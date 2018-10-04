@@ -1,7 +1,7 @@
 # Dokumentation
 
 ## Editor
-Als Editor kann beispielweise 'Visual Studio Code' verwendet werden. Es handelt sich dabei um eine Entwicklungsumgebung die mit diversen Plugins ausgestattet werden kann. Sobald man ein File aufmacht welches eine spezielle Endung hat (wie .tex) wird ein Plugin vorgeschlagen. 
+Als Editor kann beispielweise 'Visual Studio Code' verwendet werden. Es handelt sich dabei um eine Entwicklungsumgebung die mit diversen Plugins ausgestattet werden kann. Sobald man ein File aufmacht welches eine spezielle Endung hat (wie .tex) wird ein Plugin vorgeschlagen.
 Für Latex ist 'LaTeX Workshop' empfehlenswert.
 
 ## Installation
@@ -19,5 +19,8 @@ Alle Kapitel sind im Ordner 'sections' zu finden. Es können auch Unterordner er
 ## Bilder (images)
 Alle Bilder die in einem Kapitel vorkommen sind im Ordner 'images' zu finden. Es können auch hier beliebig viele Unterordner erstellt werden.
 
+## Zeichnungen (drawings)
+Selbst gezeichnete Zeichnungen die in einem Kapitel vorkommen sind im Ordner 'drawings' zu finden. Die Zeichnungen werden mithilfe von [draw.io](https://www.draw.io)
+
 ## main.tex
-Im 'main.tex' werden die einzelnen Kapitel eingefügt. 
+Im 'main.tex' werden die einzelnen Kapitel eingefügt.
