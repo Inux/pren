@@ -11,6 +11,7 @@
     \usepackage{float}
     \usepackage{subfiles}
     \usepackage{titling}
+    \usepackage{tabularx}
     \usepackage{ccicons}
     \usepackage{fontawesome}
     \usepackage{subfig}
@@ -22,15 +23,15 @@
       commentstyle=\color{black},
       keywordstyle=\color{blue}
     }
-    
+
     \graphicspath{{images/}{../images/}}
-    
+
         \title{Dokumentation - PREN}
-        \author{J. Hofstetter,  A. Rebsamen, J. Grepper, \\ M. Omlin, M. Schöni, P. Marty, S. Ineichen}
+        \author{A. Rebsamen, J. Grepper, M. Omlin, \\ M. Schöni, P. Marty, S. Ineichen}
         \date{\today{}, Luzern}
-        
+
     \begin{document}
-    
+
         \begin{titlingpage}
             \begin{center}
                 \begin{Huge} %Exakter Modulnamen und Modulnamen ausgeschrieben
@@ -54,21 +55,22 @@
                 \end{huge}
             \end{center}
         \end{titlingpage}
-        
+
         %Inhaltsverzeichnis
         \tableofcontents
         \clearpage
-        
-        \section{Technologie Recherche Elektrotechnik}
-        \subfile{sections/technologie_recherche_et.tex}
+
+        \section{Anforderungs Analyse}
+        \subfile{sections/01_anforderungs_analyse/anforderungs_analyse.tex}
         \clearpage
-        
-        \section{Technologie Recherche Maschinentechnik}
-        \subfile{sections/technologie_recherche_mt.tex}
+
+        \section{Technologie Recherche}
+        \subfile{sections/02_technologie_recherche/technologie_recherche.tex}
         \clearpage
-        
-        \section{Technologie Recherche Informatik}
-        \subfile{sections/technologie_recherche_it}
+
+        \section{Konzepte}
+        \subfile{sections/03_konzepte/konzepte.tex}
+        \subfile{sections/03_konzepte/Objekterkennung.tex}
         \clearpage
-        
+
     \end{document}
