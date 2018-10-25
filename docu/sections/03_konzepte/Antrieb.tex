@@ -1,0 +1,112 @@
+\documentclass[../../main.tex]{subfiles}
+    
+    \lstset{basicstyle=\small,
+      showstringspaces=false,
+      commentstyle=\color{black},
+      keywordstyle=\color{blue}
+    }
+
+    \graphicspath{{images/}{../../images/Antrieb/}}
+
+    \begin{document}
+    \subsection{Antrieb}
+    In der Anforderungsliste sind diverse Anforderungen an den Antrieb des Zuges gefoerdert.
+    Der Zug soll einerseits möglchst Schnell fahren können, muss aber auch präzise angesteuert werden können um die Geschwindigkeit je nach Situation anpassen zu können und präzise anzuhalten.
+    Die Möglichkeiten sind dabei durch die Anforderungen etwas eingeschränkt wie z.B. mit der Strombegrenzug von 3A.
+    In diesem Kaptiel werden verschiede Konzepte beschrieben und analysiert.\\
+
+    \textbf{Übersicht Konzepte}\\
+    Es werden der verschiede Elektromotoren betrachtet. Zu jeder Möglichkeit werden Vor- und Nachteile aufgelistet und Risiken analysiert.
+
+    \begin{itemize}
+        \item DC-Motor Bürstenlos
+        \item DC-Motor Bürstenbehaftet
+        \item Schrittmotor
+    \end{itemize}
+    \subsection{DC-Motor Bürstenlos}
+    %Quelle: https://de.nanotec.com/support/knowledge-base-pages/animation-buerstenlose-dc-motoren/?tx_nanotec_animation%5Binitial%5D=motor_bldc_block_delta&cHash=16dd715993449effcf3951fe40aaa206
+
+    Bürstenlose DC-Motoren (auch als EC-Motor bezeichet) werden normalerweise mit 3 Phasen angesteuert. Dadurch ist kein Kommutator mit Schleifkontakten notwendig. Dies macht den Motor zuverlässiger, da kein Verschleiss durch die Schleifkontakte entsteht.\\
+    Die Konzequenz dieser Ansteuerung ist jedoch, dass diese Motoren nicht direkt von einem Mikrocontroller angesteuert werden können. Es ist eine Steuerung als Treiber nötig. Diese ist oftmals durch den Hersteller vorgegeben oder Empfolen.\\
+
+    \begin{flushleft}
+        \begin{table}[H]
+        \begin{tabular}{ | l | p{11cm} |}
+        \hline
+        \textbf{Problemstellung} & Antrieb \\ \hline
+        \textbf{Disziplin} & Elektrotechnik \\ \hline
+        \textbf{Lösungskonzept} & DC-Motor Bürstenlos\\ \hline
+        \textbf{Komponente} & \begin{itemize}
+            \item DC-Motor Maxon EC 45 flat
+            \item Steuerung - DEC Module
+            \end{itemize}\\ \hline
+        \textbf{Bewertung} &  \begin{itemize}
+                                \item[+] kleiner Platzbedarf mit Flachmotor
+                                \item[+] Qualitativ guter Motor
+                                \item[+] hohe Umdrehungszahl möglich 
+                                \item[-] hohe Kosten 
+                                \item[-] keine exakte Positionnierung mit günstigerer Steuerung
+                              \end{itemize} \\ \hline
+        \end{tabular}
+        \caption{Konzeptbeurteilung: DC-Motor Bürstenlos}
+        \label{tab:antr_konzept_dcMotor_buerstenlos}
+    \end{table}
+    \end{flushleft}
+
+    \subsection{DC-Motor Bürstenbehaftet}
+    %Quelle: https://de.wikipedia.org/wiki/Gleichstrommaschine
+    
+    Bürstenbehaftete DC-Motoren sind das was traditionnell als 'Gelichstrommaschiene' bezeichnet wird. Mit Schleifkontakten wird die Rotorenwicklung beim Drehen umgepolt.
+    Bei Bürstenbehafteten DC-Motoren ist es möglich die Geschwindigkeit durch verändern der Spannung oder durch ansteuerung mit einem PWM einzustellen. Die Drehrichtung wird durch die Polarität festgelegt.
+
+    \begin{flushleft}
+        \begin{table}[H]
+        \begin{tabular}{ | l | p{11cm} |}
+        \hline
+        \textbf{Problemstellung} & Antrieb \\ \hline
+        \textbf{Disziplin} & Elektrotechnik \\ \hline
+        \textbf{Lösungskonzept} & DC-Motor Bürstenbehaftet\\ \hline
+        \textbf{Komponente} & \begin{itemize}
+            \item DC-Motor ... TODO
+            \item Steuerung / Treiber (H-Brücke)
+            \end{itemize}\\ \hline
+        \textbf{Bewertung} &  \begin{itemize}
+                                \item[+] hohe Umdrehungszahl möglich 
+                                \item[+] Kostengünstig 
+                                \item[+] Einfache ansteuerung vom Mikrocontroller via PWM 
+                                \item[-] keine exakte Positionnierung
+                                \item[-] grosser Platzbedarf
+                              \end{itemize} \\ \hline
+        \end{tabular}
+        \caption{Konzeptbeurteilung: DC-Motor Bürstenbehaftet}
+        \label{tab:antr_konzept_dcMotor_buerstenbehaftet}
+    \end{table}
+    \end{flushleft}
+
+    \subsection{Schrittmotor}
+    %Quelle: https://de.wikipedia.org/wiki/Schrittmotor
+    Bei Schrittmotoren wird das Magnetfeld im Stator schrittweise gedreht. Dadurch lässt sich die Position mit einem bestimten Winkel vorgeben.
+
+    \begin{flushleft}
+        \begin{table}[H]
+        \begin{tabular}{ | l | p{11cm} |}
+        \hline
+        \textbf{Problemstellung} & Antrieb \\ \hline
+        \textbf{Disziplin} & Elektrotechnik \\ \hline
+        \textbf{Lösungskonzept} & Schrittmotor\\ \hline
+        \textbf{Komponente} & \begin{itemize}
+            \item Motor ... TODO
+            \item Steuerung ... TODO
+            \end{itemize}\\ \hline
+        \textbf{Bewertung} &  \begin{itemize} 
+                                \item[+] exakte Positionnierung möglich
+                                \item[-] keine grosse Drehzahl möglich
+                                \item[-] grosser Platzbedarf
+                              \end{itemize} \\ \hline
+        \end{tabular}
+        \caption{Konzeptbeurteilung: Schrittmotor}
+        \label{tab:antr_konzept_schrittmotor}
+    \end{table}
+    \end{flushleft}
+    
+    \end{document}
