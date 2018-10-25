@@ -6,6 +6,7 @@ Einerseits gibt es ein Konzept welches mehrere Programme beinhaltet welche über
 Andererseits ein Konzept welches aus verschiedenen Komponenten besteht die über Interfaces miteinander interagieren. \\
 
 \subsubsection{Software Architektur mit verschiedenen Komponenten}
+
 \begin{figure}[H] %Architektur ohne Middleware
     \centering
     \includegraphics[width=0.6\textwidth]{../../drawings/ArchitekturDiagramm/SW_Architektur.png}
@@ -13,10 +14,21 @@ Andererseits ein Konzept welches aus verschiedenen Komponenten besteht die über
 \end{figure}
 
 \subsubsection{Software Architektur mit Middleware}
+Die Software Architektur mit Middleware besteht aus mehreren Programmen welche unabhängig gestartet werden.
+Sie kommunizieren über eine Middleware miteinander.
+Dies ermöglicht den Einsatz von verschiedenen Programmiersprachen und vereinfacht die Implementierung,
+da die einzelnen Programme über die Middleware unabhängig getestet werden können.
+Um gemeinsamen Code zu teilen wird eine Bibliothek erstellt welche von allen Programmen benutzt werden kann.
+
 \begin{figure}[H] %Architektur ohne Middleware
     \centering
     \includegraphics[width=1.0\textwidth]{../../drawings/ArchitekturDiagramm/SW_Architektur_Middleware.png}
     \caption {Software Architektur Middleware. Gezeichnet mit https://draw.io}
 \end{figure}
+
+\textbf{Legende:}
+\begin{itemize}
+    \item Die Pfeile visualisieren die Abhängigkeiten innerhalb der Architektur
+\end{itemize}
 
 \end{document}
