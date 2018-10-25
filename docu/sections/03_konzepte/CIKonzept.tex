@@ -1,0 +1,29 @@
+\documentclass[../../main.tex]{subfiles}
+\begin{document}
+\subsection{Continuous Integration Konzept}
+Um die Software zu entwickeln und die Dokumentation zu schreiben verwenden wir ein Git repository
+welches auf github.com gehostet wird. Die Dokumentation wird mithilfe von LaTeX geschrieben.
+Beide Entscheidungen wurden früh im Projektverlauf getroffen basierend auf einer Teamdiskussion.
+Um zu gewährleisten das die Software zu jeder Zeit funktioniert haben wir uns dazu entschiedenen einen
+CI (Continuous Integration) Prozess zu definieren damit bei jeder Integration überprüft wird dass die
+Software weiterhin funktioniert. Auch die LaTeX Dokumentation wird während dieser Zeit compiliert und überprüft.
+
+\subsubsection{Vergleichstabelle}
+
+\begin{table}[!h]
+    \begin{tabular}{|l|l|l|ll}
+    \cline{1-3}
+    \textbf{CI System} & \textbf{Vorteile}                                                                       & \textbf{Nachteile}                                                                                              &  &  \\ \cline{1-3}
+    Jenkins            & \begin{tabular}[c]{@{}l@{}}-Grosse Community\\ -Mächtig\end{tabular}                    & \begin{tabular}[c]{@{}l@{}}-Ressourcen verbrauch\\ -Komplexität\\ -Bedingte Integration github.com\end{tabular} &  &  \\ \cline{1-3}
+    CircleCI           & \begin{tabular}[c]{@{}l@{}}-Schnell\\ -Leichtgewichtig\end{tabular}                     & \begin{tabular}[c]{@{}l@{}}-Beschränkte Funktionalität\\ -Bedingte Integration github.com\end{tabular}          &  &  \\ \cline{1-3}
+    TravisCI           & \begin{tabular}[c]{@{}l@{}}-Einfach\\ -Schnell\\ -Integriert in github.com\end{tabular} & -Beschränkte Funktionalität                                                                                     &  &  \\ \cline{1-3}
+    \end{tabular}
+\end{table}
+
+\subsubsection{Entscheidung}
+Welches CI System eingesetzt wird ist nicht zentral für dieses Projekt. Da der Fokus auf der Funktionalität des Zuges Leichtgewichtig Leichtgewichtig
+liegt und nicht auf den Entwicklungswerkzeugen. Trotzdem wollten wir eine fundierte Entscheidung treffen um das bestmögliche für diese Projekt auszuwäheln.
+Schlussendlich basiert die Entscheidung auf der Integration mit github.com und der einfachheit in Kombination der Geschwindigkeit.
+Deshalb wird TravisCI genutzt um den Source Code bzw. die Dokumentaion zu compilieren und den Source Code zu testen.
+
+\end{document}
