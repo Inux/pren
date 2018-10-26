@@ -11,9 +11,9 @@
     \begin{document}
     \subsection{Antrieb}
     In der Anforderungsliste sind diverse Anforderungen an den Antrieb des Zuges gefoerdert.
-    Der Zug soll einerseits möglchst Schnell fahren können, muss aber auch präzise angesteuert werden können um die Geschwindigkeit je nach Situation anpassen zu können und präzise anzuhalten.
+    Der Zug soll einerseits möglichst Schnell fahren können, muss aber auch präzise angesteuert werden können um die Geschwindigkeit je nach Situation anpassen zu können und präzise anzuhalten.
     Die Möglichkeiten sind dabei durch die Anforderungen etwas eingeschränkt wie z.B. mit der Strombegrenzug von 3A.
-    In diesem Kaptiel werden verschiede Konzepte beschrieben und analysiert.\\
+    In diesem Kaptitel werden verschiede Konzepte beschrieben und analysiert.\\
 
     \textbf{Übersicht Konzepte}\\
     Es werden der verschiede Elektromotoren betrachtet. Zu jeder Möglichkeit werden Vor- und Nachteile aufgelistet und Risiken analysiert.
@@ -23,11 +23,11 @@
         \item DC-Motor Bürstenbehaftet
         \item Schrittmotor
     \end{itemize}
-    \subsection{DC-Motor Bürstenlos}
+    \subsubsection{DC-Motor Bürstenlos}
     %Quelle: https://de.nanotec.com/support/knowledge-base-pages/animation-buerstenlose-dc-motoren/?tx_nanotec_animation%5Binitial%5D=motor_bldc_block_delta&cHash=16dd715993449effcf3951fe40aaa206
 
     Bürstenlose DC-Motoren (auch als EC-Motor bezeichet) werden normalerweise mit 3 Phasen angesteuert. Dadurch ist kein Kommutator mit Schleifkontakten notwendig. Dies macht den Motor zuverlässiger, da kein Verschleiss durch die Schleifkontakte entsteht.\\
-    Die Konzequenz dieser Ansteuerung ist jedoch, dass diese Motoren nicht direkt von einem Mikrocontroller angesteuert werden können. Es ist eine Steuerung als Treiber nötig. Diese ist oftmals durch den Hersteller vorgegeben oder Empfolen.\\
+    Die Konsequenz dieser Ansteuerung ist jedoch, dass diese Motoren nicht direkt von einem Mikrocontroller angesteuert werden können. Es ist eine Steuerung als Treiber nötig. Diese ist oftmals durch den Hersteller vorgegeben oder Empfolen.\\
 
     \begin{flushleft}
         \begin{table}[H]
@@ -53,7 +53,7 @@
     \end{table}
     \end{flushleft}
 
-    \subsection{DC-Motor Bürstenbehaftet}
+    \subsubsection{DC-Motor Bürstenbehaftet}
     %Quelle: https://de.wikipedia.org/wiki/Gleichstrommaschine
     
     Bürstenbehaftete DC-Motoren sind das was traditionnell als 'Gelichstrommaschiene' bezeichnet wird. Mit Schleifkontakten wird die Rotorenwicklung beim Drehen umgepolt.
@@ -83,7 +83,7 @@
     \end{table}
     \end{flushleft}
 
-    \subsection{Schrittmotor}
+    \subsubsection{Schrittmotor}
     %Quelle: https://de.wikipedia.org/wiki/Schrittmotor
     Bei Schrittmotoren wird das Magnetfeld im Stator schrittweise gedreht. Dadurch lässt sich die Position mit einem bestimten Winkel vorgeben.
 
