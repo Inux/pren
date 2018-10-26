@@ -5,7 +5,7 @@
       commentstyle=\color{black},
       keywordstyle=\color{blue}
     }
-
+    
     \graphicspath{{images/}{../../images/Antrieb/}}
 
     \begin{document}
@@ -53,6 +53,27 @@
     \end{table}
     \end{flushleft}
 
+    \textbf{Risiken}\\
+    Zu diesem Lösungskonzept werden folgende Risiken betrachtet und eingeschätzt.
+    \begin{enumerate}[I]
+        \item zu Tief begrenzte umdrehungszahl
+        \item zu wenig Drehmoment
+        \item zu Teuer
+        \item zu wenig Präzise steuerung
+        \item zu schwierige Umsetzung (unter Berücksichtigung einer späteren Änderung zu einer Alternativlösung)        
+    \end{enumerate}
+
+    In Abbildung \ref{fig:antr_risikomatrix_buerstenlos} werden die Risiken nach möglicher Schadenshöhe und Eintrittswahrscheinlichkeit eingeschätzt.
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\textwidth]{Antr_Risiko_DCMotor_Buerstenlos.png}
+        \caption {Risikomatrix DC-Motor Bürstenlos}
+        \label{fig:antr_risikomatrix_buerstenlos}
+    \end{figure}
+
+    Hier ist besonders das Risiko der Umsetzung besonders gross. Dieses lässt sich durch den Einsatz einer guten Steuerung minimieren, diese sind jedoch sehr kostspielig.
+
     \subsubsection{DC-Motor Bürstenbehaftet}
     %Quelle: https://de.wikipedia.org/wiki/Gleichstrommaschine
     
@@ -83,6 +104,27 @@
     \end{table}
     \end{flushleft}
 
+    \textbf{Risiken}\\
+    Zu diesem Lösungskonzept werden folgende Risiken betrachtet und eingeschätzt.
+    \begin{enumerate}[I]
+        \item zu Tief begrenzte umdrehungszahl
+        \item zu wenig Drehmoment
+        \item zu Teuer
+        \item zu wenig Präzise steuerung
+        \item zu schwierige Umsetzung (unter Berücksichtigung einer späteren Änderung zu einer Alternativlösung)  
+    \end{enumerate}
+
+    In Abbildung \ref{fig:antr_risikomatrix_buerstenbehaftet} werden die Risiken nach möglicher Schadenshöhe und Eintrittswahrscheinlichkeit eingeschätzt.
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\textwidth]{Antr_Risiko_DCMotor_Buerstenbehaftet.png}
+        \caption {Risikomatrix DC-Motor Bürstenbehaftet}
+        \label{fig:antr_risikomatrix_buerstenbehaftet}
+    \end{figure}
+
+    Die Risiken im gelben bereich lassen sich mit einer sorgfältigen Auslegung und richtiger Ansteuerung des Motors minimieren. Bei diesem Konzept müssen diese Punkte also speziell in der Planung und auswahl beachtet werden. 
+
     \subsubsection{Schrittmotor}
     %Quelle: https://de.wikipedia.org/wiki/Schrittmotor
     Bei Schrittmotoren wird das Magnetfeld im Stator schrittweise gedreht. Dadurch lässt sich die Position mit einem bestimten Winkel vorgeben.
@@ -109,4 +151,26 @@
     \end{table}
     \end{flushleft}
     
+
+    \textbf{Risiken}\\
+    Zu diesem Lösungskonzept werden folgende Risiken betrachtet und eingeschätzt.
+    \begin{enumerate}[I]
+        \item zu Tief begrenzte umdrehungszahl
+        \item zu wenig Drehmoment
+        \item zu Teuer
+        \item zu wenig Präzise steuerung
+        \item zu schwierige Umsetzung (unter Berücksichtigung einer späteren Änderung zu einer Alternativlösung)        
+    \end{enumerate}
+
+    In Abbildung \ref{fig:antr_risikomatrix_schrittmotor} werden die Risiken nach möglicher Schadenshöhe und Eintrittswahrscheinlichkeit eingeschätzt.
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\textwidth]{Antr_Risiko_Schrittmotor.png}
+        \caption {Risikomatrix Schrittmotor}
+        \label{fig:antr_risikomatrix_schrittmotor}
+    \end{figure}
+
+    Hier ist besonders die Dimensionierung des Motors eine grosses Risiko. Das Risiko der zu geringen Drehzahl lässt sich mit einer Mechanischen Lösung  minimieren. Um das Risiko der zu geringen Drehzahl zu minimieren muss der Motor entsprechend stark dimensioniert werden. Dies erhöht jedoch auch wider die Kosten, den Platzbedarf und den Stromverbrauch.
+
     \end{document}
