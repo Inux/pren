@@ -1,0 +1,55 @@
+\documentclass[../../main.tex]{subfiles}
+    
+    \lstset{basicstyle=\small,
+      showstringspaces=false,
+      commentstyle=\color{black},
+      keywordstyle=\color{blue}
+    }
+
+    \graphicspath{{images/}{../../images/Konzept Maschinentechnik/}}
+
+    \begin{document}
+    \subsection{Konzeptentwicklung Maschinentechnik}
+    Im folgenden Kapitel wird die Konzeptentwicklung im Bereich Maschinentechnik aufgezeigt. Die Problemstellung ist in verschiedene Teilfunktionen unterteilt, welche in diesem Kapitel\\
+
+    \textbf{Teilfunktionen}\\
+    Die Objekterkennung kann je nach Problemstellung mit unterschiedlichen Disziplinen (Mechanik,
+    Elektrotechnik und Informatik) gelöst werden. In der Tabelle \ref{tab:obj_disziplin} wird
+    aufgelistet welche Problemstellung mit welcher Disziplin gelöst werden kann.
+    %Tabelle mit DisziplinKonzepte
+    \begin{flushleft}
+        \begin{table}[h]
+        \begin{tabular}{ | l | p{11cm} |}
+        \hline
+        \textbf{Disziplin} & \textbf{Konzepte} \\ \hline
+        Mechanik & \begin{itemize}
+                        \item Spurrichtungserkennung
+                    \end{itemize} \\ \hline
+        Elektrotechnik & \begin{itemize}
+                             \item Würfelerkennung
+                             \item Spurrichtungserkennung
+                             \item Lichtraumprofilerkennung
+                         \end{itemize} \\ \hline
+        Informatik &  \begin{itemize}
+                        \item Würfelerkennung
+                        \item Spurrichtungserkennung
+                        \item Lichtraumprofilerkennung
+                        \item Signalerkennung
+                      \end{itemize} \\ \hline
+        \end{tabular}
+        \caption{Disziplinentabelle}
+        \label{tab:obj_disziplin}
+    \end{table}
+    \end{flushleft}
+
+    Im Folgenden werden die möglichen Konzepte pro Problemstellung analysiert. Für die Disziplin Informatik
+    wird immer das Konzept «Kamera» verwendet.
+
+    \subsubsection{Würfelerkennung}
+    Die Problemstellung «Würfelerkennung» kann entweder mit der Disziplin Elektrotechnik oder Informatik
+    gelöst werden. Bei der «Würfelerkennung» muss im Startbereich einen Holzwürfel erkennt,
+    Position des Würfels ermittelt und diesen mittels Kran auf den Zug geladen werden 
+    (siehe Abbildung \ref{fig:wurfelerkennung}).
+
+\end{document}
+
