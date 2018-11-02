@@ -1,13 +1,30 @@
 #include "opencv2/highgui/highgui.hpp"
 #include "opencv2/imgproc/imgproc.hpp"
 #include <iostream>
+#include <numeric>
 
 namespace {
     const cv::Scalar color = cv::Scalar(255, 255, 255);
 
-    const int cannyTreshold = 300;
-    const double cannTresholdRatio = 1.5;
-    const int contourSizeTreshold = 550;
+    const int cannyTreshold = 100;
+    const double cannTresholdRatio = 3;
+    const int contourSizeTreshold = 100;
+
+    int random(int min, int max) //range : [min, max)
+    {
+        static bool first = true;
+        if (first)
+        {
+            srand( time(NULL) ); //seeding for the first time only!
+            first = false;
+        }
+        return min + rand() % (( max + 1 ) - min);
+    }
+
+    void printImageStats(cv::Mat img)
+    {
+        std::cout << "Image X: " << img.cols << ", Y: " << img.rows << std::endl;
+    }
 
     cv::Mat prepareImage(cv::Mat src)
     {
@@ -56,6 +73,29 @@ namespace {
         return contoursFiltered;
     }
 
+    void printContoursStats(std::vector<std::vector<cv::Point> > contours)
+    {
+        for(int i = 0; i < contours.size(); i++)
+        {
+            auto contour = contours[i];
+            std::cout << "Contour " << i << " Points: " << contour.size() << std::endl;
+
+            std::vector<float> vslope;
+            for(int i = 0; i < contour.size()-1; i++)
+            {
+                auto dx = contour[i+1].x - contour[i].x;
+                auto dy = contour[i+1].y - contour[i].y;
+                if(dy != 0)
+                {
+                     vslope.push_back(float(dx)/float(dy));
+                }
+            }
+            float avgSlope = std::accumulate(vslope.begin(), vslope.end(), 0.0)/vslope.size();
+
+            std::cout << "Average slope = " << avgSlope << std::endl;
+        }
+    }
+
     cv::Mat getDrawing(cv::Mat src, std::vector<std::vector<cv::Point> > contours)
     {
         cv::Mat drawing = cv::Mat::zeros( src.size(), CV_8UC3 );
@@ -81,6 +121,8 @@ int main(int argc, char** argv)
         return -1;
     }
 
+    printImageStats(src);
+
     auto prepared = prepareImage(src);
 
     auto edges = applyCanny(prepared);
@@ -88,7 +130,10 @@ int main(int argc, char** argv)
     auto contours = getContours(edges);
     contours = filterContours(contours, contourSizeTreshold);
 
+    printContoursStats(contours);
+
     auto drawing = getDrawing(edges, contours);
+
 
     cv::imshow("Source", src);
     cv::imshow("Prepared", prepared);
