@@ -10,7 +10,7 @@
 
     \begin{document}
     \subsection{Antrieb}
-    In der Anforderungsliste sind diverse Anforderungen an den Antrieb des Zuges gefoerdert.
+    In der Anforderungsliste sind diverse Anforderungen an den Antrieb des Zuges gefordert.
     Der Zug soll einerseits möglichst Schnell fahren können, muss aber auch präzise angesteuert werden können um die Geschwindigkeit je nach Situation anpassen zu können und präzise anzuhalten.
     Die Möglichkeiten sind dabei durch die Anforderungen etwas eingeschränkt wie z.B. mit der Strombegrenzug von 3A.
     In diesem Kaptitel werden verschiedene Konzepte beschrieben und analysiert.
@@ -68,7 +68,7 @@
 
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.6\textwidth]{Antr_Risiko_DCMotor_Buerstenlos.png}
+        \includegraphics[width=0.4\textwidth]{Antr_Risiko_DCMotor_Buerstenlos.png}
         \caption {Risikomatrix DC-Motor Bürstenlos}
         \label{fig:antr_risikomatrix_buerstenlos}
     \end{figure}
@@ -119,7 +119,7 @@
 
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.6\textwidth]{Antr_Risiko_DCMotor_Buerstenbehaftet.png}
+        \includegraphics[width=0.4\textwidth]{Antr_Risiko_DCMotor_Buerstenbehaftet.png}
         \caption {Risikomatrix DC-Motor Bürstenbehaftet}
         \label{fig:antr_risikomatrix_buerstenbehaftet}
     \end{figure}
@@ -167,11 +167,27 @@
 
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.6\textwidth]{Antr_Risiko_Schrittmotor.png}
+        \includegraphics[width=0.4\textwidth]{Antr_Risiko_Schrittmotor.png}
         \caption {Risikomatrix Schrittmotor}
         \label{fig:antr_risikomatrix_schrittmotor}
     \end{figure}
 
     Hier ist besonders die Dimensionierung des Motors eine grosses Risiko. Das Risiko der zu geringen Drehzahl lässt sich mit einer Mechanischen Lösung  minimieren. Um das Risiko der zu geringen Drehzahl zu minimieren muss der Motor entsprechend stark dimensioniert werden. Dies erhöht jedoch auch wider die Kosten, den Platzbedarf und den Stromverbrauch.
+
+    \subsubsection{Entscheid}
+    Mithilfe der Nutzwertanalyse in Abbildung \ref{fig:antr_nutzwertanalyse} konnte ein Entscheid getroffen werden.\\
+    Der Bürstenlo DC-Motor wurde mit dem grössten Nutzen bewertet. Vorallem die kleine Bauart und die Präzision ist ein grosses Argument für den Bürstenlosen DC-Motor.\\
+    Der Bürstenbehaftet DC-Motor fällt vorallem durch die grössere Bauart und das grössere Gewicht ab. Jedoch ist er für die Umsetzung und auch vom Preis her viel attraktiver.\\
+    Der Schrittmotor fiel ebenfalls bei der Grösse und beim Gewicht ab. Jedoch bietet der Schrittmotor keinen grossen Vorteil was die Einfachheit der Umsetzung angeht. Deshalb erreicht er die Schlechteste Bewertung in dieser Analyse.\\
+        
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=1.0\textwidth]{Antr_Nutzwertanalyse.png}
+        \caption {Nutzwertanalyse Antrieb}
+        \label{fig:antr_nutzwertanalyse}
+    \end{figure}
+
+    Der Entscheid im Morphologischen Kasten fiel Schlussendlich auf den Bürstenbehafteten DC-Motor. Der Grund dass die Entscheidung entgegen der Nutzwertanalyse fiel ist, dass der grosse Preis zusammen mit der anspruchsvollen Umsetzung beim Bürstenlosen DC-Motor ein zu grosses Risiko ist. Das Risiko der Baugrösse und des Gewichtes des Bürstenbehafteten Motors kann durch eine grosszügige Auslegung der Mechanik minimiert werden.\\
+    Der Bürstenlose DC-Motor wird als Alternativlösung im Plan B weiter verfolgt für den Fall dass die Anforderungen mit dem Bürstenbehafteten Motor nicht erfüllt werden können. Weitere Tests in der Entwicklung des Konzeptes werden dies zeigen.
 
     \end{document}
