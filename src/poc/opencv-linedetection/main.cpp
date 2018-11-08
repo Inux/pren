@@ -26,9 +26,34 @@ namespace {
         std::cout << "Image X: " << img.cols << ", Y: " << img.rows << std::endl;
     }
 
+    cv::Mat resizeImage(cv::Mat src)
+    {
+        int size = 400;
+        bool isLandscape = false;
+        float ratio = 0.f;
+        if(src.cols > src.rows) {
+            ratio = float(src.cols)/float(src.rows);
+            isLandscape = true;
+        } else {
+            ratio = float(src.rows)/float(src.cols);
+            isLandscape = false;
+        }
+
+        int newXsize = 0;
+        int newYsize = 0;
+        if(isLandscape) {
+            newXsize = size * ratio;
+            newYsize = size;
+        } else {
+            newXsize = size;
+            newYsize = size * ratio;
+        }
+    }
+
     cv::Mat prepareImage(cv::Mat src)
     {
         cv::Mat prepared;
+        src = resizeImage(src);
         cvtColor(src, prepared, CV_BGR2GRAY);
         //cv::blur(prepared, prepared, cv::Size(5,5));
         return prepared;
