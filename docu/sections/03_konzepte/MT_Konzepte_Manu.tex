@@ -9,14 +9,14 @@
     \graphicspath{{images/}{../../images/Konzept Maschinentechnik/}}
 
     \begin{document}
-    \subsection{Konzeptentwicklung Maschinentechnik}
-    Im Bereich Maschinentechnik des Projektes wird konkret auf die Thematik der Mechanik eingegangen. Die einzelnen Komponenten sind jedoch eng mit der Elektronik und der Informatik verknüpft. Die projektspezifische Mechanik wird in folgende drei Hauptgruppen unterteilt: Fahrwerk, Würfeltransport und Antrieb. In diesem Kapitel werden die mechanischen Lösungsvorschläge der definierten Teilfunktionen vorgestellt und bewertet. Der Morphologischer Kasten dient dabei als Grundlage der Lösungsfindung. Durch ihn wurden Varianten generiert, welche anschliessend mit definierten Bewertungskriterien in einer Nutzwertanalyse ausgewertet werden. Die zwei Varianten, welche den grössten Nutzwert aufweisen werden nochmals genauer beschrieben. Zusätzlich wird anhand der Vor- und Nachteile eine favorisierte Lösung für jede Problemstellung festgelegt. Das Komplette Dokument der Nutzwertanalyse der Mechanik ist im Anhang zu finden.\\
+    \section{Konzeptentwicklung Maschinentechnik}
+    Im Bereich Maschinentechnik des Projektes wird konkret auf die Thematik der Mechanik eingegangen. Die einzelnen Komponenten sind jedoch eng mit der Elektronik und der Informatik verknüpft. Die projektspezifische Mechanik wird in folgende drei Hauptgruppen unterteilt: Fahrwerk, Würfeltransport und Antrieb. In diesem Kapitel werden die mechanischen Lösungsvorschläge der definierten Teilfunktionen vorgestellt und bewertet. Der Morphologischer Kasten dient dabei als Grundlage der Lösungsfindung. Durch ihn wurden Varianten generiert, welche anschliessend mit definierten Bewertungskriterien in einer Nutzwertanalyse ausgewertet werden. Die zwei Varianten, welche den grössten Nutzwert aufweisen werden nochmals genauer beschrieben. Zusätzlich wird anhand der Vor- und Nachteile eine favorisierte Lösung für jede Problemstellung festgelegt. Das Komplette Dokument der Nutzwertanalyse der Mechanik ist im Anhang zu finden.
 
-    \subsubsection{Fahrwerk}
-    \textbf{Kurvenfahrt:}\\
+    \subsection{Fahrwerk}
+    \subsubsection{Kurvenfahrt}
     Das Ziel der Kurvenfahrt ist es, sie möglichst schnell abzufahren, ohne dabei aus den Gleisen zu fallen. Anhand der Nutzwertanalyse haben sich die zwei besten Varianten «Schwenker» und «Tiefer Schwerpunkt» für die Konzeptbildung herauskristallisiert und werden nun genauer beschrieben.
     
-    \textbf{Schwenker}
+    \textbf{Schwenker}\\
     Der Schwenker ist eine Lösungsvariante, bei welcher eine Masse quer über den Zugwagen beweglich und steuerbar angebracht ist. Damit soll gewährleistet werden, dass der Massenschwerpunkt in einer Kurve zum Radiusmittelpunkt hin verschoben werden und somit die Zentripetalkraft ausgeglichen werden kann. Zusätzlich kann der Schwenker ebenfalls für die Thematik des Greifens und Verschiebens des Würfels genutzt werden, denn dort wirken ebenfalls Momente quer auf den Zug. In der Tabelle \ref{tab:konzept_fahrwerk_schwenker} sind die Vor- und Nachteile dieser Variante aufgelistet.
     
     \begin{flushleft}
@@ -38,7 +38,7 @@
     \end{table}
     \end{flushleft}
 
-    \textbf{Tiefer Schwerpunkt}
+    \textbf{Tiefer Schwerpunkt}\\
     Das Konzept «Tiefer Schwerpunkt» hat sich deshalb in der Nutzwertanalyse durchgesetzt, da kein zusätzlicher Materialaufwand und die damit verbundenen Kosten entstehen. Der Grundgedanke dieser Lösungsvariante besteht darin, das Konzept so zu gestalten, dass der Schwerpunkt so tief wie möglich gehalten werden kann. Somit ist das Moment auf den Wagen in der Kurve kleiner und es muss weniger ausglichen werden.
 
     \begin{flushleft}
@@ -62,10 +62,10 @@
 
     Anhand der Vor- und Nachteile der jeweiligen Lösungsvariante hat sich abgezeichnet, die Variante des Schwenkers in erster Linie weiter zu verfolgen und die Variante mit dem tiefen Schwerpunkt für eine zweite alternative Variante zu wählen.
     
-    \textbf{Bremsen:}\\
+    \subsubsection{Bremsen}
     Ein Ziel des Schienenfahrzeugs ist es, möglichst schnell einen variablen Kurs autonom abzufahren. Damit man auf den geraden Strecken mit der Höchstgeschwindigkeit fahren kann und die Kurven kriegen will, braucht es eine kontrollierte Geschwindigkeitsreduktion. Nach der Nutzwertanalyse haben sich die Bremsung mittels Motor und Steuerung sowie eine mechanische Bremse direkt auf die Räder durchgesetzt.
 
-    \textbf{Motorbremse}
+    \textbf{Motorbremse}\\
     Sobald die Steuerung eine Kurve erkennt, kann sie den Motor mit der Stromregelung bremsen. Das ist eine mechanisch einfache Variante und kann rein auf der Steuerung aufbauen. (siehe Tabelle \ref{tab:konzept_fahrwerk_motorbremse})
 
     \begin{flushleft}
@@ -87,7 +87,7 @@
     \end{table}
     \end{flushleft}
 
-    \textbf{Radbremse}
+    \textbf{Radbremse}\\
     Wie es der Titel schon sagt, wird die Bremswirkung mittels Reibung eines Bremsklotzes auf dem Rad erzeugt. (Tabelle \ref{tab:konzept_fahrwerk_radbremse})
 
 \begin{flushleft}
@@ -110,10 +110,10 @@
 \end{table}
 \end{flushleft}
 
-  \textbf{Dämpfung:}
+  \subsubsection{Dämpfung}
   Die Teilfunktion Dämpfen soll das Fahrwerk des Zuges vor abrupten Schlägen und Erschütterungen schützen, womit eine kontrollierte Fahrt des Zuges ermöglicht werden soll. Anhand der Nutzwertanalyse haben sich die beiden Lösungskonzepte «Stossdämpfer» und «keine Dämpfung» als die Besten Lösungen dieses Problems herausgestellt.
 
-  \textbf{Stossdämpfer}
+  \textbf{Stossdämpfer}\\
   Der Stossdämpfer ist ein handelsübliches Einkaufsteil, dass durch seine Einfachheit und den geringen Preis für diese Problemstellung optimal ist. Er sollte einstellbar sein. (siehe Tabelle \ref{tab:konzept_fahrwerk_stossdaempfer})
 
   \begin{flushleft}
@@ -134,7 +134,7 @@
 \end{table}
 \end{flushleft}
 
-\textbf{Keine Dämpfung}  
+\textbf{Keine Dämpfung}\\
 Neben den vielen Möglichkeiten den Zug vor Schlägen und Unebenheiten zu schützen besteht ebenfalls die Möglichkeit komplett auf eine Dämpfung zu verzichten, da auf der Fahrbahn mit sehr wenig Störungen zu rechnen ist. Es besteht jedoch die Möglichkeit des Einsatzes von Dämpfungen bei vereinzelten Komponenten wie der Kamera, falls dies erforderlich ist. (siehe Tabelle \ref{tab:konzept_fahrwerk_keinedaempfung})
 
 \begin{flushleft}
@@ -156,6 +156,101 @@ Neben den vielen Möglichkeiten den Zug vor Schlägen und Unebenheiten zu schüt
 
 Anhand der Bewertungskriterien und der genauen Betrachtung der Sachlage stellt sich heraus, dass es für das Endprodukt nicht von grosser Bedeutung ist, ob eine Dämpfung vorhanden ist oder nicht. Der Aufwand gegenüber dem Nutzen wird als wesentlich grösser erachtet. Deshalb wird für die favorisierte Lösung keine Dämpfung zum Einsatz kommen.
 
+\subsection{Würfeltransport}
+\subsubsection{Greifen}
+ Eine Teilfunktion des Hochgeschwindigkeitsschienenfahrzeugs beinhaltet das Greifen eines Würfels. Dieser weist eine Kantenlänge von jeweils 50 cm auf und ist mit einem Hacken ausgestattet der auf der oberen Seite platziert ist und die Öffnung entgegen der Fahrtrichtung zeigt. Der Abstand des Würfels zur Gleismitte ist gegeben, nur die Position entlang der Gleise ist unbekannt. Ziel des Vorrichtung ist es nun, diesen Würfel zu Greifen und anschliessen auf dem Schienenfahrzeug zu platzieren.\\
+
+     \textbf{Stab}\\
+ Der Stab wurde gemäss Nutzwertanalyse als zweit beste Lösungsvariante ausgegeben, wird aber trotzdem favorisiert, weil die Einfachheit der Vorrichtung und die definierte Position des Würfels überzeugen. Ergänzend zum Stab soll ein beweglicher Haken einhängen können. \\
+\begin{flushleft}
+    \begin{table}[h]
+    \begin{tabular}{ | l | p{11cm} |}
+    \hline
+    \textbf{Problemstellung} & Würfeltransport: Greifen \\ \hline
+    \textbf{Disziplin} & Maschinentechnik \\ \hline
+    \textbf{Lösungskonzept} &  Stab \\ \hline
+    \textbf{Komponente} & Stab und Haken \\ \hline
+    \textbf{Bewertung} &  \begin{itemize}
+                            \item[+] Positionierung
+                            \item[+] Einfachheit
+                            \item[+] Erfolgsgarantie 
+                            \item[-] Auslenkung
+                          \end{itemize} \\ \hline
+    \end{tabular}
+    \caption{Konzeptbeurteilung: Würfeltransport mittels Stab}
+    \label{tab:konzept_wurfeltransport_stab}
+\end{table}
+\end{flushleft}
+
+\textbf{Magnet}\\
+ Der Haken des Würfels wird auf magnetischem Material sein und so sollte definitiv eine Lösungsvariante mit einem Magneten in Betracht gezogen werden. Diese Variante ist in der Bewertung vorne mit dabei, doch auf Grund der unberechenbaren Kräfte und Auslenkungen des Würfels hat man sich gegen einen Magneten entschieden. Falls die erste Option nicht die gewünschten Ergebnisse bringt, wird der Magnet zum Plan B und der Vorgang muss mit einigen Tests und Szenarien geprüft werden. \\
+
+ \begin{flushleft}
+    \begin{table}[h]
+    \begin{tabular}{ | l | p{11cm} |}
+    \hline
+    \textbf{Problemstellung} & Würfeltransport: Greifen \\ \hline
+    \textbf{Disziplin} & Maschinentechnik \\ \hline
+    \textbf{Lösungskonzept} &  Magnet \\ \hline
+    \textbf{Komponente} & Magnet und Führung \\ \hline
+    \textbf{Bewertung} &  \begin{itemize}
+                            \item[+] Kompakte Bauweise
+                            \item[+] Einfachheit
+                            \item[-] unberechenbar 
+                            \item[-] keine Wiederholgenauigkeit
+                          \end{itemize} \\ \hline
+    \end{tabular}
+    \caption{Konzeptbeurteilung: Würfeltransport mittels Magnet}
+    \label{tab:konzept_wurfeltrransport_magnet}
+\end{table}
+\end{flushleft}
+\subsubsection{Verschieben}
+Nachdem der Würfel im Startbereich der Strecke korrekt gegriffen wurde, wird er in einem nächsten Schritt verschoben und auf dem Zug platziert. Dazu haben sich die beiden Lösungsvorschläge «Um- und Einschwenker» und «Rampe mit Seilzug» in der Nutzwertanalyse durchgesetzt.\\
+
+\textbf{Um- und Einschwenker}\\
+
+Der Um- und Einschwenker ist ein Konzept, in welchem versucht wird die Bewegung des Verschiebens nur durch eine Achse zu realisieren. Somit bleibt das System einfach und übersichtlich. Es ist aber noch offen, um welche Achse sich der Schwenker drehen soll - entweder schwenkt er seitwärts zum Zug ein (Einschwenker) oder auf den Zug herauf (Umschwenker).\\
+
+\begin{flushleft}
+    \begin{table}[h]
+    \begin{tabular}{ | l | p{11cm} |}
+    \hline
+    \textbf{Problemstellung} & Würfeltransport: Verschieben \\ \hline
+    \textbf{Disziplin} & Maschinentechnik \\ \hline
+    \textbf{Lösungskonzept} &  Um- und Einschwenker \\ \hline
+    \textbf{Bewertung} &  \begin{itemize}
+                            \item[+] Bewegung erfolgt nur auf einer Achse
+                            \item[+] Einfachheit
+                            \item[+] tiefer Schwerpunkt
+                            \item[-] Grosser Bauraum
+                          \end{itemize} \\ \hline
+    \end{tabular}
+    \caption{Konzeptbeurteilung: Würfeltransport mittels Um- und Einschwenker}
+    \label{tab:konzept_wurfeltrransport_umschwenker}
+\end{table}
+\end{flushleft}
+\textbf{Rampe}
+Die Lösungsvariante der Rampe mit einem Seilzug bietet ebenfalls die Möglichkeit die Bewegung der Verschiebung des Würfels um eine Achse, die Seiltrommel, auszuführen. Nachdem der Würfel gepackt wurde, wird er über einen Seilzug der Rampe entlang zum Zug hinaufgezogen, wo er schlussendlich platziert wird. Die Rampe muss ebenfalls rauf und runtergelassen werden, damit sich der Zug am Ende wieder im vorschriftgemässen Luftraumprofil befindet.\\
+
+\begin{flushleft}
+    \begin{table}[h]
+    \begin{tabular}{ | l | p{11cm} |}
+    \hline
+    \textbf{Problemstellung} & Würfeltransport: Verschieben \\ \hline
+    \textbf{Disziplin} & Maschinentechnik \\ \hline
+    \textbf{Lösungskonzept} &  Rampe mit Seilzug \\ \hline
+    \textbf{Bewertung} &  \begin{itemize}
+                            \item[+] Bewegung erfolgt nur auf einer Achse
+                            \item[+] Einfachheit
+                            \item[-] Mechanisch anspruchsvoller
+                            \item[-] Grosser Bauraum
+                          \end{itemize} \\ \hline
+    \end{tabular}
+    \caption{Konzeptbeurteilung: Würfeltransport mittels Rampe}
+    \label{tab:konzept_wurfeltrransport_umschwenker}
+\end{table}
+\end{flushleft}
+Für diese Konzeptlösung des Produktes wird anhand des Konzeptes des «Um- und Einschwenkers» bevorzugt. Die Rampe mit dem Seilzug ist mechanisch anspruchsvoller zu realisieren und wird somit nicht für die favorisierte Endlösung gewählt.
 
 \textbf{Antrieb:}
 Damit die Steuerung auch weiss wie viele Umdrehungen die Rädern gemacht, respektive wieviel Weg das Schienenfahrzeug zurückgelegt hat ist es wichtig einen schlupffreien Antriebsstrang zu haben. Für das gehen wir davon aus, dass die Räder nicht auf den Gleisen durchdrehen, dies wird erreicht in dem die Auflageflächen mit einem Antirutschmaterial beschichtet werden.
