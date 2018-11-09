@@ -4,13 +4,18 @@
 Als Editor kann beispielweise 'Visual Studio Code' verwendet werden. Es handelt sich dabei um eine Entwicklungsumgebung die mit diversen Plugins ausgestattet werden kann. Sobald man ein File aufmacht welches eine spezielle Endung hat (wie .tex) wird ein Plugin vorgeschlagen.
 Für Latex ist 'LaTeX Workshop' empfehlenswert.
 
+## Spell-Checker
+Um die Rechtschreibung zu überprüfen kann auch ein Plugin installiert werden.
+Dafür eignet sich z.B.
+https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker-german
+
 ## Installation
-Neben dem Plugin für 'Visual Studio Code' ist noch eine Insatllation von Latex notwendig.
+Neben dem Plugin für 'Visual Studio Code' ist noch eine Installation von Latex notwendig.
 Dies ist hier verfügbar: https://miktex.org/
 
 Auf Windows muss noch 'Perl' installiert werden. (Auf Mac ist dies schon vorhanden)
 z.B Strawberry Perls: http://strawberryperl.com/
-Beim ersten Kompilieren in Visual Studio Code muss Perl noch einige Packages installieren. Jedes mal auf 'install' klicken bis es funktionniert.
+Beim ersten Kompilieren in Visual Studio Code muss Perl noch einige Packages installieren. Jedes mal auf 'install' klicken bis es funktioniert.
 
 
 ## Kapitel (sections)
