@@ -1,0 +1,107 @@
+\documentclass[../../main.tex]{subfiles}
+    
+    \lstset{basicstyle=\small,
+      showstringspaces=false,
+      commentstyle=\color{black},
+      keywordstyle=\color{blue}
+    }
+
+    \graphicspath{{images/}{../../images/Objekterkennung/}}
+
+    \begin{document}
+    \subsection{Würfeltransport}
+    \subsubsection{Greifen}
+     Eine Teilfunktion des Hochgeschwindigkeitsschienenfahrzeugs beinhaltet das Greifen eines Würfels. Dieser weist eine Kantenlänge von jeweils 50 cm auf und ist mit einem Hacken ausgestattet der auf der oberen Seite platziert ist und die Öffnung entgegen der Fahrtrichtung zeigt. Der Abstand des Würfels zur Gleismitte ist gegeben, nur die Position entlang der Gleise ist unbekannt. Ziel des Vorrichtung ist es nun, diesen Würfel zu Greifen und anschliessen auf dem Schienenfahrzeug zu platzieren.\\
+
+         \textbf{Stab}\\
+     Der Stab wurde gemäss Nutzwertanalyse als zweit beste Lösungsvariante ausgegeben, wird aber trotzdem favorisiert, weil die Einfachheit der Vorrichtung und die definierte Position des Würfels überzeugen. Ergänzend zum Stab soll ein beweglicher Haken einhängen können. \\
+    \begin{flushleft}
+        \begin{table}[h]
+        \begin{tabular}{ | l | p{11cm} |}
+        \hline
+        \textbf{Problemstellung} & Würfeltransport: Greifen \\ \hline
+        \textbf{Disziplin} & Maschinentechnik \\ \hline
+        \textbf{Lösungskonzept} &  Stab \\ \hline
+        \textbf{Komponente} & Stab und Haken \\ \hline
+        \textbf{Bewertung} &  \begin{itemize}
+                                \item[+] Positionierung
+                                \item[+] Einfachheit
+                                \item[+] Erfolgsgarantie 
+                                \item[-] Auslenkung
+                              \end{itemize} \\ \hline
+        \end{tabular}
+        \caption{Konzeptbeurteilung: Würfeltransport mittels Stab}
+        \label{tab:konzept_wurfeltransport_stab}
+    \end{table}
+    \end{flushleft}
+
+    \textbf{Magnet}\\
+     Der Haken des Würfels wird auf magnetischem Material sein und so sollte definitiv eine Lösungsvariante mit einem Magneten in Betracht gezogen werden. Diese Variante ist in der Bewertung vorne mit dabei, doch auf Grund der unberechenbaren Kräfte und Auslenkungen des Würfels hat man sich gegen einen Magneten entschieden. Falls die erste Option nicht die gewünschten Ergebnisse bringt, wird der Magnet zum Plan B und der Vorgang muss mit einigen Tests und Szenarien geprüft werden. \\
+
+     \begin{flushleft}
+        \begin{table}[h]
+        \begin{tabular}{ | l | p{11cm} |}
+        \hline
+        \textbf{Problemstellung} & Würfeltransport: Greifen \\ \hline
+        \textbf{Disziplin} & Maschinentechnik \\ \hline
+        \textbf{Lösungskonzept} &  Magnet \\ \hline
+        \textbf{Komponente} & Magnet und Führung \\ \hline
+        \textbf{Bewertung} &  \begin{itemize}
+                                \item[+] Kompakte Bauweise
+                                \item[+] Einfachheit
+                                \item[-] unberechenbar 
+                                \item[-] keine Wiederholgenauigkeit
+                              \end{itemize} \\ \hline
+        \end{tabular}
+        \caption{Konzeptbeurteilung: Würfeltransport mittels Magnet}
+        \label{tab:konzept_wurfeltrransport_magnet}
+    \end{table}
+    \end{flushleft}
+    \subsubsection{Verschieben}
+    Nachdem der Würfel im Startbereich der Strecke korrekt gegriffen wurde, wird er in einem nächsten Schritt verschoben und auf dem Zug platziert. Dazu haben sich die beiden Lösungsvorschläge «Um- und Einschwenker» und «Rampe mit Seilzug» in der Nutzwertanalyse durchgesetzt.\\
+
+    \textbf{Um- und Einschwenker}\\
+
+    Der Um- und Einschwenker ist ein Konzept, in welchem versucht wird die Bewegung des Verschiebens nur durch eine Achse zu realisieren. Somit bleibt das System einfach und übersichtlich. Es ist aber noch offen, um welche Achse sich der Schwenker drehen soll - entweder schwenkt er seitwärts zum Zug ein (Einschwenker) oder auf den Zug herauf (Umschwenker).\\
+
+    \begin{flushleft}
+        \begin{table}[h]
+        \begin{tabular}{ | l | p{11cm} |}
+        \hline
+        \textbf{Problemstellung} & Würfeltransport: Verschieben \\ \hline
+        \textbf{Disziplin} & Maschinentechnik \\ \hline
+        \textbf{Lösungskonzept} &  Um- und Einschwenker \\ \hline
+        \textbf{Bewertung} &  \begin{itemize}
+                                \item[+] Bewegung erfolgt nur auf einer Achse
+                                \item[+] Einfachheit
+                                \item[+] tiefer Schwerpunkt
+                                \item[-] Grosser Bauraum
+                              \end{itemize} \\ \hline
+        \end{tabular}
+        \caption{Konzeptbeurteilung: Würfeltransport mittels Um- und Einschwenker}
+        \label{tab:konzept_wurfeltrransport_umschwenker}
+    \end{table}
+    \end{flushleft}
+    \textbf{Rampe}
+    Die Lösungsvariante der Rampe mit einem Seilzug bietet ebenfalls die Möglichkeit die Bewegung der Verschiebung des Würfels um eine Achse, die Seiltrommel, auszuführen. Nachdem der Würfel gepackt wurde, wird er über einen Seilzug der Rampe entlang zum Zug hinaufgezogen, wo er schlussendlich platziert wird. Die Rampe muss ebenfalls rauf und runtergelassen werden, damit sich der Zug am Ende wieder im vorschriftgemässen Luftraumprofil befindet.\\
+
+    \begin{flushleft}
+        \begin{table}[h]
+        \begin{tabular}{ | l | p{11cm} |}
+        \hline
+        \textbf{Problemstellung} & Würfeltransport: Verschieben \\ \hline
+        \textbf{Disziplin} & Maschinentechnik \\ \hline
+        \textbf{Lösungskonzept} &  Rampe mit Seilzug \\ \hline
+        \textbf{Bewertung} &  \begin{itemize}
+                                \item[+] Bewegung erfolgt nur auf einer Achse
+                                \item[+] Einfachheit
+                                \item[-] Mechanisch anspruchsvoller
+                                \item[-] Grosser Bauraum
+                              \end{itemize} \\ \hline
+        \end{tabular}
+        \caption{Konzeptbeurteilung: Würfeltransport mittels Rampe}
+        \label{tab:konzept_wurfeltrransport_umschwenker}
+    \end{table}
+    \end{flushleft}
+    Für diese Konzeptlösung des Produktes wird anhand des Konzeptes des «Um- und Einschwenkers» bevorzugt. Die Rampe mit dem Seilzug ist mechanisch anspruchsvoller zu realisieren und wird somit nicht für die favorisierte Endlösung gewählt.
+    \end{document}
