@@ -85,7 +85,7 @@
         \label{fig:fahr_nutzwertanalyse_beschleunigung}
     \end{figure}
 
-    \subsection{Fahrdaten: Geschwindigkeit}
+    \subsection{Fahrdaten: Geschwindigkeit} \label{fahr_geschwindigkeit}
     In diesem Kapitel werden die Möglichkeiten zur Erfassung der Geschwindigkeit gezeigt. Diese kann durch Sensoren ermittelt werden oder mithilfe der Beschleunigung errechnet werden. (siehe \ref{fahr_beschleunigung})
 
     \textbf{Übersicht Konzepte}\\
@@ -141,14 +141,14 @@
                               \end{itemize} \\ \hline
         \end{tabular}
         \caption{Konzeptbeurteilung: Geschwindigkeit Encoder}
-        \label{tab:fahr_Third_Party_Sensorik}
+        \label{tab:fahr_Encoder}
     \end{table}
     \end{flushleft}
 
     \subsubsection{Verknüpfung Encoder und Beschleunigungssensor}
     Zusätzlich zum Encoder kann die Geschwindigkeit über die Integration Beschleunigung bestimmt werden. Diesen Wert kann dann der Kontrolle der Daten des Encoders dienen.\\
     Unter der Annahme, dass zu beginn der Messung zum Zeitpunkt $t = 0$ die Geschwindigkeit $0$ ist $(v_0 = 0)$ kann die Geschwindigkeit zum Zeitpunkt $t$ bestimmt werden mit $$v(t) = \int_{0}^{t} a(x) dx$$.\\
-    Da aber auf einem Digitalen System die Daten nur zu diskreten Zeitpunkten ausgewertet werden können ergibt sich dann eine Summen der Beschleunigungen zum Zeitpunkt $k$ $$v[k] = \sum_{i=0}^{k}a[k] \Delta t$$ 
+    Da aber auf einem Digitalen System die Daten nur zu diskreten Zeitpunkten ausgewertet werden können ergibt sich dann eine Summen der Beschleunigungen zum Zeitpunkt $k$ $$v[k] = \sum_{i=0}^{k}a[i] \Delta t$$ 
 
     \begin{flushleft}
         \begin{table}[H]
@@ -184,5 +184,117 @@
         \caption {Nutzwertanalyse Fahrdaten Geschwindigkeit}
         \label{fig:fahr_nutzwertanalyse_geschwindigkeit}
     \end{figure}
+
+    \subsection{Fahrdaten: Positionen}
+    Das Auswerten der Position erlaubt eine virtuelle Abbildung der Fahrbahn und somit eine optimierte zweite Runde durch Vorhersage von Kurven und Geraden.
+
+
+    \textbf{Übersicht Konzepte}\\
+    Es werden der verschiedene Ansätze mit verschiedenen Sensoren betrachtet. Zu jeder Möglichkeit werden Vor- und Nachteile aufgelistet und Risiken analysiert.
+    \begin{itemize}
+        \item Verknüpfung mit Beschleunigungssensor
+        \item GPS
+        \item Verknüpfung Encoder und Beschleunigungssensor
+    \end{itemize}
+
+    \subsubsection{Verknüpfung mit Beschleunigungssensor}
+    Über den Beschleunigungssensor kann man die aktuelle Position auf der Fahrbahn berechnen. Die zurückgelegte Strecke errechnet sich durch Integration der Geschwindigkeit oder durch zweifache Integration der Beschleunigung.\\
+    Unter der Annahme, dass zu beginn der Messung zum Zeitpunkt $t = 0$ die zurückgelegte Strecke $0$ ist $(s_0 = 0)$ kann die Geschwindigkeit zum Zeitpunkt $t$ bestimmt werden mit $$s(t) = \int_{0}^{t} v(x) dx$$.\\
+    Da aber auf einem Digitalen System die Daten nur zu diskreten Zeitpunkten ausgewertet werden können ergibt sich dann eine Summen der Geschwindigkeiten zum Zeitpunkt $k$ $$s[k] = \sum_{i=0}^{i}v[k] \Delta t$$\\
+    Die Geschwindigkeit wird gemäss Kapitel \ref{fahr_geschwindigkeit} bestimmt.
+
+    \begin{flushleft}
+        \begin{table}[H]
+        \begin{tabular}{ | l | p{11cm} |}
+        \hline
+        \textbf{Problemstellung} & Fahrdaten: Position \\ \hline
+        \textbf{Disziplin} & Elektrotechnik \\ \hline
+        \textbf{Lösungskonzept} & Verknüpfung mit Beschleunigungssensor\\ \hline
+        \textbf{Komponente} & \begin{itemize}
+            \item Sensor zum erfassen der Geschwindigkeit
+            \item Berechnung auf dem Controller
+            \end{itemize}\\ \hline
+        \textbf{Bewertung} &  \begin{itemize}
+                                \item[+] keine weiteren Sensoren nötig
+                                \item[-] Messfehler werden über die Zeit addiert
+                              \end{itemize} \\ \hline
+        \end{tabular}
+        \caption{Konzeptbeurteilung: Position Verknüpfung mit Beschleunigungssensor}
+        \label{tab:fahr_pos_Beschleunigung}
+    \end{table}
+    \end{flushleft}
+
+    \subsubsection{GPS}
+    Beim GPS wird die Position über das Anpeilen mehrerer Satelliten geschätzt.
+    Dies hat zum Nachteil, dass die erhaltenen Daten eine Abweichung von mehreren Zentimetern aufweisen können.
+    Das dazu benötigte Modul würde zusätzlich kosten und Platz einnehmen.
+
+    Mathematisch würde anhand der erhaltenen X- und Y-Koordinaten die Verschiebung auf der Fahrbahn berechnet werden.
+    In einem von uns vorgegebene Intervall werden Koordinaten ausgelesen und zu einer Abbildung der Fahrbahn gestaltet.
+
+    \begin{flushleft}
+        \begin{table}[H]
+        \begin{tabular}{ | l | p{11cm} |}
+        \hline
+        \textbf{Problemstellung} & Fahrdaten: Position \\ \hline
+        \textbf{Disziplin} & Elektrotechnik \\ \hline
+        \textbf{Lösungskonzept} & GPS\\ \hline
+        \textbf{Komponente} & \begin{itemize}
+            \item GPS Modul
+            \end{itemize}\\ \hline
+        \textbf{Bewertung} &  \begin{itemize}
+                                \item[+] Relativ Einfach
+                                \item[+] Effizient
+                                \item[-] Teuer
+                                \item[-] Eher ungenau
+                                \item[-] schlechter Empfang im Gebäude 
+                              \end{itemize} \\ \hline
+        \end{tabular}
+        \caption{Konzeptbeurteilung: Position GPS}
+        \label{tab:fahr_pos_gps}
+    \end{table}
+    \end{flushleft}
+
+    \subsubsection{Lichtraumprofil mit Rundenerkennung}
+    Bei jedem Durchfahren eines Lichtraumprofils wird bestimmt in welchem Teilbereich der Fahrbahn sich der Wagen befindet.
+    Dies ist eine sehr ungenaue Angabe der Position und auch nicht weiter hilfreich, als die Anzahl Runden zu zählen.
+    Es kann gut mit anderen Konzepten verknüpft werden um das Ende einer Runde zu bestimmen.
+
+    Mithilfe einer Kamera oder eines Distanz-Sensors kann ein Lichtraumprofil erkannt werden.
+
+
+    \begin{flushleft}
+        \begin{table}[H]
+        \begin{tabular}{ | l | p{11cm} |}
+        \hline
+        \textbf{Problemstellung} & Fahrdaten: Position \\ \hline
+        \textbf{Disziplin} & Elektrotechnik \\ \hline
+        \textbf{Lösungskonzept} & Lichtraumprofil mit Rundenerkennung\\ \hline
+        \textbf{Komponente} & \begin{itemize}
+            \item Sensorik zur Lichtraumprofilerkennung
+            \end{itemize}\\ \hline
+        \textbf{Bewertung} &  \begin{itemize}
+                                \item[+] Einfach
+                                \item[+] Zuverlässig
+                                \item[+] Kann kombiniert werden
+                                \item[-] Sehr ungenau
+                              \end{itemize} \\ \hline
+        \end{tabular}
+        \caption{Konzeptbeurteilung: Lichtraumprofil mit Rundenerkennung}
+        \label{tab:fahr_pos_Lichtraumprofilerkennung}
+    \end{table}
+    \end{flushleft}
+
+    \subsubsection{Entscheid}
+    Mithilfe der Nutzwertanalyse in Abbildung \ref{fig:fahr_nutzwertanalyse_positiont} konnte ein Entscheid getroffen werden.\\
+    Die Entscheidung für die Positionsauswertung über den Beschleunigungssensor als 1. Variante und Lichtraumprofil mit Rundenerkennung als 2. Variante entschieden. Dies ist unter anderem durch Kosten und Platzgründe zustande gekommen. 
+        
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=1.0\textwidth]{Nutzweranalyse_Fahrdaten_Position.png}
+        \caption {Nutzwertanalyse Fahrdaten Position}
+        \label{fig:fahr_nutzwertanalyse_positiont}
+    \end{figure}
+
 
     \end{document}
