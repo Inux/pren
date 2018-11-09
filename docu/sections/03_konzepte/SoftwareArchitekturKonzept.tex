@@ -41,4 +41,49 @@ Um gemeinsamen Code zu teilen wird eine Bibliothek erstellt welche von allen Pro
     \item Die Pfeile visualisieren die Abhängigkeiten innerhalb der Architektur
 \end{itemize}
 
+\subsubsection{Nutzwertanalyse}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.0\textwidth]{../../images/Steuerungssoftware/Nutzwertanalyse_Steuerungssoftware.png}
+    \caption {Nutzwertanalyse Steuerungssoftware}
+\end{figure}
+
+\subsubsection{Risiken}
+
+\textbf{Risiken Architektur mit Middleware}
+    \begin{enumerate}[I]
+        \item Schlechte Geschwindigkeit wegen Middleware
+        \item Probleme wegen mehrere Prozessen
+    \end{enumerate}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\textwidth]{../../images/Steuerungssoftware/Risiko_Steuerungssoftware_Middleware.png}
+        \caption {Risikomatrix Steuerungssoftware Middleware}
+    \end{figure}
+
+\textbf{Risiken Architektur mit Komponenten}
+    \begin{enumerate}[I]
+        \item Komplexität weil Monolith
+        \item Komplexere Testbarkeit
+    \end{enumerate}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\textwidth]{../../images/Steuerungssoftware/Risiko_Steuerungssoftware_Komponenten.png}
+        \caption {Risikomatrix Steuerungssoftware Komponenten}
+    \end{figure}
+
+
+%Alte Tabelle vor Nutzwertanalyse
+%\subsubsection{Vor- und Nachteile}
+%\begin{table}[!h]
+%    \begin{tabular}{|l|l|l|ll}
+%        \cline{1-3}
+%        \textbf{Architektur} & \textbf{Vorteile}                                                                                                        & \textbf{Nachteile}                                                                                             &  &  \\ \cline{1-3}
+%        Mit Middleware       & \begin{tabular}[c]{@{}l@{}}-Einfache Testbarkeit\\ -Mehrere Programmiersprachen\\ -Mehrere Prozesse möglich\end{tabular} & \begin{tabular}[c]{@{}l@{}}-Geschwindigkeit\\ -Zusätzliches Know-How \\   für Middleware\end{tabular}          &  &  \\ \cline{1-3}
+%        Mit Komponenten      & \begin{tabular}[c]{@{}l@{}}-Geschwindigkeit\\ -Monolith\end{tabular}                                                     & \begin{tabular}[c]{@{}l@{}}-Wrapper benötigt wenn \\   mehrere Programmiersprachen\\ -Testbarkeit\end{tabular} &  &  \\ \cline{1-3}
+%    \end{tabular}
+%\end{table}
+
 \end{document}
