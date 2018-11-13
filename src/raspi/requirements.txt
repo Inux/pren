@@ -1,0 +1,1 @@
+sanic==0.8.0 #Webframework https://github.com/huge-success/sanic
