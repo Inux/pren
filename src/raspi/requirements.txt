@@ -1,0 +1,3 @@
+sanic>=0.7.0 #Webframework https://github.com/huge-success/sanic
+protobuf>=3.3.0 #middleware
+pyzmq>=17.1.0 #middleware
