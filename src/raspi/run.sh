@@ -3,7 +3,7 @@ echo "Starting Raspi Applications..."
 
 #webapp
 echo "...WebApp..."
-python webapp/server.py &
+python3 webapp/server.py &
 
 #vision
 
