@@ -1,51 +1,33 @@
 \documentclass[../../main.tex]{subfiles}
 
-    \usepackage{ucs}
-    \usepackage[utf8]{inputenc}
-    \usepackage[T1]{fontenc}
-    \usepackage[ngerman]{babel}
-    \usepackage{amsmath,amssymb,amstext}
-    \usepackage{graphicx}
-    \usepackage{parskip}
-    \usepackage{hyperref}
-    \usepackage{float}
-    \usepackage{subfiles}
-    \usepackage{titling}
-    \usepackage{tabularx}
-    \usepackage{ccicons}
-    \usepackage{fontawesome}
-    \usepackage{subfig}
-    \usepackage[top=1in, bottom=1.25in, left=1.25in, right=1.25in]{geometry}
-    \usepackage{xcolor}
-    \usepackage{listings}
     \lstset{basicstyle=\small,
       showstringspaces=false,
       commentstyle=\color{black},
       keywordstyle=\color{blue}
     }
 
-    \graphicspath{{images/}{../../../images/}}
+    \graphicspath{{images/}{../../images/}}
 
     \begin{document}
-    \section{Akustik}
+    \subsection{Akustik}
     Während der Fahrt wird von einer Tafel die Zahl abgelesen, diese soll am Ende akustisch wiedergegeben werden.
     In diesem Abschnitt werden verschiedene akustische Lösungsansätze/Konzepte zusammengetragen und verglichen.
     Ziel ist es aus einem breiten Spektrum die optimale Lösung zu finden.\\
     \\
 
-    \subsection{Anforderung}
+    \subsubsection{Anforderung}
     Die Software muss in der Lage sein eine Zahl zwischen 1 und 9, welche als Parameter übergeben wird, akustisch wieder zu geben.
     Ausgabe muss verständlich und darf nicht zu laut sein.\\
     \\
 
-    \subsection{Auswahl Konzepte Software}
+    \subsubsection{Auswahl Konzepte Software}
     In disem Kapitel werden verschiedene Softwarekonzepte zusammengetragen. Bei den Programmiersprachen habe ich mich für Python
     und Java entschieden, da diese erstklassige Kandidaten für unsere Systemsteuerung sind.
     Somit wird ein reibungsloses Zusammenspiel gewährleistet.\\
 
     Es wurde ausschliesslich Freeware benutzt um unser Budget zu schützen und weil diese ausreichende Funktionalität mit sich bringen.
 
-    \subsubsection{Python pygame}
+    \textbf{Python pygame}\\
     Die python Bibliothek 'pygame' erlaubt es dem Benutzer relativ einfach Audiodateien abzuspielen.
     Dies geschieht über einen integrierten Mixer, welche auf mehreren Spuren gleichzeitig Musik abspielen kann.
     Für diese Aufgabe reicht bereits eine Tonspur.\\
@@ -67,7 +49,7 @@
 
     Einfach zu bedienende Python Bibliothek mit netten Features, jedoch nicht für unseren Gebrauch geignet.\\
 
-    \subsubsection{Python pyttsx3}
+    \textbf{Python pyttsx3}\\
     Bei der python Bibliothek 'pyttsx3' handelt es sich um einen 'Text To Speech'(Deutsch: Text zu Sprache) converter.
     Dieser ermöglicht das Übersetzen von Text zu Sprache in Echtzeit und bringt hiermit eine enorme Flexibilität mit sich.
     Das ganze ist einfach zu bedienen und erlaubt die Ausgabe über mehrere Sprachen.\\
@@ -82,7 +64,7 @@
     Extrem simpel und übersichtliche Ausführung (nur 3 Zeilen). Ausgabe ist sehr verständlich.\\
     Sehr gelungene Bibliothek.
 
-    \subsubsection{Java Media}
+    \textbf{Java Media}\\
     Mit den Java Media Bibliotheken kann man verschiedene Audioformate ausgeben.
     Benötigt werden die Importe 'Media' und 'MediaPlayer' aus der 'javafx.scene.media' Umgebung.
     Zusätlich muss noch von der 'Application' Klasse geerbt werden und der Befehl 'Application.launch()' ausgeführt werden.
@@ -102,38 +84,38 @@
 
     Einfach zu bedienende Bibliothek mit kleiner Umständlichkeit.
 
-    \subsubsection{Java FreeTTS}
+    \textbf{}{Java FreeTTS}
     Java FreeTTS besteht aus verschiedenen 3. Party Bibliotheken.
     Leider hatte ich keinen Erfolg die Applikation funktionsfähig zu machen.
 
-    \subsection{Auswahl Konzepte Hardware}
+    \subsubsection{Auswahl Konzepte Hardware}
     In diesem Kapitel werden einige Hardware Konzepte vorgestellt.
     Wir unterscheiden hier zwischen 3 Varianten, wie Audio ausgegeben wird.
     Daher würden auch Änderungen an der Softwarelösung vorgenommen werden müssen.
 
-    \subsubsection{Speaker}
+    \textbf{Speaker}\\
     Bei dieser Lösung wird der Ton direkt von der Software über einen Lautsprecher ausgegeben.
     Dies ist die meist verbreitete Lösung.\\
 
-    \subsubsection{Buzzer}
+    \textbf{Buzzer}\\
     Der Buzzer wird über die selbe Hardwareinheit wie der Speaker realisiert, mit dem einzigen
     Unterschied, dass man über eine integrierte Komponente den Speaker zum 'buzzen' nutzt.
 
-    \subsubsection{Speaker with DataStorage}
+    \textbf{Speaker with DataStorage}\\
     Der Speaker vefügt zusätzlich über einen integrierten Datenspeicher, über welchen Audiodateien abgespeichert
     und auf Befehl abgespielt werden können. Dies hat zur Folge, dass Softwaretechnisch Zeit und Ressourcen gespart werden können.
 
-    \subsection{Nutzwertanalyse}
+    \subsubsection{Nutzwertanalyse}
     Konzepte werden zusammengetragen und verglichen.
     In den verschiedenen Disiplinen werden Wertungen von 1 - 5 abgegeben, wobei 1 die schlechteste und 5 die beste Wertung ist.
     Auch wird auf spezifische Stärken und Schwächen eingegangen.
 
-    \subsubsection{NutzwertanalyseSoftware:}
+    \textbf{NutzwertanalyseSoftware:}\\
     \includegraphics{Akustik/NutzwertanalyseAkustikSoftware}
     \paragraph{Entscheidung}
     Favoriten sind die beiden Python Bibliotheken, jedoch macht es Sinn, dass wir für erhöhte Flexibilität von jeder Sprache einen Favoriten festlegen. Dies erlaubt uns später jederzeit zwischen den Konzepten zu wechseln.
 
-    \subsubsection{NutzwertanalyseSoftware:}
+    \textbf{NutzwertanalyseSoftware:}\\
     \includegraphics{Akustik/NutzwertanalyseAkustikHardware}
     \paragraph{Entscheidung}
     Weil der Speaker das meist verbreitete und praktischste Ausgabemittel für Audioaufnahmen ist, werden wir uns mit diesem versuchen.
