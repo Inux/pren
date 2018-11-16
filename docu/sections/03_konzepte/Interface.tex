@@ -1,0 +1,95 @@
+\documentclass[../../main.tex]{subfiles}
+    
+    \lstset{basicstyle=\small,
+      showstringspaces=false,
+      commentstyle=\color{black},
+      keywordstyle=\color{blue}
+    }
+    
+    \graphicspath{{images/Interface/}{../../images/Interface/}}
+
+    \begin{document}
+    \subsection{Aufgabentrennung zwischen Pi und Tiny} \label{aufgabentrennung_pi_tiny}
+    Dieses Kapitel beschreibt die Aufgabentrennung zwischen der Systemsteuerung auf dem Raspberry Pi (im folgenden Pi genannt) und dem Mikrocontroller MK22FN512VLH12 auf dem Entwicklerboard TinyK22 (im folgenden Tiny genannt). Das Pi dient im System als Master. Damit fällt das Pi alle Entscheidungen. Das Tiny dient als Slave, es führt die Entscheidungen vom Pi aus und gibt Rückmeldung zum aktuellen Status und zu den Sensordaten.\\
+    Im System sind folgende Aufgaben für die jeweiligen Steuerungen vorgesehen:\\
+    \textbf{Pi:}
+    \begin{itemize}
+        \item Auswertung der Kamera aufnahmen
+            \subitem Entscheidung über bevorstehende Kurven
+            \subitem Entscheidungen gemäss erkannter Schilder 
+        \item Entscheidung der Fahrtgeschwindigkeit
+            \subitem schnell
+            \subitem mittel
+            \subitem langsam
+        \item Versenden auswertung der Sensordaten
+    \end{itemize}
+
+    \textbf{Tiny:}
+    \begin{itemize}
+        \item Ansteuerung / Regelung Antriebsmotor
+        \item Auslesen von Sensordaten
+            \subitem Beschleunigung
+            \subitem Objekterkennung links und rechts
+            \subitem Halteschilderkennung
+            \subitem Stromverbrauch
+            \subitem aktuelle Ist-Geschwindigkeit
+        %\item Ansteuerung Gewichtsausgleich
+        %    \subitem Gemäss vorhersage der Kurven
+        %    \subitem Nachregelung in der Kurve gemäss der Querbeschleunigung
+    \end{itemize}
+
+    Somit ist jedes System auf Informationen des anderen angewiesen. Somit ist eine klare Definition der Schnittstelle der beiden Komponenten nötig. Im folgenden Kapitel \ref{interface_pi_tiny} wird diese Interface genauer beschrieben.
+    
+    \subsection{Interface zwischen Pi und Tiny} \label{interface_pi_tiny}
+    Dieses Kapitel beschreibt die Kommunikation zwischen der Systemsteuerung auf dem Raspberry Pi (im folgenden Pi genannt) und dem Mikrocontroller MK22FN512VLH12 auf dem Entwicklerboard TinyK22 (im folgenden Tiny genannt). Dabei sollen Informationen zur aktuellen Situation, sowie auch Informationen zum aktuellen Status des jeweiligen Systems.\\
+    Diese Kommunikation soll es den Systemen ermöglichen die zugewiesenen aufgaben gemäss Kapitel \ref{aufgabentrennung_pi_tiny} zu erfüllen.
+
+    \subsubsection{Hardware Schnittstelle}
+    Als Hardware Schnittstelle wird UART (zum Teil auch RS-232 genannt) verwendet. Dies ist eine Asynchrone Serielle Schnittstelle. Die Kommunikation kann mit zwei Leitungen realisiert werden. Eine dient als Empfangsverbindung (Rx) und eine als Sendeverbindung (Tx). Diese Trennung erlaubt eine voll-duplex Kommunikation. 
+
+    \subsubsection{Übertragungsprotokoll}
+    Zu jedem Zeitpunkt wird Datenpaket (im folgenden Frame genannt) in einem fest vorgelegten Format ausgetauscht. Dabei gibt es ein Grundformat für die Informationen und zwei Formate für den Informationsinhalt eines Frames von Pi zum Tiny und ein anderes Format für die Frames vom Tiny zum Pi. Der Informationsinhalt der beiden Formate unterscheidet sich gemäss der Aufgabentrennung in Kapitel \ref{aufgabentrennung_pi_tiny}.\\
+    
+    \textbf{Grundformat}\\
+    Die Frames bestehen jeweils aus einem Bezeichner (Key) und einem Wert (Value). Diese werden mit einem Komma getrennt. Als Abschluss dient das New Line Zeichen '\textbackslash n'. Somit sieht ein Informationsstück folgendermassen aus: $$\{Key\},\{Value\}\textbackslash n$$
+    Zum Beispiel würde eine Informationen zur Geschwindigkeit folgendermassen aussehen: $$speed,200$$
+    Die gesamten Informationen werden als Zeichenkette (String) im Ascii Format verschickt. Die Zahlen werden aus dem String jeweils umgewandelt. Dies verbessert die Leserlichkeit für Menschen enorm, was zum Testen und Simulieren der Kommunikation sehr Hilfreich sein kann.
+    
+    \textbf{Frames: Pi $\Rightarrow$ Tiny}\\
+    Das Pi schickt dem Tiny eine vorgegebene Soll-Geschwindigkeit und Richtung der nächsten Kurve. Auch Informationen über den aktuellen Status des Pi werden verschickt. Die genauen Bezeichner und die Bedeutung und Grösse der Zugehörigen werte sind in Tabelle \ref{tab:com_pi_tiny} aufgelistet.
+    
+    \begin{table}[H] \centering
+        \begin{tabular}{|l|l|l|}
+        \hline
+        \textbf{Bezeichner} & \textbf{Wert Beschreibung} & \textbf{Wert Zahlengrösse} \\ \hline
+        speed               & Soll-Geschwindigket        & signed 32-Bit Integer      \\ \hline
+        dir                 & Kurvenrichtung             & signed 32-Bit Integer      \\ \hline
+        status              & Moral es Pi                & unsigned 8-Bit Integer     \\ \hline
+        \end{tabular}
+        
+        \caption{Kommunikation Frames: Pi $\Rightarrow$ Tiny}
+        \label{tab:com_pi_tiny}
+    \end{table}
+    
+
+    \textbf{Frames: Tiny $\Rightarrow$ Pi}\\
+    Das Tiny nimmt die nötigen Sensordaten auf und schickt die nötigen Informationen daraus dem Pi. Auch Informationen über den aktuellen Status des Tiny werden verschickt. Die genauen Bezeichner und die Bedeutung und Grösse der Zugehörigen werte sind in Tabelle \ref{tab:com_tiny_pi} aufgelistet.
+
+    \begin{table}[H] \centering
+        \begin{tabular}{|l|l|l|}
+        \hline
+        \textbf{Bezeichner} & \textbf{Wert Beschreibung}                                  & \textbf{Wert Zahlengrösse} \\ \hline
+        is-speed            & Ist-Geschwindigkeit (gemäss Encoder)                        & signed 32-Bit Integer      \\ \hline
+        acc-x               & Beschleunigung in x-Richtung (gemäss Beschleunigungssensor) & signed 16-Bit Integer      \\ \hline
+        acc-y               & Beschleunigung in y-Richtung (gemäss Beschleunigungssensor) & signed 16-Bit Integer      \\ \hline
+        acc-z               & Beschleunigung in z-Richtung (gemäss Beschleunigungssensor) & signed 16-Bit Integer      \\ \hline
+        obj                 & Objekt erkannt (einzelne Bits 1 oder 0)                     & unsigned 8-Bit Integer     \\ \hline
+        status              & Moral es Tiny                                               & unsigned 8-Bit Integer     \\ \hline
+        \end{tabular}
+        
+        \caption{Kommunikation Frames: Tiny $\Rightarrow$ Pi}
+        \label{tab:com_tiny_pi}
+        \end{table}
+        
+
+    \end{document}
