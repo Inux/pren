@@ -11,14 +11,14 @@
 #include "util.h"
 #include "term.h"
 
-void FTM2CH1_IRQHandler(void)
+void FTM0CH7_IRQHandler(void)
 {
-  if (FTM2_C1SC & FTM_CnSC_CHF_MASK)
+  if (FTM0_C7SC & FTM_CnSC_CHF_MASK)
   {
     // check for channel 0 interrupt
-    FTM2_C1SC &= ~FTM_CnSC_CHF_MASK;        // clear interrupt flag
-    hcsr04_ticks = FTM2_C1SC;
-    hcsr04_time_ms = FTM2_TICKS2MS((float )hcsr04_ticks);
+    FTM0_C7SC &= ~FTM_CnSC_CHF_MASK;        // clear interrupt flag
+    hcsr04_ticks = FTM0_C7V;
+    hcsr04_time_ms = FTM0_TICKS2MS((float )hcsr04_ticks);
     hcsr04_dist_mm = (hcsr04_time_ms * SPEED_OF_SOUND_MM_MS / 2);
   }
   else
@@ -37,10 +37,10 @@ void FTM2CH1_IRQHandler(void)
   }
 }
 
-void FTM2CH0_IRQHandler(void)
+void FTM0CH5_IRQHandler(void)
 {
   __asm("bkpt");
-  // Still a hacker? ;-) FTM2 CH0 is used as trigger for the HCSR04
+  // Still a hacker? ;-) FTM0 CH5 is used as trigger for the HCSR04
 }
 
 /**
@@ -73,10 +73,10 @@ void hcsr04PrintCurrentStatus(void)
  */
 void hcsr04Init(void)
 {
-  PORTB_PCR18 = PORT_PCR_MUX(3);
-  PORTB_PCR7 = PORT_PCR_MUX(3);
+  PORTD_PCR5 = (PORTD_PCR5 & (~PORTD_PCR5_MASK)) | PORTD_PCR5_VALUE;
+  PORTD_PCR7 = (PORTD_PCR7 & (~PORTD_PCR7_MASK)) | PORTD_PCR7_VALUE;
 
-  ftm2Init();
+  ftm0Init();
 
 }
 

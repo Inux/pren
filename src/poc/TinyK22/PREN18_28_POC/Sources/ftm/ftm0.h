@@ -19,8 +19,6 @@
 #include "ftm0.h"
 #include "platform.h"
 
-// todo this implementation has been moved to ftm2
-
 #define FTM0_CLOCK              BUSCLOCK
 #define FTM0_CLOCK_DEVIDER      64
 
