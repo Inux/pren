@@ -5,7 +5,7 @@
  *      Author: andre
  */
 
-#include "ftm0.h"
+#include "ftm2.h"
 #include "MK22F51212.h"
 #include "HCSR04.h"
 #include "util.h"
@@ -74,7 +74,7 @@ void hcsr04PrintCurrentStatus(void)
 void hcsr04Init(void)
 {
   PORTB_PCR18 = PORT_PCR_MUX(3);
-  PORTB_PCR7 = PORT_PCR_MUX(3);
+  PORTB_PCR19 = PORT_PCR_MUX(3);
 
   ftm2Init();
 
