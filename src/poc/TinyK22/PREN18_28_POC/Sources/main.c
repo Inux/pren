@@ -40,7 +40,6 @@ void main(void)
 
   while (TRUE)
   {
-
     if (FTM3_SC & FTM_SC_TOF_MASK)    // check for timer overflow
     {
       FTM3_SC &= ~FTM_SC_TOF_MASK;    // overflow occurred => clear TOF flag

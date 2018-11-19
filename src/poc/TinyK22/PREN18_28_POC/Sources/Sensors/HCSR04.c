@@ -9,6 +9,7 @@
 #include "MK22F51212.h"
 #include "HCSR04.h"
 #include "util.h"
+#include "term.h"
 
 void FTM0CH7_IRQHandler(void)
 {
