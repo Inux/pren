@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Team 28
+        </title>
+    </head>
+    <body>
+        <section id="curveDetection">
+            <h1 id="direction"></h1>
+        </section>
+        <script>
+            //Variables & Constants
+            var updateInterval = 500 // 500ms
+
+            //set values to initial value
+            document.getElementById("direction").innerText = "undefined";
+
+            //Helpers
+            function apiGet(callback) {
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function() {
+                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                        console.log('responseText:' + xmlhttp.responseText);
+                        try {
+                            var data = JSON.parse(xmlhttp.responseText);
+                        } catch(err) {
+                            console.log(err.message + " in " + xmlhttp.responseText);
+                            return;
+                        }
+                        callback(data);
+                    }
+                };
+                xmlhttp.open("GET", '/api', true);
+                xmlhttp.send();
+            }
+
+            // UI
+
+            //updateUI method (called by setTimeout each 500ms)
+            function updateUI(data) {
+                console.log("Received Data:");
+                console.log(data);
+                updateDirection(data.direction);
+            }
+
+            function updateDirection(direction) {
+                document.getElementById("direction").innerText = direction;
+            }
+
+            setInterval(apiGet, updateInterval, updateUI);
+        </script>
+    </body>
+</html>
