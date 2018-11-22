@@ -47,8 +47,17 @@
             function updateDirection(direction) {
                 document.getElementById("direction").innerText = direction;
             }
+            function playSound(sound_nr){
+                xmlhttp = new XMLHttpRequest()
+                xmlhttp.open('POST', '/sound/' + sound_nr, true)
+                xmlhttp.send()
+                alert("playing Sound #1")
+            }
 
             setInterval(apiGet, updateInterval, updateUI);
         </script>
+        <button onclick='playSound(1)'>
+            Play sound #1
+        </button>
     </body>
 </html>
