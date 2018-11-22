@@ -45,7 +45,7 @@ void main(void)
       FTM3_SC &= ~FTM_SC_TOF_MASK;    // overflow occurred => clear TOF flag
 
       count++;                        // count the number of TOF's
-      if (count >= TOFS_MS(1000)) // check if number of TOF's is equal or greater 250ms
+      if (count >= TOFS_MS(1000))
       {
         count = 0;
         hcsr04PrintCurrentStatus();
