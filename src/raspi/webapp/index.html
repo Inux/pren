@@ -49,15 +49,21 @@
             }
             function playSound(sound_nr){
                 xmlhttp = new XMLHttpRequest()
-                xmlhttp.open('POST', '/sound/' + sound_nr, true)
+                xmlhttp.open('GET', '/sound/' + sound_nr, true)
                 xmlhttp.send()
                 alert("playing Sound #1")
             }
 
             setInterval(apiGet, updateInterval, updateUI);
         </script>
-        <button onclick='playSound(1)'>
-            Play sound #1
-        </button>
+        <button onclick='playSound(1)'> Play sound #1 </button>
+        <button onclick='playSound(2)'> Play sound #2 </button>
+        <button onclick='playSound(3)'> Play sound #3 </button>
+        <button onclick='playSound(4)'> Play sound #4 </button>
+        <button onclick='playSound(5)'> Play sound #5 </button>
+        <button onclick='playSound(6)'> Play sound #6 </button>
+        <button onclick='playSound(7)'> Play sound #7 </button>
+        <button onclick='playSound(8)'> Play sound #8 </button>
+        <button onclick='playSound(9)'> Play sound #9 </button>
     </body>
 </html>
