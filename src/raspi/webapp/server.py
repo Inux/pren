@@ -3,8 +3,9 @@
 """
 import sys
 sys.path.append('../')
-
+import asyncio
 import os
+import signal
 from sanic import Sanic
 from sanic.response import json
 from sanic.response import file
@@ -12,17 +13,31 @@ from sanic.response import file
 from acoustic import sound
 
 app = Sanic()
+app.name = "PrenTeam28WebApp"
+
+MIDDLEWARE_SCAN_INTERVAL = 0.100 # 100ms
+
+# SIGINT handler (when pressing Ctrl+C)
+
+def signal_int_handler(sig, frame):
+    print("Ctrl+C Pressed. Exit...")
+    sys.exit(0)
+
+# Routes
 
 @app.route('/')
 async def index(request):
+    ''' index returns index.html available under / '''
     return await file(os.path.join(os.path.dirname(__file__), "index.html"))
 
 @app.route('/favicon.ico')
 async def favicon(request):
+    ''' favicon returns favicon.ico available under /favicon.ico '''
     return await file(os.path.join(os.path.dirname(__file__), "favicon.ico"))
 
 @app.route('/api')
 async def api(request):
+    ''' api returns the API JSON available under /api '''
     return json({'direction': 'right'})
 
 
@@ -49,11 +64,15 @@ async def simulationGet(request):
     mov_dict['distance'] = 20
     return json(mov_dict)
 
+# Middleware handling
+
+async def periodic_middleware_task(app):
+    ''' periodic task for retrieving middleware messages '''
+    print(app.name + '. Reading Middleware Messages...')
+    asyncio.sleep(MIDDLEWARE_SCAN_INTERVAL)
+    app.add_task(periodic_middleware_task(app))
+
 if __name__ == '__main__':
+    signal.signal(signal.SIGINT, signal_int_handler)
+    app.add_task(periodic_middleware_task(app))
     app.run(host='0.0.0.0', port=2828)
-
-
-async def notify_server_started_after_five_seconds():
-    print('Server successfully started!')
-
-app.add_task(notify_server_started_after_five_seconds())

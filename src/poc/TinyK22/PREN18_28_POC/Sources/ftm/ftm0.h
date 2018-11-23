@@ -28,9 +28,11 @@
 #define FTM0_MS2TICKS(x)        ((FMT0_FREQ/1000)*(x))
 
 //Configuration from Processor Expert
-/* FTM0_SC: TOF=0,TOIE=1,CPWMS=0,CLKS=1,PS=6 */
+/* FTM0_SC: TOF=0,TOIE=0,CPWMS=0,CLKS=1,PS=6 */
 #define FTM0_SC_VALUE      0x0EU
 #define FTM0_SC_MASK       0xFFU
+
+#define FTM0_MOD_VALUE       0xC350U
 
 /* FTM0_C5SC: ??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,CHF=0,CHIE=0,MSB=1,ELSB=0,ELSA=1,ICRST=0,DMA=0 */
 #define FTM0_C5SC_VALUE      0x24U

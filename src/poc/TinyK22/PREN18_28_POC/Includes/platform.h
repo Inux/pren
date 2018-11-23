@@ -33,10 +33,10 @@
 #define PRIO_UART0                         5  // [0..15] set interrupt priority: 0=max Prio
 #define PRIO_UART1                         5  // [0..15] set interrupt priority: 0=max Prio
 #define PRIO_LPUART0                       5  // [0..15] set interrupt priority: 0=max Prio
-#define PRIO_FTM0                          8  // [0..15] IR
-#define PRIO_FTM1                          4  // [0..15] Quad decoder
+#define PRIO_FTM0                          8  // [0..15] HCSR04
+#define PRIO_FTM1                          4  // [0..15] System, Motor-PWM
 #define PRIO_FTM2                          4  // [0..15] Quad decoder
-#define PRIO_FTM3                         12  // [0..15] Motor-PWM, RGB-Led's
+#define PRIO_FTM3                         12  // [0..15] not used
 
 
 
@@ -91,6 +91,7 @@ typedef enum
 } tError;
 
 
+
 #if DEBUG_LED
 #define LED_GREEN_FL_ON()                       (GPIOC_PCOR = (1<<8))   // PTC8
 #define LED_GREEN_FL_OFF()                      (GPIOC_PSOR = (1<<8))
@@ -98,22 +99,25 @@ typedef enum
 #define LED_GREEN_FR_OFF()                      (GPIOC_PSOR = (1<<11))
 
 // switch on led for debug purposes
-#define OnEnterQuadLeftISR()                    LED_GREEN_FR_ON()
-#define OnEnterQuadRightISR()                   LED_GREEN_FR_ON()
+#define OnEnterQuadLeftISR()                    LED_GREEN_FL_ON()
+#define OnEnterQuadRightISR()                   LED_GREEN_FL_ON()
 #define OnEnterInfraredISR()                    LED_GREEN_FL_ON()
 #define OnEnterSoundISR()                       LED_GREEN_FL_ON()
 #define OnEnterUart0RxTxISR()                   LED_GREEN_FL_ON()
 #define OnEnterUart1RxTxISR()                   LED_GREEN_FL_ON()
 #define OnEnterLpUart0ISR()                     LED_GREEN_FL_ON()
+#define OnEnterMain()                           LED_GREEN_FR_ON()
 
 // switch off led for debug purposes
-#define OnExitQuadLeftISR()                     LED_GREEN_FR_OFF()
-#define OnExitQuadRightISR()                    LED_GREEN_FR_OFF()
+#define OnExitQuadLeftISR()                     LED_GREEN_FL_OFF()
+#define OnExitQuadRightISR()                    LED_GREEN_FL_OFF()
 #define OnExitInfraredISR()                     LED_GREEN_FL_OFF()
 #define OnExitSoundISR()                        LED_GREEN_FL_OFF()
 #define OnExitUart0RxTxISR()                    LED_GREEN_FL_OFF()
 #define OnExitUart1RxTxISR()                    LED_GREEN_FL_OFF()
 #define OnExitLpUart0ISR()                      LED_GREEN_FL_OFF()
+#define OnExitMain()                            LED_GREEN_FR_OFF()
+
 
 __STATIC_INLINE void EnableDebugLeds(void)
 {
@@ -122,17 +126,23 @@ __STATIC_INLINE void EnableDebugLeds(void)
 }
 
 #else
+#define OnEnterQuadLeftISR()
+#define OnEnterQuadRightISR()
 #define OnEnterInfraredISR()
 #define OnEnterSoundISR()
 #define OnEnterUart0RxTxISR()
 #define OnEnterUart1RxTxISR()
 #define OnEnterLpUart0ISR()
+#define OnEnterMain()
 
+#define OnExitQuadLeftISR()
+#define OnExitQuadRightISR()
 #define OnExitInfraredISR()
 #define OnExitSoundISR()
 #define OnExitUart0RxTxISR()
 #define OnExitUart1RxTxISR()
 #define OnExitLpUart0ISR()
+#define OnExitMain()
 
 __STATIC_INLINE void EnableDebugLeds(void) {}
 
