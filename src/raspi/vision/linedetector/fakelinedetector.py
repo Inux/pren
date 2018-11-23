@@ -7,8 +7,7 @@ import time
 import zmq
 import zmq.auth
 from zmq.auth.thread import ThreadAuthenticator
-
-from ..pb import direction_pb2
+import direction_pb2
 
 PORT = 8282
 DIRECTION_TOPIC = b'direction'
