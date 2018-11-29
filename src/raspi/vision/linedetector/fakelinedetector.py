@@ -3,11 +3,13 @@
 """
 import time
 import sys
+sys.path.append('../..')
 
 import zmq
 import zmq.auth
 
-import direction_pb2
+#import direction_pb2
+from pb import direction_pb2
 
 PORT = 8282
 DIRECTION_TOPIC = b'direction'

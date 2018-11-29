@@ -2,12 +2,13 @@
 
 import logging
 import sys
+sys.path.append('..')
 import os
 import select
 
 import zmq
 
-import direction_pb2
+from pb import direction_pb2
 
 
 PUBLISHER_IP = 'localhost'

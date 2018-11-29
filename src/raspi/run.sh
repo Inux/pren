@@ -3,10 +3,10 @@ echo "Starting Raspi Applications..."
 
 #webapp
 echo "...WebApp..."
-python3 webapp/server.py &
+(cd webapp && python3 server.py) &
 
 #vision
 echo "...FakeLineDetector..."
-python3 vision/linedetector/fakelinedetector.py &
+(cd vision/linedetector && python3 fakelinedetector.py) &
 
 #acustic
