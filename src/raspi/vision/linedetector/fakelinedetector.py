@@ -1,16 +1,21 @@
 # -*- coding: utf-8 -*-
 """Fake Line Detector
 """
-import random
 import time
+import sys
+sys.path.append('../..')
 
 import zmq
 import zmq.auth
-from zmq.auth.thread import ThreadAuthenticator
-import direction_pb2
+
+#import direction_pb2
+from pb import direction_pb2
 
 PORT = 8282
 DIRECTION_TOPIC = b'direction'
+
+OFFSET = 0
+DIRECTIONS = ['straight', 'left', 'right']
 
 def _main():
     socket = make_socket()
@@ -36,9 +41,20 @@ def send_messages(socket):
 
 def get_direction_update():
     direction = direction_pb2.Direction()
-    direction.direction = "leftOrRight"
+    direction.direction = get_dir()
     directionBytes = direction.SerializeToString()
     return directionBytes
+
+def get_dir():
+    global OFFSET
+    global DIRECTIONS
+
+    d = DIRECTIONS[OFFSET]
+    OFFSET = OFFSET + 1
+    if OFFSET >= len(DIRECTIONS):
+        OFFSET = 0
+
+    return d
 
 if __name__ == '__main__':
     _main()

@@ -2,26 +2,33 @@
 """Server for the Raspi Webapp
 """
 import sys
-sys.path.append('../')
-import asyncio
+sys.path.append('..')
 import os
 import signal
+import time
+
 from sanic import Sanic
 from sanic.response import json
 from sanic.response import file
 
 from acoustic import sound
+import middlewareadapter as mwadapter
 
 app = Sanic()
 app.name = "PrenTeam28WebApp"
 
 MIDDLEWARE_SCAN_INTERVAL = 0.100 # 100ms
 
+middlewareData = None
+
 # SIGINT handler (when pressing Ctrl+C)
 
 def signal_int_handler(sig, frame):
     print("Ctrl+C Pressed. Exit...")
     sys.exit(0)
+
+# Start middleware adapter
+mwadapter.create()
 
 # Routes
 
@@ -37,8 +44,12 @@ async def favicon(request):
 
 @app.route('/api')
 async def api(request):
+    global middlewareData
     ''' api returns the API JSON available under /api '''
-    return json({'direction': 'right'})
+    direction = 'undefined'
+    if middlewareData != None:
+        direction = middlewareData.direction
+    return json({'direction': str(direction)})
 
 
 @app.route('/sound/<sound_nr>')
@@ -67,9 +78,12 @@ async def simulationGet(request):
 # Middleware handling
 
 async def periodic_middleware_task(app):
+    global middlewareData
     ''' periodic task for retrieving middleware messages '''
     print(app.name + '. Reading Middleware Messages...')
-    asyncio.sleep(MIDDLEWARE_SCAN_INTERVAL)
+    middlewareData = mwadapter.get_data()
+    print('Direction: ' + str(middlewareData.direction))
+    time.sleep(MIDDLEWARE_SCAN_INTERVAL)
     app.add_task(periodic_middleware_task(app))
 
 if __name__ == '__main__':
