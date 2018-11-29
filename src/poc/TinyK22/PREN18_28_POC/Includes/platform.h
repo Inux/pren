@@ -52,6 +52,9 @@
 #define NULL                     ((void *)0)
 #define TRUE                               1
 #define FALSE                              0
+#define true                               1
+#define false                              0
+
 
 #ifndef __cplusplus
 typedef char bool;
@@ -176,8 +179,9 @@ typedef uint16_t word;
 typedef uint8_t boolean;
 typedef uint8_t byte;
 
-uint32_t platform_msSinceStartup = 0;
+uint32_t platform_msSinceStartup;
 
+#define SysTimerInit() (platform_msSinceStartup = 0)
 #define OneMsPassed() (platform_msSinceStartup++)
 #define millis() (platform_msSinceStartup)
 

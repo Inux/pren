@@ -21,6 +21,7 @@
 #include "HCSR04.h"
 #include "drive.h"
 #include "motor.h"
+#include "VL53L0X.h"
 
 // calulates the nr of TOF count for a given number of milliseconds
 #define TOFS_MS(x)   ((uint16_t)(((FTM1_CLOCK / 1000) * x) / (FTM1_MODULO + 1)))
@@ -33,6 +34,24 @@ void hcsr04()
   {
     count = 0;
     hcsr04PrintCurrentStatus();
+  }
+}
+
+void VL53L0x_Main()
+{
+  static uint32_t count = 0;
+  count++;
+  if (count >= TOFS_MS(1000))
+  {
+    char buf[128];
+    buf[0] = '\0';
+    utilStrcat(buf, sizeof(buf), "dist: ");
+    utilStrcatNum32u(buf, sizeof(buf), (uint32_t) VL53L0X_readRangeContinuousMillimeters());
+    utilStrcat(buf, sizeof(buf), "mm;");
+    termWriteLine(buf);
+    termWriteChar('\n');
+    termWriteNum32s(millis());
+    termWriteChar('\n');
   }
 }
 
@@ -59,11 +78,6 @@ void term()
   }
 }
 
-void SystemTiming()
-{
-  OneMsPassed();
-}
-
 /**
  * The main function
  */
@@ -77,6 +91,13 @@ void main(void)
   driveInit();
   motorInit();
 //  quadInit();
+  i2cInit();
+  VL53L0X_Constructor();
+  VL53L0X_init(true);
+  //VL53L0X_setTimeout(500);
+  VL53L0X_io_timeout = 5; //todo correct
+  VL53L0X_startContinuous(0);
+
 
   GPIOC_PDDR |= 1 << 2; // Set port direction of the blue Led on tinyK22 as output
   PORTC_PCR2 = PORT_PCR_MUX(1);    // configure port mux of the blue led to GPIO
@@ -87,11 +108,11 @@ void main(void)
     {
       FTM1_SC &= ~FTM_SC_TOF_MASK;    // overflow occurred => clear TOF flag
 
-      SystemTiming();
-
       //hcsr04();
+      VL53L0x_Main();
       //drive();
       term();
+
     }
   }
 }
