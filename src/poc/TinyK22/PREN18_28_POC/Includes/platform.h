@@ -53,7 +53,9 @@
 #define TRUE                               1
 #define FALSE                              0
 
+#ifndef __cplusplus
 typedef char bool;
+#endif
 
 /**
  * @brief Disable External Interrupt
@@ -161,6 +163,23 @@ __STATIC_INLINE void EnableDebugLeds(void) {}
 #define FTM_CnSC_MSx(x)                          (((uint32_t)(((uint32_t)(x))<<FTM_CnSC_MSx_SHIFT))&FTM_CnSC_MSx_MASK)
 
 
+/*
+ * Custom definitions from Arduino.h
+ * https://github.com/esp8266/Arduino/blob/master/cores/esp8266/Arduino.h
+ */
+
+typedef uint16_t word;
+
+#define bit(b) (1UL << (b))
+#define _BV(b) (1UL << (b))
+
+typedef uint8_t boolean;
+typedef uint8_t byte;
+
+uint32_t platform_msSinceStartup = 0;
+
+#define OneMsPassed() (platform_msSinceStartup++)
+#define millis() (platform_msSinceStartup)
 
 
 #endif /* INCLUDES_PLATFORM_H_ */

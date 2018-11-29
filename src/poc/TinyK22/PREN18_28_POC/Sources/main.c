@@ -59,6 +59,11 @@ void term()
   }
 }
 
+void SystemTiming()
+{
+  OneMsPassed();
+}
+
 /**
  * The main function
  */
@@ -81,6 +86,8 @@ void main(void)
     if (FTM1_SC & FTM_SC_TOF_MASK)    // check for timer overflow
     {
       FTM1_SC &= ~FTM_SC_TOF_MASK;    // overflow occurred => clear TOF flag
+
+      SystemTiming();
 
       //hcsr04();
       //drive();
