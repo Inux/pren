@@ -318,8 +318,11 @@ void i2cInit(void)
   SIM_SCGC4 |= SIM_SCGC4_I2C0_MASK;
 
   // _todo ML#10.02 configure MUX for SCL & SDA
-  PORTE_PCR24 = PORT_PCR_MUX(5) | PORT_PCR_ODE(1);
-  PORTE_PCR25 = PORT_PCR_MUX(5) | PORT_PCR_ODE(1);
+//  PORTE_PCR24 = PORT_PCR_MUX(5) | PORT_PCR_ODE(1);
+//  PORTE_PCR25 = PORT_PCR_MUX(5) | PORT_PCR_ODE(1);
+
+  PORTD_PCR3 = PORT_PCR_MUX(7) | PORT_PCR_ODE(1);
+  PORTD_PCR2 = PORT_PCR_MUX(7) | PORT_PCR_ODE(1);
 
   // _todo ML#10.03 configure i2c clock (frequency divider register) to 400 kHz
   I2Cx_F = 0x1D;  // 60 MHz/(1*160) = 375kHz => MULT=0, ICR=1D

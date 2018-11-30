@@ -85,6 +85,7 @@ __STATIC_INLINE void NVIC_DisableIRQEx(IRQn_Type IRQn)
 typedef enum
 {
   EC_SUCCESS = 0,           // no error
+  EC_FAILED,
 
   EC_INVALID_CMD,           // invalid or unknown command
   EC_INVALID_ARG,           // invalid or unknown argument(s)
