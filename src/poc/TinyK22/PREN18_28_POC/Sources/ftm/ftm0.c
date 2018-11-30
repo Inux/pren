@@ -16,6 +16,22 @@
 #include "platform.h"
 #include "ftm0.h"
 
+#define FTM0_TOFS_MS(x)   ((uint16_t)(((FMT0_FREQ / 1000) * x) / (FTM0_MOD_VALUE + 1)))
+
+void FTM0TOF_IRQHandler(void)
+{
+  FTM0_SC &= ~FTM_SC_TOF_MASK;    // overflow occurred => clear TOF flag
+
+  // todo: move this to a faster timer --> TOF time here is 20ms, should be less then 1ms
+  static uint32_t count = 0;
+  count++;
+  if (count >= FTM0_TOFS_MS(1))
+  {
+    count = 0;
+    OneMsPassed();
+  }
+}
+
 /**
  * Default handler is called if there is no handler for the FTM0 channel or tof interrupt
  */
@@ -33,7 +49,7 @@ void FTM0CH4_IRQHandler(void) __attribute__ ((weak, alias("Default_Handler_FTM0"
 void FTM0CH5_IRQHandler(void) __attribute__ ((weak, alias("Default_Handler_FTM0")));
 void FTM0CH6_IRQHandler(void) __attribute__ ((weak, alias("Default_Handler_FTM0")));
 void FTM0CH7_IRQHandler(void) __attribute__ ((weak, alias("Default_Handler_FTM0")));
-void FTM0TOF_IRQHandler(void) __attribute__ ((weak, alias("Default_Handler_FTM0")));
+//void FTM0TOF_IRQHandler(void) __attribute__ ((weak, alias("Default_Handler_FTM0")));
 
 #define CHF_CHIE_MASK       (FTM_CnSC_CHF_MASK | FTM_CnSC_CHIE_MASK)
 #define TOF_TOIE_MASK       (FTM_SC_TOF_MASK | FTM_SC_TOIE_MASK)
@@ -67,10 +83,12 @@ void FTM0_IRQHandler(void)
 
 void ftm0Init(void)
 {
+  SysTimerInit();
+
   // _todo #7.3-01 set clockgating for FTM0
   SIM_SCGC6 |= SIM_SCGC6_FTM0_MASK;
 
-  FTM0_SC = (FTM0_SC & (~FTM0_SC_MASK)) | (FTM0_SC_VALUE);
+  FTM0_SC = (FTM0_SC & (~FTM0_SC_MASK)) | (FTM0_SC_VALUE) | FTM_SC_TOIE(1);
   FTM0_MOD = FTM0_MOD_VALUE;
 
   FTM0_C5SC = (FTM0_C5SC & (~FTM0_C5SC_MASK)) | FTM0_C5SC_VALUE;

@@ -92,6 +92,13 @@ void termWriteNum32s(int32_t value)
   termWrite(str);
 }
 
+void termWriteNum32u(uint32_t value)
+{
+  char str[sizeof("4294967295")];
+  utilNum32uToStr(str, sizeof(str), value);
+  termWrite(str);
+}
+
 void termWriteNum16s(int16_t value)
 {
   char str[sizeof("-32768")];

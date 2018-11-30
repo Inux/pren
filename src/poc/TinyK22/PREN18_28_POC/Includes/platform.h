@@ -52,8 +52,13 @@
 #define NULL                     ((void *)0)
 #define TRUE                               1
 #define FALSE                              0
+#define true                               1
+#define false                              0
 
+
+#ifndef __cplusplus
 typedef char bool;
+#endif
 
 /**
  * @brief Disable External Interrupt
@@ -80,6 +85,7 @@ __STATIC_INLINE void NVIC_DisableIRQEx(IRQn_Type IRQn)
 typedef enum
 {
   EC_SUCCESS = 0,           // no error
+  EC_FAILED,
 
   EC_INVALID_CMD,           // invalid or unknown command
   EC_INVALID_ARG,           // invalid or unknown argument(s)
@@ -161,6 +167,24 @@ __STATIC_INLINE void EnableDebugLeds(void) {}
 #define FTM_CnSC_MSx(x)                          (((uint32_t)(((uint32_t)(x))<<FTM_CnSC_MSx_SHIFT))&FTM_CnSC_MSx_MASK)
 
 
+/*
+ * Custom definitions from Arduino.h
+ * https://github.com/esp8266/Arduino/blob/master/cores/esp8266/Arduino.h
+ */
+
+typedef uint16_t word;
+
+#define bit(b) (1UL << (b))
+#define _BV(b) (1UL << (b))
+
+typedef uint8_t boolean;
+typedef uint8_t byte;
+
+uint32_t platform_msSinceStartup;
+
+#define SysTimerInit() (platform_msSinceStartup = 0)
+#define OneMsPassed() (platform_msSinceStartup++)
+#define millis() (platform_msSinceStartup)
 
 
 #endif /* INCLUDES_PLATFORM_H_ */
