@@ -3,67 +3,25 @@
 #include <iostream>
 #include <numeric>
 
+#include "logger.h"
+#include "cli.h"
+#include "imghelper.h"
+
 namespace {
-    const cv::Scalar color = cv::Scalar(255, 255, 255);
-
-    const int cannyTreshold = 100;
-    const double cannTresholdRatio = 3;
-    const int contourSizeTreshold = 100;
-
-    int random(int min, int max) //range : [min, max)
-    {
-        static bool first = true;
-        if (first)
-        {
-            srand( time(NULL) ); //seeding for the first time only!
-            first = false;
-        }
-        return min + rand() % (( max + 1 ) - min);
-    }
+    const Cli::CliParams defaultParams = {.filename = "", .contourMinSizeThreshold = 100, .cannyThreshold = 200, .cannyRatio=3, .verbose = false, .isValid = false};
 
     void printImageStats(cv::Mat img)
     {
-        std::cout << "Image X: " << img.cols << ", Y: " << img.rows << std::endl;
-    }
-
-    cv::Mat resizeImage(cv::Mat src)
-    {
-        int size = 400;
-        bool isLandscape = false;
-        float ratio = 0.f;
-        if(src.cols > src.rows) {
-            ratio = float(src.cols)/float(src.rows);
-            isLandscape = true;
-        } else {
-            ratio = float(src.rows)/float(src.cols);
-            isLandscape = false;
-        }
-
-        int newXsize = 0;
-        int newYsize = 0;
-        if(isLandscape) {
-            newXsize = size * ratio;
-            newYsize = size;
-        } else {
-            newXsize = size;
-            newYsize = size * ratio;
-        }
+        Log::dbg("Main", "printImageStats", "X: " + std::to_string(img.cols) + ", Y: " + std::to_string(img.rows));
     }
 
     cv::Mat prepareImage(cv::Mat src)
     {
-        cv::Mat prepared;
-        src = resizeImage(src);
-        cvtColor(src, prepared, CV_BGR2GRAY);
-        //cv::blur(prepared, prepared, cv::Size(5,5));
-        return prepared;
-    }
-
-    cv::Mat applyCanny(cv::Mat src)
-    {
-        cv::Mat cdst;
-        Canny(src, cdst, cannyTreshold, cannyTreshold*cannTresholdRatio, 3 );
-        return cdst;
+        src = Img::resizeImage(src);
+        src = Img::applyGrayscale(src);
+        src = src > 128;
+        src = Img::applyBlur(src);
+        return src;
     }
 
     std::vector<std::vector<cv::Point> > getContours(cv::Mat src)
@@ -71,8 +29,8 @@ namespace {
         std::vector<std::vector<cv::Point> > contours;
         std::vector<cv::Vec4i> hierarchy;
 
-        findContours(src, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, cv::Point(0, 0) );
-        std::cout << "Found Contours: " << contours.size() << std::endl;
+        cv::findContours(src, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_TC89_KCOS, cv::Point(0, 0));
+        Log::dbg("Main", "getContours", "Contours Count: " + std::to_string(contours.size()));
 
         return contours;
     }
@@ -92,8 +50,8 @@ namespace {
                 dropped++;
             }
         }
-        std::cout << "Dropped Contours: " << dropped << std::endl;
-        std::cout << "Useful Contours: " << useful << std::endl;
+        Log::dbg("Main", "filterContours", "Dropped Contours: " + std::to_string(dropped));
+        Log::dbg("Main", "filterContours", "Useful Contours: " + std::to_string(useful));
 
         return contoursFiltered;
     }
@@ -103,7 +61,7 @@ namespace {
         for(int i = 0; i < contours.size(); i++)
         {
             auto contour = contours[i];
-            std::cout << "Contour " << i << " Points: " << contour.size() << std::endl;
+            Log::dbg("Main", "printContourStats", "Contour " + std::to_string(i) + " Points: " + std::to_string(contour.size()));
 
             std::vector<float> vslope;
             for(int i = 0; i < contour.size()-1; i++)
@@ -117,52 +75,47 @@ namespace {
             }
             float avgSlope = std::accumulate(vslope.begin(), vslope.end(), 0.0)/vslope.size();
 
-            std::cout << "Average slope = " << avgSlope << std::endl;
+            Log::dbg("Main", "printContourStats", "Average slope = " + std::to_string(avgSlope));
         }
-    }
-
-    cv::Mat getDrawing(cv::Mat src, std::vector<std::vector<cv::Point> > contours)
-    {
-        cv::Mat drawing = cv::Mat::zeros( src.size(), CV_8UC3 );
-        std::vector<cv::Vec4i> hierarchy;
-
-        for( int i = 0; i< contours.size(); i++ )
-        {
-            drawContours(drawing, contours, i, color, 2, cv::LineTypes::LINE_4, hierarchy, 0, cv::Point());
-        }
-
-        return drawing;
     }
 }
 
 int main(int argc, char** argv)
 {
-    const char* filename = argc >= 2 ? argv[1] : "";
-
-    cv::Mat src = cv::imread(filename, 1);
-    if(src.empty())
-    {
-        std::cout << "can not open " << filename << std::endl;
-        return -1;
+    Cli::CliParams params = Cli::parse(argv, defaultParams);
+    if(not params.isValid) {
+        Log::err("Main", "parameterCheck" , "invalid CLI params");
+        return 1;
     }
 
-    printImageStats(src);
+    cv::Mat src = cv::imread(params.filename, 1);
+    if(src.empty())
+    {
+        Log::err("Main", "parameterCheck" , "can't open file path: '" + params.filename + "'");
+        return 1;
+    }
+
+    if(Log::isDebug())
+        printImageStats(src);
 
     auto prepared = prepareImage(src);
 
-    auto edges = applyCanny(prepared);
+    auto edges = Img::applyCanny(prepared, params.cannyThreshold, params.cannyRatio);
 
     auto contours = getContours(edges);
-    contours = filterContours(contours, contourSizeTreshold);
+    contours = filterContours(contours, params.contourMinSizeThreshold);
 
     printContoursStats(contours);
 
-    auto drawing = getDrawing(edges, contours);
+    auto drawing = Img::applyContours(edges, contours);
+    Img::applyLine(drawing, cv::Point(drawing.cols/2, 0), cv::Point(drawing.cols/2, drawing.rows));
 
+    if(Log::isDebug())
+    {
+        cv::imshow("Prepared", prepared);
+        cv::imshow("Edges", edges);
+    }
 
-    cv::imshow("Source", src);
-    cv::imshow("Prepared", prepared);
-    cv::imshow("Edges", edges);
     cv::imshow("Result", drawing);
 
     cv::waitKey(0);
