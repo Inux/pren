@@ -97,7 +97,7 @@
     Für die Bestimmung der Geschwindigkeit kann die Dauer eines Impulses gemessen werden oder es können die Anzahl Impulse in einer bestimmten Zeit gezählt werden. Für dieses Projekt soll die Dauer des Impulses gemessen werden. Der Vorteil dieser Methode ist die bessere Präzision, da nach jedem einzelnen Impuls die durchschnittliche Geschwindigkeit seit dem letzten Impuls sofort bestimmt werden kann. Das Risiko ist, dass bei hohen Umdrehungszahlen der Mikrocontroller nicht schnell genug ist mit dem Zählen oder dass der Zähler des Mikrocontrollers bei sehr tiefen Umdrehungszahlen überläuft.\\
     Die maximalen Umdrehungszahl des Antriebsmotors liegt bei $8590 min^{-1}$. Mit $256$ Impulsen pro Umdrehung ergibt dies $$8590 min^{-1} \cdot 256 Impulse = 2'199'040 \frac{Impulse}{min}$$.
     Dies sind dann $$ 2'199'040 \frac{Impulse}{min} / 60s = 36'651 \frac{Impulse}{s} $$.
-    Dies ergibt eine Impulsdauer von $$\frac{1}{36'651 \frac{Impulse}{s}} = 27.26\mu s$$. Bei der schnellsten möglichen Timer Einstellung auf dem TinyK22 ($60MHz$) ergibt dies noch $1'637 \frac{Ticks}{Impuls}$.\\
+    Dies ergibt eine Impulsdauer von $$\frac{1}{36'651 \frac{Impulse}{s}} = 27.26\mu s$$. Bei der schnellsten möglichen Timer Einstellung auf dem TinyK22 ($60MHz$) ergibt dies noch $1'637 \frac{Ticks}{Impuls}$. Dies ist ein plausibler Wert. Bei der Implementation muss jedoch beachtet werden, dass bei hoher Geschwindigkeit möglichst wenig Zeit in der Interrupt routine verbracht wird, da diese dann sehr of aufgerufen wird.\\
     Damit der Timer nicht überläuft muss der Impuls fertig sein, bevor der Timer den Wert $$2^{32} \approx 4.29 Mrd$$ erreicht wird. Dies ergibt bei $60MHz$ eine Zeit von $$2^{32} \cdot \frac{1}{60MHz} = 71.58s$$. Also ist ein tiefe Umdrehungszahl bis zu $$\frac{1}{71.58s \cdot 256} = 54.6 \cdot 10^{-6} s^{-1} \hat{=} 909 \cdot 10^{-9} min^{-1}$$
     Also sollte diese Umdrehungszahl nicht unterschritten werden. 
     
@@ -128,6 +128,19 @@
     Gemäss der Aufgabenstellung befindet sich der Würfel in einem Abstand von $8\pm1cm$ von der Gleismitte. Somit muss der Distanzsensor Distanzen zwischen ca. $20mm$ und $80mm$ erkennen können. Der exakte Wert der Distanz ist dabei nicht entscheidend, da nur ein bestimmter Schwellwert erkennt werden muss.
 
     \paragraph{Haltesignalerkennung:}
-    Um möglichst präzise anhalten zu können muss die Systemsteuerung den exakten Wert der Distanz zum Haltesignal kennen. 
+    Um möglichst präzise anhalten zu können muss die Systemsteuerung den exakten Wert der Distanz zum Haltesignal kennen. Dies wird mit einem Distanzsensor ermittelt.\\
+    
+    \subsubsection{Aktoren}
+    Die Aktoren stellen die Schnittstelle zur Mechanik dar. Diese sollen alle nötigen Mechanischen bewegungen auf Befehl des Mikrocontrollers ausführen.\\
+
+    \textbf{H-Brücken Treiber für Antriebsmotor}\\
+    Um den Antriebsmotor anzusteuern wird ein H-Brückentreiber verwendet. Damit kann der Motor durch ein PWM Signal in der Geschwindigkeit fast beliebig eingestellt werden. Über die wahlweise Ansteuer einer der beiden eingänge der H-Brücke wird die Richtung bestimmt.\\
+    Es wird ein Arduion DC-Motoren Treiber mit einem BTS7960 eingesetzt. Dieses Bauteil kann Motoren mit einem Strom von bis zu 43A versorgen. \\
+
+    \textbf{Motorentreiber für Schwenker-Motor}\\
+    Da die Geschwindigkeit für den Schwenker nicht eingestellt werden muss reicht es ein normaler Verstärker-Treiber für diesen Motor einzusetzen.
+
+    \textbf{Distanzsensor links ausklappen}\\
+    Um den Sensor beim Parkieren ausklappen zu können wird er an einem Servo befestigt.\\
 
     \end{document}
