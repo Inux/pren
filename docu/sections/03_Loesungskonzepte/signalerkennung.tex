@@ -1,7 +1,12 @@
 \documentclass[../..main.tex]{subfiles}
 \begin{document}
 \subsubsection{Signalerkennung}
-
+    Es wird gefordert, dass der Schnellzug während der Bewältigung der Strecke ein Signal mit aufgedruckter Nummer erkennt wird. Wie in der Abbildung XX ersichtlich, ist die Nummer auf einer 3x3cm Tafel mit weissem Hintergrund, schwarz aufgedruckt. Die Aufgabe Signalerkennung wird in zwei Teilaufgaben unterteilt:
+    \begin{itemize}
+        \item Erkennung der Signalisation mit Tafel
+        \item Erkennung der aufgedruckten Nummer
+    \end{itemize}
+    Wie bereits in der Übersicht beschrieben, wird im Gesamtkonzept zwei Kameras verwendet. Eine Kamera wird zur Erkennung der Gleisrichtung verwendet. Die zweite Kamera wird nun für die Signalerkennung eingesetzt. Der Raspberry PI verfügt nur über einen CSI- Anschluss (Camera Serial Interface). Für die Signalerkennung wird ein weiterer Raspberry PI eingesetzt. 
 
 
 
