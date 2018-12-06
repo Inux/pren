@@ -125,22 +125,25 @@
     Auf beiden Seiten des Zuges wird eine Distanzmessung benötigt. Auf der rechten Seite des Zuges muss der Würfel erkennt werden und auf der Linken Seite soll ein ausklappbarer Sensor am Schluss die genaue Distanz zum Haltesignal bestimmen.
 
     \paragraph{Würfelerkennung:}
-    Gemäss der Aufgabenstellung befindet sich der Würfel in einem Abstand von $8\pm1cm$ von der Gleismitte. Somit muss der Distanzsensor Distanzen zwischen ca. $20mm$ und $80mm$ erkennen können. Der exakte Wert der Distanz ist dabei nicht entscheidend, da nur ein bestimmter Schwellwert erkennt werden muss.
+    Gemäss der Aufgabenstellung befindet sich der Würfel in einem Abstand von $8\pm1cm$ von der Gleismitte. Somit muss der Distanzsensor Distanzen zwischen ca. $20mm$ und $80mm$ erkennen können. Der exakte Wert der Distanz ist dabei nicht entscheidend, da nur ein bestimmter Schwellwert erkennt werden muss. Die Distanz zum Würfle wird mit einem TOF (Timo-Of-Flight) Sensor VL53L0X ermittelt.
 
     \paragraph{Haltesignalerkennung:}
-    Um möglichst präzise anhalten zu können muss die Systemsteuerung den exakten Wert der Distanz zum Haltesignal kennen. Dies wird mit einem Distanzsensor ermittelt.\\
+    Um möglichst präzise anhalten zu können muss die Systemsteuerung den exakten Wert der Distanz zum Haltesignal kennen. Dies wird mit einem Distanzsensor ermittelt. Diese Distanz wird mit einem Ultraschall Sensor HC-SR04 gemessen. Es ist entscheidend, dass der Sensor korrekt und mit wenig Toleranz auf der Mechanik befestigt wird um eine exakte Ausrichtung auf das Haltesignal sicherzustellen.\\
     
     \subsubsection{Aktoren}
     Die Aktoren stellen die Schnittstelle zur Mechanik dar. Diese sollen alle nötigen Mechanischen bewegungen auf Befehl des Mikrocontrollers ausführen.\\
 
     \textbf{H-Brücken Treiber für Antriebsmotor}\\
     Um den Antriebsmotor anzusteuern wird ein H-Brückentreiber verwendet. Damit kann der Motor durch ein PWM Signal in der Geschwindigkeit fast beliebig eingestellt werden. Über die wahlweise Ansteuer einer der beiden eingänge der H-Brücke wird die Richtung bestimmt.\\
-    Es wird ein Arduion DC-Motoren Treiber mit einem BTS7960 eingesetzt. Dieses Bauteil kann Motoren mit einem Strom von bis zu 43A versorgen. \\
+    Es wird ein Arduion IBT\_2 DC-Motoren Treiber mit einem BTS7960 eingesetzt. Dieses Bauteil kann Motoren mit einem Strom von bis zu 43A versorgen. \\
+
+    \textbf{Antriebsmotor}\\
+    Als Antriebsmotor dient ein Maxon RE 30. Dieser kann eine Leistung von bis zu 60 Watt umsetzen. Dabei zu beachten ist, dass der Anlaufstrom bis zu 50.3A betragen kann. Dieser Strom muss begrenzt werden indem der Mikrocontrollers die Beschleunigung gemäss dem gemessenen Stromverbrach anpasst.\\ %Quelle: Maxon Katalogseite 129 RE 30
 
     \textbf{Motorentreiber für Schwenker-Motor}\\
     Da die Geschwindigkeit für den Schwenker nicht eingestellt werden muss reicht es ein normaler Verstärker-Treiber für diesen Motor einzusetzen.
 
     \textbf{Distanzsensor links ausklappen}\\
-    Um den Sensor beim Parkieren ausklappen zu können wird er an einem Servo befestigt.\\
+    Um den Sensor beim Parkieren ausklappen zu können wird er an einem Servo befestigt. Sobald die Systemsteuerung entscheidend, dass das korrekte Haltesignal das nächste ist gibt sie den Befehlt den Sensor auszuklappen. \\
 
     \end{document}
