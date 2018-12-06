@@ -37,12 +37,29 @@ nun mithilfe von einem 'protobuffer compiler' Code generiert werden welcher die 
 \begin{lstlisting}
     protoc -I=pb --python_out=pb pb/direction.proto
 \end{lstlisting}
-In diesem Beispiel wird die direction.proto Definition zu Python Code generiert.
+Mithilfe von diesem Beispiel wird die Protobuf Definition (direction.proto) zu Python Code generiert.
 
 \textbf{Beispiel Generierter Python Code:}
 \lstinputlisting[language=Python]{../../../src/raspi/pb/direction_pb2.py}
+Das generierte Python File welches mithilfe des 'protobuffer compiler' erzeugt wurde.
 
 \subsubsection{Proof-of-Concept}
+Um zu testen ob eine Kommunikation zwischen zwei Prozessen mithilfe der Middleware möglich ist wurde eine kleine Testsoftware entwickelt.
+Dabei wurde das 'direction.proto' File verwendet um vom einten Prozess eine Richtung (Direction) zu einem anderen Prozess zu senden.
 
+Der Sender der Richtung wurde im folgenden File implementiert: src/raspi/vision/linedetection/fakelinedetector.py
+Der Empfänger der Richtung wurde im folgenden File implementiert: src/raspi/webapp/middlewareadapter.py
+wobei der Empfänger von vom Webapp Server gestartet wird: src/raspi/webapp/server.py
+
+\subsubsection{Performance}
+Die Performance wurde nicht selbst gemessen und verifziert. Jedoch wurden bei unseren Tests keine Limitationen gefunden und deshalb gehen wir davon aus
+das die Performance für unseren Anwendungsfall ausreicht. Ausserdem werden nur wichtige Events zwischen den Prozessen ausgetauscht und somit ist die Datenrate
+eher zweitrangig. Die Latenz ist jedoch sehr zentral um einen möglichst agilen Regelkreis zu implementieren. Hier bewegt sicht ZeroMQ zwischen 450us - 700us.
+
+\textbf{Performance Tests:}
+\begin{itemize}
+    \item http://zeromq.org/area:results
+    \item http://nikolaveber.blogspot.com/2011/04/if-you-are-planning-large-or-not-even.html
+\end{itemize}
 
 \end{document}
