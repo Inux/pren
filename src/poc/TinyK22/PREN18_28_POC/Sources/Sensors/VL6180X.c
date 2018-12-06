@@ -10,6 +10,9 @@
 #include "platform.h"
 #include "i2c.h"
 
+uint8_t proxSensAddress =  0x29;
+
+
 tError proxSensInit()
 {
   tError result = EC_FAILED;
