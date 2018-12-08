@@ -45,7 +45,7 @@
     Diese Kommunikation soll es den Systemen ermöglichen die zugewiesenen aufgaben gemäss Kapitel \ref{aufgabentrennung_pi_tiny} zu erfüllen.
 
     \subsubsection{Hardware Schnittstelle}
-    Als Hardware Schnittstelle wird UART (zum Teil auch RS-232 genannt) verwendet. Dies ist eine Asynchrone Serielle Schnittstelle. Die Kommunikation kann mit zwei Leitungen realisiert werden. Eine dient als Empfangsverbindung (Rx) und eine als Sendeverbindung (Tx). Diese Trennung erlaubt eine voll-duplex Kommunikation. 
+    Als Hardware Schnittstelle wird UART (auch RS-232 genannt) verwendet. Dies ist eine Asynchrone Serielle Schnittstelle. Die Kommunikation kann mit zwei Leitungen realisiert werden. Eine dient als Empfangsverbindung (Rx) und eine als Sendeverbindung (Tx). Diese Trennung erlaubt eine voll-duplex Kommunikation. 
 
     \subsubsection{Übertragungsprotokoll}
     Zu jedem Zeitpunkt wird Datenpaket (im folgenden Frame genannt) in einem fest vorgelegten Format ausgetauscht. Dabei gibt es ein Grundformat für die Informationen und zwei Formate für den Informationsinhalt eines Frames von Pi zum Tiny und ein anderes Format für die Frames vom Tiny zum Pi. Der Informationsinhalt der beiden Formate unterscheidet sich gemäss der Aufgabentrennung in Kapitel \ref{aufgabentrennung_pi_tiny}.\\
