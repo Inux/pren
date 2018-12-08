@@ -9,3 +9,5 @@
 *.pdf
 *.toc
 *.tks
+*.bbl
+*.blg
