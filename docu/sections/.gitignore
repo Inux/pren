@@ -6,7 +6,7 @@
 *.out
 *.synctex.gz
 *.synctex(busy)
-main.pdf
+*.pdf
 *.toc
 *.tks
 *.bbl
