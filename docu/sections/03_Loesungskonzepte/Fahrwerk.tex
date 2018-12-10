@@ -173,7 +173,7 @@
         \includegraphics[width=0.9\textwidth]{Fuehrungswagen.png}
         \caption{Explosionsdarstellung Führungswagen}
         \label{fig:expl_fuehrungswagen}
-    \end{figure} \\
+    \end{figure}\\
 
     \begin{table}[H] \centering
         \begin{tabular}{|l|l|}
@@ -193,6 +193,12 @@
         \end{tabular}
 
     \textbf{Würfeltransport}\\
-    %Text von Schöni
+    Um den Würfel rechts neben der Gleisstrecke aufzunehmen wird eine steuerungstechnisch sowie mechanisch einfache Lösung angestrebt. Wie aus dem morphologischen Kasten (Anhang) und der Nutzwertanalyse hervor geht, wird die Würfelaufnahme mittels eines Drahts und einem Stab durchgeführt. Damit nur ein Aktor angesteuert werden muss wird von dem Prinzip einer Kurvenscheibe Gebrauch gemacht.  Die gesamte Vorrichtung besteht grundsätzlich aus drei Elementen. Einem Kran zur Lastaufnahme, einem Antriebsstrang und der Kurvenscheibe.
+
+    Der Kran besteht aus drei Drehteilen, welche mit einer Pressverbindung zusammengefügt wurden. Der Grundkörper des Krans wird auf Grund seiner optimalen Gleiteigenschaften und der geringen Dichte aus Teflon gefertigt. Der kleinere Stahlstift ist für die Drehmomentübertragung zuständig. Der Grössere der beiden Stahlstifte ist der eigentliche Ausleger. An dessen ende wird ein Draht aus Federstahl geformt und angehängt. Dieser Draht soll als Haken zur Lastaufnahme dienen. Weiter ist der Ausleger in beide Richtungen von der Drehachse ausgedehnt, da die Kurvenscheibe zwei Laufflächen hat, um für einen stabilen Hub zu sorgen. Der ganze Aufbau wird mittels einer Spielpassung in einer Bohrung mit zwei längsnuten in einem 3D gedruckten, modifizierten Zahnrad gelagert.
+
+    Der Antrieb besteht aus einem Motor, dessen Aufhängung und zwei Zahnrädern. Der Motor ist ein bürstenbehafteter Motor mit Encoder und Getriebe vornedrauf. Mit dieser Variante und der Übersetzung von Getriebe und den Zahnrädern kann von der Steuerung aus genau definiert werden, wie viele Umdrehungen der Motor benötigt, um mit dem Kranausleger eine Viertelumdrehung zu fahren. Das eine Zahnrad ist Standard und von Mädler eingekauft. Das zweite Zahnrad jedoch wurde nur als STEP von Mädler heruntergeladen und anschliessend im CAD bearbeitet. Die Bohrung und der Flansch in der Mitte wurden verlängert und mit zwei Längsnuten versehen. Die Bohrung gilt als Axialführung und die Nuten als Drehmomentübertragung.
+
+    Die Kurvenscheibe ist ebenfalls ein 3D-Druckteil. Der Grundkörper ist ein Rohr mit dem Aussendurchmesser 80 mm. An diesem wurden zwei Bahnführungen mittels Freiformflächen für den Kranausleger erzeugt. Die Steigung dieser Flächen ist variabel. Zu Beginn ist die Steigung gering und wird dann exponentiell grösser. Dies wurde aus dem einen Grund gewählt, damit das Anfahren für den Motor nicht zu streng ist. Nachdem die Drehbewegung und der vertikale Hub gemacht wurden, stoppt der Motor und der Kranausleger sollte durch die Schwerkraft heruntergezogen werden. Der Würfel wird nun in der für ihn vorgesehenen Aufnahme auf dem Zug platziert.
 
 \end{document}
