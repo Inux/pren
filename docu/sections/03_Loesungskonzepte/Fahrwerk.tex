@@ -3,7 +3,7 @@
 
 \begin{document}
     \subsection{Konzeptbeschreibung}
-    Die Lokomotive in Abbildung ist in die drei Unterbaugruppen Antriebswagen (Position 1), Führungswagen (Position 2) und Ladungsträger (Position 3) unterteilt. Der Antriebswagen enthält alle notwendigen Komponenten, um die Lokomotive zu beschleunigen und wieder abzubremsen. Zusätzlich sind die Kameras für die Spur- und Signalerkennung an ihm angebracht. Der Führungswagen hingegen dient lediglich als Abstützung für den Ladungsträger. Er bietet aber zusätzlichen Bauraum für elektronische Komponenten. In den nachfolgenden Abschnitten wird auf die verschiedenen Unterbaugruppen eingegengen und vorgestellt.
+    Die Lokomotive in Abbildung \ref{fig:bg_lokomotive} in die drei Unterbaugruppen Antriebswagen (Position 1), Führungswagen (Position 2) und Ladungsträger (Position 3) unterteilt. Der Antriebswagen enthält alle notwendigen Komponenten, um die Lokomotive zu beschleunigen und wieder abzubremsen. Zusätzlich sind die Kameras für die Spur- und Signalerkennung an ihm angebracht. Der Führungswagen hingegen dient lediglich als Abstützung für den Ladungsträger. Er bietet aber zusätzlichen Bauraum für elektronische Komponenten.\\
 
     \begin{figure}[H] %Lokomotive mit Positionsnummern
         \centering
@@ -24,6 +24,20 @@
         Position 3          & Ladungsträger\\
         \hline
         \end{tabular}
+        
+        \caption{Positionsnummern der Lokomotive mit Bezeichnungen}
+        \label{tab:com_tiny_pi}
+        \end{table}
+    
+    In der Querschnittsdarstellung in Abbildung \ref{fig:schnitt_lokomotive} die Lagerungen zwischen dem Ladungsträger und dem Antriebswagen beziehungsweise dem Führungswagen sowie die Antriebseinheit besser sichtbar. Der Aufbau der Unterbaugruppen wird in den nächsten Abschnitten vorgestellt.
+   
+    \begin{figure}[H] %Lokomotive im Schnitt
+        \centering
+        \includegraphics[width=0.9\textwidth]{Lokomotive.png}
+        \caption{Schnittansicht der Lokomotivenbaugruppe}
+        \label{fig:schnitt_lokomotive}
+    \end{figure}
+    \newpage
 
     \subsubsection{Antriebswagen}
     Der Grundaufbau der beiden Wägen ist derselbe, mit dem Unterschied, dass der Antriebswagen durch einen Motor angetrieben wird. Der Grundwagen beziehungsweise der Führungswagen in Abbildung besteht aus einem Rahmen und einer Platte, welche miteinander verstiftet (Position 2) und verschraubt (Position 3) sind. Im Rahmen werden die beiden Achsen jeweils mit einem Los- und einem Festlager lagert. Die Achsen sind an beiden Enden mit einem Gewinde versehen, damit die Räder bei Bedarf schnell und einfach gewechselt werden können, ohne dass der ganze Wagen auseinander genommen werden muss. Die Anfräsfläche auf der Welle (Position 5) dient für das bessere Befestigen der Räder durch einen Gabelschlüssel.
@@ -63,8 +77,12 @@
         Position 11         & Zylinderschraube\\
         \hline
         \end{tabular}
-
-    Der Antriebswagen in Abbildung ist grundsätzlich gleich aufgebaut wie der Führungswagen, jedoch ist der Rahmen aufgrund des Riemenantriebs etwas anders Aufgebaut. Die Platte, welche auf dem Rahmen angebracht ist, wurde grösser dimensioniert, damit  . 
+        
+        \caption{Kommunikation Frames: Tiny $\Rightarrow$ Pi}
+        \label{tab:com_tiny_pi}
+        \end{table}
+    \newpage
+    Der Antriebswagen in Abbildung ist grundsätzlich gleich aufgebaut wie der Führungswagen, jedoch ist der Rahmen aufgrund des Riemenantriebs etwas anders Aufgebaut. Die Platte, welche auf dem Rahmen angebracht ist, wurde für die Kameras für die Signal- und Spurerkennung grösser dimensioniert. Die Kamera für die Spurerkennung wird einstellbar befestigt, damit bei der Testphase des Prototyps Optimierungen vorgenommen werden können. Die Stromübetrag von der Shiene auf die Lokomotive erfolgt über vier Schleifkontakte. Davon sind jeweils zwei ein einem Wagen zwischen den Rädern angebracht.
 
     \begin{figure}[H] %Antriebswagen
         \centering
@@ -82,7 +100,11 @@
          \hline
         Position 2          & Antriebseinheit\\
         \hline
-        \end{tabular}
+    \end{tabular}
+    
+    \caption{Kommunikation Frames: Tiny $\Rightarrow$ Pi}
+    \label{tab:com_tiny_pi}
+    \end{table}
 
     Antriebseinheit in Abbildung besteht aus einem Grundgestell, an welchem die Lagerung der Antriebswelle und der Motor angebracht sind. Das Drehmoment vom Motor wird über ein geradverzahntes Zahnrad mit einem Übersetzungsverhältnis von 1:2 auf eine Achse übertragen. Von dieser wird es über einen Riemen auf die beiden Radachsen und somit auf die Räder weitergeleitet. Durch die Berechnung der maximalen Geschwindigkeit wird entsprechend der Motor ausgelegt, was im nächsten Abschnitt genauer beschrieben wird.
 
@@ -121,6 +143,60 @@
         Position 11         & Zylinderschraube\\
         \hline
         \end{tabular}
+        
+        \caption{Kommunikation Frames: Tiny $\Rightarrow$ Pi}
+        \label{tab:com_tiny_pi}
+        \end{table}
+    \newpage
+
+    \textbf{Beschleunigungsberechnung}\\
+    Wie schnell die Lokomotive beschleunigen kann hängt von der Reibung zwischen Rad und schiene und der Masse des Zuges ab. Die Grunddefinition der Beschleunigung ist der Quotient von Kraft und Masse. Die Reibung ist durch den Reibkoeffizienten bestimmt, welcher sich je nach Materialpaarung 
+
+    Die Kraft für das aus dem Stillstand in Fahrt zu bringende ist am grösste. Anschliessend wird die Reibung kleiner (Da rollreibung).
+
+    \begin{table}[H] \centering
+        \begin{tabular}{|l|l|l|}
+        \hline
+        \textbf{Material Schiene} & \textbf{Material Rad} & \textbf{Reibungskoeffizient}\\
+        \hline
+        Stahl                                & Stahl        & 0.02\\
+         \hline
+        Stahl                                & Holz         & 0.02\\
+        \hline
+        Stahl                                & Kunststoff   & 0.02\\
+        \hline
+        Stahl                                & Gummi        & 0.02\\
+        \hline
+        \end{tabular}\\
+        
+        \caption{Reibungskoeffizienten verschiedener Materialpaarungen}
+        \label{tab:com_tiny_pi}
+        \end{table}
+    
+    Um die maximale Beschleunigung zu berechnen, wird das Gesamtgewicht der Lokomotive auf die vier Räder aufgeteilt. In der Tabelle \ref{tab:groessen_beschleunigung} sind die gegeben Grössen für die nachfolgenden Berechnungen aufgelistet.
+
+    \begin{table}[H] \centering
+        \begin{tabular}{|l|l|}
+        \hline
+        \textbf{Grösse} & \textbf{Wert}\\
+        \hline
+        Durchmesser Rad [D]          & 30 Milimeter\\
+         \hline
+        Reibungskoeffizient [k]      & 0.3\\
+        \hline
+        \end{tabular}
+        
+        \caption{Grössen für die Beschleunigungsberechnung}
+        \label{tab:groessen_beschleunigung}
+        \end{table}   
+
+    F\textsubscript{Rad}=\(\frac{F\textsubscript{G}}{8}\)=\(\frac{m*g=3kg*9.81m/s^2}{8}\)=0.375\\
+
+    F\textsubscript{Reibung}=\(F\textsubscript{Rad}*k\)=\(0.375N*0.3=29.4N\)=0.1125N\\
+
+    M\textsubscript{Rad}=\(F\textsubscript{Rad}*2*D\textsubscript{Rad}\)=\(\frac{m*g=3kg*9.81m/s^2}{8}\)=0.375Nm\\
+
+    a\textsubscript{max}=\(\frac{F\textsubscript{Reibung}}{\frac{F\textsubscript{Rad}}{g}}\)=\(\frac{F\textsubscript{Reibung}}{\frac{F\textsubscript{Rad}}{g}}\)\\
 
     \textbf{Geschwindigkeitsberechnung}\\
     Die Fahrgeschwindigkeit der Lokomotive wird durch drei Faktoren bestimmt. Einerseits muss die maximale Geschwindigkeit der Anforderungsliste eingehalten werden und andererseits wird die Geschwindigkeit in der Kurvenfahrt durch den Schwerpunkt des Fahrzeuges und durch die maximale Haftreibkraft zwischen Schiene und Rad eingeschränkt.
@@ -132,16 +208,20 @@
         \hline
         \textbf{Grösse} & \textbf{Wert}\\
         \hline
-        Minimaler Radius                                 & 0.8 Meter\\
+        Minimaler Radius  [r]                               & 0.8 Meter\\
          \hline
-        Masse                                            & 3 Kilogramm\\
+        Masse [m]                                           & 3 Kilogramm\\
         \hline
-        Schwerpunkt in x-Achse (maximaler Wert)          & Meter\\
+        Schwerpunkt in x-Achse (maximaler Wert) [x]         & Meter\\
         \hline
-        Schwerpunkt in y-Achse (maximaler Wert)          & Meter\\
+        Schwerpunkt in y-Achse (maximaler Wert) [y]         & Meter\\
         \hline
         \end{tabular}\\
-   
+        
+        \caption{Kommunikation Frames: Tiny $\Rightarrow$ Pi}
+        \label{tab:com_tiny_pi}
+        \end{table}
+
         Die Zentripedalkraft und die Gewichtskraft sind wie folgt definiert:\\
     
     F\textsubscript{G}=\(m*g=3kg*9.81m/s^2=29.4N\)\\
@@ -173,7 +253,7 @@
         \includegraphics[width=0.9\textwidth]{Fuehrungswagen.png}
         \caption{Explosionsdarstellung Führungswagen}
         \label{fig:expl_fuehrungswagen}
-    \end{figure} \\
+    \end{figure}
 
     \begin{table}[H] \centering
         \begin{tabular}{|l|l|}
@@ -191,6 +271,10 @@
         Position 5          & Achsen mit Gewinden an beiden Enden und Anfräsfläche für Gabelschlüssel\\
         \hline
         \end{tabular}
+        
+        \caption{Kommunikation Frames: Tiny $\Rightarrow$ Pi}
+        \label{tab:com_tiny_pi}
+        \end{table}
 
     \textbf{Würfeltransport}\\
     %Text von Schöni
