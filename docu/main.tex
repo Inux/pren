@@ -17,6 +17,7 @@
     \usepackage[top=1in, bottom=1.25in, left=1.25in, right=1.25in]{geometry}
     \usepackage{xcolor}
     \usepackage{listings}
+    \usepackage{natbib}
     \usepackage{enumerate}
 
     \lstset{basicstyle=\small,
@@ -24,6 +25,8 @@
       commentstyle=\color{black},
       keywordstyle=\color{blue}
     }
+
+    \bibliographystyle{unsrtnat}
 
     \graphicspath{{images/}{images/Antrieb/}{images/Fahrdaten}{images/Maschinentechnik}{images/Objekterkennung}{images/Stromversorgung}{images/Vision}}
 
@@ -70,9 +73,12 @@
         \clearpage
         \section{Lösungskonzepte}
         \subfile{sections/03_Loesungskonzepte/loesungskonzepte.tex}
+        \subfile{sections/03_Loesungskonzepte/Ablauf.tex}
         \subfile{sections/03_Loesungskonzepte/signalerkennung.tex}
         \subfile{sections/03_Loesungskonzepte/akustik.tex}
         \subfile{sections/03_Loesungskonzepte/beschleunigung.tex}
+        \subfile{sections/03_Loesungskonzepte/Elektronik.tex}
+        \subfile{sections/03_Loesungskonzepte/Interface.tex}
         \clearpage
         \section{Projektmanagement}
         \subfile{sections/04_Projektmanagement/projektmanagement.tex}
@@ -82,5 +88,8 @@
         \clearpage
         \section{Anhang}
         \subfile{sections/06_Anhang/anhang.tex}
+        \clearpage
+
+        \bibliography{diverses/literatur-lib}
 
     \end{document}
