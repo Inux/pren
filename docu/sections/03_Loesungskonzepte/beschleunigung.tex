@@ -1,7 +1,67 @@
 \documentclass[../..main.tex]{subfiles}
+
+\graphicspath{{images/Fahrdaten/}{../../images/Fahrdaten/}}
+
 \begin{document}
 \subsubsection{Beschleunigung}
 Mithilfe elektronischer Komponente kann Beschleunigung, Geschwindigkeit und Distanz(vom Startbereich) gemessen und analyiert werden. Zusätzlich kann eine approximierte Position des Zuges auf der Strecke berechnet werden.
+
+\paragraph{Anforderungen}
+\begin{itemize}
+    \item Momentane Beschleunigung auslesen
+    \item Beschleunigung in Geschwindigkeit und Distanz umrechnen
+    \item Approximierte Position berechnen (wo auf der Strecke befinden wir uns)
+    \item Auf wenige cm genau anhalten
+    \item (Optional) Zentrifugalkräfte in Kurven berechnen
+\end{itemize}
+
+\paragraph{Konzept}
+Über ein Beschleunigungssensor werden Beschleunigung und Rotation ausgelesen. Die Beschleunigung kann zusätzlich in Geschwindigkeit und Distanz umgerechnet werden.
+
+\paragraph{Komponente}
+Bei der Komponentenwahl haben wir uns für den Adafruit ADXL335 3-Achsen Beschleunigungssensor entschieden, dieser kann Beschleunigung sowie Rotation berechnen. Er weist eine sehr kompakte Bauform auf und ist relativ günstig zu erwerben. Online haben verschiedene Nutzer mit dieser Komponente positive Erfahrung gesammelt. Auch ist die Komponente gut dokumentiert und man findet verschiedene Tutorien wie man diese mit einem Raspberry Pi kombinieren kann. Der Adafruit ADXL335 3-Achsen Beschleunigungssensor wird über die i2c Schnittstelle angesteuert.
+
+\subparagraph{Bauplan / Interface}
+\includegraphics{Bauplan_Verbindungsplan_Adafruit_ADXL335}
+
+\subparagraph{Daten}
+Gyroskop
+
+gyroskop\_xout:   -260  skaliert:  -2
+gyroskop\_yout:   -154  skaliert:  -2
+gyroskop\_zout:     78  skaliert:  0
+
+Beschleunigungssensor
+
+beschleunigung\_xout:   -1048  skaliert:  -0.06396484375
+beschleunigung\_yout:    -676  skaliert:  -0.041259765625
+beschleunigung\_zout:   16644  skaliert:  1.01586914062
+X Rotation:  -2.32121150537
+Y Rotation:  3.59994842011
+
+\paragraph{Berechnungen}
+
+\subparagraph{Geschwindigkeit & Distanz}
+Aus dem Integral der Beschleunigung kann die momentane Geschwindigkeit des Zuges berechnet werden. Und aus dem Integral der Geschwindigkeit kann die bisher gefahrene Distanz festgelegt werden. Das sieht mathematisch folgendermassen aus:
+
+<insert nice math formulas here>
+
+\subparagraph{Approximierte Position}
+Sobald eine Lichtschranke oder ähnliche physische Objekte auf der Strecke durchfahren werden, kann eine ungefähre Position dieser mithilfe der gefahrenen Distanz abgespeichert werden. Wird das Objekt nun ein zweites Mal durchfahren, weis man wo auf der Strecke man sich befindet und kann dementsprechend reagieren.
+
+physische Objekte können Lichtschranken, Signale oder Kurven sein. Dies erlaubt eine relativ exakte Abbildung der Strecke und ermöglicht es dem Team frühzeitig zu reagieren.
+
+Hauptziel dieser Anforderung ist das Anhalten auf wenige cm Genauigkeit.
+
+\subparagraph{Zentrifugalkräfte}
+
+
+\paragraph{Realisierung}
+
+
+
+
+
 
 
 
