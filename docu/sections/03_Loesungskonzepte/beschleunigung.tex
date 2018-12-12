@@ -1,4 +1,4 @@
-\documentclass[../..main.tex]{subfiles}
+\documentclass[../../main.tex]{subfiles}
 
 \graphicspath{{images/Fahrdaten/}{../../images/Fahrdaten/}}
 
@@ -19,12 +19,43 @@ Mithilfe elektronischer Komponente kann Beschleunigung, Geschwindigkeit und Dist
 Über ein Beschleunigungssensor werden Beschleunigung und Rotation ausgelesen. Die Beschleunigung kann zusätzlich in Geschwindigkeit und Distanz umgerechnet werden.
 
 \paragraph{Komponente}
-Bei der Komponentenwahl haben wir uns für den Adafruit ADXL335 3-Achsen Beschleunigungssensor entschieden, dieser kann Beschleunigung sowie Rotation berechnen. Er weist eine sehr kompakte Bauform auf und ist relativ günstig zu erwerben. Online haben verschiedene Nutzer mit dieser Komponente positive Erfahrung gesammelt. Auch ist die Komponente gut dokumentiert und man findet verschiedene Tutorien wie man diese mit einem Raspberry Pi kombinieren kann. Der Adafruit ADXL335 3-Achsen Beschleunigungssensor wird über die i2c Schnittstelle angesteuert.
+Bei der Komponentenwahl haben wir uns für einen Adafruit i2c 3-Achsen Beschleunigungssensor entschieden, dieser kann Beschleunigung sowie Rotation berechnen. Er weist eine sehr kompakte Bauform auf und ist relativ günstig zu erwerben. Online haben verschiedene Nutzer mit dieser Komponente positive Erfahrung gesammelt. Auch ist die Komponente gut dokumentiert und man findet verschiedene Tutorien wie man diese mit einem Raspberry Pi kombinieren kann.
+
+\begin{table}[] \centering
+\begin{tabular}{lll}
+Name & Adafruit ADXL 345 \\
+Preis & 1Fr    \\
+Länge & 25mm    \\
+Breite & 19mm   \\
+Höhe & 3.14mm      \\
+Gewicht & 1.27g   \\
+Leistung & 3V \\
+\end{tabular}
+\end{table}
 
 \subparagraph{Bauplan / Interface}
-\includegraphics{Bauplan_Verbindungsplan_Adafruit_ADXL335}
+\begin{figure}[H] \centering
+  \includegraphics{Verkabelung_BeschlSensor}
+  \caption{Verkabelung Beschleunigungssensor}
+  \label{fig:Beschleunigungssensor}
+\end{figure}
+
+\begin{table}[] \centering
+\begin{tabular}{lll}
+Bezeichnung     & GPIO Bus & MPU 6050 \\
+Stromversorgung & 3V3      & VCC      \\
+Ground          & GND      & GND      \\
+Daten          & SDA      & SDA      \\
+Clock          & SCL      & SCL
+\end{tabular}
+\end{table}
+
+Der Sensor wird über die i2c Schnittstelle angesprochen und verwendet somit einen Datenport (SDA) und eine Clock (SCL). Für die Stromversorgung reicht der 3.3V Port (3V3) und der Ground (GND) des GPIO Buses.
 
 \subparagraph{Daten}
+Mithilfe eines Skripts erhalten wir eine gute übersicht der erhaltenen Daten.
+
+\begin{lstlisting}
 Gyroskop
 
 gyroskop\_xout:   -260  skaliert:  -2
@@ -38,23 +69,7 @@ beschleunigung\_yout:    -676  skaliert:  -0.041259765625
 beschleunigung\_zout:   16644  skaliert:  1.01586914062
 X Rotation:  -2.32121150537
 Y Rotation:  3.59994842011
-
-\paragraph{Berechnungen}
-
-\subparagraph{Geschwindigkeit & Distanz}
-Aus dem Integral der Beschleunigung kann die momentane Geschwindigkeit des Zuges berechnet werden. Und aus dem Integral der Geschwindigkeit kann die bisher gefahrene Distanz festgelegt werden. Das sieht mathematisch folgendermassen aus:
-
-<insert nice math formulas here>
-
-\subparagraph{Approximierte Position}
-Sobald eine Lichtschranke oder ähnliche physische Objekte auf der Strecke durchfahren werden, kann eine ungefähre Position dieser mithilfe der gefahrenen Distanz abgespeichert werden. Wird das Objekt nun ein zweites Mal durchfahren, weis man wo auf der Strecke man sich befindet und kann dementsprechend reagieren.
-
-physische Objekte können Lichtschranken, Signale oder Kurven sein. Dies erlaubt eine relativ exakte Abbildung der Strecke und ermöglicht es dem Team frühzeitig zu reagieren.
-
-Hauptziel dieser Anforderung ist das Anhalten auf wenige cm Genauigkeit.
-
-\subparagraph{Zentrifugalkräfte}
-
+\end{lstlisting}
 
 \paragraph{Realisierung}
 
