@@ -1,105 +1,74 @@
-#!/usr/bin/env python
-#---------------------------------------------------
-#
-#	This is a program for Passive Buzzer Module
-#		It will play simple songs.
-#	You could try to make songs by youselves!
-# 
-#		Passive buzzer 			   Pi 
-#			VCC ----------------- 3.3V
-#			GND ------------------ GND
-#			SIG ---------------- Pin 11
-#
-#---------------------------------------------------
+#include <wiringPi.h>
+#include <stdio.h>
 
-import RPi.GPIO as GPIO
-import time
+//Pin 11 on Raspberry Pi corresponds to BCM GPIO 17 and wiringPi pin 0
+#define BeepPin 0
 
-Buzzer = 11
+//FREQUENCIES
+#define cL 129
+#define cLS 139
+#define dL 146
+#define dLS 156
+#define eL 163
+#define fL 173
+#define fLS 185
+#define gL 194
+#define gLS 207
+#define aL 219
+#define aLS 228
+#define bL 232
 
-#FREQUENCIES for song 1, 2
-CL = [0, 131, 147, 165, 175, 196, 211, 248]		# Frequency of Low C notes
+#define c 261
+#define cS 277
+#define d 294
+#define dS 311
+#define e 329
+#define f 349
+#define fS 370
+#define g 391
+#define gS 415
+#define a 440
+#define aS 455
+#define b 466
 
-CM = [0, 262, 294, 330, 350, 393, 441, 495]		# Frequency of Middle C notes
+#define cH 523
+#define cHS 554
+#define dH 587
+#define dHS 622
+#define eH 659
+#define fH 698
+#define fHS 740
+#define gH 784
+#define gHS 830
+#define aH 880
+#define aHS 910
+#define bH 933
 
-CH = [0, 525, 589, 661, 700, 786, 882, 990]		# Frequency of High C notes
+//This function generates the square wave that makes the piezo speaker sound at a determinated frequency.
+void beep(unsigned int note, unsigned int duration)
+{
+  //This is the semiperiod of each note.
+  long beepDelay = (long)(1000000/note);
+  //This is how much time we need to spend on the note.
+  long time = (long)((duration*1000)/(beepDelay*2));
+  for (int i=0;i<time;i++)
+  {
+    //1st semiperiod
+    digitalWrite(BeepPin, HIGH);
+    delayMicroseconds(beepDelay);
+    //2nd semiperiod
+    digitalWrite(BeepPin, LOW);
+    delayMicroseconds(beepDelay);
+  }
 
-#FREQUENCIES
-cL = 129
-cLS 139
-dL 146
-dLS 156
-eL 163
-fL 173
-fLS 185
-gL 194
-gLS 207
-aL 219
-aLS 228
-bL 232
+  //Add a little delay to separate the single notes
+  digitalWrite(BeepPin, LOW);
+  delay(20);
+}
 
-c 261
-cS 277
-d 294
-dS 311
-e 329
-f 349
-fS 370
-g 391
-gS 415
-a 440
-aS 455
-b 466
-
-cH 523
-cHS 554
-dH 587
-dHS 622
-eH 659
-fH 698
-fHS 740
-gH 784
-gHS 830
-aH 880
-aHS 910
-bH 933
-
-song_1 = [	CM[3], CM[5], CM[6], CM[3], CM[2], CM[3], CM[5], CM[6], # Notes of song1
-			CH[1], CM[6], CM[5], CM[1], CM[3], CM[2], CM[2], CM[3], 
-			CM[5], CM[2], CM[3], CM[3], CL[6], CL[6], CL[6], CM[1],
-			CM[2], CM[3], CM[2], CL[7], CL[6], CM[1], CL[5]	]
-
-beat_1 = [	1, 1, 3, 1, 1, 3, 1, 1, 			# Beats of song 1, 1 means 1/8 beats
-			1, 1, 1, 1, 1, 1, 3, 1, 
-			1, 3, 1, 1, 1, 1, 1, 1, 
-			1, 2, 1, 1, 1, 1, 1, 1, 
-			1, 1, 3	]
-
-song_2 = [	CM[1], CM[1], CM[1], CL[5], CM[3], CM[3], CM[3], CM[1], # Notes of song2
-			CM[1], CM[3], CM[5], CM[5], CM[4], CM[3], CM[2], CM[2], 
-			CM[3], CM[4], CM[4], CM[3], CM[2], CM[3], CM[1], CM[1], 
-			CM[3], CM[2], CL[5], CL[7], CM[2], CM[1]	]
-
-beat_2 = [	1, 1, 2, 2, 1, 1, 2, 2, 			# Beats of song 2, 1 means 1/8 beats
-			1, 1, 2, 2, 1, 1, 3, 1, 
-			1, 2, 2, 1, 1, 2, 2, 1, 
-			1, 2, 2, 1, 1, 3 ]
-			
-imperial_march_song = [	a, a, f, cH, 
-						a, f, cH, a, eH, 
-						eH, eH, fH, cH, gS, 
-						f, cH, a, aH, a, 
-						a, aH, gHS, gH, fHS, 
-						fH, fHS]
-
-imperial_march_beat = [	500, 500, 350, 150,
-						500, 350, 150, 1000, 500, 
-						500, 500, 350, 150, 500, 
-						350, 150, 1000, 500, 350, 
-						150, 500, 250, 250, 125, 
-						125, 125]
-
-'''
+//The source code of the Imperial March from Star Wars
+void play()
+{
   beep( a, 500);
   beep( a, 500);
   beep( f, 350);
@@ -188,44 +157,21 @@ imperial_march_beat = [	500, 500, 350, 150,
   beep( f, 375);
   beep( c, 125);
   beep( a, 1000);
-'''
+}
 
-def setup():
-	GPIO.setmode(GPIO.BOARD)		# Numbers GPIOs by physical location
-	GPIO.setup(Buzzer, GPIO.OUT)	# Set pins' mode is output
-	global Buzz						# Assign a global variable to replace GPIO.PWM 
-	Buzz = GPIO.PWM(Buzzer, 440)	# 440 is initial frequency.
-	Buzz.start(50)					# Start Buzzer pin with 50% duty ration
+int main(void)
+{
+  //Check wiringPi setup
+  if(-1 == wiringPiSetup())
+  {
+    printf("setup wiringPi failed!");
+    return 1;
+  }
 
-def loop():
-	while True:
-		print '\n    Playing song 1...'
-		for i in range(1, len(song_1)):		# Play song 1
-			Buzz.ChangeFrequency(song_1[i])	# Change the frequency along the song note
-			time.sleep(beat_1[i] * 0.5)		# delay a note for beat * 0.5s
-		time.sleep(1)						# Wait a second for next song.
+  //Prepare GPIO0
+  pinMode(BeepPin, OUTPUT);
+  //Play the Imperial March
+  play();
 
-		print '\n\n    Playing song 2...'
-		for i in range(1, len(song_2)):     # Play song 1
-			Buzz.ChangeFrequency(song_2[i]) # Change the frequency along the song note
-			time.sleep(beat_2[i] * 0.5)     # delay a note for beat * 0.5s
-			
-def imperial_march():
-	while True:
-		print 'playing imperial march from starwars'
-		for i in range(1, len(imperial_march_song)):
-			Buzz.ChangeFrequency(imperial_march_song[i])
-			time.sleep(imperial_march_beat[i] / 1000)		#python time.sleep() takes seconds
-
-def destory():
-	Buzz.stop()					# Stop the buzzer
-	GPIO.output(Buzzer, 1)		# Set Buzzer pin to High
-	GPIO.cleanup()				# Release resource
-
-if __name__ == '__main__':		# Program start from here
-	setup()
-	try:
-		imperial_march()
-		#loop()
-	except KeyboardInterrupt:  	# When 'Ctrl+C' is pressed, the child program destroy() will be  executed.
-		destory()
+  return 0;
+}
