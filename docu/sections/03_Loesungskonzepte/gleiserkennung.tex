@@ -12,11 +12,21 @@ bestmögliche Regelung implementiert werden ohne genauere Angaben zum aktuellen 
 Mehr Details zum Regelkreis und dem Ganzen Ablauf sind im unter \ref{ablauf} zu finden.
 
 \subsubsection{Verfahren}
-Im folgenden Diagramm wird die Architektur der Steuerungssoftware aufgezeigt
-\begin{figure}[H] %Architektur mit Middleware
-    \centering
-    \includegraphics[width=1.0\textwidth]{../../drawings/ArchitekturDiagramm/SW_Architektur_Middleware.png}
-    \caption {Software Architektur Middleware. Gezeichnet mit https://draw.io}
-\end{figure}
+Nachfolgend werden die einzelen Schritte zur bearbeitung eines Einzelnen Bild aufgelistet.
+Das Ganze wird dann für jedes Bild welches aufgenommen wird neu berechnet.
+\begin{itemize} %Verfahren kurz und knapp
+    \item Bild Skalieren
+    \item Umrechnen zu Schwarz Weiss
+    \item Kantengletung Anwenden (Canny Algorithmus)
+    \item Konturen Erkennung (Suzukui85 Algorithmus)
+    \item Kleine Konturen erkennen und verwerfen
+    \item Bild in zwei Hälften unterteilen
+    \item Berechnen der Anzahl Konturen in beiden Hälften
+        \begin{itemize}
+            \item Beide Hälften etwa gleich viele Konturen -> Gleis geht geradeaus
+            \item Linke Hälfte hat mehr Konturen -> Gleis geht nacht Links
+            \item Rechte Hälfte hat mehr Konturen -> Gleis geht nach Rechts
+        \end{itemize}
+\end{itemize}
 
 \end{document}
