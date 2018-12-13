@@ -80,7 +80,7 @@
     Das StormPi Modul wird mit einem LiFePO4-Akku ergänzt. Der Standartakku hat $1000mAh$. Bei einer Spannung von $3.7V$ entspricht dies $3.7Wh$. \\
     Dies ist genügend für zwei durchläufe und da der Akku ausserhalb der Hochgeschwindigkeitsfahrt nachgeladen werden soll, reicht dieser Akku gut.
 
-    \subsubsection{Sensoren}
+    \subsubsection{Sensoren} \label{et_sensoren}
     Mit diversen Sensoren sollen folgende Daten aufgenommen werden. Folgende Daten sollen aufgezeichnet werden:
     \begin{itemize}
         \item Beschleunigung
@@ -90,11 +90,10 @@
         \item Distanz links (für Erkennung Haltesignal)
     \end{itemize}
 
-
     \textbf{Beschleunigung}\\
-    Die Beschleunigung wird mit einem Beschleunigungssensor ADXL345 aufgenommen. Dieser kommuniziert über eine $I^2C$ Schnittstelle mit dem Mikrocontrollers. Er liefert jeweils die Beschleunigung in x-, y-, und z-Richtung. Der Sensor wird parallel zur Fahrtrichtung montiert, sodass es reicht eine Beschleunigungsrichtung für die Querbeschleunigung und eine Richtung für die Längsbeschleunigung auszuwerten.\\
+    Die Beschleunigung wird mit einem Beschleunigungssensor ADXL345 aufgenommen. Dieser kommuniziert über eine $I^2C$ Schnittstelle mit dem Mikrocontrollers. Er liefert jeweils die Beschleunigung in x-, y-, und z-Richtung. Der Sensor wird parallel zur Fahrtrichtung montiert, sodass es reicht eine Beschleunigungsrichtung für die Querbeschleunigung und eine Richtung für die Längsbeschleunigung auszuwerten. Die Verwendung des Sensors ist in Kapitel \ref{pi_beschleunigung} detailliert beschreiben.\\
 
-    \textbf{Geschwindigkeit}\\ \label{et_geschwindigkeit}
+    \textbf{Geschwindigkeit}\\
     Die Geschwindigkeit wird hauptsächlich über den Quadratur Encoder am Antriebsmotor aufgenommen. Zusätzlich wird die Geschwindigkeit über die Beschleunigung zur Plausibilitätskontrolle nachgerechnet.
 
     \paragraph{Quadratur Encoder:} Der Quadratur Encoder MR, Typ L gibt 256 Impulse pro Umdrehung. Der Verlauf eines Impulses ist in Abbildung \ref{fig:et_encoder} dargestellt. Der Encoder stellt drei Kanäle zur Verfügung. Über den Kanal $A$ und $B$ kann einzeln die Geschwindigkeit bestimmt werden. Durch auswerten der Phasenverschiebung der beiden Kanäle ("$A$ eilt $B$ vor" oder "$A$ eilt $B$ nach") kann zusätzlich noch die Drehrichtung bestimmt werden. Der Kanal $I$ ist mit Kanal $A$ und $B$ synchronisiert und kann ebenfalls zur Bestimmung der Geschwindigkeit dienen.\\
@@ -123,7 +122,7 @@
     Über den Beschleunigungssensor kann man die aktuelle Position auf der Fahrbahn berechnen. Die zurückgelegte Strecke errechnet sich durch Integration der Geschwindigkeit oder durch zweifache Integration der Beschleunigung.\\
     Unter der Annahme, dass zu beginn der Messung zum Zeitpunkt $t = 0$ die zurückgelegte Strecke $0$ ist $(s(t=0) = 0)$ kann die Geschwindigkeit zum Zeitpunkt $t$ bestimmt werden mit $$s(t) = \int_{0}^{t} v(x) dx$$.\\
     Da aber auf einem Digitalen System die Daten nur zu diskreten Zeitpunkten ausgewertet werden können ergibt sich dann eine Summen der Geschwindigkeiten zum Zeitpunkt $k$ $$s[k] = \sum_{i=0}^{k}v[i] \Delta t$$\\
-    Die Geschwindigkeit wird gemäss Kapitel \ref{et_geschwindigkeit} bestimmt.
+    Die Geschwindigkeit wird gemäss der Beschreibung oben bestimmt.
 
     \textbf{Distanz}\\
     Auf beiden Seiten des Zuges wird eine Distanzmessung benötigt. Auf der rechten Seite des Zuges muss der Würfel erkennt werden und auf der Linken Seite soll ein ausklappbarer Sensor am Schluss die genaue Distanz zum Haltesignal bestimmen.
@@ -148,7 +147,7 @@
     Da die Richtung immer dieselbe ist reicht für den Schwenker ein normaler DC-Motoren Treiber. Um eine sanfte Beschleunigung und Abbremsung der konstruktion zu ermöglichen, soll auch der Schwenkermotor mit einem PWM angesteuert werden. Als Treiber wird ein Board mit einem L298N verwendet.\\
 
     \textbf{Schwenkermotor}\\
-    Für den Schwenker wir ein \textcolor{red}{TODO: Motorentyp} verwendet. Um die Position des Schwenkers zu bestimmen ist auch an diesem Motor ein Encoder befestigt. Durch Messungen kann genau festgestellt werden wie viele Impulse abgewartet werden müssen bis der Schwenker seine Endposition erreicht hat.\\
+    Für den Schwenker wir ein Maxon DCX 19 S verwendet. Um die Position des Schwenkers zu bestimmen ist auch an diesem Motor ein Encoder befestigt. Durch die Bestimmung der nötigen Umdrehungen bis der Schwenker eingefahren ist kann genau festgestellt werden wie viele Impulse abgewartet werden müssen bis der Der Motor anhalten muss. \cite{MaxonDCX19S}\\
 
     \textbf{Distanzsensor links ausklappen}\\
     Um den Sensor beim Parkieren ausklappen zu können wird er an einem Servo befestigt. Sobald die Systemsteuerung entscheidend, dass das korrekte Haltesignal das nächste ist gibt sie den Befehlt den Sensor auszuklappen. Dafür wird ein "Tower Pro Micro Servo SG90" verwendet. Dieser hat ein Drehmoment von bis zu $2.5 kg-cm$. \cite{SG90Datasheet}\\
