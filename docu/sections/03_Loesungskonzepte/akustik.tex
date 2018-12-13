@@ -29,7 +29,7 @@ Länge & 25mm    \\
 Breite & 25mm   \\
 Höhe & 7mm      \\
 Gewicht & 10g   \\
-Leistung & 3.3V \\
+Spannung & 3.3V \\
 \end{tabular}
 \end{table}
 
@@ -53,9 +53,9 @@ Signal          & GPIO17   & SIG
 Über den GPIO Bus des Raspberry Pi kann der Buzzer direkt angesprochen und versorgt werden. Ein einzelnes Signalkabel reicht für die Kommunikation aus und hält den Aufbau weitestgehend simpel.
 
 \subparagraph{Daten}
-Dem Buzzer werden verschiedene Frequenzen gesendet, welche dieser dementsprechend abspielt. Somit ist das Spielen einer Melodie möglich. Für unsere Benutzung reicht jedoch eine einzelne Frequenz. Die Frequenz wird im Interval von 500ms an den Buzzer gesendet und ist somit in der Lage das höchste Zahl "9" innerhalb von 4.5s abzuspielen.
+Dem Buzzer werden verschiedene Frequenzen gesendet, welche dieser dementsprechend abspielt. Somit ist das Spielen einer Melodie möglich. Für unsere Benutzung reicht jedoch eine einzelne Frequenz. Die Frequenz wird im Interval von 500ms an den Buzzer gesendet und ist somit in der Lage die höchste mögliche Zahl "9" innerhalb von 4.5s abzuspielen.
 
-Die Freuenz wird in Form einer Zahl gesendet, der Frequenzbereich variert je nach Buzzer.
+Die Freuenz wird in Form einer Zahl(von ~100 bis 1000) gesendet, der Frequenzbereich kann nach Buzzer varieren.
 
 \paragraph{Realisierung}
 Der Code wird in Python realisiert und macht Verwendung von den Bibliotheken GPIO und time. Es wird in einem Interval (500ms) eine Frequenz auf den GPIO Port ausgegeben. Alle Module/Komponente werden asynchron ausgeführt, das Ausführen von time.sleep(ms) sollte somit kein Problem sein.
