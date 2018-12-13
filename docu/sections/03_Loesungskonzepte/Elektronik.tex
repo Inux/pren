@@ -96,23 +96,24 @@
     \textbf{Geschwindigkeit}\\
     Die Geschwindigkeit wird hauptsächlich über den Quadratur Encoder am Antriebsmotor aufgenommen. Zusätzlich wird die Geschwindigkeit über die Beschleunigung zur Plausibilitätskontrolle nachgerechnet.
 
-    \paragraph{Quadratur Encoder:} Der Quadratur Encoder MR, Typ L gibt 256 Impulse pro Umdrehung. Der Verlauf eines Impulses ist in Abbildung \ref{fig:et_encoder} dargestellt. Der Encoder stellt drei Kanäle zur Verfügung. Über den Kanal $A$ und $B$ kann einzeln die Geschwindigkeit bestimmt werden. Durch auswerten der Phasenverschiebung der beiden Kanäle ("$A$ eilt $B$ vor" oder "$A$ eilt $B$ nach") kann zusätzlich noch die Drehrichtung bestimmt werden. Der Kanal $I$ ist mit Kanal $A$ und $B$ synchronisiert und kann ebenfalls zur Bestimmung der Geschwindigkeit dienen.\\
+    \paragraph{Quadratur Encoder:} Der Quadratur Encoder MR, Typ L gibt $1024$ Impulse pro Umdrehung. Der Verlauf eines Impulses ist in Abbildung \ref{fig:et_encoder} dargestellt. Der Encoder stellt drei Kanäle zur Verfügung. Über den Kanal $A$ und $B$ kann einzeln die Geschwindigkeit bestimmt werden. Durch auswerten der Phasenverschiebung der beiden Kanäle ("$A$ eilt $B$ vor" oder "$A$ eilt $B$ nach") kann zusätzlich noch die Drehrichtung bestimmt werden. Der Kanal $I$ ist mit Kanal $A$ und $B$ synchronisiert und kann ebenfalls zur Bestimmung der Geschwindigkeit dienen.\\
     Für die Bestimmung der Geschwindigkeit kann die Dauer eines Impulses gemessen werden oder es können die Anzahl Impulse in einer bestimmten Zeit gezählt werden. Für dieses Projekt soll die Dauer des Impulses gemessen werden. Der Vorteil dieser Methode ist die bessere Präzision, da nach jedem einzelnen Impuls die durchschnittliche Geschwindigkeit seit dem letzten Impuls sofort bestimmt werden kann. Das Risiko ist, dass bei hohen Umdrehungszahlen der Mikrocontroller nicht schnell genug ist mit dem Zählen oder dass der Zähler des Mikrocontrollers bei sehr tiefen Umdrehungszahlen überläuft.\\
-    Die maximalen Umdrehungszahl des Antriebsmotors liegt bei $8590 min^{-1}$. Mit $256$ Impulsen pro Umdrehung ergibt dies $$8590 min^{-1} \cdot 256 Impulse = 2'199'040 \frac{Impulse}{min}$$.
-    Dies sind dann $$ 2'199'040 \frac{Impulse}{min} / 60s = 36'651 \frac{Impulse}{s} $$.
-    Dies ergibt eine Impulsdauer von $$\frac{1}{36'651 \frac{Impulse}{s}} = 27.26\mu s$$. Bei der schnellsten möglichen Timer Einstellung auf dem TinyK22 ($60MHz$) ergibt dies noch $1'637 \frac{Ticks}{Impuls}$. Dies ist ein plausibler Wert. Bei der Implementation muss jedoch beachtet werden, dass bei hoher Geschwindigkeit möglichst wenig Zeit in der Interrupt routine verbracht wird, da diese dann sehr of aufgerufen wird.\\
-    Damit der Timer nicht überläuft muss der Impuls fertig sein, bevor der Timer den Wert $$2^{32} \approx 4.29 Mrd$$ erreicht wird. Dies ergibt bei $60MHz$ eine Zeit von $$2^{32} \cdot \frac{1}{60MHz} = 71.58s$$. Also ist ein tiefe Umdrehungszahl bis zu $$\frac{1}{71.58s \cdot 256} = 54.6 \cdot 10^{-6} s^{-1} \hat{=} 909 \cdot 10^{-9} min^{-1}$$
-    Also sollte diese Umdrehungszahl nicht unterschritten werden. 
+    Die maximalen Umdrehungszahl des Antriebsmotors für die angestrebte Maximalgeschwindigkeit liegt bei $5200 min^{-1}$. Mit $1024$ Impulsen pro Umdrehung ergibt dies $$5200 min^{-1} \cdot 1024 Impulse = 5'324'800 \frac{Impulse}{min}$$.
+    Dies sind dann $$ 5'324'800 \frac{Impulse}{min} / 60s = 88'747 \frac{Impulse}{s} $$.
+    Dies ergibt eine Impulsdauer von $$\frac{1}{36'651 \frac{Impulse}{s}} = 11.29\mu s$$. Bei der schnellsten möglichen Timer Einstellung auf dem TinyK22 ($60MHz$) ergibt dies noch $676 \frac{Ticks}{Impuls}$. Bei der Implementation muss also beachtet werden, dass bei hoher Geschwindigkeit möglichst wenig Zeit in der Interrupt routine verbracht wird, da diese dann sehr of aufgerufen wird. Sollte sich zeigen, dass der Mikrocontrollers durch die hohe Impulsrate überlastet ist, muss ein Encoder mit weniger Impulsen pro Umdrehung gewählt werden oder ein Frequenzteiler dazwischen geschaltet werden.\\
+    Damit der Timer nicht überläuft muss eine Impulsperiode fertig sein, bevor der Timer den Wert $$2^{32} \approx 4.29 Mrd$$ erreicht wird. Dies ergibt bei $60MHz$ eine Zeit von $$2^{32} \cdot \frac{1}{60MHz} = 71.58s$$. Also ist ein tiefe Umdrehungszahl bis zu $$\frac{1}{71.58s \cdot 1024} = 13.6 \cdot 10^{-6} s^{-1}$$
+    Also sollte diese Umdrehungszahl nicht unterschritten werden. Diese Zahl ist so klein, dass dies als Stillstand gewertet werden kann.
     
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.8\textwidth]{Encoder_MR.png}
+        \includegraphics[width=0.6\textwidth]{Encoder_MR.png}
         \caption {Signalverlauf Encoder \\Quelle: Katalogseite 420, Encoder MR Typ L, maxon sensor}
         \label{fig:et_encoder}
     \end{figure}
 
-    Die Geschwindigkeit kann daraus mittels der Mechanischen Übersetzung berechnet werden. 
-    \textcolor{red}{TODO: Mechis --> Übersetzun vom Motor auf die Schienen, also $$v_{Zug}(Umdrehungszahl_{Motor}) = ???$$}\\
+    Die Geschwindigkeit des Zuges ($v_{Zug}$) kann somit aus der Umdrehungszahl des Motors ($N_{Motor}$) mittels der Mechanischen Übersetzung und der Grösse der Räder berechnet werden. 
+    $$v_{Zug}(N_{Motor}) = \frac{N_{Motor}}{2} \cdot d \cdot \pi$$\\
+    $d:$ Raddurchmesser $22mm$\\
 
     \paragraph{Nachrechnen der Geschwindigkeit:}
     Unter der Annahme, dass zu beginn der Messung zum Zeitpunkt $t = 0$ die Geschwindigkeit $0$ ist $(v(t=0) = 0)$ kann die Geschwindigkeit zum Zeitpunkt $t$ bestimmt werden mit $$v(t) = \int_{0}^{t} a(x) dx$$.\\
@@ -141,7 +142,7 @@
     Es wird ein Arduion IBT\_2 DC-Motoren Treiber mit einem BTS7960 eingesetzt. Dieses Bauteil kann Motoren mit einem Strom von bis zu 43A versorgen. \\
     
     \textbf{Antriebsmotor}\\
-    Als Antriebsmotor dient ein Maxon DCX 32 L. Dieser kann eine Leistung von bis zu 70 Watt umsetzen. Dabei zu beachten ist, dass der Anlaufstrom bis zu $70A$ betragen kann. Dieser Strom muss begrenzt werden indem der Mikrocontrollers die Beschleunigung gemäss dem gemessenen Stromverbrach anpasst.\cite{MaxonDCX32L} Dies ist bei einer Versorgungsspannung von 24V spezifiziert. Da aber nicht die maximale Drehzahl benötigt wird kann auch eine entsprechend tiefere Spannung angelegt werden.\\ 
+    Als Antriebsmotor dient ein Maxon DCX 32 L. Dieser kann eine Leistung von bis zu 70 Watt umsetzen. Dabei zu beachten ist, dass der Anlaufstrom bis zu $70A$ betragen kann. Dieser Strom muss begrenzt werden indem der Mikrocontrollers die Beschleunigung gemäss dem gemessenen Stromverbrach anpasst.\cite{MaxonDCX32L} Dies ist bei einer Versorgungsspannung von 24V spezifiziert. Da aber nicht die maximale Drehzahl benötigt wird kann auch eine entsprechend tiefere Spannung angelegt werden. Die Drehzahlkonstante des Motors ist $350 \frac{min^{-1}}{V}$. Für die angestrebte Drehzahl von $5200min^{-1}$ ergibt sich eine Spannung von $$\frac{5200min^{-1}}{350 \frac{min^{-1}}{V}} =14.8V$$ Somit muss der Antriebsmotor mit einer Spannung von mindestens $14.8V$ versorgt werden.\\ 
 
     \textbf{Motorentreiber für Schwenker-Motor}\\
     Da die Richtung immer dieselbe ist reicht für den Schwenker ein normaler DC-Motoren Treiber. Um eine sanfte Beschleunigung und Abbremsung der konstruktion zu ermöglichen, soll auch der Schwenkermotor mit einem PWM angesteuert werden. Als Treiber wird ein Board mit einem L298N verwendet.\\
