@@ -3,23 +3,22 @@
 \graphicspath{{images/Fahrdaten/}{../../images/Fahrdaten/}}
 
 \begin{document}
-\subsubsection{Beschleunigung}
-Mithilfe elektronischer Komponente kann Beschleunigung, Geschwindigkeit und Distanz(vom Startbereich) gemessen und analyiert werden. Zusätzlich kann eine approximierte Position des Zuges auf der Strecke berechnet werden.
+\subsubsection{Beschleunigung} \label{pi_beschleunigung}
+Mithilfe elektronischer Komponente kann Beschleunigung, Geschwindigkeit und Distanz(vom Startbereich) gemessen und analysiert werden. Zusätzlich kann eine approximierte Position des Zuges auf der Strecke berechnet werden. Die Berechnungen dazu sind in Kapitel \ref{et_sensoren} beschrieben.
 
 \paragraph{Anforderungen}
 \begin{itemize}
     \item Momentane Beschleunigung auslesen
     \item Beschleunigung in Geschwindigkeit und Distanz umrechnen
     \item Approximierte Position berechnen (wo auf der Strecke befinden wir uns)
-    \item Auf wenige cm genau anhalten
-    \item (Optional) Zentrifugalkräfte in Kurven berechnen
+    %\item (Optional) Zentrifugalkräfte in Kurven berechnen
 \end{itemize}
 
 \paragraph{Konzept}
 Über ein Beschleunigungssensor werden Beschleunigung und Rotation ausgelesen. Die Beschleunigung kann zusätzlich in Geschwindigkeit und Distanz umgerechnet werden.
 
 \paragraph{Komponente}
-Bei der Komponentenwahl haben wir uns für einen Adafruit i2c 3-Achsen Beschleunigungssensor entschieden, dieser kann Beschleunigung sowie Rotation berechnen. Er weist eine sehr kompakte Bauform auf und ist relativ günstig zu erwerben. Online haben verschiedene Nutzer mit dieser Komponente positive Erfahrung gesammelt. Auch ist die Komponente gut dokumentiert und man findet verschiedene Tutorien wie man diese mit einem Raspberry Pi kombinieren kann.
+Bei der Komponentenwahl fiel der Entscheid auf einen Adafruit $I^2C$ 3-Achsen Beschleunigungssensor, dieser kann Beschleunigung sowie Rotation berechnen. Er weist eine sehr kompakte Bauform auf und ist relativ günstig zu erwerben. Online haben verschiedene Nutzer mit dieser Komponente positive Erfahrung gesammelt. Auch ist die Komponente gut dokumentiert und man findet verschiedene Tutorien wie man diese mit einem Raspberry Pi kombinieren kann.
 
 \begin{table}[] \centering
 \begin{tabular}{lll}
@@ -29,7 +28,7 @@ Länge & 25mm    \\
 Breite & 19mm   \\
 Höhe & 3.14mm   \\
 Gewicht & 1.27g   \\
-Leistung & 3V \\
+Versorgungsspannung & 3-5V \\
 \end{tabular}
 \end{table}
 
@@ -42,7 +41,7 @@ Leistung & 3V \\
 
 \begin{table}[] \centering
 \begin{tabular}{lll}
-Bezeichnung     & GPIO Bus & MPU 6050 \\
+Bezeichnung     & GPIO Port & MPU 6050 \\
 Stromversorgung & 3V3      & VCC      \\
 Ground          & GND      & GND      \\
 Daten          & SDA      & SDA      \\
@@ -50,7 +49,7 @@ Clock          & SCL      & SCL
 \end{tabular}
 \end{table}
 
-Der Sensor wird über die i2c Schnittstelle angesprochen und verwendet somit einen Datenport (SDA) und eine Clock (SCL). Für die Stromversorgung reicht der 3.3V Port (3V3) und der Ground (GND) des GPIO Buses.
+Der Sensor wird über die $I^2C$ Schnittstelle angesprochen und verwendet somit einen Datenport (SDA) und eine Clock (SCL). Für die Stromversorgung reicht der 3.3V Port (3V3) und der Ground (GND) des GPIO Buses.
 
 \subparagraph{Daten}
 Mithilfe eines Skripts erhalten wir eine gute übersicht der erhaltenen Daten.
