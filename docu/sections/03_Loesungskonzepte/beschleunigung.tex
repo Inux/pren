@@ -20,7 +20,8 @@ Mithilfe elektronischer Komponente kann Beschleunigung, Geschwindigkeit und Dist
 \paragraph{Komponente}
 Bei der Komponentenwahl fiel der Entscheid auf einen Adafruit $I^2C$ 3-Achsen Beschleunigungssensor, dieser kann Beschleunigung sowie Rotation berechnen. Er weist eine sehr kompakte Bauform auf und ist relativ günstig zu erwerben. Online haben verschiedene Nutzer mit dieser Komponente positive Erfahrung gesammelt. Auch ist die Komponente gut dokumentiert und man findet verschiedene Tutorien wie man diese mit einem Raspberry Pi kombinieren kann.
 
-\begin{table}[] \centering
+\begin{table}[H]\centering
+\begin{flushleft}
 \begin{tabular}{lll}
 Name & Adafruit ADXL 345 \\
 Preis & 1Fr    \\
@@ -30,6 +31,7 @@ Höhe & 3.14mm   \\
 Gewicht & 1.27g   \\
 Versorgungsspannung & 3-5V \\
 \end{tabular}
+\end{flushleft}
 \end{table}
 
 \subparagraph{Bauplan / Interface}
@@ -71,7 +73,11 @@ Y Rotation:  3.59994842011
 \end{lstlisting}
 
 \paragraph{Realisierung}
+Daten werden in einem von uns festgelegten Interval über die $i^2c$ Schnittstelle eingelesen. Die $i^2c$ Schnittstelle muss in der Raspberry Pi Konfiguration aktiviert werden. Weiter müssen die benötigten Tools "i2c-tools" sowie "python-smbus" installiert werden. Dem Raspberry Pi wird eine Adresse auf dem $i^2c$ Datenbus zugewiesen, welche über "sudo i2cdetect -y 1" abgerufen werden kann.
 
+Softwaretechnisch wird die Schnittstelle in Python realisiert, denn Python verfügt über die mächtigsten Bibliotheken in den Bereichen Mathematik und $i^2c$. Der Beschleunigungssensor kann direkt über seine Adresse angesprochen werden und gibt die Daten in Form eines Words zurück. Der Beschleunigungssensor muss für jedes Word(z.B. gyroskop\_xout) eine Anfrage auf den Datenbus schreiben und lesen.
+
+Die erhaltenen Daten werden in momentane Geschwindigkeitsdaten(Beschleunigung, Geschwindigkeit, Distanz) umgerechnet und anschliessend analysiert.
 
 
 
