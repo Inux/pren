@@ -5,7 +5,7 @@
       commentstyle=\color{black},
       keywordstyle=\color{blue}
     }
-
+\emergencystretch 1em  % F"ur TeX <3.0 auskommentieren!
 \graphicspath{{images/Signalerkennung/}{../../images/Signalerkennung/}}
 
 
@@ -16,10 +16,10 @@
         \item Erkennung der Signalisation mit Tafel
         \item Erkennung der aufgedruckten Nummer
     \end{itemize}
-    Wie bereits in der Übersicht beschrieben, wird im Gesamtkonzept zwei Kameras verwendet. Eine Kamera wird zur Erkennung der Gleisrichtung verwendet. Die zweite Kamera wird nun für die Signalerkennung eingesetzt. Der Raspberry PI 3+, welcher als Hauptrecheneinheit geplant ist, verfügt nur über einen CSI- Anschluss (Camera Serial Interface). Für die Signalerkennung wird daher auf einen weiteren kleineren Raspberry PI Zero W gesetzt. Dieser verfügt wie der Raspberry PI 3+ einen vollwertigen CSI- Anschluss und kann somit die zweite Kamera bedienen. Dies führt auch dazu, dass der Raspberry PI 3+ zusätzlich entlastet werden kann.\\
+    Wie bereits in der Übersicht beschrieben, wird im Gesamtkonzept zwei Kameras verwendet. Eine Kamera wird zur Erkennung der Schienenrichtung verwendet. Die zweite Kamera wird nun für die Signalerkennung eingesetzt. Der Raspberry PI 3+, welcher als Hauptrecheneinheit geplant ist, verfügt nur über einen CSI- Anschluss (Camera Serial Interface). Für die Signalerkennung wird auf einen weiteren kleineren Raspberry PI 3 Model A+ gesetzt. Dieser verfügt wie der Raspberry PI 3+ einen vollwertigen CSI- Anschluss und kann somit die zweite Kamera bedienen. Dies führt auch dazu, dass der Raspberry PI 3+ zusätzlich entlastet werden kann.\\
 
     \textbf{Architektur}\\
-    Die Signalerkennung in zwei Teilaufgaben zu trennen hat noch einen weiteren vorteil. Die beiden Teilaufgaben werden auf beide Raspberry PIs verteilt. Der Raspberry PI Zero W ist für die Bilderaufnahme Verarbeitung und für die Signalerkennung mit Tafel zuständig. Der Raspberry PI 3+ übernimmt dann die Erkennung der aufgedruckten Nummer auf der Tafel. So kann die Ressourcen des Raspberry PI 3+ gezielter eingesetzt werden.
+    Die Signalerkennung in zwei Teilaufgaben zu trennen hat noch einen weiteren vorteil. Die beiden Teilaufgaben werden auf beide Raspberry PIs verteilt. Der Raspberry PI 3 Model A+ ist für die Bilderaufnahme Verarbeitung und für die Signalerkennung mit Tafel zuständig. Der Raspberry PI 3+ übernimmt dann die Erkennung der aufgedruckten Nummer auf der Tafel. So kann die Ressourcen des Raspberry PI 3+ gezielter eingesetzt werden.
 
     \begin{figure}[H] %Architektur
         \centering
@@ -28,10 +28,56 @@
         \label{fig:architektur_hardware_signalerkennung}
     \end{figure}
 
-    Für die Nummererkennung auf der Tafel wird ein auf Keras und Tensorflow basierender Machine- Learning Algorithmus verwendet. Damit die Trainingsdaten des Models eingelesen werden können und somit Tenserflow ausführbar wird, braucht es eine gewisse grösse des Arbeitsspeichers. Der Arbeitsspeicher des Raspberry PI Zero W (512Mb) reicht dafür nicht aus. Der Raspberry PI 3+ verfügt über mehr speicher (1Gb) und kann somit den Algorithmus bearbeiten. Für die Kameraufnahmen und die Bearbeitung der Bilder und schlussendlich die Konturenerkennung der Signalisation ist der Raspberry PI Zero W gut geeignet. \cite{raspberrypi3A+}
+    Für die Nummererkennung auf der Tafel wird ein auf Keras und Tensorflow basierender Machine- Learning Algorithmus verwendet. Damit die Trainingsdaten des Models eingelesen werden können und somit Tenserflow ausführbar wird, braucht es eine gewisse grösse des Arbeitsspeichers. Der Arbeitsspeicher des Raspberry PI 3 Model A+ (512Mb) reicht dafür nicht aus. Der Raspberry PI 3+ verfügt über mehr speicher (1Gb) und kann somit den Algorithmus bearbeiten. Für die Kameraufnahmen und die Bearbeitung der Bilder und schlussendlich die Konturenerkennung der Signalisation ist der Raspberry PI 3 Model A+  gut geeignet.
     \pagebreak
 
-    \textbf{Software Tafelerkennung}
+    \textbf{Software Tafelerkennung}\\
+    Für die Erkennung der Tafel wird auf das Framework OpenCV gesetzt. OpenCV hat sich als Standartframework im Bereich der Echtzeitbildverarbeitung. Weiter zeichnet sich OpenCV in seiner Effizienz und seiner breiten Community, welche im Internet mit vielen Tutorial zu hilfe stehen. In der Abbildung \ref{fig:ablauf_tafelerkennung} ist der Abblauf der Tafelerkennung und in der Tabelle \ref{tab:OpenCV_Funktionen_Tafelerkennung} die jeweilige Funktion beschrieben.
+
+
+
+    \begin{figure}[H] %Vision Ablauf
+        \centering
+        \includegraphics[width=1\textwidth]{Ablauf_Tafelerkennung.png}
+        \caption{Ablauf Erkennung der Tafelerkennung}
+        \label{fig:ablauf_tafelerkennung}
+    \end{figure}
+
+    \begin{table}[H]
+        \begin{flushleft}
+            \begin{tabular}{ | p{3cm} | p{10.5cm} |}
+                \hline
+                \textbf{Funktion}  & \textbf{Beschreibung} \\\hline
+                Bild aufnehmen und digitalisieren & Die Umgebung wird mittels der Raspberry PI Kamera und der Bibliothek picamera aufgenommen und dem OpenCV übergeben \\\hline
+                BGR2GRAY & Die Farbinformation vom Bild werden nicht benötigt und deshalb entfernt (Effizienz) \\ \hline
+                threashold & Für die Konturenerkennung braucht es nur die Schattierungen des Bildes. Aus diesem Grund wird ein Threashold auf das Bild gelegt damit ein Binery- Picture generiert werden kann. \\ \hline
+                find-contours & Nun wird die OpenCV Funktion find-contours angewendet. Dabei werden benachbarte Schwarz oder Weiss Pixel miteinander zusammengefügt bis eine Kontur entstehen kann. \\ \hline
+                morphologische Transformationen & Hier wird das Bild mittels morphologische Transformationen nachbearbeitet \\ \hline
+                filter & Die erkannten Konturen werden gefiltert nach der Grösse und Form der Tafel. \\ \hline
+                Tafel & Nun ist das Bild mit der Tafel erkannt worden und wird zur Nummererkennung vorbereitet. \\ \hline
+            \end{tabular}
+        \end{flushleft}
+        \caption{Beschreibung der OpenCV Funktionen}
+        \label{tab:OpenCV_Funktionen_Tafelerkennung}
+     \end{table}
+
+     In der Abbildung \ref{fig:tafelerkennung} links sieht man die erkannte Position der Nummer auf der Tafel. Rechts sieht man die gleiche Aufnahme nach der Filterung. Dieses Bild wird nun auf die Grösse des rechten Erkannten Rechteckes zugeschnitten und dem Raspberry PI 3+ zur Nummererkennung übergeben.\\
+
+     \textbf{Konfiguration Raspberry PI Kamera}\\
+     Eine weitere Schwierigkeit bei der Nummererkennung ist die Aufnahme mittels Kamera. Bei hohen Geschwindigkeiten neigt das Bild dazu unscharf zu werden. Dies liegt daran, dass die Verschlusszeit der Kamera zu lange ist. Mit der Raspberry PI Kamera und der Schnittstelle piCamera können viele Parameter eingestellt werden. Hier liegt der Schlüssel zur Behebung von unscharfen Bildern. Wenn Parameter wie Belichtungszeit, Helligkeit, Sättigung und Weissabgleich fest eingestellt werden, können in erster Linie reproduzierbare Bilder aufgenommen werden und die Belichtungszeit kann auf ein Minimum gesetzt werden. Wenn die Belichtungszeit kürzer gesetzt wird, ist das Ergebnis aber dunklere Bilder. Mit digitaler Aufhellung oder sogar mit externer Beleuchtung kann aber diesen Effekt entgegengesetzt werden. 
+
+     \begin{figure}[H] %Vision Ablauf
+        \centering
+        \includegraphics[width=0.3\textwidth]{signal_number.png}
+        \hspace{1cm}
+        \includegraphics[width=0.28\textwidth]{signal_threshold.png}
+        \caption{Tafelerkennung}
+        \label{fig:tafelerkennung}
+    \end{figure}
+
+    \textbf{Software Nummererkennung}
+
+
     
 
 
