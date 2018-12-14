@@ -80,7 +80,7 @@
     Das StormPi Modul wird mit einem LiFePO4-Akku ergänzt. Der Standartakku hat $1000mAh$. Bei einer Spannung von $3.7V$ entspricht dies $3.7Wh$. \\
     Dies ist genügend für zwei durchläufe und da der Akku ausserhalb der Hochgeschwindigkeitsfahrt nachgeladen werden soll, reicht dieser Akku gut.
 
-    \subsubsection{Sensoren}
+    \subsubsection{Sensoren} \label{et_sensoren}
     Mit diversen Sensoren sollen folgende Daten aufgenommen werden. Folgende Daten sollen aufgezeichnet werden:
     \begin{itemize}
         \item Beschleunigung
@@ -90,30 +90,30 @@
         \item Distanz links (für Erkennung Haltesignal)
     \end{itemize}
 
-
     \textbf{Beschleunigung}\\
-    Die Beschleunigung wird mit einem Beschleunigungssensor ADXL345 aufgenommen. Dieser kommuniziert über eine $I^2C$ Schnittstelle mit dem Mikrocontrollers. Er liefert jeweils die Beschleunigung in x-, y-, und z-Richtung. Der Sensor wird parallel zur Fahrtrichtung montiert, sodass es reicht eine Beschleunigungsrichtung für die Querbeschleunigung und eine Richtung für die Längsbeschleunigung auszuwerten.\\
+    Die Beschleunigung wird mit einem Beschleunigungssensor ADXL345 aufgenommen. Dieser kommuniziert über eine $I^2C$ Schnittstelle mit dem Mikrocontrollers. Er liefert jeweils die Beschleunigung in x-, y-, und z-Richtung. Der Sensor wird parallel zur Fahrtrichtung montiert, sodass es reicht eine Beschleunigungsrichtung für die Querbeschleunigung und eine Richtung für die Längsbeschleunigung auszuwerten. Die Verwendung des Sensors ist in Kapitel \ref{pi_beschleunigung} detailliert beschreiben.\\
 
-    \textbf{Geschwindigkeit}\\ \label{et_geschwindigkeit}
+    \textbf{Geschwindigkeit}\\
     Die Geschwindigkeit wird hauptsächlich über den Quadratur Encoder am Antriebsmotor aufgenommen. Zusätzlich wird die Geschwindigkeit über die Beschleunigung zur Plausibilitätskontrolle nachgerechnet.
 
-    \paragraph{Quadratur Encoder:} Der Quadratur Encoder MR, Typ L gibt 256 Impulse pro Umdrehung. Der Verlauf eines Impulses ist in Abbildung \ref{fig:et_encoder} dargestellt. Der Encoder stellt drei Kanäle zur Verfügung. Über den Kanal $A$ und $B$ kann einzeln die Geschwindigkeit bestimmt werden. Durch auswerten der Phasenverschiebung der beiden Kanäle ("$A$ eilt $B$ vor" oder "$A$ eilt $B$ nach") kann zusätzlich noch die Drehrichtung bestimmt werden. Der Kanal $I$ ist mit Kanal $A$ und $B$ synchronisiert und kann ebenfalls zur Bestimmung der Geschwindigkeit dienen.\\
+    \paragraph{Quadratur Encoder:} Der Quadratur Encoder MR, Typ L gibt $1024$ Impulse pro Umdrehung. Der Verlauf eines Impulses ist in Abbildung \ref{fig:et_encoder} dargestellt. Der Encoder stellt drei Kanäle zur Verfügung. Über den Kanal $A$ und $B$ kann einzeln die Geschwindigkeit bestimmt werden. Durch auswerten der Phasenverschiebung der beiden Kanäle ("$A$ eilt $B$ vor" oder "$A$ eilt $B$ nach") kann zusätzlich noch die Drehrichtung bestimmt werden. Der Kanal $I$ ist mit Kanal $A$ und $B$ synchronisiert und kann ebenfalls zur Bestimmung der Geschwindigkeit dienen.\\
     Für die Bestimmung der Geschwindigkeit kann die Dauer eines Impulses gemessen werden oder es können die Anzahl Impulse in einer bestimmten Zeit gezählt werden. Für dieses Projekt soll die Dauer des Impulses gemessen werden. Der Vorteil dieser Methode ist die bessere Präzision, da nach jedem einzelnen Impuls die durchschnittliche Geschwindigkeit seit dem letzten Impuls sofort bestimmt werden kann. Das Risiko ist, dass bei hohen Umdrehungszahlen der Mikrocontroller nicht schnell genug ist mit dem Zählen oder dass der Zähler des Mikrocontrollers bei sehr tiefen Umdrehungszahlen überläuft.\\
-    Die maximalen Umdrehungszahl des Antriebsmotors liegt bei $8590 min^{-1}$. Mit $256$ Impulsen pro Umdrehung ergibt dies $$8590 min^{-1} \cdot 256 Impulse = 2'199'040 \frac{Impulse}{min}$$.
-    Dies sind dann $$ 2'199'040 \frac{Impulse}{min} / 60s = 36'651 \frac{Impulse}{s} $$.
-    Dies ergibt eine Impulsdauer von $$\frac{1}{36'651 \frac{Impulse}{s}} = 27.26\mu s$$. Bei der schnellsten möglichen Timer Einstellung auf dem TinyK22 ($60MHz$) ergibt dies noch $1'637 \frac{Ticks}{Impuls}$. Dies ist ein plausibler Wert. Bei der Implementation muss jedoch beachtet werden, dass bei hoher Geschwindigkeit möglichst wenig Zeit in der Interrupt routine verbracht wird, da diese dann sehr of aufgerufen wird.\\
-    Damit der Timer nicht überläuft muss der Impuls fertig sein, bevor der Timer den Wert $$2^{32} \approx 4.29 Mrd$$ erreicht wird. Dies ergibt bei $60MHz$ eine Zeit von $$2^{32} \cdot \frac{1}{60MHz} = 71.58s$$. Also ist ein tiefe Umdrehungszahl bis zu $$\frac{1}{71.58s \cdot 256} = 54.6 \cdot 10^{-6} s^{-1} \hat{=} 909 \cdot 10^{-9} min^{-1}$$
-    Also sollte diese Umdrehungszahl nicht unterschritten werden. 
+    Die maximalen Umdrehungszahl des Antriebsmotors für die angestrebte Maximalgeschwindigkeit liegt bei $5200 min^{-1}$. Mit $1024$ Impulsen pro Umdrehung ergibt dies $$5200 min^{-1} \cdot 1024 Impulse = 5'324'800 \frac{Impulse}{min}$$.
+    Dies sind dann $$ 5'324'800 \frac{Impulse}{min} / 60s = 88'747 \frac{Impulse}{s} $$.
+    Dies ergibt eine Impulsdauer von $$\frac{1}{36'651 \frac{Impulse}{s}} = 11.29\mu s$$. Bei der schnellsten möglichen Timer Einstellung auf dem TinyK22 ($60MHz$) ergibt dies noch $676 \frac{Ticks}{Impuls}$. Bei der Implementation muss also beachtet werden, dass bei hoher Geschwindigkeit möglichst wenig Zeit in der Interrupt routine verbracht wird, da diese dann sehr of aufgerufen wird. Sollte sich zeigen, dass der Mikrocontrollers durch die hohe Impulsrate überlastet ist, muss ein Encoder mit weniger Impulsen pro Umdrehung gewählt werden oder ein Frequenzteiler dazwischen geschaltet werden.\\
+    Damit der Timer nicht überläuft muss eine Impulsperiode fertig sein, bevor der Timer den Wert $$2^{32} \approx 4.29 Mrd$$ erreicht wird. Dies ergibt bei $60MHz$ eine Zeit von $$2^{32} \cdot \frac{1}{60MHz} = 71.58s$$. Also ist ein tiefe Umdrehungszahl bis zu $$\frac{1}{71.58s \cdot 1024} = 13.6 \cdot 10^{-6} s^{-1}$$
+    Also sollte diese Umdrehungszahl nicht unterschritten werden. Diese Zahl ist so klein, dass dies als Stillstand gewertet werden kann.
     
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.8\textwidth]{Encoder_MR.png}
+        \includegraphics[width=0.6\textwidth]{Encoder_MR.png}
         \caption {Signalverlauf Encoder \\Quelle: Katalogseite 420, Encoder MR Typ L, maxon sensor}
         \label{fig:et_encoder}
     \end{figure}
 
-    Die Geschwindigkeit kann daraus mittels der Mechanischen Übersetzung berechnet werden. 
-    \textcolor{red}{TODO: Mechis --> Übersetzun vom Motor auf die Schienen, also $$v_{Zug}(Umdrehungszahl_{Motor}) = ???$$}\\
+    Die Geschwindigkeit des Zuges ($v_{Zug}$) kann somit aus der Umdrehungszahl des Motors ($N_{Motor}$) mittels der Mechanischen Übersetzung und der Grösse der Räder berechnet werden. 
+    $$v_{Zug}(N_{Motor}) = \frac{N_{Motor}}{2} \cdot d \cdot \pi$$\\
+    $d:$ Raddurchmesser $22mm$\\
 
     \paragraph{Nachrechnen der Geschwindigkeit:}
     Unter der Annahme, dass zu beginn der Messung zum Zeitpunkt $t = 0$ die Geschwindigkeit $0$ ist $(v(t=0) = 0)$ kann die Geschwindigkeit zum Zeitpunkt $t$ bestimmt werden mit $$v(t) = \int_{0}^{t} a(x) dx$$.\\
@@ -123,7 +123,7 @@
     Über den Beschleunigungssensor kann man die aktuelle Position auf der Fahrbahn berechnen. Die zurückgelegte Strecke errechnet sich durch Integration der Geschwindigkeit oder durch zweifache Integration der Beschleunigung.\\
     Unter der Annahme, dass zu beginn der Messung zum Zeitpunkt $t = 0$ die zurückgelegte Strecke $0$ ist $(s(t=0) = 0)$ kann die Geschwindigkeit zum Zeitpunkt $t$ bestimmt werden mit $$s(t) = \int_{0}^{t} v(x) dx$$.\\
     Da aber auf einem Digitalen System die Daten nur zu diskreten Zeitpunkten ausgewertet werden können ergibt sich dann eine Summen der Geschwindigkeiten zum Zeitpunkt $k$ $$s[k] = \sum_{i=0}^{k}v[i] \Delta t$$\\
-    Die Geschwindigkeit wird gemäss Kapitel \ref{et_geschwindigkeit} bestimmt.
+    Die Geschwindigkeit wird gemäss der Beschreibung oben bestimmt.
 
     \textbf{Distanz}\\
     Auf beiden Seiten des Zuges wird eine Distanzmessung benötigt. Auf der rechten Seite des Zuges muss der Würfel erkennt werden und auf der Linken Seite soll ein ausklappbarer Sensor am Schluss die genaue Distanz zum Haltesignal bestimmen.
@@ -142,15 +142,37 @@
     Es wird ein Arduion IBT\_2 DC-Motoren Treiber mit einem BTS7960 eingesetzt. Dieses Bauteil kann Motoren mit einem Strom von bis zu 43A versorgen. \\
     
     \textbf{Antriebsmotor}\\
-    Als Antriebsmotor dient ein Maxon DCX 32 L. Dieser kann eine Leistung von bis zu 70 Watt umsetzen. Dabei zu beachten ist, dass der Anlaufstrom bis zu $70A$ betragen kann. Dieser Strom muss begrenzt werden indem der Mikrocontrollers die Beschleunigung gemäss dem gemessenen Stromverbrach anpasst.\cite{MaxonDCX32L} Dies ist bei einer Versorgungsspannung von 24V spezifiziert. Da aber nicht die maximale Drehzahl benötigt wird kann auch eine entsprechend tiefere Spannung angelegt werden.\\ 
+    Als Antriebsmotor dient ein Maxon DCX 32 L. Dieser kann eine Leistung von bis zu 70 Watt umsetzen. Dabei zu beachten ist, dass der Anlaufstrom bis zu $70A$ betragen kann. Dieser Strom muss begrenzt werden indem der Mikrocontrollers die Beschleunigung gemäss dem gemessenen Stromverbrach anpasst.\cite{MaxonDCX32L} Dies ist bei einer Versorgungsspannung von 24V spezifiziert. Da aber nicht die maximale Drehzahl benötigt wird kann auch eine entsprechend tiefere Spannung angelegt werden. Die Drehzahlkonstante des Motors ist $350 \frac{min^{-1}}{V}$. Für die angestrebte Drehzahl von $5200min^{-1}$ ergibt sich eine Spannung von $$\frac{5200min^{-1}}{350 \frac{min^{-1}}{V}} =14.8V$$ Somit muss der Antriebsmotor mit einer Spannung von mindestens $14.8V$ versorgt werden.\\ 
 
     \textbf{Motorentreiber für Schwenker-Motor}\\
     Da die Richtung immer dieselbe ist reicht für den Schwenker ein normaler DC-Motoren Treiber. Um eine sanfte Beschleunigung und Abbremsung der konstruktion zu ermöglichen, soll auch der Schwenkermotor mit einem PWM angesteuert werden. Als Treiber wird ein Board mit einem L298N verwendet.\\
 
     \textbf{Schwenkermotor}\\
-    Für den Schwenker wir ein \textcolor{red}{TODO: Motorentyp} verwendet. Um die Position des Schwenkers zu bestimmen ist auch an diesem Motor ein Encoder befestigt. Durch Messungen kann genau festgestellt werden wie viele Impulse abgewartet werden müssen bis der Schwenker seine Endposition erreicht hat.\\
+    Für den Schwenker wir ein Maxon DCX 19 S verwendet. Um die Position des Schwenkers zu bestimmen ist auch an diesem Motor ein Encoder befestigt. Durch die Bestimmung der nötigen Umdrehungen bis der Schwenker eingefahren ist kann genau festgestellt werden wie viele Impulse abgewartet werden müssen bis der Der Motor anhalten muss. \cite{MaxonDCX19S}\\
 
     \textbf{Distanzsensor links ausklappen}\\
     Um den Sensor beim Parkieren ausklappen zu können wird er an einem Servo befestigt. Sobald die Systemsteuerung entscheidend, dass das korrekte Haltesignal das nächste ist gibt sie den Befehlt den Sensor auszuklappen. Dafür wird ein "Tower Pro Micro Servo SG90" verwendet. Dieser hat ein Drehmoment von bis zu $2.5 kg-cm$. \cite{SG90Datasheet}\\
+
+    \subsubsection{Proof-of-Concept}
+    Um die Funktionsfähigkeit der einzelnen Komponenten sicherzustellen wurden diverse Tests gemacht. Das ziel dieser Tests war es die einfachste Form jeder Funktionalität zu realisieren. Auf eine quantitativ genaue Anpassung wurde in diesem ersten Schritt verzichtet, dies ist für die Realisierung des Projekts vorgesehen. Das Ziel der Tests war somit nur zu Zeigen, dass die Komponente wie vorgesehen funktionnieren kann. Eine Übersicht der durchgeführten Tests ist in Tabelle \ref{tab:poc_et} ersichtlich.\\
+
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{|l|p{10cm}|r|}
+        \hline
+        \textbf{Komponente}   & \textbf{Beschreibung des Tests}                                                                                                                                                                                                                                                                                                                  & \textbf{Ok} \\ \hline
+        Tiny K22              & Der Mikrocontroller konnte erfolgreich programmiert werden und Hardware kann darüber angesteuert werden.                                                                                                                                                                                                                                         & \checkmark       \\ \hline
+        UART Kommunikation    & Mittels dem "Raspberry Pi APROG HAT" konnte erfolgreich zwischen dem Pi und dem Tiny mittels UART kommuniziert werden.                                                                                                                                                                                                                           & \checkmark       \\ \hline
+        Beschleunigungssensor & Der Beschleunigungssensor wurde über die Schnittstelle angesteuert und die werte für die x-, y- und z-Richtung konnten erfolgreich ausgelesen werden.                                                                                                                                                                                            & \checkmark       \\ \hline
+        Motorenansteuerung    & Vom Mikrocontroller wurde ein PWM generiert. Der Pin mit dem PWM wurde mit dem Motorentreiber Arduion IBT 2 und dieser dann mit einem Motor verbunden. Durch Vorgaben des Mikrocontrollers konnte die Geschwindigkeit und die Richtung des Motors eingestellt werden.                                                                            & \checkmark       \\ \hline
+        Encoder               & Der Encoder wurde vom Mikrocontroller ausgelesen und die Zeiten und Impulse ausgewertet. Es zeigte sich dass der Encoder korrekt 1024 Impulse pro Umdrehung liefert. Daraus lies sich dann die Umdrehungszahl berechnen.                                                                                                                         & \checkmark       \\ \hline
+        Ultraschallsensor     & Der Ultraschallsensor wurde vom Mikrocontroller gemäss dem Datenblatt angesteuert. Mittels der gemessenen Zeit konnte eine approximative Distanz berechnet werden. Für einen exakten Wert sind noch genauere Abstimmungen nötig. Der Sensor reagiert jedoch zuverlässig auf Objekte in der Grösse des Würfels oder der Haltesignale.             & \checkmark       \\ \hline
+        TOF-Sensor            & Mit einer Code-Bibliothek, die für das Tiny K22 angepasst wurde, konnte der TOF-Sensor erfolgreich angesteuert werden. Damit kann eine approximative Distanz berechnet werden. Für einen exakten Wert sind noch genauere Abstimmungen nötig. Der Sensor reagiert jedoch zuverlässig auf Objekte in der Grösse des Würfels oder der Haltesignale. & \checkmark       \\ \hline
+        Spannungsanpassung    & Der DC-DC Converter wurde mit einer Spannungsquelle verbunden und die Ausgangsspannung bei diversen Einstellungen korrekt gemessen.                                                                                                                                                                                                              & \checkmark       \\ \hline
+        Stromüberwachung      & Eine Differenzverstärkerschaltung wurde mit unterschiedlichen Lastwiderständen simuliert und durch die Messspannung den Strom bestimmmt und mit dem Strom der Simulation verglichen.                                                                                                                                                             & \checkmark       \\ \hline
+        \end{tabular}
+        \caption{Übersicht Proof-of-Concept Elektronik}
+        \label{tab:poc_et}
+        \end{table}
 
     \end{document}

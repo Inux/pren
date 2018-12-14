@@ -1,7 +1,87 @@
-\documentclass[../..main.tex]{subfiles}
+\documentclass[../../main.tex]{subfiles}
+
+\graphicspath{{images/Fahrdaten/}{../../images/Fahrdaten/}}
+
 \begin{document}
-\subsubsection{Beschleunigung}
-Mithilfe elektronischer Komponente kann Beschleunigung, Geschwindigkeit und Distanz(vom Startbereich) gemessen und analyiert werden. Zusätzlich kann eine approximierte Position des Zuges auf der Strecke berechnet werden.
+\subsubsection{Beschleunigung} \label{pi_beschleunigung}
+Mithilfe elektronischer Komponente kann Beschleunigung, Geschwindigkeit und Distanz(vom Startbereich) gemessen und analysiert werden. Zusätzlich kann eine approximierte Position des Zuges auf der Strecke berechnet werden. Die Berechnungen dazu sind in Kapitel \ref{et_sensoren} beschrieben.
+
+\paragraph{Anforderungen}
+\begin{itemize}
+    \item Momentane Beschleunigung auslesen
+    \item Beschleunigung in Geschwindigkeit und Distanz umrechnen
+    \item Approximierte Position berechnen (wo auf der Strecke befinden wir uns)
+    %\item (Optional) Zentrifugalkräfte in Kurven berechnen
+\end{itemize}
+
+\paragraph{Konzept}
+Über ein Beschleunigungssensor werden Beschleunigung und Rotation ausgelesen. Die Beschleunigung kann zusätzlich in Geschwindigkeit und Distanz umgerechnet werden.
+
+\paragraph{Komponente}
+Bei der Komponentenwahl fiel der Entscheid auf einen Adafruit $I^2C$ 3-Achsen Beschleunigungssensor, dieser kann Beschleunigung sowie Rotation berechnen. Er weist eine sehr kompakte Bauform auf und ist relativ günstig zu erwerben. Online haben verschiedene Nutzer mit dieser Komponente positive Erfahrung gesammelt. Auch ist die Komponente gut dokumentiert und man findet verschiedene Tutorien wie man diese mit einem Raspberry Pi kombinieren kann.
+
+\begin{table}[H]\centering
+\begin{flushleft}
+\begin{tabular}{lll}
+Name & Adafruit ADXL 345 \\
+Preis & 1Fr    \\
+Länge & 25mm    \\
+Breite & 19mm   \\
+Höhe & 3.14mm   \\
+Gewicht & 1.27g   \\
+Versorgungsspannung & 3-5V \\
+\end{tabular}
+\end{flushleft}
+\end{table}
+
+\subparagraph{Bauplan / Interface}
+\begin{figure}[H] \centering
+  \includegraphics[width=0.5\textwidth, angle=90]{Verkabelung_BeschlSensor}
+  \caption{Verkabelung Beschleunigungssensor}
+  \label{fig:Beschleunigungssensor}
+\end{figure}
+
+\begin{table}[] \centering
+\begin{tabular}{lll}
+Bezeichnung     & GPIO Port & MPU 6050 \\
+Stromversorgung & 3V3      & VCC      \\
+Ground          & GND      & GND      \\
+Daten          & SDA      & SDA      \\
+Clock          & SCL      & SCL
+\end{tabular}
+\end{table}
+
+Der Sensor wird über die $I^2C$ Schnittstelle angesprochen und verwendet somit einen Datenport (SDA) und eine Clock (SCL). Für die Stromversorgung reicht der 3.3V Port (3V3) und der Ground (GND) des GPIO Buses.
+
+\subparagraph{Daten}
+Mithilfe eines Skripts erhalten wir eine gute übersicht der erhaltenen Daten.
+
+\begin{lstlisting}
+Gyroskop
+
+gyroskop\_xout:   -260  skaliert:  -2
+gyroskop\_yout:   -154  skaliert:  -2
+gyroskop\_zout:     78  skaliert:  0
+
+Beschleunigungssensor
+
+beschleunigung\_xout:   -1048  skaliert:  -0.06396484375
+beschleunigung\_yout:    -676  skaliert:  -0.041259765625
+beschleunigung\_zout:   16644  skaliert:  1.01586914062
+X Rotation:  -2.32121150537
+Y Rotation:  3.59994842011
+\end{lstlisting}
+
+\paragraph{Realisierung}
+Daten werden in einem von uns festgelegten Interval über die $i^2c$ Schnittstelle eingelesen. Die $i^2c$ Schnittstelle muss in der Raspberry Pi Konfiguration aktiviert werden. Weiter müssen die benötigten Tools "i2c-tools" sowie "python-smbus" installiert werden. Dem Raspberry Pi wird eine Adresse auf dem $i^2c$ Datenbus zugewiesen, welche über "sudo i2cdetect -y 1" abgerufen werden kann.
+
+Softwaretechnisch wird die Schnittstelle in Python realisiert, denn Python verfügt über die mächtigsten Bibliotheken in den Bereichen Mathematik und $i^2c$. Der Beschleunigungssensor kann direkt über seine Adresse angesprochen werden und gibt die Daten in Form eines Words zurück. Der Beschleunigungssensor muss für jedes Word(z.B. gyroskop\_xout) eine Anfrage auf den Datenbus schreiben und lesen.
+
+Die erhaltenen Daten werden in momentane Geschwindigkeitsdaten(Beschleunigung, Geschwindigkeit, Distanz) umgerechnet und anschliessend analysiert.
+
+
+
+
 
 
 
