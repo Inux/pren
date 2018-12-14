@@ -22,5 +22,7 @@
 void ftm2Init(void);
 
 uint32_t ftm2GetNbrOfImpulses();
+uint32_t ftm2GetRevMin();
+uint32_t ftm2GetLastDivTicks();
 
 #endif /* SOURCES_FTM2_H_ */

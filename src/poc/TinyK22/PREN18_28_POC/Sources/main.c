@@ -103,11 +103,18 @@ void ImpulsCounterMain()
   {
     count = 0;
     uint32_t impulses = ftm2GetNbrOfImpulses();
+    uint32_t revMin = ftm2GetRevMin();
+    uint32_t speed = ((float)revMin/60)*22*3.14159;
 
     char buf[128];
     buf[0] = '\0';
     utilStrcat(buf, sizeof(buf), "Impulses: ");
     utilStrcatNum32u(buf, sizeof(buf),  impulses);
+    utilStrcat(buf, sizeof(buf), "   N: ");
+    utilStrcatNum32u(buf, sizeof(buf),  revMin);
+    utilStrcat(buf, sizeof(buf), "min^(-1)   speed: ");
+    utilStrcatNum32u(buf, sizeof(buf),  speed);
+    utilStrcat(buf, sizeof(buf), "mm/s");
     termWriteLine(buf);
   }
 }
@@ -139,11 +146,11 @@ void main(void)
 //  quadInit();
 //  i2cInit();
 
-  VL53L0X_Constructor();
-  VL53L0X_init(true);
+//  VL53L0X_Constructor();
+//  VL53L0X_init(true);
 //  VL53L0X_setTimeout(500);
-  VL53L0X_io_timeout = 5; //todo correct
-  VL53L0X_startContinuous(0);
+//  VL53L0X_io_timeout = 5; //todo correct
+//  VL53L0X_startContinuous(0);
 
 //  VL6180X_init();
 

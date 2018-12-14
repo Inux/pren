@@ -32,17 +32,44 @@ void FTM2TOF_IRQHandler(void) __attribute__ ((weak, alias("Default_Handler_FTM2"
 #define TOF_TOIE_MASK       (FTM_SC_TOF_MASK | FTM_SC_TOIE_MASK)
 
 uint32_t nbrOfImpulses;
+uint32_t oldTicks;
+uint32_t divTicks;
 
 uint32_t ftm2GetNbrOfImpulses()
 {
   return nbrOfImpulses;
 }
 
+uint32_t ftm2GetLastDivTicks()
+{
+  return divTicks;
+}
+
+uint32_t ftm2GetRevMin()
+{
+  if (divTicks > 0)
+  {
+    float revMin = (float)60/(((float)divTicks/FTM2_CLOCK)*1024);
+    return (uint32_t)round(revMin);
+  }
+  else
+  {
+    return 0;
+  }
+}
 
 void FTM2CH0_IRQHandler()
 {
+  GPIOC_PCOR |= 1 << 2;
+
   FTM2_C0SC &= ~FTM_CnSC_CHF_MASK;
   nbrOfImpulses++;
+
+  uint32_t newTicks = FTM2_C0V;
+  divTicks = newTicks - oldTicks;
+  oldTicks = newTicks;
+
+  GPIOC_PSOR |= 1 << 2;
 }
 
 /**
