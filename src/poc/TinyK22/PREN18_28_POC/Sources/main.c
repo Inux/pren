@@ -23,6 +23,7 @@
 #include "motor.h"
 #include "VL53L0X.h"
 #include "VL6180X.h"
+#include "ftm2.h"
 
 // calulates the nr of TOF count for a given number of milliseconds
 #define TOFS_MS(x)   ((uint16_t)(((FTM1_CLOCK / 1000) * x) / (FTM1_MODULO + 1)))
@@ -94,6 +95,22 @@ void drive()
   }
 }
 
+void ImpulsCounterMain()
+{
+  static uint32_t count = 0;
+  count++;
+  if (count >= TOFS_MS(500))
+  {
+    count = 0;
+    uint32_t impulses = ftm2GetNbrOfImpulses();
+
+    char buf[128];
+    buf[0] = '\0';
+    utilStrcat(buf, sizeof(buf), "Impulses: ");
+    utilStrcatNum32u(buf, sizeof(buf),  impulses);
+    termWriteLine(buf);
+  }
+}
 
 void term()
 {
@@ -113,13 +130,14 @@ void main(void)
 {
   char buf[128];
 
-  ftm1Init();                         // init flex timer 1
+  ftm1Init();
+  ftm2Init();
   termInit(57600);                    // init terminal with a baudrate of 57600
-  hcsr04Init();
+//  hcsr04Init();
   driveInit();
   motorInit();
 //  quadInit();
-  i2cInit();
+//  i2cInit();
 
   VL53L0X_Constructor();
   VL53L0X_init(true);
@@ -140,10 +158,12 @@ void main(void)
       FTM1_SC &= ~FTM_SC_TOF_MASK;    // overflow occurred => clear TOF flag
 
       //hcsr04();
-      VL53L0x_Main();
+      //VL53L0x_Main();
       //drive();
       term();
 //      VL6180x_Main();
+
+      ImpulsCounterMain();
 
     }
   }
