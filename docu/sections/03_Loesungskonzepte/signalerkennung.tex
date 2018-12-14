@@ -11,7 +11,7 @@
 
 \begin{document}
 \subsection{Signalerkennung}
-    In der Aufgabenstellung wird gefordert, dass der Schnellzug während der Bewältigung der Strecke ein Signal mit aufgedruckter Nummer erkennt wird. Wie in der Abbildung XX ersichtlich, ist die Nummer auf einer 3x3cm Tafel mit weissem Hintergrund, schwarz aufgedruckt. Die Aufgabe Signalerkennung wird in zwei Teilaufgaben unterteilt:
+    In der Aufgabenstellung wird gefordert, dass der Schnellzug während der Bewältigung der Strecke ein Signal mit aufgedruckter Nummer erkennt wird. Die Nummer ist auf einer 3x3cm Tafel mit weissem Hintergrund, schwarz aufgedruckt. Die Aufgabe Signalerkennung wird in zwei Teilaufgaben unterteilt:
     \begin{itemize}
         \item Erkennung der Signalisation mit Tafel
         \item Erkennung der aufgedruckten Nummer
@@ -28,7 +28,7 @@
         \label{fig:architektur_hardware_signalerkennung}
     \end{figure}
 
-    Für die Nummererkennung auf der Tafel wird ein auf Keras und Tensorflow basierender Machine- Learning Algorithmus verwendet. Damit die Trainingsdaten des Models eingelesen werden können und somit Tenserflow ausführbar wird, braucht es eine gewisse grösse des Arbeitsspeichers. Der Arbeitsspeicher des Raspberry PI 3 Model A+ (512Mb) reicht dafür nicht aus. Der Raspberry PI 3+ verfügt über mehr speicher (1Gb) und kann somit den Algorithmus bearbeiten. Für die Kameraufnahmen und die Bearbeitung der Bilder und schlussendlich die Konturenerkennung der Signalisation ist der Raspberry PI 3 Model A+  gut geeignet.
+    Für die Nummererkennung auf der Tafel Machine- Learning Algorithmus verwendet. Damit die Trainingsdaten des Models eingelesen werden können und somit ausführbar wird, braucht es eine gewisse grösse des Arbeitsspeichers. Der Arbeitsspeicher des Raspberry PI 3 Model A+ (512Mb) reicht dafür nicht aus. Der Raspberry PI 3+ verfügt über mehr speicher (1Gb) und kann somit den Algorithmus bearbeiten. Für die Kameraufnahmen und die Bearbeitung der Bilder und schlussendlich die Konturenerkennung der Signalisation ist der Raspberry PI 3 Model A+  gut geeignet.
     \pagebreak
 
     \textbf{Software Tafelerkennung}\\
@@ -68,18 +68,33 @@
 
      \begin{figure}[H] %Vision Ablauf
         \centering
-        \includegraphics[width=0.3\textwidth]{signal_number.png}
+        \includegraphics[width=0.2\textwidth]{number_location.png}
         \hspace{1cm}
-        \includegraphics[width=0.28\textwidth]{signal_threshold.png}
-        \caption{Tafelerkennung}
+        \includegraphics[width=0.17\textwidth]{number_thres.png}
+        \hspace{1cm}
+        \includegraphics[width=0.4\textwidth]{number_reco.png}
+        \caption{Nummerposition- und Nummererkennung}
         \label{fig:tafelerkennung}
     \end{figure}
 
-    \textbf{Software Nummererkennung}
-
-
-    
-
-
-
+    \textbf{Software Nummererkennung}\\
+    Damit nun die Nummer auf der Tafel erkannt werden kann, wird ein Machine- Learning Algorithmus verwendet. Dafür wird die high-level API Keras verwendet. Als Backend kommt Tensorflow zum Einsatz. Als Trainingsdatabase kommt die frei Verfügbare MNIST- Database zu Einsatz. Die MNIST- Datenbank verfügt über 60'000 Zahlen in Handschrift. In Tabelle XX ist die Zusammenfassung der Tensorflowbackend bezüglich dem ausgewählten Keras Model. In den ersten Tests hat die Erkennung gut funktioniert auch auf dem Raspberry PI. Probleme sind in erster Linie mit der Nummer "1" aufgetaucht. Die MNIST Datenbank verfügt nur über die amerikanisch geschriebene "1". Die "1" in Arial wird dadurch nicht erkannt. Sobald in PREN2 die Schriftart der Zahlen bekannt gegeben wird, muss eventuell einen eigenen Trainingsdatensatz erstellt werden oder auf einen anderen Datensatz wie zum Beispiel von UCI Machine Learning Repository. 
+    \begin{table}[H]
+            \begin{center}
+                \begin{tabular}{ | l | l | p{3cm} |}
+                \hline
+                \textbf{Layer(type)}  & \textbf{Output Shape} & \textbf{Param \#}\\\hline
+                conv2d\_1 (Conv2D) & (None, 26, 26, 32) & 320 \\\hline
+                conv2d\_2 (Conv2D) & (None, 24, 24, 64) & 18496 \\ \hline
+                max\_pooling2d\_1 (MaxPooling2) & (None, 12, 12, 64) & 0\\ \hline
+                dropout\_1 (Dropout) & (None, 12, 12, 64) & 0 \\ \hline
+                flatten\_1 (Flatten) & (None, 9216) & 0 \\ \hline
+                dense\_1 (Dense) & (None, 128) & 1179776 \\ \hline
+                dropout\_2 (Dropout)  & (None, 128) & 0 \\ \hline
+                dense\_2 (Dense)  & (None, 10) & 1290 \\ \hline
+                \end{tabular}
+            \end{center}
+            \caption{Auflistung aller Testklassen mit jeweiliger Testarten}
+            \label{tab:Testklassen}
+        \end{table}
 \end{document}
