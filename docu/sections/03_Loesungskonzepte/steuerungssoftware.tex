@@ -29,7 +29,7 @@ Klassen bzw. Funktionen für fast jede Programmiersprache zu benutzen. Das heiss
 allen Teilprogrammen verwendet werden können.
 
 \textbf{Beispiel Protobuf:}
-\lstinputlisting{../../../src/raspi/pb/direction.proto}
+\lstinputlisting{../src/raspi/pb/direction.proto}
 Man sieht nun das eine 'Direction' Mitteilung definiert wird welche ein String Attribute hat welches direction heisst. Mit diesere Definition
 nun mithilfe von einem 'protobuffer compiler' Code generiert werden welcher die definierte Message Serialisieren und Deserialisieren kann.
 
@@ -40,7 +40,7 @@ nun mithilfe von einem 'protobuffer compiler' Code generiert werden welcher die 
 Mithilfe von diesem Beispiel wird die Protobuf Definition (direction.proto) zu Python Code generiert.
 
 \textbf{Beispiel Generierter Python Code:}
-\lstinputlisting[language=Python]{../../../src/raspi/pb/direction_pb2.py}
+\lstinputlisting[language=Python]{../src/raspi/pb/direction_pb2.py}
 Das generierte Python File welches mithilfe des 'protobuffer compiler' erzeugt wurde.
 
 \subsubsection{Proof-of-Concept}
