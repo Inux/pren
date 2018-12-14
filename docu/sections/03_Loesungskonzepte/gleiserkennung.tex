@@ -1,0 +1,62 @@
+\documentclass[../../main.tex]{subfiles}
+\begin{document}
+\subsubsection{Gleiserkennung}
+Ein Beschleunigungssensor für die Erfassung der Fahrdaten ist bereits in der Aufgabenstellung vorgeschrieben.
+Um aber eine ideale Regelung zu ermöglichen wird zusätzlich eine Gleiserkennung implementiert. Mitwelcher schon im vorraus
+erkennt werden kann ob eine Kurve bevorsteht oder ob sich der Hochgeschwindigkeitszug auf einer geraden befindet.
+Während der Konzept Phase wurden verschiedene Verfahren evaluiert und zum Teil ausprobiert. Jedoch gab es keine Lösung welche zusätzlich zur Richtung noch den Radius
+der Kurve bestimmen kann. Die Momentane Lösung welche angestrebt wird kann also nur sagen ob es Geradeaus, nach Links oder nach Rechts geht.
+Diese Information wird in den Regelungskreis eingespiesen, welcher dadurch auf die maximale Geschwindikeit die im engsten schienen Radius möglich ist
+herunterreglet. Anschliessend wird mithilfe des Beschleunigungssensor versucht an das Limit der Zentripedalkraft zu regeln. Somit kann die
+bestmögliche Regelung implementiert werden ohne genauere Angaben zum aktuellen Kurvenradius zu haben.
+Mehr Details zum Regelkreis und dem Ganzen Ablauf sind im unter \ref{ablauf} zu finden.
+
+\subsubsection{Verfahren}
+Nachfolgend werden die einzelen Schritte zur bearbeitung eines Einzelnen Bild aufgelistet.
+Die einzelnen Teilschritte werden für jedes Bild welches aufgenommen wird neu berechnet.
+\begin{itemize} %Verfahren kurz und knapp
+    \item Bild Skalieren
+    \item Umrechnen zu Schwarz Weiss
+    \item Kantenglettung Anwenden (Canny Algorithmus)
+    \item Konturen Erkennung (Suzukui85 Algorithmus)
+    \item Kleine Konturen erkennen und verwerfen
+    \item Bild in zwei Hälften unterteilen
+    \item Berechnen der Anzahl Konturen in beiden Hälften
+        \begin{itemize}
+            \item Beide Hälften etwa gleich viele Konturen -> Gleis geht geradeaus
+            \item Linke Hälfte hat mehr Konturen -> Gleis geht nacht Links
+            \item Rechte Hälfte hat mehr Konturen -> Gleis geht nach Rechts
+        \end{itemize}
+\end{itemize}
+
+\textbf{Bild Skalieren}\\
+Das Bild muss für die Berechnungen herunterskaliert werden um die Rechenzeit zu reduzieren. Das Format
+wird dabei beibehalten, um verzerrungen zu vermeiden. Zuerst wird also das Seitenverhältnis berechnet um dann
+die kürzere Seite auf einen Konfigurierbaren wert zu setzen. Die längere Seite wird dann mit dem Seitenverhältnis Faktor
+berechnet.
+
+\textbf{Umrechnen zu Schwarz Weiss}\\
+Der Canny Algorithmus für die Kantenglettung muss mit einem Schwarz-Weiss Bild gefüttert werden deshalb wird das farbige Bild
+zu einem Schwarz-Weiss Bild umgerechnet.
+
+\textbf{Kantenglettung Anwenden (Canny Algorithmus)}\\
+Der Canny Algorithmus sucht Kanten im Bild und erzeugt ein Binäres Bild (Schwarz oder Weiss), wobei die Weissen Pixel eine Kanten
+beschreiben.
+
+\textbf{Konturen Erkennung (Suzuki85 Algorithmus)}\\
+Das Binäre Bild welches mithilfe vom Canny Algorithmus erzeugt wird kann mit dem Suzuki85 Algorithmus analysiert werden um Kontueren zu erkennen.
+Die Konturen sind jeweils eine Liste von Punkten welche zusammen eine Kontur abbilden.
+
+\textbf{Kleine Konturen erkennen und verwerfen}\\
+Die Anzahl Punkte einer Kontur werden mit einem Schwellwert verglichen. Sind die Anzahl Punkte innerhalb der Kontur zu gering wird sie verworfen.
+Somit können kleine Störungen im Bild bzw. kurze Linien ignoriert werden.
+
+\textbf{Bild in zwei Hälften unterteilen}\\
+Das Bild wird nun in zwei Hälften geteilt um die Entscheidung zu treffen ob Geradeaus, nach Links oder nach Rechts gefahren wird.
+
+\textbf{Berechnen der Anzahl Konturen in beiden Hälften}\\
+Um die Entscheidung zu treffen wird einfach die Anzahl Punkte in jeder Hälfte verglichen. Hat es in der Linken hälfte mehr geht das Gleis nach Links.
+Sind es in der Rechten Hälfte mehr geht es nach Rechts. Ist die Anzahl ungefähr identisch, dann geht es Geradeaus. Da es nie genau viele Punkte haben wird
+git es eine minimal Differenz die es geben muss zwischen Rechts und Links damit eine Kurve detektiert wird.
+
+\end{document}
