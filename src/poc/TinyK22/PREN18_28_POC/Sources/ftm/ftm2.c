@@ -60,7 +60,7 @@ uint32_t ftm2GetRevMin()
 
 void FTM2CH0_IRQHandler()
 {
-  GPIOC_PCOR |= 1 << 2;
+  GPIOC_PCOR |= 1 << 2 | 1 << 8;
 
   FTM2_C0SC &= ~FTM_CnSC_CHF_MASK;
   nbrOfImpulses++;
@@ -69,7 +69,7 @@ void FTM2CH0_IRQHandler()
   divTicks = newTicks - oldTicks;
   oldTicks = newTicks;
 
-  GPIOC_PSOR |= 1 << 2;
+  GPIOC_PSOR |= 1 << 2 | 1 << 8;
 }
 
 /**

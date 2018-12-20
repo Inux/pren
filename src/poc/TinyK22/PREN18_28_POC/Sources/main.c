@@ -158,6 +158,9 @@ void main(void)
   GPIOC_PDDR |= 1 << 2; // Set port direction of the blue Led on tinyK22 as output
   PORTC_PCR2 = PORT_PCR_MUX(1);    // configure port mux of the blue led to GPIO
 
+  GPIOC_PDDR |= 1<<8;                 // Test pin for encoder performace mesurement
+  PORTC_PCR8 = PORT_PCR_MUX(1);
+
   while (TRUE)
   {
     if (FTM1_SC & FTM_SC_TOF_MASK)    // check for timer overflow
