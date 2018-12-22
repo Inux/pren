@@ -2,39 +2,37 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 \subsubsection{Kostenübersicht}
+Gemäss der Aufgabenstellung steht ein Budget von 500 Franken zur verfügung. In Tabelle \ref{tab:kosten_total} wurden alle Komponente in einer Kostenübersicht zusammengetragen. Gemäss dieser Übersicht gibt es noch eine Reserve von ca. 50 Franken für nicht vorhergesehene Änderungen.\\
+In dieser Übersicht nicht enthalten sind Komponenten, welche aus der Mechanikwerkstadt oder dem Elektronik Labor der HSLU bezogen werden können. Auch sind Stundenansätzte für Werkstadtpersonal oder 3D-Drucker nicht berücksichtigt. \\
 
-
-% Please add the following required packages to your document preamble:
-% \usepackage[normalem]{ulem}
-% \useunder{\uline}{\ul}{}
 \begin{table}[H] \centering
     \begin{tabular}{|p{6cm}|l|r|r|r|}
     \hline
     \textbf{Beschreibung}                                   & \textbf{Lieferant} & \textbf{Anzahl} & \textbf{Stückpreis} & \textbf{Gesammtpreis} \\ \hline
-    Raspberry Pi 3 Model B+                                 & pi-shop            & 1               & CHF 39.00           & CHF 39.00             \\ \hline
-    Raspberry Pi Zero W                                     & pi-shop            & 1               & CHF 10.80           & CHF 10.80             \\ \hline
-    Raspberry Pi Kamera Beleuchtung                         & pi-shop            & 2               & CHF 24.90           & CHF 49.80             \\ \hline
-    Raspberry Pi Kamera                                     & pi-shop            & 2               & CHF 32.90           & CHF 65.80             \\ \hline
-    Passiver Buzzer                                         & play-zone          & 1               & CHF 5.00            & CHF 5.00              \\ \hline
-    StromPi 3                                               & Reichelt           & 1               & CHF 41.64           & CHF 41.64             \\ \hline
-    StromPi 3 Battery Pack, 1000 mAh                        & Reichelt           & 1               & CHF 31.20           & CHF 31.20             \\ \hline
-    Beschleunigungssensor ADXL345                           & aliexpress         & 1               & CHF 1.00            & CHF 1.00              \\ \hline
+    Raspberry Pi 3 Model B+                                 & pi-shop            & 1               & CHF 39.00           & CHF 39.00             \\ \hline \nocite{PiShopPi3ModelBp}
+    Raspberry Pi Zero W                                     & pi-shop            & 1               & CHF 10.80           & CHF 10.80             \\ \hline \nocite{PiShopPiZero}
+    Raspberry Pi Kamera Beleuchtung                         & pi-shop            & 2               & CHF 24.90           & CHF 49.80             \\ \hline \nocite{PiShopBrightPi}
+    Raspberry Pi Kamera                                     & pi-shop            & 2               & CHF 32.90           & CHF 65.80             \\ \hline \nocite{PiShopPiKamera}
+    Passiver Buzzer                                         & play-zone          & 1               & CHF 5.00            & CHF 5.00              \\ \hline \nocite{PlayZonePassiverBuzzer}
+    StromPi 3                                               & Reichelt           & 1               & CHF 41.64           & CHF 41.64             \\ \hline \nocite{ReicheltStromPi}
+    StromPi 3 Battery Pack, 1000 mAh                        & Reichelt           & 1               & CHF 31.20           & CHF 31.20             \\ \hline \nocite{ReicheltStromPiAkku}
+    Beschleunigungssensor ADXL345                           & aliexpress         & 1               & CHF 1.00            & CHF 1.00              \\ \hline \nocite{AliExpressADXL345}
     Tiny K22                                                & hslu               & 1               & CHF 26.00           & CHF 26.00             \\ \hline
-    Arduino IBT\_2 (DC-Motoren Treiber) (43A)               & wish               & 1               & CHF 9.00            & CHF 9.00              \\ \hline
-    DC\-DC CC Converter (12A)                               & wish               & 1               & CHF 3.00            & CHF 3.00              \\ \hline
-    Ultraschallsensor HS-SR04                               & aliexpress         & 1               & CHF 0.77            & CHF 0.77              \\ \hline
-    TOF Sensor VL53L0X                                      & aliexpress         & 1               & CHF 3.69            & CHF 3.69              \\ \hline
-    LM2596 DC-DC Schritt-down Converter (2.5A)              & aliexpress         & 1               & CHF 0.90            & CHF 0.90              \\ \hline
-    Strommesswiderstand 13FR200E                            & Distrelec          & 1               & CHF 2.80            & CHF 2.80              \\ \hline
-    Logic\-Level\-Converter 5V zu 3,3V                      & aliexpress         & 1               & CHF 0.90            & CHF 0.90              \\ \hline
-    Tower Pro Micro Servo SG90                              & wish               & 1               & CHF 1.60            & CHF 1.60              \\ \hline
-    Mini Modul PWM Speed Control Über L298N                 & aliexpress         & 1               & CHF 0.69            & CHF 0.69              \\ \hline
+    Arduino IBT\_2 (DC-Motoren Treiber) (43A)               & wish               & 1               & CHF 9.00            & CHF 9.00              \\ \hline \nocite{WisIBT2}
+    DC\-DC CC Converter (12A)                               & wish               & 1               & CHF 3.00            & CHF 3.00              \\ \hline \nocite{WishDCDCConverter}
+    Ultraschallsensor HS-SR04                               & aliexpress         & 1               & CHF 0.77            & CHF 0.77              \\ \hline \nocite{AliExpressHCSR04}
+    TOF Sensor VL53L0X                                      & aliexpress         & 1               & CHF 3.69            & CHF 3.69              \\ \hline \nocite{AliExpressVL53L0X}
+    LM2596 DC-DC Schritt-down Converter (2.5A)              & aliexpress         & 1               & CHF 0.90            & CHF 0.90              \\ \hline \nocite{AliExpressLM2596}
+    Strommesswiderstand 13FR200E                            & Distrelec          & 1               & CHF 2.80            & CHF 2.80              \\ \hline \nocite{Distrelec13FR200E}
+    Logic\-Level\-Converter 5V zu 3,3V                      & aliexpress         & 1               & CHF 0.90            & CHF 0.90              \\ \hline \nocite{AliExpress5V33VConverter}
+    Tower Pro Micro Servo SG90                              & wish               & 1               & CHF 1.60            & CHF 1.60              \\ \hline \nocite{WishTowerpro48}
+    Mini Modul PWM Speed Control Über L298N                 & aliexpress         & 1               & CHF 0.69            & CHF 0.69              \\ \hline \nocite{WishTowerpro48}
     Antriebsmotor mit Encoder                               & Sponsor            & 1               & CHF 30.00           & CHF 30.00             \\ \hline
     Schwenker Motor mit Encoder                             & Sponsor            & 1               & CHF 25.00           & CHF 25.00             \\ \hline
-    Zahnriehmen                                             & Mädler             & 1               & CHF 15.00           & CHF 15.00             \\ \hline
-    Zahnriehmenrad                                          & Mädler             & 3               & CHF 8.00            & CHF 24.00             \\ \hline
-    Kupplungen                                              & Mädler             & 1               & CHF 30.00           & CHF 30.00             \\ \hline
-    Zahnräder                                               & Mädler             & 3               & CHF 10.00           & CHF 30.00             \\ \hline \hline
+    Zahnriehmen                                             & Mädler             & 1               & CHF 15.00           & CHF 15.00             \\ \hline \nocite{MadlerZahnriemen}
+    Zahnriehmenrad                                          & Mädler             & 3               & CHF 8.00            & CHF 24.00             \\ \hline \nocite{MadlerZahnriemenrad}
+    Kupplungen                                              & Mädler             & 1               & CHF 30.00           & CHF 30.00             \\ \hline \nocite{MadlerKupplung}
+    Zahnräder                                               & Mädler             & 3               & CHF 10.00           & CHF 30.00             \\ \hline \hline \nocite{MadlerZahnrad}
     \textbf{Total}                                          & \textbf{}          & \textbf{30}     & \textbf{}           & \textbf{CHF 447.59}   \\ \hline
     \end{tabular}
     \caption{Kostenübersicht Gesamtkonzept}
