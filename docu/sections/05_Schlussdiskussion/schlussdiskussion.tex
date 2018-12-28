@@ -7,4 +7,37 @@
 - offene Punkte, Risiken und Ausblick auf PREN 2
 
 
+\subsection{Risiken ET}
+\begin{table}[H]
+    \begin{tabular}{|p{0.3\textwidth}|p{0.3\textwidth}|p{0.4\textwidth}|}
+    \hline
+    \textbf{Risiko}                                            & \textbf{Massnahmen ergriffen}                                                                         & \textbf{Mögliche Massnahme bei weiteren Problemen}                                                                \\ \hline
+    Spannungsabfall / Wackelkontakt bei Schleifkontakten       & Stützkondensator eingeplant / Systemstuerung durch Akku gestützt                                      & weitere Schleifkontakte hinzufügen                                                                                \\ \hline
+    Mikrocontroller Überlastet durch Antriebsencoder-Interrupt & Messung zeigt Maximalgeschwindigkeit wird zu ca. 10\% Auslastung mit Antriebsencoder-Interrupt führen & Encoder mit weniger Impulsen einsetzten / Frequenzteiler zwischen Encoder und Microkontroller einsetzen           \\ \hline
+    Strom-Pi mit Akku ist zu teuer                             &                                                                                                       & Alternative Komponenten finden                                                                                    \\ \hline
+    Motor benötigt zu hohen Anlaufstrom                        &                                                                                                       & sanftes Anfahren mit dem Microkontroller                                                                          \\ \hline
+    HC-SR04 misst die Distanz nicht präzise genug              &                                                                                                       & Systematische Fehler in der Software korrigieren / Bei zu hohen zufälligen Fehler auch ein TOF-Sensor einsetzten  \\ \hline
+    \end{tabular}
+    \caption{Risiken Elektrotechnik}
+    \label{tab:risk_et}
+    \end{table}
+
+\subsection{Nächste Schritte ET}
+\begin{enumerate}
+    \item ersten Prototyp erstellen (damit Informatiker testen können)
+        \subitem Aufbau auf erstem Zug Prototyp vom Maschinenbau
+        \subitem PCB für Stromversorgung und Antrieb
+        \subitem Microkontroller mit Software für Antrieb und Kommunikaiton mit Pi 
+    \item Ansteuerung / Auslesen Sensoren
+    \item Ansteuerung Schwenker
+    \item Anpassungen (speziell für präzisen Halt)
+    \item Kompletter Prototyp
+        \subitem PCB für alle Komponente
+        \subitem Komplette Software für Mikrocontroller
+    \item Finales zusammenführen mit Informatik und Maschinenbau
+\end{enumerate}
+
+\subsection{Lessons learned ET}
+Es hat sich gezeigt, dass eine enge Zusammenarbeit unter den disziplinen entscheidend ist. Ein sehr guten Beispiel dafür ist die Auswahl des Motors. Weder die Fachleute Elektrotechnik, noch die Fachleute Maschinentechnik können diese Auswahl alleine treffen. Bevor eine genauere Auswahl vorgenommen werden kann müssen zuerst von beiden Disziplinen alle Anforderungen und Limitierungen zusammengetragen und diskutiert werden. Im Team kann diese Auswahl dann sehr gut getroffen werden.
+
 \end{document}
