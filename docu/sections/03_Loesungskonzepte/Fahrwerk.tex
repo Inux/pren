@@ -32,13 +32,13 @@
         Position 4          & Transportgut (Würfel)\\
         \hline
         \end{tabular}
-        
+
         \caption{Positionsnummern der Lokomotive mit Bezeichnungen}
         \label{tab:bg_lokomotive}
     \end{table}
 
     In der Querschnittsdarstellung in Abbildung \ref{fig:schnitt_lokomotive} ist die Lagerungen zwischen dem Ladungsträger und dem Antriebswagen beziehungsweise dem Führungswagen besser sichtbar. Ebenfalls sieht man gut, wie der Antriebswagen mit Zahnriemen angetrieben wird. Der Aufbau der Unterbaugruppen wird in den nächsten Abschnitten vorgestellt.\\
-   
+
     \begin{figure}[H] %Lokomotive im Schnitt
         \centering
         \includegraphics[width=0.7\textwidth]{lokomotive_2.png}
@@ -69,7 +69,7 @@
         Position 3          & Sicherungsring für Rillenkugellager\\
         \hline
         Position 4          & Eingepresstes Rillenkugellager (Festlager) bzw. Loslager\\
-        \hline       
+        \hline
         Position 5          & Rad\\
         \hline
         Position 6          & Unterlagscheibe\\
@@ -77,12 +77,12 @@
         Position 7          & Zylinderschraube\\
         \hline
         \end{tabular}
-        
+
         \caption{Explosionsdarstellung Führungswagen}
         \label{tab:expl_fuehrungswagen}
         \end{table}
     \newpage
-    
+
     Der Antriebswagen in Abbildung \ref{fig:antriebswagen} (siehe Tabelle \ref{tab:expl_antriebswagen}) wie bereits erwähnt grundsätzlich gleich aufgebaut wie der Führungswagen, jedoch ist der Rahmen aufgrund des Riemenantriebs H-Förmig aufgebaut. Das Ziel dieser Konstruktion ist es hauptsächlich den Riemen, falls nötig, schnell wechselbar zu montieren. Durch die H-Form können die Achsen und die Räder für die Riemenmontage am Rahmen montiert gelassen werden. Die Platte, welche am Rahmen angebracht ist, ist für die Kameras für die Signal- und Spurerkennung grösser dimensioniert. Die Kamera für die Spurerkennung wird einstellbar befestigt, damit bei der Testphase des Prototyps Optimierungen des Winkels vorgenommen werden können. Der Stromübetrag von der Schiene auf die Lokomotive erfolgt über vier Schleifkontakte, welche als Einkaufsteile von Lieferanten bezogen werden. Davon sind pro Wagen zwei und jeweils zwischen den Rädern angebracht.\\
 
     \begin{figure}[H] %Antriebswagen
@@ -90,7 +90,7 @@
         \includegraphics[width=0.9\textwidth]{antriebswagen.png}
         \caption{Baugruppe Antriebswagen}
         \label{fig:antriebswagen}
-    \end{figure} 
+    \end{figure}
 
     \begin{table}[H] \centering
         \begin{tabular}{|l|l|}
@@ -104,7 +104,7 @@
         Position 3          & Kameras\\
         \hline
     \end{tabular}
-    
+
     \caption{Explosionsdarstellung Antriebswagen}
     \label{tab:expl_antriebswagen}
     \end{table}
@@ -118,7 +118,7 @@
         \includegraphics[width=0.9\textwidth]{antriebseinheit.png}
         \caption{Explosionsdarstellung Antriebseinheit}
         \label{fig:antriebseinheit}
-    \end{figure} 
+    \end{figure}
 
     \begin{table}[H] \centering
         \begin{tabular}{|l|l|}
@@ -154,11 +154,11 @@
         Position 14         & Rillenkugellager (Festlager)\\
         \hline
         \end{tabular}
-        
+
         \caption{Positionen Antriebseinheit}
         \label{tab:pos_antriebseinheit}
         \end{table}
-    
+
     \newpage
 
     \textbf{Beschleunigungsberechnung}\\
@@ -178,11 +178,11 @@
         Stahl                                & Gummi        & 0.3\\
         \hline
         \end{tabular}
-        
+
         \caption{Reibungskoeffizienten verschiedener Materialpaarungen}
         \label{tab:com_tiny_pi}
         \end{table}
-    
+
     Um die maximale Beschleunigung zu berechnen, wird das Gesamtgewicht der Lokomotive auf die vier Räder aufgeteilt. In der Tabelle \ref{tab:groessen_beschleunigung} sind die gegeben Grössen für die nachfolgenden Berechnungen aufgelistet.\\
 
     \begin{table}[H] \centering
@@ -195,10 +195,10 @@
         Reibungskoeffizient [k]      & 0.3\\
         \hline
         \end{tabular}
-        
+
         \caption{Grössen für die Beschleunigungsberechnung}
         \label{tab:groessen_beschleunigung}
-        \end{table}   
+        \end{table}
 
     F\textsubscript{Rad}=\(\frac{F\textsubscript{G}}{8}\)=\(\frac{m*g=3kg*9.81m/s^2}{8}\)=0.375N\\
 
@@ -212,7 +212,7 @@
     Die Fahrgeschwindigkeit der Lokomotive wird durch zwei Faktoren bestimmt. Einerseits muss die maximale Geschwindigkeit der Anforderungsliste eingehalten werden und andererseits wird die Geschwindigkeit in der Kurvenfahrt durch den Schwerpunkt des Fahrzeuges eingeschränkt. Nachdem die Lokomotive auf die Fahrtgeschwindigkeit beschleungigt wurde, ist die Rollreibung das einzige, was der Motor mit seiner Leistung kompensieren muss.\\
 
     In der Anforderungsliste wurde eine minimale Geschwindigkeit von 0.5 Meter pro Sekunde festgelegt. Der begrenzende Faktor der Geschwindigkeit in der Kurve ist der Schwerpunkt der Lokomotive. Je tiefer dieser ist, umso schneller kann die Kurve abgefahren werden. Über die Zentripedalkraft und die Gewichtskraft der Lokomotive wird die Momentengleichung aufgestellt und Anhand der gegebeen Werten in Tabelle \ref{tab:geschwindigkeitsberechnung} wird die maximal erreichbare Geschwindigkeit in der Kurve, ohne aus den Gleisen zu kippen, berechnet.\\
-       
+
     Das Kippmoment wird durch den Aufbau der Lokomotive minimiert. Da der Schwerpunkt durch die beiden Wagen mehr in das Zentrum des Kreismittelpunktes rückt.\\
 
     \begin{table}[H] \centering
@@ -229,17 +229,17 @@
         Schwerpunkt in y-Achse (maximaler Wert) [y]         & 0.08 Meter\\
         \hline
         \end{tabular}
-        
+
         \caption{Grössen für die Geschwindigkeitsberechnung}
         \label{tab:geschwindigkeitsberechnung}
         \end{table}
 
     Die Gewichts- und Zentripedalkraft, welche das Gleichungssystem bilden, sind wie folgt definiert:\\
-    
+
     F\textsubscript{G}=\(m*g=3kg*9.81m/s^2=29.4N\)\\
 
     F\textsubscript{max z}=\(\frac{m*v^2}{r}\)=\(\frac{3kg*(1.28m/s)^2}{0.8}\)\\
-    
+
     Da das Drehmoment eine vektorielle Grösse ist, müssen die beiden entstehenden Momente am Drehpunkt "P" am Gleis zusammen Null ergeben. Oder anderst gesagt müssen die beiden Momente gleich gross sein, damit das System "statisch" bestimmt ist. Die Berechnungen sind auf den kleinsten Kurvenradius ausgelegt, da dort die grössere Zentripedalkraft entsteht. Nun werden die ob\\
 
     F\textsubscript{max z}=\(\frac{F\textsubscript{G}*x}{y}\)=\(\frac{29.4N*0.025m+9.2N*a}{0.08m}\)=9.2N\\
@@ -276,7 +276,7 @@
         Position 7          & Plattengelenk\\
         \hline
         \end{tabular}
-        
+
         \caption{Positionen des Ladungsträgers}
         \label{tab:pos_ladungstraeger}
         \end{table}
