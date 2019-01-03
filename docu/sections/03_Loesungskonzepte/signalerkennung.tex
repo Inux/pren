@@ -19,7 +19,7 @@
     Wie bereits in der Übersicht beschrieben, wird im Gesamtkonzept zwei Kameras verwendet. Eine Kamera wird zur Erkennung der Schienenrichtung verwendet. Die zweite Kamera wird nun für die Signalerkennung eingesetzt. Der Raspberry PI 3+, welcher als Hauptrecheneinheit geplant ist, verfügt nur über einen CSI- Anschluss (Camera Serial Interface). Für die Signalerkennung wird auf einen weiteren kleineren Raspberry PI 3 Model A+ gesetzt. Dieser verfügt wie der Raspberry PI 3+ einen vollwertigen CSI- Anschluss und kann somit die zweite Kamera bedienen. Dies führt auch dazu, dass der Raspberry PI 3+ zusätzlich entlastet werden kann.\\
 
     \textbf{Architektur}\\
-    Die Signalerkennung in zwei Teilaufgaben zu trennen hat noch einen weiteren vorteil. Die beiden Teilaufgaben werden auf beide Raspberry PIs verteilt. Der Raspberry PI 3 Model A+ ist für die Bilderaufnahme Verarbeitung und für die Signalerkennung mit Tafel zuständig. Der Raspberry PI 3+ übernimmt dann die Erkennung der aufgedruckten Nummer auf der Tafel. So kann die Ressourcen des Raspberry PI 3+ gezielter eingesetzt werden.
+    Die Signalerkennung in zwei Teilaufgaben zu trennen hat noch einen weiteren Vorteil. Die beiden Teilaufgaben werden auf beide Raspberry PIs verteilt. Der Raspberry PI 3 Model A+ ist für die Bildaufnahme Verarbeitung und für die Signalerkennung mit Tafel zuständig. Der Raspberry PI 3+ übernimmt dann die Erkennung der aufgedruckten Nummer auf der Tafel. So kann die Ressourcen des Raspberry PI 3+ gezielter eingesetzt werden.
 
     \begin{figure}[H] %Architektur
         \centering
@@ -28,7 +28,7 @@
         \label{fig:architektur_hardware_signalerkennung}
     \end{figure}
 
-    Für die Nummererkennung auf der Tafel Machine- Learning Algorithmus verwendet. Damit die Trainingsdaten des Models eingelesen werden können und somit ausführbar wird, braucht es eine gewisse grösse des Arbeitsspeichers. Der Arbeitsspeicher des Raspberry PI 3 Model A+ (512Mb) reicht dafür nicht aus. Der Raspberry PI 3+ verfügt über mehr speicher (1Gb) und kann somit den Algorithmus bearbeiten. Für die Kameraufnahmen und die Bearbeitung der Bilder und schlussendlich die Konturenerkennung der Signalisation ist der Raspberry PI 3 Model A+  gut geeignet.
+    Für die Nummernerkennung auf der Tafel Machine- Learning Algorithmus verwendet. Damit die Trainingsdaten des Models eingelesen werden können und somit ausführbar wird, braucht es eine gewisse Grösse des Arbeitsspeichers. Der Arbeitsspeicher des Raspberry PI 3 Model A+ (512Mb) reicht dafür nicht aus. Der Raspberry PI 3+ verfügt über mehr Speicher (1Gb) und kann somit den Algorithmus bearbeiten. Für die Kameraaufnahmen und die Bearbeitung der Bilder und schlussendlich die Konturenerkennung der Signalisation ist der Raspberry PI 3 Model A+  gut geeignet.
     \pagebreak
 
     \textbf{Software Tafelerkennung}\\
@@ -64,7 +64,7 @@
      In der Abbildung \ref{fig:tafelerkennung} links sieht man die erkannte Position der Nummer auf der Tafel. Rechts sieht man die gleiche Aufnahme nach der Filterung. Dieses Bild wird nun auf die Grösse des rechten Erkannten Rechteckes zugeschnitten und dem Raspberry PI 3+ zur Nummererkennung übergeben.\\
 
      \textbf{Konfiguration Raspberry PI Kamera}\\
-     Eine weitere Schwierigkeit bei der Nummererkennung ist die Aufnahme mittels Kamera. Bei hohen Geschwindigkeiten neigt das Bild dazu unscharf zu werden. Dies liegt daran, dass die Verschlusszeit der Kamera zu lange ist. Mit der Raspberry PI Kamera und der Schnittstelle piCamera können viele Parameter eingestellt werden. Hier liegt der Schlüssel zur Behebung von unscharfen Bildern. Wenn Parameter wie Belichtungszeit, Helligkeit, Sättigung und Weissabgleich fest eingestellt werden, können in erster Linie reproduzierbare Bilder aufgenommen werden und die Belichtungszeit kann auf ein Minimum gesetzt werden. Wenn die Belichtungszeit kürzer gesetzt wird, ist das Ergebnis aber dunklere Bilder. Mit digitaler Aufhellung oder sogar mit externer Beleuchtung kann aber diesen Effekt entgegengesetzt werden. 
+     Eine weitere Schwierigkeit bei der Nummererkennung ist die Aufnahme mittels Kamera. Bei hohen Geschwindigkeiten neigt das Bild dazu unscharf zu werden. Dies liegt daran, dass die Verschlusszeit der Kamera zu lange ist. Mit der Raspberry PI Kamera und der Schnittstelle piCamera können viele Parameter eingestellt werden. Hier liegt der Schlüssel zur Behebung von unscharfen Bildern. Wenn Parameter wie Belichtungszeit, Helligkeit, Sättigung und Weissabgleich fest eingestellt werden, können in erster Linie reproduzierbare Bilder aufgenommen werden und die Belichtungszeit kann auf ein Minimum gesetzt werden. Wenn die Belichtungszeit kürzer gesetzt wird, ist das Ergebnis aber dunklere Bilder. Mit digitaler Aufhellung oder sogar mit externer Beleuchtung kann aber diesen Effekt entgegengesetzt werden.
 
      \begin{figure}[H] %Vision Ablauf
         \centering
@@ -78,7 +78,7 @@
     \end{figure}
 
     \textbf{Software Nummererkennung}\\
-    Damit nun die Nummer auf der Tafel erkannt werden kann, wird ein Machine- Learning Algorithmus verwendet. Dafür wird die high-level API Keras verwendet. Als Backend kommt Tensorflow zum Einsatz. Als Trainingsdatabase kommt die frei Verfügbare MNIST- Database zu Einsatz. Die MNIST- Datenbank verfügt über 60'000 Zahlen in Handschrift. In Tabelle XX ist die Zusammenfassung der Tensorflowbackend bezüglich dem ausgewählten Keras Model. In den ersten Tests hat die Erkennung gut funktioniert auch auf dem Raspberry PI. Probleme sind in erster Linie mit der Nummer "1" aufgetaucht. Die MNIST Datenbank verfügt nur über die amerikanisch geschriebene "1". Die "1" in Arial wird dadurch nicht erkannt. Sobald in PREN2 die Schriftart der Zahlen bekannt gegeben wird, muss eventuell einen eigenen Trainingsdatensatz erstellt werden oder auf einen anderen Datensatz wie zum Beispiel von UCI Machine Learning Repository. 
+    Damit nun die Nummer auf der Tafel erkannt werden kann, wird ein Machine- Learning Algorithmus verwendet. Dafür wird die high-level API Keras verwendet. Als Backend kommt Tensorflow zum Einsatz. Als Trainingsdatabase kommt die frei Verfügbare MNIST- Database zu Einsatz. Die MNIST- Datenbank verfügt über 60'000 Zahlen in Handschrift. In Tabelle XX ist die Zusammenfassung der Tensorflowbackend bezüglich dem ausgewählten Keras Model. In den ersten Tests hat die Erkennung gut funktioniert auch auf dem Raspberry PI. Probleme sind in erster Linie mit der Nummer "1" aufgetaucht. Die MNIST Datenbank verfügt nur über die amerikanisch geschriebene "1". Die "1" in Arial wird dadurch nicht erkannt. Sobald in PREN2 die Schriftart der Zahlen bekannt gegeben wird, muss eventuell einen eigenen Trainingsdatensatz erstellt werden oder auf einen anderen Datensatz wie zum Beispiel von UCI Machine Learning Repository.
     \begin{table}[H]
             \begin{center}
                 \begin{tabular}{ | l | l | p{3cm} |}

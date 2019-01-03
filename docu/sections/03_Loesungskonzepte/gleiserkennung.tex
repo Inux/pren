@@ -2,22 +2,22 @@
 \begin{document}
 \subsection{Gleiserkennung}
 Ein Beschleunigungssensor für die Erfassung der Fahrdaten ist bereits in der Aufgabenstellung vorgeschrieben.
-Um aber eine ideale Regelung zu ermöglichen wird zusätzlich eine Gleiserkennung implementiert. Mitwelcher schon im vorraus
+Um aber eine ideale Regelung zu ermöglichen wird zusätzlich eine Gleiserkennung implementiert. Mit welchem schon im voraus
 erkennt werden kann ob eine Kurve bevorsteht oder ob sich der Hochgeschwindigkeitszug auf einer geraden befindet.
 Während der Konzept Phase wurden verschiedene Verfahren evaluiert und zum Teil ausprobiert. Jedoch gab es keine Lösung welche zusätzlich zur Richtung noch den Radius
 der Kurve bestimmen kann. Die Momentane Lösung welche angestrebt wird kann also nur sagen ob es Geradeaus, nach Links oder nach Rechts geht.
-Diese Information wird in den Regelungskreis eingespiesen, welcher dadurch auf die maximale Geschwindikeit die im engsten schienen Radius möglich ist
-herunterreglet. Anschliessend wird mithilfe des Beschleunigungssensor versucht an das Limit der Zentripedalkraft zu regeln. Somit kann die
+Diese Information wird in den Regelungskreis eingespiesen, welcher dadurch auf die maximale Geschwindigkeit die im engsten schienen Radius möglich ist
+geregelt. Anschliessend wird mithilfe des Beschleunigungssensor versucht an das Limit der Zentripedalkraft zu regeln. Somit kann die
 bestmögliche Regelung implementiert werden ohne genauere Angaben zum aktuellen Kurvenradius zu haben.
 Mehr Details zum Regelkreis und dem Ganzen Ablauf sind im unter \ref{ablauf} zu finden.
 
 \subsubsection{Verfahren}
-Nachfolgend werden die einzelen Schritte zur bearbeitung eines Einzelnen Bild aufgelistet.
+Nachfolgend werden die einzelnen Schritte zur Bearbeitung eines Einzelnen Bild aufgelistet.
 Die einzelnen Teilschritte werden für jedes Bild welches aufgenommen wird neu berechnet.
 \begin{itemize} %Verfahren kurz und knapp
     \item Bild Skalieren
     \item Umrechnen zu Schwarz Weiss
-    \item Kantenglettung Anwenden (Canny Algorithmus)
+    \item Kantenglättung Anwenden (Canny Algorithmus)
     \item Konturen Erkennung (Suzukui85 Algorithmus)
     \item Kleine Konturen erkennen und verwerfen
     \item Bild in zwei Hälften unterteilen
@@ -30,16 +30,16 @@ Die einzelnen Teilschritte werden für jedes Bild welches aufgenommen wird neu b
 \end{itemize}
 
 \textbf{Bild Skalieren}\\
-Das Bild muss für die Berechnungen herunterskaliert werden um die Rechenzeit zu reduzieren. Das Format
-wird dabei beibehalten, um verzerrungen zu vermeiden. Zuerst wird also das Seitenverhältnis berechnet um dann
+Das Bild muss für die Berechnungen runter skaliert werden um die Rechenzeit zu reduzieren. Das Format
+wird dabei beibehalten, um Verzerrungen zu vermeiden. Zuerst wird also das Seitenverhältnis berechnet um dann
 die kürzere Seite auf einen Konfigurierbaren wert zu setzen. Die längere Seite wird dann mit dem Seitenverhältnis Faktor
 berechnet.
 
 \textbf{Umrechnen zu Schwarz Weiss}\\
-Der Canny Algorithmus für die Kantenglettung muss mit einem Schwarz-Weiss Bild gefüttert werden deshalb wird das farbige Bild
+Der Canny Algorithmus für die Kantenglättung muss mit einem Schwarz-Weiss Bild gefüttert werden deshalb wird das farbige Bild
 zu einem Schwarz-Weiss Bild umgerechnet.
 
-\textbf{Kantenglettung Anwenden (Canny Algorithmus)}\\
+\textbf{Kantenglättung Anwenden (Canny Algorithmus)}\\
 Der Canny Algorithmus sucht Kanten im Bild und erzeugt ein Binäres Bild (Schwarz oder Weiss), wobei die Weissen Pixel eine Kanten
 beschreiben.
 
