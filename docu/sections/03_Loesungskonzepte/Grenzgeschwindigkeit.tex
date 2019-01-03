@@ -1,0 +1,28 @@
+\documentclass[../../main.tex]{subfiles}
+\begin{document}
+\subsection{Grenzgeschwindikeit}
+Die Grenzgeschwindikeit ist nicht nur abhängig von der Masse des Zuges, des Schwerpunktes, der Leistung des Antriebs und den Kurven Radien.
+Es ist zentral, dass die Bilderkennung ebenfalls noch funktioniert. Deshalb werden in diesem Kapitel die verschiedenen Grenzgeschwindigkeiten aufgelistet.
+Daraus kann der Flaschenhals bezüglich Grenzgeschwindikeit herausgelesen werden.
+
+\subsubsection{Auflistung}
+Nachfolgend werden die einzelen Grenzgeschwindigkeiten die berechnet wurden aufgelistet
+\begin{itemize} %Die verschiedenen Grenzgeschwindigkeiten
+    \item Grenzgeschwindikeit ohne Bildverarbeitung
+    \item Grenzgeschwindikeit mit Signalerkennung
+    \item Grenzgeschwindikeit mit Signalerkennung \& Gleiserkennung
+\end{itemize}
+
+\textbf{Grenzgeschwindikeit ohne Bildverarbeitung} \\
+Die Grenzgeschwindikeit ohne Bildverarbeitung basiert auf der Masse des Zuges, des Schwerpunktes, der Leistung des Motors und den Kurven Radien.
+
+\textbf{Grenzgeschwindikeit mit Signalerkennung} \\
+Die Grenzgeschwindikeit mit Signalerkennung basiert auf der Grenzgeschwindikeit ohne Bildverarbeitung. Zusätlich wird aber berücksichtig wie lange eine
+Aufnahme eines einzelnen Bildes dauert. Somit kann gewährleistet werden ob noch ein verwendbares Bild aufgenommen werden kann. Die eigentliche Bildanalyse
+wird dabei vernachlässigt weil dies nicht während den Highspeed Runden passiert sondern anschliessend bei der Fahrt zum Haltesignal.
+
+\textbf{Grenzgeschwindikeit mit Signalerkennung \& Gleiserkennung} \\
+Die Grenzgeschwindikeit mit Signalerkennung \& Gleiserkennung basiert auf der Grenzgeschwindikeit mit Signalerkennung. Dabei wird aber die Erkennung des Gleises
+mit berücksichtigt. Die Gleiserkennung dient dazu Kurven zu erkennen und bietet somit einen weiteren Parameter für die Regelung.
+
+\end{document}
