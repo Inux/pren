@@ -58,7 +58,7 @@
     \item ersten Prototyp erstellen (damit Informatiker testen können)
         \subitem Aufbau auf erstem Zug Prototyp vom Maschinenbau
         \subitem PCB für Stromversorgung und Antrieb
-        \subitem Microkontroller mit Software für Antrieb und Kommunikaiton mit Pi 
+        \subitem Microkontroller mit Software für Antrieb und Kommunikaiton mit Pi
     \item Ansteuerung / Auslesen Sensoren
     \item Ansteuerung Schwenker
     \item Anpassungen (speziell für präzisen Halt)
@@ -70,7 +70,16 @@
 
 \subsection{Nächste Schritte Informatik}
 \begin{enumerate}
-    \item Lorem IPSUM
+    \item Finalisieren bestehender Komponenten
+        \subitem Signalerkennung
+        \subitem Gleiserkennung
+        \subitem Akustik
+        \subitem Sensorik
+    \item Die restlichen Komponenten implementieren
+        \subitem Interface zu Motor
+        \subitem Interface zu Kran
+    \item Hauptablauf implementieren
+    \item Testing \& Bugfixing
 \end{enumerate}
 
 \subsection{Nächste Schritte Maschinenbau}
@@ -85,10 +94,14 @@
 \end{enumerate}
 
 \subsection{Lessons learned ET}
-Es hat sich gezeigt, dass eine enge Zusammenarbeit unter den disziplinen entscheidend ist. Ein sehr guten Beispiel dafür ist die Auswahl des Motors. Weder die Fachleute Elektrotechnik, noch die Fachleute Maschinentechnik können diese Auswahl alleine treffen. Bevor eine genauere Auswahl vorgenommen werden kann müssen zuerst von beiden Disziplinen alle Anforderungen und Limitierungen zusammengetragen und diskutiert werden. Im Team kann diese Auswahl dann sehr gut getroffen werden.
+Es hat sich gezeigt, dass eine enge Zusammenarbeit unter den Disziplinen entscheidend ist. Ein sehr guten Beispiel dafür ist die Auswahl des Motors. Weder die Fachleute Elektrotechnik, noch die Fachleute Maschinentechnik können diese Auswahl alleine treffen. Bevor eine genauere Auswahl vorgenommen werden kann müssen zuerst von beiden Disziplinen alle Anforderungen und Limitierungen zusammengetragen und diskutiert werden. Im Team kann diese Auswahl dann sehr gut getroffen werden.
 
 \subsection{Lessons learned Informatik}
+Für die Informatik ist es schwer etwas greifbares zu erschaffen ohne die Mithilfe von den anderen Disziplinen. Deshalb
+war die grösste Lektion, dass eine gute Softwarearchitektur Goldwert ist. In unserem Fall konnten wir Dank der
+Middleware Architektur schon finale Komponenten entwickeln und diese Testen obwohl der Zug noch nicht vollständig gebaut
+ist. Dies gilt speziell für die Signalerkennung, Gleiserkennung, Akustik und die Sensorik
 
 \subsection{Lessons learned Maschinenbau}
-Ein grosser Vorteil im Bereich der Maschinentechnik sind die Erfahrungen, welche die Teammitglieder der Mechanik durch ihre Ausbildung als Konstrukteure einbringen können. Dadurch sind rasch gute Lösungskonzepte entwickelt und ausgearbeitet worden. Teilkonzepte konnten somit bereits mit Prototypen getestet werden. Es wurde die Erfahrung gemacht, dass für die Maschinentechnik die Zusammenarbeit mit den anderen Diziplinen wesentlich ist, da sie das Grundgerüst des Zuges bildet und die Verbindung zwischen Elektronik und Informatik ist.
+Ein grosser Vorteil im Bereich der Maschinentechnik sind die Erfahrungen, welche die Teammitglieder der Mechanik durch ihre Ausbildung als Konstrukteure einbringen können. Dadurch sind rasch gute Lösungskonzepte entwickelt und ausgearbeitet worden. Teilkonzepte konnten somit bereits mit Prototypen getestet werden. Es wurde die Erfahrung gemacht, dass für die Maschinentechnik die Zusammenarbeit mit den anderen Disziplinen wesentlich ist, da sie das Grundgerüst des Zuges bildet und die Verbindung zwischen Elektronik und Informatik ist.
 \end{document}

@@ -1,17 +1,17 @@
 \documentclass[../../main.tex]{subfiles}
-    
+
     \lstset{basicstyle=\small,
       showstringspaces=false,
       commentstyle=\color{black},
       keywordstyle=\color{blue}
     }
-    
+
     \graphicspath{{images/Konzepte/}{../../drawings/Konzepte/}{drawings/Ablaufdiagramm/}{../../drawings/Ablaufdiagramm/}}
 
 
     \begin{document}
     \subsection{Ablauf} \label{ablauf}
-    Dieses Kaptiel gibt eine Übersicht über den Gesammten Ablauf, der nötig ist um die Aufgabenstellung zu erfüllen. Der Ablauf ist in \ref{fig:Ablaufdiagramm} Grafisch dargestellt. Der Ablauf kann in fünf Zustände unterteilt werden.\\
+    Dieses Kapitel gibt eine Übersicht über den gesamten Ablauf, der nötig ist um die Aufgabenstellung zu erfüllen. Der Ablauf ist in \ref{fig:Ablaufdiagramm} Grafisch dargestellt. Der Ablauf kann in fünf Zustände unterteilt werden.\\
 
     \begin{figure}
         \centering
@@ -22,8 +22,8 @@
 
     \begin{itemize}
         \item Initialisierung
-        \item Würfelaufnahem
-        \item Hochgeschwindigkeitsfahrt
+        \item Würfelaufnahme
+        \item Hochgeschwindigkeit Fahrt
         \item Parkplatzsuche
         \item Parkieren
     \end{itemize}
@@ -33,11 +33,14 @@
     \textbf{Initialisierung}\\
     Alle Systeme werden Gestartet sobald sie mit Strom versorgt werden. Alle Schnittstellen werden Initialisiert und die Kommunikation beginnt. Beim Ende der Initialisierung soll über das Web Interface angezeigt werden, dass das System bereit ist und die Fahrt gestartet werden kann.\\
 
-    \textbf{Würfleaufnahme}\\
+    \textbf{Würfelaufnahme}\\
     Nach dem Startsignal über das Web Interface fährt der Zug in langsamer Fahrt vorwärts bis der Würfle von den Sensoren erfasst wird. Sobald der Würfel erkannt wurde hält der Zug an und der Schwenker mit dem Würfel wird eingefahren.\\
 
-    \textbf{Hochgeschwindigkeitsfahrt}\\
-    Nachdem der Würfel Aufgeladen ist kann der Zug beschleunigen. Der Zug soll immer die Höchstmögliche Geschwindigkeit fahren. Die Geschwindigkeit wird für die Kurven gemäss der Bilderkennung angepasst. Auch sucht das System dauernd das Infosignal und erkennt die Nummer darauf, sobald die Nummer erkannt wurde gibt das System diese Information über den Lautsprecher aus. 
+    \textbf{Hochgeschwindigkeit Fahrt}\\
+    Nachdem der Würfel Aufgeladen ist kann der Zug beschleunigen. Der Zug soll immer die Höchstmögliche Geschwindigkeit
+    fahren. Die Geschwindigkeit wird für die Kurven gemäss der Bilderkennung angepasst. Auch sucht das System dauernd
+    das Info Signal und erkennt die Nummer darauf, sobald die Nummer erkannt wurde gibt das System diese Information
+    über den Lautsprecher aus.
     Sobald das Signal der Ende der Zeitmessung erkannt wird verlangsamt der Zug und beginnt die Parkplatzsuche\\
 
     \textbf{Parkplatzsuche}\\
