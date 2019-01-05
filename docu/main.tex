@@ -19,6 +19,7 @@
     \usepackage{listings}
     \usepackage{natbib}
     \usepackage{enumerate}
+    \usepackage{longtable}
 
     \lstset{basicstyle=\small,
       showstringspaces=false,
@@ -68,7 +69,7 @@
         \section{Management Summery}
         \subfile{sections/01_ManagementSummery/managementSummery.tex}
         \clearpage
-        \section{Einleitung, Zielsetzung}
+        \section{Einleitung}
         \subfile{sections/02_Einleitung/einleitung.tex}
         \clearpage
         \section{Lösungskonzepte}
@@ -99,12 +100,13 @@
         \clearpage
         \section{Schlussdiskussion}
         \subfile{sections/05_Schlussdiskussion/schlussdiskussion.tex}
-        \subfile{sections/05_Schlussdiskussion/Kosten.tex}
         \clearpage
         %\section{Anhang}
         %\subfile{sections/06_Anhang/anhang.tex}
         %\clearpage
-
+        \section{Verzeichnisse}
+        \listoffigures
+        \listoftables
         \bibliography{diverses/literatur-lib}
 
     \end{document}

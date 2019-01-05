@@ -11,8 +11,7 @@
 
     \begin{document}
     \subsection{Elektronik Komponenten}
-    In diesem Kapitel wird der Aufbau der Elektronik des Fahrzeuges beschrieben. \\
-    Die Abbildung \ref{fig:et_komponenten} veranschaulicht den Aufbau der Elektronik. Darauf sind alle logischen Verbindungen eingezeichnet. Weitere Elektrische Verbindungen für die Stromversorgung werden im Kapitel \ref{et_stromversorgung} weiter erläutert.\\
+    In diesem Kapitel wird der Aufbau der Elektronik des Fahrzeuges beschrieben. Die Abbildung \ref{fig:et_komponenten} veranschaulicht den Aufbau der Elektronik. Darauf sind alle logischen Verbindungen eingezeichnet. Weitere Elektrische Verbindungen für die Stromversorgung werden im Kapitel \ref{et_stromversorgung} weiter erläutert.\\
     Zentral dabei ist der Mikrocontroller Tiny K22. Die Software auf dem Mikrocontroller initialisiert alle Komponenten, überwacht deren Status und sendet die nötigen Informationen an  das Pi. Diese Schnittstelle ist detailliert im Kapitel \ref{interface_pi_tiny} beschrieben.\\
     Die Schnittstelle über den Debugger zum PC wird hier nicht weiter beschrieben, da diese Verbindung nur zum Entwickeln benutzt wird und für das Endgültige Produkt nicht mehr von Bedeutung ist sobald alles funktioniert.
 
@@ -24,17 +23,16 @@
     \end{figure}
 
     \subsubsection{Stromversorgung} \label{et_stromversorgung}
-    Die Energie für das System wird über die Schienen bezogen.\\
-    Die Antriebsenergie wird direkt von den Schienen bezogen und lediglich auf die korrekte Motorspannung angepasst. Die
+    Die Energie für das System wird über die Schienen bezogen. Die Antriebsenergie wird direkt von den Schienen bezogen und lediglich auf die korrekte Motorspannung angepasst. Die
     Systemsteuerung wird über ein StromPi 3 mit Strom versorgt. Als primär Stromquelle wird dafür die Schienenspannung
     benutzt. Bei der Hochgeschwindigkeitsfahrt wird diese Quelle abgeschaltet, damit die Gesamte Energie für den Antrieb
     zur Verfügung steht. Das StromPi schaltet sofort auf die sekundäre Stromversorgung für das Pi. Diese sekundäre
     Quelle wird durch einen LiFePO4-Akku auf dem StromPi realisiert. Sobald die primär Stromquelle von den Schienen
     wieder zur Verfügung steht wird der Akku wieder nachgeladen.\\
-    Das Pi zero und das TinyK22 mit diversen Sensoren und Aktoren werden über die USB-Anschlüsse des Pi versorgt.
+    Das Pi zero und das TinyK22 mit diversen Sensoren und Aktoren werden über die USB-Anschlüsse des Pi versorgt.\\
 
     \textbf{Antriebsenergie}\\
-    Die Energie für den Antrieb wird direkt von den Schienen bezogen. Bei der Hochgeschwindigkeitsfahrt werden alle anderen Verbraucher von den Schienen deaktiviert um die gesamte Energie für den Antrieb nutzen zu können.
+    Die Energie für den Antrieb wird direkt von den Schienen bezogen. Bei der Hochgeschwindigkeitsfahrt werden alle anderen Verbraucher (z.B. Raspberry PI) von den Schienen entkoppelt um die gesamte Energie für den Antrieb nutzen zu können.
 
     \textbf{Verpolungsschutz}\\
     Auf den Schienen steht eine Gleichspannung zur Verfügung, wobei eine Schienenseite der $+$ Pol und die andere Seite der $-$ Pol ist. Daraus ergibt sich das Problem, dass beim Platzieren des Zuges entgegen der vorgesehenen Fahrtrichtung eine Verpolung stattfindet. Auch ist die Zuordnung der Pole in der Aufgabenstellung noch nicht spezifiziert. Um sicherzustellen, dass das System unabhängig von der Polung der Schienen funktioniert muss eine Gleichrichtung realisiert werden. Dies kann mit einem Brückengleichrichter realisiert werden. (siehe Abbildung \ref{fig:et_bruckengleichrichter})
@@ -42,7 +40,7 @@
     \begin{figure}[H]
         \centering
         \includegraphics[width=0.3\textwidth]{Brueckengleichrichter.png}
-        \caption {Brückengleichrichter \\Quelle: https://www.elektronik-kompendium.de/sites/slt/1807181.htm}
+        \caption {Brückengleichrichter (www.elektronik-kompendium.de)}
         \label{fig:et_bruckengleichrichter}
     \end{figure}
 
@@ -50,7 +48,7 @@
     Für den Hochgeschwindigkeitszug wird ein "B40C 3700-2200"  verwendet. Dabei hantelt es sich um eine Integrierte Schaltung für einen Brückengleichrichter. Der maximal zulässige Strom ist dabei $3.7A$. Bei diesem Strom fällt über dem Gleichrichtung eine Spannung von ca $1V$ ab.
 
     \textbf{Spannungsanpassung}\\
-    Gemäss der Aufgabenstellung stehen $20\pm2V$ bei bis zu $3A$ zur Verfügung. Aufgrund der grossen Toleranz von $4V$ muss die Spannung angepasst werden um eine stabile Spannung zur sicherzustellen. Dafür wird ein DC-DC Converter verwendet. Zu beachten dabei ist, dass der Converter für den maximalen Strom von $3A$ ausgelegt ist.\\
+    Gemäss der Aufgabenstellung stehen $20\pm2V$ bei bis zu $3A$ zur Verfügung. Aufgrund der grossen Toleranz von $4V$ muss die Spannung angepasst werden um eine stabile Spannung zur sicherzustellen. Dafür wird ein DC-DC Converter verwendet. Zu beachten dabei ist, dass der Converter für den maximalen Strom von $3A$ ausgelegt ist.
 
     \textbf{Unterbrechungssicherheit}\\
     Um sicherzustellen, dass ein allfälliger Wackelkontakt der Schleifkontakte überbrückt werden kann und um grössere Spannungsschwankungen zu vermeiden wird ein Kondensator als Stützung eingesetzt.
@@ -60,11 +58,11 @@
     Differenzverstärker Schaltung bereitet die Spannung über dem Strom Messwiderstand auf, damit der Mikrocontrollers mit
     dem Analog-Digital Wandler den Strom bestimmen kann. Mit dieser Information kann die Software des Mikrocontrollers
     auf Stromspitzen reagieren und z.B. die Geschwindigkeit reduzieren. Der Stromverbrauch ist auch für Entwicklungs-
-    und Testphase eine sehr wertvolle Information, damit das System optimal ausgelegt werden kann.  \\
+    und Testphase eine sehr wertvolle Information, damit das System optimal ausgelegt werden kann.
     Zur Messung wird ein "13FR200E - Strom Messwiderstand" verwendet. Dieser hat einen Widerstand von $0.2\Omega$. Der Strom kann daraus mit dem Ohmsches Gesetz bestimmt werden. $$I=\frac{U_R}{R}=\frac{U_R}{0.2\Omega} $$
     \\
     \textbf{Akku}\\
-    Während der Hochgeschwindigkeitsfahrt wird die Systemsteuerung wird über einen Akku mit Storm versorgt. Die benötige Leistung der einzelnen Komponenten ist in Tabelle \ref{tab:et_komponente_leistung} aufgeführt. Im schlimmsten Fall soll der Akku das System dabei mindestens für zwei durchläufe mit Energie versorgen können.\\
+    Während der Hochgeschwindigkeitsfahrt wird die Systemsteuerung über einen Akku mit Storm versorgt. Die benötige Leistung der einzelnen Komponenten ist in Tabelle \ref{tab:et_komponente_leistung} aufgeführt. Im schlimmsten Fall soll der Akku das System dabei mindestens für zwei komplette Abläufe mit Energie versorgen können.\\
     Eine Runde darf maximal vier Minuten dauern, das bedeutet die Energie vom Akku muss für mindestens 8 Minuten reichen. Daraus ergibt sich für die Energie $$E=P\cdot t = 14.2W \cdot 8min = 113.6Wmin = 1.9Wh$$
 
     \begin{table}[H] \centering
@@ -86,8 +84,8 @@
         \label{tab:et_komponente_leistung}
     \end{table}
 
-    Das StormPi Modul wird mit einem LiFePO4-Akku ergänzt. Der stadart Akku hat $1000mAh$. Bei einer Spannung von $3.7V$ entspricht dies $3.7Wh$. \\
-    Dies ist genügend für zwei durchläufe und da der Akku ausserhalb der Hochgeschwindigkeitsfahrt nachgeladen werden soll, reicht dieser Akku gut.
+    Das StormPi Modul wird mit einem LiFePO4-Akku ergänzt. Der verbaute Akku hat $1000mAh$. Bei einer Spannung von $3.7V$ entspricht dies $3.7Wh$. \\
+    Dies ist genügend für zwei durchläufe und da der Akku ausserhalb der Hochgeschwindigkeitsfahrt nachgeladen werden soll, reicht dieser Akku.
 
     \subsubsection{Sensoren} \label{et_sensoren}
     Mit diversen Sensoren sollen folgende Daten aufgenommen werden. Folgende Daten sollen aufgezeichnet werden:
@@ -98,9 +96,9 @@
         \item Distanz rechts (für Erkennung Würfel)
         \item Distanz links (für Erkennung Haltesignal)
     \end{itemize}
-
+    \pagebreak
     \textbf{Beschleunigung}\\
-    Die Beschleunigung wird mit einem Beschleunigungssensor ADXL345 aufgenommen. Dieser kommuniziert über eine $I^2C$ Schnittstelle mit dem Mikrocontrollers. Er liefert jeweils die Beschleunigung in x-, y-, und z-Richtung. Der Sensor wird parallel zur Fahrtrichtung montiert, sodass es reicht eine Beschleunigungsrichtung für die Querbeschleunigung und eine Richtung für die Längsbeschleunigung auszuwerten. Die Verwendung des Sensors ist in Kapitel \ref{pi_beschleunigung} detailliert beschreiben.\\
+    Die Beschleunigung wird mit einem Beschleunigungssensor ADXL345 aufgenommen. Dieser kommuniziert über eine $I^2C$ Schnittstelle mit dem Mikrocontrollers. Er liefert jeweils die Beschleunigung in x-, y-, und z-Richtung. Der Sensor wird parallel zur Fahrtrichtung montiert, sodass es genügt eine Beschleunigungsrichtung für die Querbeschleunigung und eine Richtung für die Längsbeschleunigung auszuwerten. Die Verwendung des Sensors ist in Kapitel \ref{pi_beschleunigung} detailliert beschreiben.\\
 
     \textbf{Geschwindigkeit}\\
     Die Geschwindigkeit wird hauptsächlich über den Quadratur Encoder am Antriebsmotor aufgenommen. Zusätzlich wird die
@@ -108,21 +106,21 @@
 
     \paragraph{Quadratur Encoder:} Der Quadratur Encoder MR, Typ L gibt $1024$ Impulse pro Umdrehung. Der Verlauf eines Impulses ist in Abbildung \ref{fig:et_encoder} dargestellt. Der Encoder stellt drei Kanäle zur Verfügung. Über den Kanal $A$ und $B$ kann einzeln die Geschwindigkeit bestimmt werden. Durch auswerten der Phasenverschiebung der beiden Kanäle ("$A$ eilt $B$ vor" oder "$A$ eilt $B$ nach") kann zusätzlich noch die Drehrichtung bestimmt werden. Der Kanal $I$ ist mit Kanal $A$ und $B$ synchronisiert und kann ebenfalls zur Bestimmung der Geschwindigkeit dienen.\\
     Für die Bestimmung der Geschwindigkeit kann die Dauer eines Impulses gemessen werden oder es können die Anzahl Impulse in einer bestimmten Zeit gezählt werden. Für dieses Projekt soll die Dauer des Impulses gemessen werden. Der Vorteil dieser Methode ist die bessere Präzision, da nach jedem einzelnen Impuls die durchschnittliche Geschwindigkeit seit dem letzten Impuls sofort bestimmt werden kann. Das Risiko ist, dass bei hohen Umdrehungszahlen der Mikrocontroller nicht schnell genug ist mit dem Zählen oder dass der Zähler des Mikrocontrollers bei sehr tiefen Umdrehungszahlen überläuft.\\
-    Die maximalen Umdrehungszahl des Antriebsmotors für die angestrebte Maximalgeschwindigkeit liegt bei $5200 min^{-1}$. Mit $1024$ Impulsen pro Umdrehung ergibt dies $$5200 min^{-1} \cdot 1024 Impulse = 5'324'800 \frac{Impulse}{min}$$.
-    Dies sind dann $$ 5'324'800 \frac{Impulse}{min} / 60s = 88'747 \frac{Impulse}{s} $$.
-    Dies ergibt eine Impulsdauer von $$\frac{1}{36'651 \frac{Impulse}{s}} = 11.29\mu s$$. Bei der schnellsten möglichen
+    Die maximalen Umdrehungszahl des Antriebsmotors für die angestrebte Maximalgeschwindigkeit liegt bei $5200 min^{-1}$. Mit $1024$ Impulsen pro Umdrehung ergibt dies $$5200 min^{-1} \cdot 1024 Impulse = 5'324'800 \frac{Impulse}{min}$$
+    Dies sind dann $$ 5'324'800 \frac{Impulse}{min} / 60s = 88'747 \frac{Impulse}{s} $$
+    Dies ergibt eine Impulsdauer von $$\frac{1}{36'651 \frac{Impulse}{s}} = 11.29\mu s$$ Bei der schnellsten möglichen
     Timer Einstellung auf dem TinyK22 ($60MHz$) ergibt dies noch $676 \frac{Ticks}{Impuls}$. Bei der Implementierung
     muss also beachtet werden, dass bei hoher Geschwindigkeit möglichst wenig Zeit in der Interrupt Routine verbracht
     wird, da diese dann sehr of aufgerufen wird. Sollte sich zeigen, dass der Mikrocontrollers durch die hohe Impulsrate
     überlastet ist, muss ein Encoder mit weniger Impulsen pro Umdrehung gewählt werden oder ein Frequenz Teiler
     dazwischen geschaltet werden.\\
-    Damit der Timer nicht überläuft muss eine Impulsperiode fertig sein, bevor der Timer den Wert $$2^{32} \approx 4.29 Mrd$$ erreicht wird. Dies ergibt bei $60MHz$ eine Zeit von $$2^{32} \cdot \frac{1}{60MHz} = 71.58s$$. Also ist ein tiefe Umdrehungszahl bis zu $$\frac{1}{71.58s \cdot 1024} = 13.6 \cdot 10^{-6} s^{-1}$$
+    Damit der Timer nicht überläuft muss eine Impulsperiode fertig sein, bevor der Timer den Wert $$2^{32} \approx 4.29 Mrd$$ erreicht wird. Dies ergibt bei $60MHz$ eine Zeit von $$2^{32} \cdot \frac{1}{60MHz} = 71.58s$$ Also ist ein tiefe Umdrehungszahl bis zu $$\frac{1}{71.58s \cdot 1024} = 13.6 \cdot 10^{-6} s^{-1}$$
     Also sollte diese Umdrehungszahl nicht unterschritten werden. Diese Zahl ist so klein, dass dies als Stillstand gewertet werden kann.
 
     \begin{figure}[H]
         \centering
         \includegraphics[width=0.6\textwidth]{Encoder_MR.png}
-        \caption {Signalverlauf Encoder \\Quelle: Katalogseite 420, Encoder MR Typ L, maxon sensor}
+        \caption {Signalverlauf Encoder (www.maxonmotor.ch)}
         \label{fig:et_encoder}
     \end{figure}
 
@@ -136,7 +134,7 @@
 
     \textbf{Position}\\
     Über den Beschleunigungssensor kann man die aktuelle Position auf der Fahrbahn berechnen. Die zurückgelegte Strecke errechnet sich durch Integration der Geschwindigkeit oder durch zweifache Integration der Beschleunigung.\\
-    Unter der Annahme, dass zu beginn der Messung zum Zeitpunkt $t = 0$ die zurückgelegte Strecke $0$ ist $(s(t=0) = 0)$ kann die Geschwindigkeit zum Zeitpunkt $t$ bestimmt werden mit $$s(t) = \int_{0}^{t} v(x) dx$$.\\
+    Unter der Annahme, dass zu beginn der Messung zum Zeitpunkt $t = 0$ die zurückgelegte Strecke $0$ ist $(s(t=0) = 0)$ kann die Geschwindigkeit zum Zeitpunkt $t$ bestimmt werden mit $$s(t) = \int_{0}^{t} v(x) dx$$\\
     Da aber auf einem Digitalen System die Daten nur zu diskreten Zeitpunkten ausgewertet werden können ergibt sich dann eine Summen der Geschwindigkeiten zum Zeitpunkt $k$ $$s[k] = \sum_{i=0}^{k}v[i] \Delta t$$\\
     Die Geschwindigkeit wird gemäss der Beschreibung oben bestimmt.
 

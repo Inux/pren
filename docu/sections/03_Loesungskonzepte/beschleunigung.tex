@@ -4,7 +4,7 @@
 
 \begin{document}
 \subsection{Beschleunigung} \label{pi_beschleunigung}
-Mithilfe elektronischer Komponente kann Beschleunigung, Geschwindigkeit und Distanz(vom Startbereich) gemessen und analysiert werden. Zusätzlich kann eine approximierte Position des Zuges auf der Strecke berechnet werden. Die Berechnungen dazu sind in Kapitel \ref{et_sensoren} beschrieben.
+Mithilfe elektronischer Komponente kann Beschleunigung, Geschwindigkeit und Distanz (vom Startbereich) gemessen und analysiert werden. Zusätzlich kann eine approximierte Position des Zuges auf der Strecke berechnet werden. Die Berechnungen dazu sind in Kapitel \ref{et_sensoren} beschrieben.
 
 \paragraph{Anforderungen}
 \begin{itemize}
@@ -21,8 +21,8 @@ Mithilfe elektronischer Komponente kann Beschleunigung, Geschwindigkeit und Dist
 Bei der Komponentenwahl fiel der Entscheid auf einen Adafruit $I^2C$ 3-Achsen Beschleunigungssensor, dieser kann Beschleunigung sowie Rotation berechnen. Er weist eine sehr kompakte Bauform auf und ist relativ günstig zu erwerben. Online haben verschiedene Nutzer mit dieser Komponente positive Erfahrung gesammelt. Auch ist die Komponente gut dokumentiert und man findet verschiedene Tutorien wie man diese mit einem Raspberry Pi kombinieren kann.
 
 \begin{table}[H]
-\begin{flushleft}
-\begin{tabular}{lll}
+\begin{center}
+\begin{tabular}{ll}
 Name & Adafruit ADXL 345  \\ \hline
 Preis & 1Fr               \\ \hline
 Länge & 25mm              \\ \hline
@@ -31,14 +31,15 @@ Höhe & 3.14mm             \\ \hline
 Gewicht & 1.27g           \\ \hline
 Versorgungsspannung & 3-5V \\ \hline
 \end{tabular}
-\end{flushleft}
+\caption {Technische Daten (https://www.adafruit.com/product/1231)}
+\end{center}
 \end{table}
 
 \paragraph{Bauplan / Interface}
-Der Sensor wird über die $I^2C$ Schnittstelle angesprochen und verwendet somit einen Datenport (SDA) und eine Clock (SCL). Für die Stromversorgung reicht der 3.3V Port (3V3) und der Ground (GND) des GPIO Buses.
+Der Sensor wird über die $I^2C$ Schnittstelle angesprochen und verwendet somit einen Datenport (SDA) und eine Clock (SCL). Für die Stromversorgung reicht der 3.3V Port (3V3) und der Ground (GND) der GPIO Header.
 
 \begin{table}[H]
-\begin{flushleft}
+\begin{center}
 \begin{tabular}{lll}
 Bezeichnung     & GPIO Port & MPU 6050 \\ \hline
 Stromversorgung & 3V3      & VCC      \\ \hline
@@ -46,12 +47,12 @@ Ground          & GND      & GND      \\ \hline
 Daten          & SDA      & SDA       \\ \hline
 Clock          & SCL      & SCL       \\ \hline
 \end{tabular}
-\end{flushleft}
+\end{center}
 \end{table}
 
 \begin{figure}[H] \centering
   \includegraphics[width=0.5\textwidth, angle=90]{Verkabelung_BeschlSensor}
-  \caption{Verkabelung Beschleunigungssensor}
+  \caption{Verkabelung Beschleunigungssensor (http://fritzing.org)}
   \label{fig:Beschleunigungssensor}
 \end{figure}
 
@@ -75,7 +76,7 @@ Y Rotation:  3.59994842011
 \end{lstlisting}
 
 \paragraph{Realisierung}
-Daten werden in einem von uns festgelegten Intervall über die $i^2c$ Schnittstelle eingelesen. Die $i^2c$ Schnittstelle muss in der Raspberry Pi Konfiguration aktiviert werden. Weiter müssen die benötigten Tools ``i2c-tools'' sowie ``python-smbus'' installiert werden. Dem Raspberry Pi wird eine Adresse auf dem $i^2c$ Datenbus zugewiesen, welche über "sudo i2cdetect -y 1" abgerufen werden kann.
+Daten werden in einem von uns festgelegten Intervall über die $i^2c$ Schnittstelle eingelesen. Die $i^2c$ Schnittstelle muss in der Raspberry Pi Konfiguration aktiviert werden. Weiter müssen die benötigten Tools «i2c-tools» sowie «python-smbus» installiert werden. Dem Raspberry Pi wird eine Adresse auf dem $i^2c$ Datenbus zugewiesen, welche über «sudo i2cdetect -y 1» abgerufen werden kann.
 
 Softwaretechnisch wird die Schnittstelle in Python realisiert, denn Python verfügt über die mächtigsten Bibliotheken in den Bereichen Mathematik und $i^2c$. Der Beschleunigungssensor kann direkt über seine Adresse angesprochen werden und gibt die Daten in Form eines Words zurück. Der Beschleunigungssensor muss für jedes Word(z.B. gyroskop\_xout) eine Anfrage auf den Datenbus schreiben und lesen.
 

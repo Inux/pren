@@ -11,3 +11,5 @@
 *.tks
 *.bbl
 *.blg
+*.lof
+*.lot

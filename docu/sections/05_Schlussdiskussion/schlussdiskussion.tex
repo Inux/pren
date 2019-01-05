@@ -1,59 +1,77 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
-\subsection{Schlussdiskussion}
 
-- Entwicklungskosten, zeitlicher Entwicklungsaufwand
-- Erfahrungen, „Lessons learned“, kritische Würdigung der Arbeiten
-- offene Punkte, Risiken und Ausblick auf PREN 2
+\subsection{}{Kosten}
+Gemäss der Aufgabenstellung steht ein Budget von 500 Franken zur verfügung. In Tabelle \ref{tab:kosten_total} wurden alle Komponente in einer Kostenübersicht zusammengetragen. Gemäss dieser Übersicht gibt es noch eine Reserve von ca. 50 Franken für nicht vorhergesehene Änderungen.\\
+In dieser Übersicht nicht enthalten sind Komponenten, welche aus der Mechanikwerkstatt oder dem Elektronik Labor der
+HSLU bezogen werden können. Auch sind Stundenansätze für Werkstattpersonal oder 3D-Drucker nicht berücksichtigt. \\
 
-
-\subsection{Risiken ET}
-\begin{table}[H]
-    \begin{tabular}{|p{0.3\textwidth}|p{0.3\textwidth}|p{0.4\textwidth}|}
+\begin{table}[H] \centering
+    \begin{tabular}{|p{6cm}|l|r|r|r|}
     \hline
-    \textbf{Risiko}                                            & \textbf{Massnahmen ergriffen}                                                                         & \textbf{Mögliche Massnahme bei weiteren Problemen}                                                                \\ \hline
-    Spannungsabfall / Wackelkontakt bei Schleifkontakten       & Stützkondensator eingeplant / Systemstuerung durch Akku gestützt                                      & weitere Schleifkontakte hinzufügen                                                                                \\ \hline
-    Mikrocontroller Überlastet durch Antriebsencoder-Interrupt & Messung zeigt Maximalgeschwindigkeit wird zu ca. 10\% Auslastung mit Antriebsencoder-Interrupt führen & Encoder mit weniger Impulsen einsetzten / Frequenzteiler zwischen Encoder und Microkontroller einsetzen           \\ \hline
-    Strom-Pi mit Akku ist zu teuer                             &                                                                                                       & Alternative Komponenten finden                                                                                    \\ \hline
-    Motor benötigt zu hohen Anlaufstrom                        &                                                                                                       & sanftes Anfahren mit dem Microkontroller                                                                          \\ \hline
-    HC-SR04 misst die Distanz nicht präzise genug              &                                                                                                       & Systematische Fehler in der Software korrigieren / Bei zu hohen zufälligen Fehler auch ein TOF-Sensor einsetzten  \\ \hline
+    \textbf{Beschreibung}                                   & \textbf{Lieferant} & \textbf{Anzahl} & \textbf{Stückpreis} & \textbf{Gesammtpreis} \\ \hline
+    Raspberry Pi 3 Model B+                                 & pi-shop            & 1               & CHF 39.00           & CHF 39.00             \\ \hline \nocite{PiShopPi3ModelBp}
+    Raspberry Pi Zero W                                     & pi-shop            & 1               & CHF 10.80           & CHF 10.80             \\ \hline \nocite{PiShopPiZero}
+    Raspberry Pi Kamera Beleuchtung                         & pi-shop            & 2               & CHF 24.90           & CHF 49.80             \\ \hline \nocite{PiShopBrightPi}
+    Raspberry Pi Kamera                                     & pi-shop            & 2               & CHF 32.90           & CHF 65.80             \\ \hline \nocite{PiShopPiKamera}
+    Passiver Buzzer                                         & play-zone          & 1               & CHF 5.00            & CHF 5.00              \\ \hline \nocite{PlayZonePassiverBuzzer}
+    StromPi 3                                               & Reichelt           & 1               & CHF 41.64           & CHF 41.64             \\ \hline \nocite{ReicheltStromPi}
+    StromPi 3 Battery Pack, 1000 mAh                        & Reichelt           & 1               & CHF 31.20           & CHF 31.20             \\ \hline \nocite{ReicheltStromPiAkku}
+    Beschleunigungssensor ADXL345                           & aliexpress         & 1               & CHF 1.00            & CHF 1.00              \\ \hline \nocite{AliExpressADXL345}
+    Tiny K22                                                & hslu               & 1               & CHF 26.00           & CHF 26.00             \\ \hline
+    Arduino IBT\_2 (DC-Motoren Treiber) (43A)               & wish               & 1               & CHF 9.00            & CHF 9.00              \\ \hline \nocite{WisIBT2}
+    DC\-DC CC Converter (12A)                               & wish               & 1               & CHF 3.00            & CHF 3.00              \\ \hline \nocite{WishDCDCConverter}
+    Ultraschallsensor HS-SR04                               & aliexpress         & 1               & CHF 0.77            & CHF 0.77              \\ \hline \nocite{AliExpressHCSR04}
+    TOF Sensor VL53L0X                                      & aliexpress         & 1               & CHF 3.69            & CHF 3.69              \\ \hline \nocite{AliExpressVL53L0X}
+    LM2596 DC-DC Schritt-down Converter (2.5A)              & aliexpress         & 1               & CHF 0.90            & CHF 0.90              \\ \hline \nocite{AliExpressLM2596}
+    Strommesswiderstand 13FR200E                            & Distrelec          & 1               & CHF 2.80            & CHF 2.80              \\ \hline \nocite{Distrelec13FR200E}
+    Logic\-Level\-Converter 5V zu 3,3V                      & aliexpress         & 1               & CHF 0.90            & CHF 0.90              \\ \hline \nocite{AliExpress5V33VConverter}
+    Tower Pro Micro Servo SG90                              & wish               & 1               & CHF 1.60            & CHF 1.60              \\ \hline \nocite{WishTowerpro48}
+    Mini Modul PWM Speed Control Über L298N                 & aliexpress         & 1               & CHF 0.69            & CHF 0.69              \\ \hline \nocite{WishTowerpro48}
+    Antriebsmotor mit Encoder                               & Sponsor            & 1               & CHF 30.00           & CHF 30.00             \\ \hline
+    Schwenker Motor mit Encoder                             & Sponsor            & 1               & CHF 25.00           & CHF 25.00             \\ \hline
+    Zahnriehmen                                             & Mädler             & 1               & CHF 15.00           & CHF 15.00             \\ \hline \nocite{MadlerZahnriemen}
+    Zahnriehmenrad                                          & Mädler             & 3               & CHF 8.00            & CHF 24.00             \\ \hline \nocite{MadlerZahnriemenrad}
+    Kupplungen                                              & Mädler             & 1               & CHF 30.00           & CHF 30.00             \\ \hline \nocite{MadlerKupplung}
+    Zahnräder                                               & Mädler             & 3               & CHF 10.00           & CHF 30.00             \\ \hline \hline \nocite{MadlerZahnrad}
+    \textbf{Total}                                          & \textbf{}          & \textbf{30}     & \textbf{}           & \textbf{CHF 447.59}   \\ \hline
     \end{tabular}
-    \caption{Risiken Elektrotechnik}
-    \label{tab:risk_et}
+    \caption{Kostenübersicht Gesamtkonzept}
+    \label{tab:kosten_total}
     \end{table}
 
-    \subsection{Risiken Informatik}
-    \begin{table}[H]
-        \begin{tabular}{|p{0.3\textwidth}|p{0.3\textwidth}|p{0.4\textwidth}|}
+\pagebreak
+
+\subsection{Risikomanagement}
+Während der Konzeptionsphase, in welcher dieses Konzept entstanden ist, wurde in bestimmten zeitlichen Intervallen Risikoanalysen druchgeführt. Diese Risikoanalysen flossen in die Entscheidungsfindung für alle Lösungskonzepte mit ein. Zum Schluss der Konzeptphase anhand des fertigen Konzeptes wurde nochmals eine Risikoanalyse durchgeführt pro Disziplin. Diese Risikoanalyse wird für das PREN2 entscheidend sein um die geplanten Lösungskonzepte erfolgreich realisieren zu können.
+
+    \begin{longtable}{|l|p{2.5cm}|p{3cm}|p{3.8cm}|p{3.8cm}|}
     \hline
-    \textbf{Risiko}          & \textbf{Massnahmen ergriffen}                                                                                       & \textbf{Mögliche Massnahme bei weiteren Problemen} \\ \hline
-    \end{tabular}
-    \caption{Risiken Informatik}
-    \label{tab:risk_I}
-    \end{table}
+    \textbf{Nr} & \textbf{Disziplin} & \textbf{Risiko} & \textbf{Massnahmen PREN1} & \textbf{Massnahmen PREN2} \\ \hline
+    1    &  Elektrotechnik    & Spannungsabfall/ Wackelkontakt bei Schleifkontakten & Stützkondensator/ Akku & weitere Schleifkontakte \\ \hline
+    2    &  Elektrotechnik    & MC Überlastung durch Antriebsencoder                & aktuelle Messung zeigen 10\% Auslastung & Encoder tauschen \\ \hline
+    3    & Elektrotechnik    & Strom-Pi mit Akku zu teuer                           & -  & alternative suchen \\ \hline
+    4    & Elektrotechnik    & zu hoher Anlaufstrom beim Motor                      & -  & Momentenregelung mittels MC \\ \hline
+    5    & Elektrotechnik    & Ultraschallsensor zu ungenau                         & - & Systematische Fehler mittels Software korrigieren / TOF Sensor verwenden \\ \hline
+    6    & Maschinenbau      & zu wenig Reibung Räder => Schienen                   & Aufgummierung geplant & Oberfläche der Räder optimieren (Rauheit) \\ \hline
+    7    & Maschinenbau     & Kupplungen schleifen                                  & Grössere Haftreibung durch erhöhte Rauheit & alternative Befestigungsmethode wählen (Gewindestifte) \\ \hline
+    8    & Maschinenbau & Gewichtsverteilung Zug nicht optimal                      & statische Berechnungen durchgeführt & Gegengewichte einsetzten \\ \hline
+    9   & Maschinenbau  & Kippen in der Kurve oder bei Würfelaufnahme               & Konzept mit Kraftausgleich ausgearbeitet & Alternatives Konzept verfolgen \\ \hline
+    10  & Maschinenbau & Riemen defekt                                              & Ersatzriemen auf Lager            & Riemenart wechseln \\ \hline
+    11  & Maschinenbau & Reibfläche zwischen Ladungsträger und Wägen                & Material mit günstigen Gleiteigenschaften verwendet & Axiallager einbauen \\ \hline
+    12  & Maschinenbau & Würfel Aufnahme/ Platzierung                               & Optimierung des Konzeptes «Greifers» & alternatives Konzept verfolgen \\ \hline
+    13  & Maschinenbau & Reibung zu hoch bei Kran                                   & Material mit günstigen Gleiteigenschaften verwendet & Lagerung einbauen \\ \hline
+    14 & Informatik    & Tafelerkennung zu langsam                              & Optimierung der Algorithmen   & wechsel auf Raspberry PI 3 A+ \\ \hline
+    15 & Informatik     & Nummererkennung zu langsam                            & Optimierung der Algorithmen   & wechsel der ML- Framework \\ \hline
+    16 & Informatik     & Kommunikation MC <=> RPI zu langsam                   & max. Baudrate verwendet       & wechsel zu anderem Bus \\ \hline
+    17 & Informatik     & Bildverarbeitung zu langsam                           & C++ als Programiersprache verwenden & OpenCL verwenden \\ \hline
+    \caption{Risikotabelle}
+    \end{longtable}
 
-    \subsection{Risiken Maschinenbau}
-    \begin{table}[H]
-        \begin{tabular}{|p{0.3\textwidth}|p{0.3\textwidth}|p{0.4\textwidth}|}
-        \hline
-        \textbf{Risiko}   & \textbf{Massnahmen ergriffen}                                                                                   & \textbf{Mögliche Massnahme bei weiteren Problemen} \\ \hline
-        Zu wenig Reibung zwischen Räder und Schiene & Aufgummierung geplant & Oberflächenbeschaffenheit des Rades selber optimieren (Rauheit erhöhen) \\ \hline
-        Kupplungen schleifen & Grössere Haftreibung durch erhöhte Rauheit erzielen & Alternative Befestigungsmethode wählen (mit Gewindestift anschrauben) \\ \hline
-        Gewichtsverteilung von Lokomotive nicht optimal & Statische Berechnung vorlaufend ergänzen, wenn Anpassungen an Prototyp vorgenommen werden & Gegengewichte einsetzen \\ \hline
-        Kippen in der Kurve bzw. bei Würfelaufnahme & Zu beginn im Team abgesprochen Vernachlässigung des Konzeptes der Kraftausgleich bei Würfelaufnahme und Kurven fahrt wieder aufgreifen & Alternatives Konzept verfolgen \\ \hline
-        Riemen defekt & Ersatzriemen auf Lager & Riemenart wechseln \\ \hline
-        Rütteln bei Fahrt (Kamera) & Zu beginn im Team abgesprochen Vernachlässigung des Konzeptes der Fahrzeugdämpfung wieder aufgreifen & Nur Kameras dämpfen \\ \hline
-        Schleifkontakte funktionieren nicht & Optimierung an Konstruktion vornehmen & Alternative Schleifkontakte verwenden \\ \hline
-        Reibfläche zwischen Ladungsträger und Wägen (zu grosse Reibkräfte) & Material mit günstigen Gleiteigenschaften &  Axiallager einbauen\\ \hline
-        Würfel kann nicht aufgenommen und / oder korrekt platziert werden & Optimierung des Konzepts "Greifer" &  Alternatives Konzept verfolgen\\ \hline
-        Würfel ist zu wenig gesichert & Spannvorrichtung vorgesehen &  Alternative Befesitungsmethode anwenden\\ \hline
-        Reibung ist zu hoch bei Kran & Material mit günstigen Gleiteigenschaften &  Lagerung einbauen\\ \hline
-        \end{tabular}
-        \caption{Risiken Maschinenbau}
-        \label{tab:risk_M}
-        \end{table}
 
-\subsection{Nächste Schritte ET}
+\subsection{Nächsten Schritte}
+Nach der Konzeptionsphase im PREN1 folgt nun die Realisation des Zugs im PREN2. Das Ziel am Anfang des PREN2 wird sein, so schnell wie möglich die mechanischen Grundplatform des Zuges zu erstellen, damit die Elektrontik und die Software getestet werden kann. Währendessen arbeiten Elektrotechnik und Informatik an der finalisierung ihrer Komponenten. Mitte des PREN2 ist geplant den fertigen Zug in physischen Zustand fertig zu haben, damit in der zweiten hälfte das Testen und Optimieren beginnen kann.
+\paragraph{Elektrotechnik}
 \begin{enumerate}
     \item ersten Prototyp erstellen (damit Informatiker testen können)
         \subitem Aufbau auf erstem Zug Prototyp vom Maschinenbau
@@ -68,21 +86,17 @@
     \item Finales zusammenführen mit Informatik und Maschinenbau
 \end{enumerate}
 
-\subsection{Nächste Schritte Informatik}
+\paragraph{Informatik}
 \begin{enumerate}
     \item Finalisieren bestehender Komponenten
-        \subitem Signalerkennung
-        \subitem Gleiserkennung
-        \subitem Akustik
-        \subitem Sensorik
+        \subitem Signalerkennung, Gleiserkennung, Akustik, Sensorik
     \item Die restlichen Komponenten implementieren
-        \subitem Interface zu Motor
-        \subitem Interface zu Kran
+        \subitem Interface zu Motor/ Kran
     \item Hauptablauf implementieren
     \item Testing \& Bugfixing
 \end{enumerate}
 
-\subsection{Nächste Schritte Maschinenbau}
+\paragraph{Maschinenbau}
 \begin{enumerate}
     \item Konstruktionszeichnungen erstellen
     \subitem Funktionsmasse
@@ -93,15 +107,17 @@
     \item Weitere Versuche an Prototyp durchführen sowie Optimierungen und Änderungen vornehmen
 \end{enumerate}
 
-\subsection{Lessons learned ET}
+\subsection{Lessons learned}
+
+\paragraph{Lessons learned ET}
 Es hat sich gezeigt, dass eine enge Zusammenarbeit unter den Disziplinen entscheidend ist. Ein sehr guten Beispiel dafür ist die Auswahl des Motors. Weder die Fachleute Elektrotechnik, noch die Fachleute Maschinentechnik können diese Auswahl alleine treffen. Bevor eine genauere Auswahl vorgenommen werden kann müssen zuerst von beiden Disziplinen alle Anforderungen und Limitierungen zusammengetragen und diskutiert werden. Im Team kann diese Auswahl dann sehr gut getroffen werden.
 
-\subsection{Lessons learned Informatik}
+\paragraph{Lessons learned Informatik}
 Für die Informatik ist es schwer etwas greifbares zu erschaffen ohne die Mithilfe von den anderen Disziplinen. Deshalb
 war die grösste Lektion, dass eine gute Softwarearchitektur Goldwert ist. In unserem Fall konnten wir Dank der
 Middleware Architektur schon finale Komponenten entwickeln und diese Testen obwohl der Zug noch nicht vollständig gebaut
 ist. Dies gilt speziell für die Signalerkennung, Gleiserkennung, Akustik und die Sensorik
 
-\subsection{Lessons learned Maschinenbau}
+\paragraph{Lessons learned Maschinenbau}
 Ein grosser Vorteil im Bereich der Maschinentechnik sind die Erfahrungen, welche die Teammitglieder der Mechanik durch ihre Ausbildung als Konstrukteure einbringen können. Dadurch sind rasch gute Lösungskonzepte entwickelt und ausgearbeitet worden. Teilkonzepte konnten somit bereits mit Prototypen getestet werden. Es wurde die Erfahrung gemacht, dass für die Maschinentechnik die Zusammenarbeit mit den anderen Disziplinen wesentlich ist, da sie das Grundgerüst des Zuges bildet und die Verbindung zwischen Elektronik und Informatik ist.
 \end{document}
