@@ -10,7 +10,7 @@
 
     \begin{document}
     \subsection{Aufgabentrennung zwischen Pi und Tiny} \label{aufgabentrennung_pi_tiny}
-    Dieses Kapitel beschreibt die Aufgabentrennung zwischen der Systemsteuerung auf dem Raspberry Pi (im folgenden Pi genannt) und dem Mikrocontroller MK22FN512VLH12 auf dem Entwicklerboard TinyK22 (im folgenden Tiny genannt). Das Pi dient im System als Master. Damit fällt das Pi alle Entscheidungen. Das Tiny dient als Slave, es führt die Entscheidungen vom Pi aus und gibt Rückmeldung zum aktuellen Status und zu den Sensordaten.\\
+    Dieses Kapitel beschreibt die Aufgabentrennung zwischen der Systemsteuerung auf dem Pi (im folgenden Pi genannt) und dem Mikrocontroller MK22FN512VLH12 auf dem Entwicklerboard TinyK22 (im folgenden Tiny genannt). Das Pi dient im System als Master. Damit fällt das Pi alle Entscheidungen. Das Tiny dient als Slave, es führt die Entscheidungen vom Pi aus und gibt Rückmeldung zum aktuellen Status und zu den Sensordaten.\\
     Im System sind folgende Aufgaben für die jeweiligen Steuerungen vorgesehen:\\
     \textbf{Pi:}
     \begin{itemize}
@@ -38,7 +38,7 @@
         %    \subitem Nachregelung in der Kurve gemäss der Querbeschleunigung
     \end{itemize}
 
-    Somit ist jedes System auf Informationen des anderen angewiesen. Somit ist eine klare Definition der Schnittstelle der beiden Komponenten nötig. Im folgenden Kapitel \ref{interface_pi_tiny} wird diese Interface genauer beschrieben.
+    Somit ist jedes System auf Informationen des anderen angewiesen. Deshalb ist eine klare Definition der Schnittstelle der beiden Komponenten nötig. Im folgenden Kapitel \ref{interface_pi_tiny} wird diese Interface genauer beschrieben.
 
     \subsection{Interface zwischen Pi und Tiny} \label{interface_pi_tiny}
     Dieses Kapitel beschreibt die Kommunikation zwischen der Systemsteuerung auf dem Raspberry Pi und dem Mikrocontroller MK22FN512VLH12 auf dem Entwicklerboard TinyK22. Dabei sollen Informationen zur aktuellen Situation, sowie auch Informationen zum aktuellen Status des jeweiligen Systems.\\
@@ -48,12 +48,12 @@
     Als Hardware Schnittstelle wird UART (auch RS-232 genannt) verwendet. Dies ist eine Asynchrone Serielle Schnittstelle. Die Kommunikation kann mit zwei Leitungen realisiert werden. Eine dient als Empfangsverbindung (Rx) und eine als Sendeverbindung (Tx). Diese Trennung erlaubt eine voll-duplex Kommunikation.
 
     \subsubsection{Übertragungsprotokoll}
-    Zu jedem Zeitpunkt wird Datenpaket (im folgenden Frame genannt) in einem fest vorgelegten Format ausgetauscht. Dabei gibt es ein Grundformat für die Informationen und zwei Formate für den Informationsinhalt eines für Frames von Pi zum Tiny und ein anderes Format für die Frames vom Tiny zum Pi. Der Informationsinhalt der beiden Formate unterscheidet sich gemäss der Aufgabentrennung in Kapitel \ref{aufgabentrennung_pi_tiny}.\\
+    In regelmässig wiederholenden Zeitpunkten wird Datenpaket (im folgenden Frame genannt) in einem fest vorgelegten Format ausgetauscht. Dabei gibt es ein Grundformat für die Informationen und zwei Formate für den Informationsinhalt eines für Frames von Pi zum Tiny und ein anderes Format für die Frames vom Tiny zum Pi. Der Informationsinhalt der beiden Formate unterscheidet sich gemäss der Aufgabentrennung in Kapitel \ref{aufgabentrennung_pi_tiny}.\\
 
     \textbf{Grundformat}\\
     Die Frames bestehen jeweils aus einem Bezeichner (Key) und einem Wert (Value). Diese werden mit einem Komma getrennt. Als Abschluss dient das New Line Zeichen '\textbackslash n'. Somit sieht ein Informationsstück folgendermassen aus: $$\{Key\},\{Value\}\textbackslash n$$
     Zum Beispiel würde eine Informationen zur Geschwindigkeit folgendermassen aussehen: $$speed,200$$
-    Die gesamten Informationen werden als Zeichenkette (String) im Ascii Format verschickt. Die Zahlen werden aus dem String jeweils umgewandelt. Dies verbessert die Leserlichkeit für Menschen, was zum Testen und Simulieren der Kommunikation sehr Hilfreich sein kann.
+    Die gesamten Informationen werden als Zeichenkette (String) im Ascii Format verschickt. Zahlenwerte werden jeweils vor dem Senden in einen String umgewandelt und nach dem Empfangen wieder in einen Zahlenwert zurückkonvertiert. Dies verbessert die Leserlichkeit für Menschen, was zum Testen und Simulieren der Kommunikation sehr Hilfreich sein kann.
 
     \textbf{Frames: Pi $\Rightarrow$ Tiny}\\
     Das Pi schickt dem Tiny eine vorgegebene Soll-Geschwindigkeit und Richtung der nächsten Kurve. Auch Informationen über den aktuellen Status des Pi werden verschickt. Die genauen Bezeichner und die Bedeutung und Grösse der Zugehörigen werte sind in Tabelle \ref{tab:com_pi_tiny} aufgelistet.
@@ -91,7 +91,7 @@
         \label{tab:com_tiny_pi}
         \end{table}
 
-        Der Wert der Moral ist bestimmt für Statusinformationen, welche den einzelnen Bits in der Zahl zugeordnet werden. Der genaue Inhalt ist kann sich je nach Status (gemäss Kapitel \ref{ablauf}) unterscheiden. Der nötige Informationsinhalt um den Ablauf zu erfüllen ist ein Tabelle \ref{tab:statusInfo} aufgelistet. Für Tests soll es möglich sein den Inhalt je nach Bedarf zu erweitern.
+        Der Wert der Moral ist bestimmt für Statusinformationen, welche den einzelnen Bits in der Zahl zugeordnet werden. Der genaue Inhalt kann sich je nach Status (gemäss Kapitel \ref{ablauf}) unterscheiden. Der nötige Informationsinhalt um den Ablauf zu erfüllen ist ein Tabelle \ref{tab:statusInfo} aufgelistet. Für Tests soll es möglich sein den Inhalt je nach Bedarf zu erweitern.
 
         \begin{table}[H] \centering
             \begin{tabular}{|l|l|}

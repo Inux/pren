@@ -11,9 +11,9 @@
 
     \begin{document}
     \subsection{Elektronik Komponenten}
-    In diesem Kapitel wird der Aufbau der Elektronik des Fahrzeuges beschrieben. Die Abbildung \ref{fig:et_komponenten} veranschaulicht den Aufbau der Elektronik. Darauf sind alle logischen Verbindungen eingezeichnet. Weitere Elektrische Verbindungen für die Stromversorgung werden im Kapitel \ref{et_stromversorgung} weiter erläutert.\\
+    In diesem Kapitel wird der Aufbau der Elektronik des Zuges beschrieben. Die Abbildung \ref{fig:et_komponenten} veranschaulicht den Aufbau der Elektronik. Darauf sind alle logischen Verbindungen eingezeichnet. Weitere Elektrische Verbindungen für die Stromversorgung werden im Kapitel \ref{et_stromversorgung} erläutert.\\
     Zentral dabei ist der Mikrocontroller Tiny K22. Die Software auf dem Mikrocontroller initialisiert alle Komponenten, überwacht deren Status und sendet die nötigen Informationen an  das Pi. Diese Schnittstelle ist detailliert im Kapitel \ref{interface_pi_tiny} beschrieben.\\
-    Die Schnittstelle über den Debugger zum PC wird hier nicht weiter beschrieben, da diese Verbindung nur zum Entwickeln benutzt wird und für das Endgültige Produkt nicht mehr von Bedeutung ist sobald alles funktioniert.
+    Die Schnittstelle über den Debugger zum PC wird hier nicht weiter beschrieben, da diese Verbindung nur zum Entwickeln benutzt wird und für das endgültige Produkt nicht mehr von Bedeutung ist, sobald alles funktioniert.
 
     \begin{figure}[H]
         \centering
@@ -26,7 +26,7 @@
     Die Energie für das System wird über die Schienen bezogen. Die Antriebsenergie wird direkt von den Schienen bezogen und lediglich auf die korrekte Motorspannung angepasst. Die
     Systemsteuerung wird über ein StromPi 3 mit Strom versorgt. Als primär Stromquelle wird dafür die Schienenspannung
     benutzt. Bei der Hochgeschwindigkeitsfahrt wird diese Quelle abgeschaltet, damit die Gesamte Energie für den Antrieb
-    zur Verfügung steht. Das StromPi schaltet sofort auf die sekundäre Stromversorgung für das Pi. Diese sekundäre
+    zur Verfügung steht. Das StromPi schaltet automatisch auf die sekundäre Stromversorgung für das Pi. Diese sekundäre
     Quelle wird durch einen LiFePO4-Akku auf dem StromPi realisiert. Sobald die primär Stromquelle von den Schienen
     wieder zur Verfügung steht wird der Akku wieder nachgeladen.\\
     Das Pi zero und das TinyK22 mit diversen Sensoren und Aktoren werden über die USB-Anschlüsse des Pi versorgt.\\
@@ -35,7 +35,7 @@
     Die Energie für den Antrieb wird direkt von den Schienen bezogen. Bei der Hochgeschwindigkeitsfahrt werden alle anderen Verbraucher (z.B. Raspberry PI) von den Schienen entkoppelt um die gesamte Energie für den Antrieb nutzen zu können.
 
     \textbf{Verpolungsschutz}\\
-    Auf den Schienen steht eine Gleichspannung zur Verfügung, wobei eine Schienenseite der $+$ Pol und die andere Seite der $-$ Pol ist. Daraus ergibt sich das Problem, dass beim Platzieren des Zuges entgegen der vorgesehenen Fahrtrichtung eine Verpolung stattfindet. Auch ist die Zuordnung der Pole in der Aufgabenstellung noch nicht spezifiziert. Um sicherzustellen, dass das System unabhängig von der Polung der Schienen funktioniert muss eine Gleichrichtung realisiert werden. Dies kann mit einem Brückengleichrichter realisiert werden. (siehe Abbildung \ref{fig:et_bruckengleichrichter})
+    Auf den Schienen steht eine Gleichspannung zur Verfügung, wobei eine Schienenseite der $+$ Pol und die andere Seite der $-$ Pol ist. Daraus ergibt sich das Problem, dass beim Platzieren des Zuges entgegen der vorgesehenen Fahrtrichtung eine Verpolung stattfindet. Auch ist die Zuordnung der Pole in der Aufgabenstellung noch nicht spezifiziert. Um sicherzustellen, dass das System unabhängig von der Polung der Schienen funktioniert, muss eine Gleichrichtung realisiert werden. Dies kann mit einem Brückengleichrichter realisiert werden. (siehe Abbildung \ref{fig:et_bruckengleichrichter})
 
     \begin{figure}[H]
         \centering
@@ -45,10 +45,10 @@
     \end{figure}
 
     Die Ausgangsspannung $U_a$ hat dabei immer dieselbe Polarität, unabhängig welche Polarität $U_e$ hat. \\
-    Für den Hochgeschwindigkeitszug wird ein "B40C 3700-2200"  verwendet. Dabei hantelt es sich um eine Integrierte Schaltung für einen Brückengleichrichter. Der maximal zulässige Strom ist dabei $3.7A$. Bei diesem Strom fällt über dem Gleichrichtung eine Spannung von ca $1V$ ab.
+    Für den Hochgeschwindigkeitszug wird ein "B40C 3700-2200"  verwendet. Dabei hantelt es sich um eine Integrierte Schaltung für einen Brückengleichrichter. Der maximal zulässige Strom ist dabei $3.7A$. Bei diesem Strom fällt über dem Gleichrichtung eine Spannung von ca. $1V$ ab.
 
     \textbf{Spannungsanpassung}\\
-    Gemäss der Aufgabenstellung stehen $20\pm2V$ bei bis zu $3A$ zur Verfügung. Aufgrund der grossen Toleranz von $4V$ muss die Spannung angepasst werden um eine stabile Spannung zur sicherzustellen. Dafür wird ein DC-DC Converter verwendet. Zu beachten dabei ist, dass der Converter für den maximalen Strom von $3A$ ausgelegt ist.
+    Gemäss der Aufgabenstellung stehen $20\pm2V$ bei bis zu $3A$ zur Verfügung. Aufgrund der grossen Toleranz von $4V$ muss die Spannung angepasst werden um eine stabile Spannung sicherzustellen. Dafür wird ein DC-DC Converter verwendet. Zu beachten dabei ist, dass der Converter für den maximalen Strom von $3A$ ausgelegt ist.
 
     \textbf{Unterbrechungssicherheit}\\
     Um sicherzustellen, dass ein allfälliger Wackelkontakt der Schleifkontakte überbrückt werden kann und um grössere Spannungsschwankungen zu vermeiden wird ein Kondensator als Stützung eingesetzt.
@@ -63,7 +63,7 @@
     \\
     \textbf{Akku}\\
     Während der Hochgeschwindigkeitsfahrt wird die Systemsteuerung über einen Akku mit Storm versorgt. Die benötige Leistung der einzelnen Komponenten ist in Tabelle \ref{tab:et_komponente_leistung} aufgeführt. Im schlimmsten Fall soll der Akku das System dabei mindestens für zwei komplette Abläufe mit Energie versorgen können.\\
-    Eine Runde darf maximal vier Minuten dauern, das bedeutet die Energie vom Akku muss für mindestens 8 Minuten reichen. Daraus ergibt sich für die Energie $$E=P\cdot t = 14.2W \cdot 8min = 113.6Wmin = 1.9Wh$$
+    Eine Runde darf maximal vier Minuten dauern, das bedeutet die Energie vom Akku muss für mindestens acht Minuten reichen. Daraus ergibt sich für die Energie $$E=P\cdot t = 14.2W \cdot 8min = 113.6Wmin = 1.9Wh$$
 
     \begin{table}[H] \centering
         \begin{tabular}{|l|r|}
@@ -85,10 +85,10 @@
     \end{table}
 
     Das StormPi Modul wird mit einem LiFePO4-Akku ergänzt. Der verbaute Akku hat $1000mAh$. Bei einer Spannung von $3.7V$ entspricht dies $3.7Wh$. \\
-    Dies ist genügend für zwei durchläufe und da der Akku ausserhalb der Hochgeschwindigkeitsfahrt nachgeladen werden soll, reicht dieser Akku.
+    Dies ist genügend für zwei durchläufe. Ausserdem wird der Akku ausserhalb der Hochgeschwindigkeitsfahrt nachgeladen, was eine zusätzliche Reserve gibt.
 
     \subsubsection{Sensoren} \label{et_sensoren}
-    Mit diversen Sensoren sollen folgende Daten aufgenommen werden. Folgende Daten sollen aufgezeichnet werden:
+    Mit diversen Sensoren sollen folgende Daten aufgenommen werden.
     \begin{itemize}
         \item Beschleunigung
         \item Geschwindigkeit
@@ -104,11 +104,11 @@
     Die Geschwindigkeit wird hauptsächlich über den Quadratur Encoder am Antriebsmotor aufgenommen. Zusätzlich wird die
     Geschwindigkeit über die Beschleunigung zur Kontrolle nachgerechnet.
 
-    \paragraph{Quadratur Encoder:} Der Quadratur Encoder MR, Typ L gibt $1024$ Impulse pro Umdrehung. Der Verlauf eines Impulses ist in Abbildung \ref{fig:et_encoder} dargestellt. Der Encoder stellt drei Kanäle zur Verfügung. Über den Kanal $A$ und $B$ kann einzeln die Geschwindigkeit bestimmt werden. Durch auswerten der Phasenverschiebung der beiden Kanäle ("$A$ eilt $B$ vor" oder "$A$ eilt $B$ nach") kann zusätzlich noch die Drehrichtung bestimmt werden. Der Kanal $I$ ist mit Kanal $A$ und $B$ synchronisiert und kann ebenfalls zur Bestimmung der Geschwindigkeit dienen.\\
+    \paragraph{Quadratur Encoder:} Der Quadratur Encoder MR, Typ L gibt $1024$ Impulse pro Umdrehung. Der Verlauf eines Impulses ist in Abbildung \ref{fig:et_encoder} dargestellt. Der Encoder stellt drei Kanäle zur Verfügung. Über den Kanal $A$ und $B$ kann einzeln die Geschwindigkeit bestimmt werden. Durch auswerten der Phasenverschiebung der beiden Kanäle (''$A$ eilt $B$ vor'' oder ''$A$ eilt $B$ nach'') kann zusätzlich noch die Drehrichtung bestimmt werden. Der Kanal $I$ ist mit Kanal $A$ und $B$ synchronisiert und kann ebenfalls zur Bestimmung der Geschwindigkeit dienen.\\
     Für die Bestimmung der Geschwindigkeit kann die Dauer eines Impulses gemessen werden oder es können die Anzahl Impulse in einer bestimmten Zeit gezählt werden. Für dieses Projekt soll die Dauer des Impulses gemessen werden. Der Vorteil dieser Methode ist die bessere Präzision, da nach jedem einzelnen Impuls die durchschnittliche Geschwindigkeit seit dem letzten Impuls sofort bestimmt werden kann. Das Risiko ist, dass bei hohen Umdrehungszahlen der Mikrocontroller nicht schnell genug ist mit dem Zählen oder dass der Zähler des Mikrocontrollers bei sehr tiefen Umdrehungszahlen überläuft.\\
     Die maximalen Umdrehungszahl des Antriebsmotors für die angestrebte Maximalgeschwindigkeit liegt bei $5200 min^{-1}$. Mit $1024$ Impulsen pro Umdrehung ergibt dies $$5200 min^{-1} \cdot 1024 Impulse = 5'324'800 \frac{Impulse}{min}$$
     Dies sind dann $$ 5'324'800 \frac{Impulse}{min} / 60s = 88'747 \frac{Impulse}{s} $$
-    Dies ergibt eine Impulsdauer von $$\frac{1}{36'651 \frac{Impulse}{s}} = 11.29\mu s$$ Bei der schnellsten möglichen
+    Dies ergibt eine Impulsdauer von $$\frac{1}{88'747 \frac{Impulse}{s}} = 11.29\mu s$$ Bei der schnellsten möglichen
     Timer Einstellung auf dem TinyK22 ($60MHz$) ergibt dies noch $676 \frac{Ticks}{Impuls}$. Bei der Implementierung
     muss also beachtet werden, dass bei hoher Geschwindigkeit möglichst wenig Zeit in der Interrupt Routine verbracht
     wird, da diese dann sehr of aufgerufen wird. Sollte sich zeigen, dass der Mikrocontrollers durch die hohe Impulsrate
@@ -151,7 +151,7 @@
     Die Aktoren stellen die Schnittstelle zur Mechanik dar. Diese sollen alle nötigen Mechanischen Bewegungen auf Befehl des Mikrocontrollers ausführen.\\
 
     \textbf{H-Brücken Treiber für Antriebsmotor}\\
-    Um den Antriebsmotor anzusteuern wird ein H-Brückentreiber verwendet. Damit kann der Motor durch ein PWM Signal in der Geschwindigkeit fast beliebig eingestellt werden. Über die wahlweise Ansteuer einer der beiden eingänge der H-Brücke wird die Richtung bestimmt.\\
+    Um den Antriebsmotor anzusteuern wird ein H-Brückentreiber verwendet. Damit kann der Motor durch ein PWM Signal in der Geschwindigkeit fast beliebig eingestellt werden. Über die wahlweise Ansteuerung einer der beiden eingänge der H-Brücke wird die Richtung bestimmt.\\
     Es wird ein Arduion IBT\_2 DC-Motoren Treiber mit einem BTS7960 eingesetzt. Dieses Bauteil kann Motoren mit einem Strom von bis zu 43A versorgen. \\
 
     \textbf{Antriebsmotor}\\
@@ -161,13 +161,13 @@
     Da die Richtung immer dieselbe ist reicht für den Schwenker ein normaler DC-Motoren Treiber. Um eine sanfte Beschleunigung und Bremsung der Konstruktion zu ermöglichen, soll auch der Schwenkmotor mit einem PWM angesteuert werden. Als Treiber wird ein Board mit einem L298N verwendet.\\
 
     \textbf{Schwenkmotor}\\
-    Für den Schwenker wir ein Maxon DCX 19 S verwendet. Um die Position des Schwenkers zu bestimmen ist auch an diesem Motor ein Encoder befestigt. Durch die Bestimmung der nötigen Umdrehungen bis der Schwenker eingefahren ist kann genau festgestellt werden wie viele Impulse abgewartet werden müssen bis der Der Motor anhalten muss. \cite{MaxonDCX19S}\\
+    Für den Schwenker wir ein Maxon DCX 19 S verwendet. Um die Position des Schwenkers zu bestimmen ist auch an diesem Motor ein Encoder befestigt. Durch die Bestimmung der nötigen Umdrehungen bis der Schwenker eingefahren ist kann genau festgestellt werden wie viele Impulse abgewartet werden müssen bis der Motor anhalten muss. \cite{MaxonDCX19S}\\
 
     \textbf{Distanzsensor links ausklappen}\\
-    Um den Sensor beim Parkieren ausklappen zu können wird er an einem Servo befestigt. Sobald die Systemsteuerung entscheidend, dass das korrekte Haltesignal das nächste ist gibt sie den Befehlt den Sensor auszuklappen. Dafür wird ein "Tower Pro Micro Servo SG90" verwendet. Dieser hat ein Drehmoment von bis zu $2.5 kg-cm$. \cite{SG90Datasheet}\\
+    Um den Sensor beim Parkieren ausklappen zu können wird dieser an einem Servo befestigt. Sobald die Systemsteuerung entscheidet, dass das korrekte Haltesignal das nächste ist, gibt sie den Befehlt den Sensor auszuklappen. Dafür wird ein "Tower Pro Micro Servo SG90" verwendet. Dieser hat ein Drehmoment von bis zu $2.5 kg-cm$. \cite{SG90Datasheet}\\
 
     \subsubsection{Proof-of-Concept}
-    Um die Funktionsfähigkeit der einzelnen Komponenten sicherzustellen wurden diverse Tests gemacht. Das ziel dieser Tests war es die einfachste Form jeder Funktionalität zu realisieren. Auf eine quantitativ genaue Anpassung wurde in diesem ersten Schritt verzichtet, dies ist für die Realisierung des Projekts vorgesehen. Das Ziel der Tests war somit nur zu Zeigen, dass die Komponente wie vorgesehen funktionnieren kann. Eine Übersicht der durchgeführten Tests ist in Tabelle \ref{tab:poc_et} ersichtlich.\\
+    Um die Funktionsfähigkeit der einzelnen Komponenten sicherzustellen wurden diverse Tests gemacht. Das Ziel dieser Tests war es, die einfachste Form jeder Funktionalität zu realisieren. Auf eine quantitativ genaue Anpassung wurde in diesem ersten Schritt verzichtet, dies ist für die Realisierung des Projekts vorgesehen. Das Ziel der Tests war somit nur zu zeigen, dass die Komponente wie vorgesehen funktionnieren kann. Eine Übersicht der durchgeführten Tests ist in Tabelle \ref{tab:poc_et} ersichtlich.\\
 
     \begin{table}[H]
         \centering

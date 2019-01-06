@@ -20,6 +20,8 @@
     \usepackage{natbib}
     \usepackage{enumerate}
     \usepackage{longtable}
+    \usepackage[ddmmyyyy]{datetime}
+    \renewcommand{\dateseparator}{.}
 
     \lstset{basicstyle=\small,
       showstringspaces=false,
@@ -33,32 +35,41 @@
 
         %\title{Dokumentation - PREN}
         \title{Schlussdokumentation PREN1 Gruppe 28}
-        \author{A. Rebsamen, J. Grepper, M. Omlin, \\ M. Schöni, P. Marty, S. Ineichen}
+        \author{Andreas Rebsamen \\Joel Grepper\\ Manuel Omlin\\ Marco Schöni\\ Patrick Marty\\ Steve Ineichen}
         \date{\today{}, Luzern}
 
     \begin{document}
 
         \begin{titlingpage}
-            \begin{center}
+            \begin{flushleft}
                 \begin{Huge} %Exakter Modulnamen und Modulnamen ausgeschrieben
-                    TA.BA{\_}PREN1.H1801 \\
+                    %TA.BA{\_}PREN1.H1801 \\
                     \textbf{\thetitle} \\
                 \end{Huge}
-                \vspace{0.5cm}
-                \begin{huge} %Author-Variable
+                \vspace{1.5cm}
+                \begin{large} %Author-Variable
                     \theauthor \\
+                \end{large}
+                \vspace{1.5cm}
+                \begin{huge}
+                    \textbf{Hochgeschwindigkeitsschienenfahrzeug}\\
+                    \textbf{SOUL TRAIN}\\
                 \end{huge}
                 \vspace{0.5cm}
-                \vspace{1cm}
+                \begin{large}
+                    Hochschule Luzern – Technik \& Architektur\\
+                    TA.BA{\_}PREN1.H1801
+                \end{large}
+                \vspace{1.5cm}
                 \begin{figure}[H] %Titelbild
                     \centering
                     \includegraphics[width=0.8\textwidth]{images/uebersicht_Zug.png}
                 \end{figure}
-                \vspace{0.5cm}
-                \begin{huge} %Datumsvariable
-                    \thedate
-                \end{huge}
-            \end{center}
+                \vspace{3cm}
+                \begin{large} %Datumsvariable
+                    Horw, Hochschule Luzern – Technik \& Architektur,\thedate
+                \end{large}
+            \end{flushleft}
         \end{titlingpage}
 
 

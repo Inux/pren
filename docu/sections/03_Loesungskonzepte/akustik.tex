@@ -3,7 +3,7 @@
 \graphicspath{{images/Akustik/}{../../images/Akustik/}}
 \begin{document}
 \subsection{Akustik}
-Während der Fahrt wird ein Signal mit einer Nummer gelesen, diese Nummer soll am Ende der Fahrt akustisch ausgegeben werden. In diesem Kapitel wird das Lösungskonzept für unsere akustische Komponente aufgezeigt.
+Während der Fahrt wird ein Signal mit einer Nummer gelesen, diese Nummer soll am Ende der Fahrt akustisch ausgegeben werden. In diesem Kapitel wird das Lösungskonzept für die akustische Komponente aufgezeigt.
 
 \paragraph{Anforderungen}
 \begin{itemize}
@@ -38,7 +38,7 @@ Versorgungsspannung & 3.3V \\ \hline
 
 \paragraph{Bauplan / Interface}
 
-Über die GPIO Header des Raspberry Pi kann der Buzzer direkt angesprochen und versorgt werden. Ein einzelnes Signalkabel reicht für die Kommunikation aus und hält den Aufbau weitestgehend simpel.
+Über die GPIO Header des Raspberry Pi kann der Buzzer direkt angesprochen und versorgt werden. Ein einzelnes Signalkabel reicht für die Kommunikation aus und hält den Aufbau einfach.
 
 \begin{table}[H]
 \begin{center}
@@ -59,9 +59,9 @@ Signal          & GPIO17   & SIG    \\ \hline
 \end{figure}
 
 \paragraph{Daten}
-Dem Buzzer werden verschiedene Frequenzen gesendet, welche dieser dementsprechend abspielt. Somit ist das Spielen einer Melodie möglich. Für unsere Benutzung reicht jedoch eine einzelne Frequenz. Die Frequenz wird im Intervall von 500ms an den Buzzer gesendet und ist somit in der Lage die höchste mögliche Zahl ``9'' innerhalb von 4.5s abzuspielen.
+Dem Buzzer werden verschiedene Frequenzen gesendet, welche dieser entsprechend abspielt. Somit ist das Spielen einer Melodie möglich. Für unsere Benutzung reicht jedoch eine einzelne Frequenz. Die Frequenz wird im Intervall von 500ms an den Buzzer gesendet und ist somit in der Lage die höchste mögliche Zahl ``9'' innerhalb von 4.5s abzuspielen.
 
-Die Frequenz wird in Form einer Zahl(von ~100 bis 1000) gesendet, der Frequenzbereich kann je nach Buzzer variieren.
+Die Frequenz wird in Form einer Zahl(von 100 bis 1000) gesendet, der Frequenzbereich kann je nach Buzzer variieren.
 
 \paragraph{Realisierung}
 Der Code wird in Python realisiert und macht Verwendung von den Bibliotheken GPIO und time. Es wird in einem Intervall (500ms) eine Frequenz auf den GPIO Port ausgegeben. Alle Module/Komponente werden asynchron ausgeführt, das Ausführen von time.sleep(ms) sollte somit kein Problem sein.

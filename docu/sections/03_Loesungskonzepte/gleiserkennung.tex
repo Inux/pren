@@ -5,15 +5,14 @@ Ein Beschleunigungssensor für die Erfassung der Fahrdaten ist bereits in der Au
 Um aber eine ideale Regelung zu ermöglichen wird zusätzlich eine Gleiserkennung implementiert. Mit welchem schon im voraus
 erkennt werden kann ob eine Kurve bevorsteht oder ob sich der Hochgeschwindigkeitszug auf einer geraden befindet.
 Während der Konzept Phase wurden verschiedene Verfahren evaluiert und zum Teil ausprobiert. Jedoch gab es keine Lösung welche zusätzlich zur Richtung noch den Radius
-der Kurve bestimmen kann. Die Momentane Lösung welche angestrebt wird kann also nur sagen ob es Geradeaus, nach Links oder nach Rechts geht.
-Diese Information wird in den Regelungskreis eingespiesen, welcher dadurch auf die maximale Geschwindigkeit die im engsten schienen Radius möglich ist
-geregelt. Anschliessend wird mithilfe des Beschleunigungssensor versucht an das Limit der Zentripedalkraft zu regeln. Somit kann die
+der Kurve bestimmen kann. Die Momentane Lösung welche angestrebt wird kann also nur sagen ob es geradeaus, nach links oder nach rechts geht.
+Diese Information wird in den Regelungskreis eingespeist. Dadurch wird die maximale Geschwindigkeit für den engsten Schienen-Radius festgelegt. Anschliessend wird mithilfe des Beschleunigungssensor versucht an das Limit der Zentripetalkraft zu regeln. Somit kann die
 bestmögliche Regelung implementiert werden ohne genauere Angaben zum aktuellen Kurvenradius zu haben.
 Mehr Details zum Regelkreis und dem Ganzen Ablauf sind im unter \ref{ablauf} zu finden.
 
 \subsubsection{Verfahren}
-Nachfolgend werden die einzelnen Schritte zur Bearbeitung eines Einzelnen Bild aufgelistet.
-Die einzelnen Teilschritte werden für jedes Bild welches aufgenommen wird neu berechnet.
+Nachfolgend werden die einzelnen Schritte zur Bearbeitung eines einzelnen Bild aufgelistet.
+Die einzelnen Teilschritte werden für jedes Bild, welches aufgenommen wird, neu berechnet.
 \begin{itemize} %Verfahren kurz und knapp
     \item Bild Skalieren
     \item Umrechnen zu Schwarz Weiss
@@ -23,15 +22,15 @@ Die einzelnen Teilschritte werden für jedes Bild welches aufgenommen wird neu b
     \item Bild in zwei Hälften unterteilen
     \item Berechnen der Anzahl Konturen in beiden Hälften
         \begin{itemize}
-            \item Beide Hälften etwa gleich viele Konturen -> Gleis geht geradeaus
-            \item Linke Hälfte hat mehr Konturen -> Gleis geht nacht Links
-            \item Rechte Hälfte hat mehr Konturen -> Gleis geht nach Rechts
+            \item Beide Hälften etwa gleich viele Konturen $\Rightarrow$ Gleis geht geradeaus
+            \item Linke Hälfte hat mehr Konturen $\Rightarrow$ Gleis geht nach links
+            \item Rechte Hälfte hat mehr Konturen $\Rightarrow$ Gleis geht nach rechts
         \end{itemize}
 \end{itemize}
 
 \textbf{Bild Skalieren}\\
 Das Bild muss für die Berechnungen runter skaliert werden um die Rechenzeit zu reduzieren. Das Format
-wird dabei beibehalten, um Verzerrungen zu vermeiden. Zuerst wird also das Seitenverhältnis berechnet um dann
+wird dabei beibehalten um Verzerrungen zu vermeiden. Zuerst wird also das Seitenverhältnis berechnet um dann
 die kürzere Seite auf einen Konfigurierbaren wert zu setzen. Die längere Seite wird dann mit dem Seitenverhältnis Faktor
 berechnet.
 

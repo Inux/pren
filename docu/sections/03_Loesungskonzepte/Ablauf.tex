@@ -11,7 +11,7 @@
 
     \begin{document}
     \subsection{Ablauf} \label{ablauf}
-    Dieses Kapitel gibt eine Übersicht über den gesamten Ablauf, der nötig ist um die Aufgabenstellung zu erfüllen. Der Ablauf ist in \ref{fig:Ablaufdiagramm} Grafisch dargestellt. Der Ablauf kann in fünf Zustände unterteilt werden.
+    Dieses Kapitel gibt eine Übersicht über den gesamten Ablauf, der nötig ist um die Aufgabenstellung zu erfüllen. Der Ablauf ist in Abbildung \ref{fig:Ablaufdiagramm} Grafisch dargestellt. Dieser Ablauf kann in fünf Zustände unterteilt werden.
 
     \begin{itemize}
         \item Initialisierung
@@ -24,22 +24,20 @@
     Im folgenden werden die Zustände kurz beschrieben.\\  
 
     \textbf{Initialisierung}\\
-    Alle Systeme werden Gestartet sobald sie mit Strom versorgt werden. Alle Schnittstellen werden Initialisiert und die Kommunikation beginnt. Beim Ende der Initialisierung soll über das Web Interface angezeigt werden, dass das System bereit ist und die Fahrt gestartet werden kann.\\
+    Alle Systeme werden gestartet sobald sie mit Strom versorgt werden. Alle Schnittstellen werden Initialisiert und die Kommunikation zwischen den Komponenten beginnt. Beim Ende der Initialisierung soll über das Web Interface angezeigt werden, dass das System bereit ist und die Fahrt gestartet werden kann.\\
 
     \textbf{Würfelaufnahme}\\
     Nach dem Startsignal über das Web Interface fährt der Zug in langsamer Fahrt vorwärts bis der Würfle von den Sensoren erfasst wird. Sobald der Würfel erkannt wurde hält der Zug an und der Schwenker mit dem Würfel wird eingefahren.\\
 
     \textbf{Hochgeschwindigkeit Fahrt}\\
-    Nachdem der Würfel Aufgeladen ist kann der Zug beschleunigen. Der Zug soll immer die höchstmögliche Geschwindigkeit fahren. Die Geschwindigkeit wird für die Kurven gemäss der Bilderkennung angepasst. Auch sucht das System dauernd
-    das Info Signal und erkennt die Nummer darauf, sobald die Nummer erkannt wurde gibt das System diese Information
-    über den Lautsprecher aus.
-    Sobald das Signal der Ende der Zeitmessung erkannt wird verlangsamt der Zug und beginnt die Parkplatzsuche\\
+    Nachdem der Würfel Aufgeladen ist kann der Zug beschleunigen. Der Zug soll immer die höchstmögliche Geschwindigkeit fahren. Die Geschwindigkeit wird für die Kurven gemäss der Spurerkennung angepasst. Auch sucht das System dauernd das Info Signal und erkennt die Nummer darauf, sobald die Nummer erkannt wurde gibt das System diese Information akustisch aus.
+    Sobald das Signal für das Ende der Zeitmessung erkannt wird, verlangsamt der Zug und beginnt die Parkplatzsuche.\\
 
     \textbf{Parkplatzsuche}\\
     Um das korrekte Haltesignal zu finden kann der Zug eine so tiefe Geschwindigkeit fahren wie nötig. Die Bilderkennung sucht das korrekte Signal und entscheidet wo der Zug parkiert werden soll.\\
 
     \textbf{Parkieren}\\
-    Nachdem das korrekte Signal erkannt ist, wird der Parksensor ausgeklappt. Dieser misst die Distanz zum Haltesignal bis ein bestimmter Schwellwert erreicht ist. Beim Erreichen der Haltedistanz Stoppt der Zug und beendet damit die Fahrt.
+    Nachdem das korrekte Signal erkannt ist, wird der Parksensor ausgeklappt. Dieser misst die Distanz zum Haltesignal bis ein bestimmter Schwellwert für die Haltedistanz erreicht ist. Beim Erreichen der Haltedistanz stoppt der Zug und beendet damit die Fahrt.
 
     \begin{figure}[H]
         \centering

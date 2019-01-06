@@ -9,8 +9,10 @@ Mithilfe elektronischer Komponente kann Beschleunigung, Geschwindigkeit und Dist
 \paragraph{Anforderungen}
 \begin{itemize}
     \item Momentane Beschleunigung auslesen
+      \subitem in Fahrtrichtung
+      \subitem Querbeschleunigung
     \item Beschleunigung in Geschwindigkeit und Distanz umrechnen
-    \item Approximierte Position berechnen (wo auf der Strecke befinden wir uns)
+    \item Approximierte Position berechnen
     %\item (Optional) Zentrifugalkräfte in Kurven berechnen
 \end{itemize}
 
@@ -36,7 +38,7 @@ Versorgungsspannung & 3-5V \\ \hline
 \end{table}
 
 \paragraph{Bauplan / Interface}
-Der Sensor wird über die $I^2C$ Schnittstelle angesprochen und verwendet somit einen Datenport (SDA) und eine Clock (SCL). Für die Stromversorgung reicht der 3.3V Port (3V3) und der Ground (GND) der GPIO Header.
+Der Sensor wird über die $I^2C$ Schnittstelle angesprochen und verwendet somit einen Datenleitung (SDA) und eine Clockleitung (SCL). Für die Stromversorgung werden die Anschlüsse für 3.3V des GPIO Headers benutzt.
 
 \begin{table}[H]
 \begin{center}
@@ -56,7 +58,7 @@ Clock          & SCL      & SCL       \\ \hline
   \label{fig:Beschleunigungssensor}
 \end{figure}
 
-\subparagraph{Daten}
+\textbf{Daten}\\
 Mithilfe eines Skripts erhalten wir eine gute Übersicht der erhaltenen Daten.
 
 \begin{lstlisting}
