@@ -13,7 +13,7 @@
 
     \begin{figure}[H] %Lokomotive mit Positionsnummern
         \centering
-        \includegraphics[width=0.9\textwidth]{Lokomotive.png}
+        \includegraphics[width=0.7\textwidth]{Lokomotive.png}
         \caption{Baugruppe Lokomotive}
         \label{fig:bg_lokomotive}
     \end{figure}
@@ -33,27 +33,27 @@
         \hline
         \end{tabular}
 
-        \caption{Positionsnummern der Lokomotive mit Bezeichnungen}
+        \caption{Positionsnummern der Lokomotive}
         \label{tab:bg_lokomotive}
     \end{table}
 
-    In der Querschnittsdarstellung in Abbildung \ref{fig:schnitt_lokomotive} ist die Lagerungen zwischen dem Ladungsträger und dem Antriebswagen beziehungsweise dem Führungswagen besser sichtbar. Ebenfalls sieht man gut, wie der Antriebswagen mit Zahnriemen angetrieben wird. Der Aufbau der Unterbaugruppen wird in den nächsten Abschnitten vorgestellt.\\
+    In der Querschnittsdarstellung in Abbildung \ref{fig:schnitt_lokomotive} ist die Lagerungen zwischen dem Ladungsträger und dem Antriebswagen beziehungsweise dem Führungswagen besser sichtbar. Ebenfalls ist ersichtlich, wie der Antriebswagen durch einen Zahnriemen angetrieben wird. Der Aufbau der einzelnen Unterbaugruppen wird in den nächsten Abschnitten vorgestellt.\\
 
     \begin{figure}[H] %Lokomotive im Schnitt
         \centering
         \includegraphics[width=0.7\textwidth]{lokomotive_2.png}
-        \caption{Schnittansicht der Lokomotivenbaugruppe}
+        \caption{Schnittansicht der Lokomotive}
         \label{fig:schnitt_lokomotive}
     \end{figure}
     \newpage
 
-    \subsubsection{Antriebswagen}
+    \subsubsection{Antriebs- und Führungswagen}
     Der Grundaufbau der beiden Wägen ist derselbe, mit dem Unterschied, dass der Antriebswagen durch einen Motor angetrieben wird. Der Grundwagen beziehungsweise der Führungswagen in Abbildung \ref{fig:expl_fuehrungswagen} (siehe Tabelle \ref{tab:expl_fuehrungswagen}) besteht aus einem Rahmen und einer Platte, welche miteinander verstiftet (Position 2) und verschraubt (Position 3) sind. Im Rahmen werden die beiden Achsen jeweils mit einem Los- (Position 7) und einem Festlager (Position 8) gelagert und mit Sicherungsringen (Position 6) gesichert. Die Achsen sind an beiden Enden mit einem Gewinde versehen, damit die Räder bei Bedarf schnell und einfach gewechselt werden können, ohne dass der ganze Wagen auseinander genommen werden muss. Die Anfräsfläche auf der Welle (Position 5) dient für das bessere Befestigen der Räder mit einen Gabelschlüssel.\\
 
      \begin{figure}[H] %Führungswagen
         \centering
-        \includegraphics[width=0.9\textwidth]{Fuehrungswagen.png}
-        \caption{Explosionsdarstellung Führungswagen}
+        \includegraphics[width=1\textwidth]{Fuehrungswagen.png}
+        \caption{Explosionsdarstellung Grundwagens}
         \label{fig:expl_fuehrungswagen}
     \end{figure}
 
@@ -78,7 +78,7 @@
         \hline
         \end{tabular}
 
-        \caption{Explosionsdarstellung Führungswagen}
+        \caption{Positionsnummern des Grundwagens}
         \label{tab:expl_fuehrungswagen}
         \end{table}
     \newpage
@@ -87,7 +87,7 @@
 
     \begin{figure}[H] %Antriebswagen
         \centering
-        \includegraphics[width=0.9\textwidth]{antriebswagen.png}
+        \includegraphics[width=0.7\textwidth]{antriebswagen.png}
         \caption{Baugruppe Antriebswagen}
         \label{fig:antriebswagen}
     \end{figure}
@@ -103,19 +103,21 @@
         \hline
         Position 3          & Kameras\\
         \hline
+        Position 4          & Zahnriemen\\
+        \hline
     \end{tabular}
 
-    \caption{Explosionsdarstellung Antriebswagen}
+    \caption{Positionsnummern des Antriebswagens}
     \label{tab:expl_antriebswagen}
     \end{table}
 
-    \newpage
+    \pagebreak
 
     Die Antriebseinheit in Abbildung \ref{fig:antriebseinheit} (siehe Tabelle \ref{tab:pos_antriebseinheit}) besteht aus einem Grundgestell, an welchem die Lagerung der Antriebswelle und der Motor angebracht sind. Das Drehmoment vom Motor wird über ein geradverzahntes Zahnrad mit einem Übersetzungsverhältnis von 1:2 auf eine Achse übertragen. Von dieser wird es über einen Riemen auf die beiden Radachsen und somit auf die Räder weitergeleitet. Durch die Berechnung der maximalen Geschwindigkeit wird entsprechend der Motor ausgelegt. Dies wird im nächsten Abschnitt genauer beschrieben.\\
 
     \begin{figure}[H] %Antriebseinheit
         \centering
-        \includegraphics[width=0.9\textwidth]{antriebseinheit.png}
+        \includegraphics[width=1\textwidth]{antriebseinheit.png}
         \caption{Explosionsdarstellung Antriebseinheit}
         \label{fig:antriebseinheit}
     \end{figure}
@@ -127,7 +129,7 @@
         \hline
         Position 1          & Spannsatz\\
          \hline
-        Position 2          & Zahnräder Übersetzung 1:2\\
+        Position 2          & Zahnräder (Übersetzung 1:2)\\
         \hline
         Position 3          & Motorhalterung\\
         \hline
@@ -159,10 +161,10 @@
         \label{tab:pos_antriebseinheit}
         \end{table}
 
-    \newpage
+    \pagebreak
 
     \textbf{Beschleunigungsberechnung}\\
-    Wie schnell die Lokomotive beschleunigen kann hängt von der Reibung zwischen Rad und Schiene und der Masse des Zuges ab. Die Grunddefinition der Beschleunigung ist der Quotient von Kraft und Masse. Die Reibung ist durch den Reibkoeffizienten bestimmt, welcher sich von Materialpaarung zu Materialpaarung unterscheidet. Zusätzlich ist der Reibkoeffizient von der Oberflächenbeschaffenheit, der Rauigkeit, abhängig. Je grösser die Rauigkeit, desto mehr Reibung entsteht und desto schneller kann beschleunigt werde. Die Kraft, um das Fahrzeug aus dem Stillstand zu beschleunigen ist grösser, als wenn es bei einer gewissen Geschwindigkeit weiter beschleunigt wird. Dies ist auf Grund des Trägheitsmomentes des Zuges. \\ %ist das wirklich so?
+    Wie schnell die Lokomotive beschleunigen kann hängt von der Reibung zwischen Rad und Schiene und der Masse des Zuges ab. Die Grunddefinition der Beschleunigung ist der Quotient von Kraft und Masse. Die Reibung ist durch den Reibkoeffizienten bestimmt, welcher sich von Materialpaarung zu Materialpaarung unterscheidet. Zusätzlich ist der Reibkoeffizient von der Oberflächenbeschaffenheit, der Rauigkeit, abhängig. Je grösser die Rauigkeit, desto mehr Reibung entsteht und desto schneller kann beschleunigt werden.
 
     \begin{table}[H] \centering
         \begin{tabular}{|l|l|l|}
@@ -179,11 +181,11 @@
         \hline
         \end{tabular}
 
-        \caption{Reibungskoeffizienten verschiedener Materialpaarungen}
+        \caption{Reibungskoeffizienten von Materialpaarungen (durch Versuche ermittelt)}
         \label{tab:com_tiny_pi}
         \end{table}
 
-    Um die maximale Beschleunigung zu berechnen, wird das Gesamtgewicht der Lokomotive auf die vier Räder aufgeteilt. In der Tabelle \ref{tab:groessen_beschleunigung} sind die gegeben Grössen für die nachfolgenden Berechnungen aufgelistet.\\
+    Um die maximale Beschleunigung zu berechnen, wird das Gesamtgewicht der Lokomotive auf die vier Räder aufgeteilt. In der Tabelle \ref{tab:groessen_beschleunigung} sind die gegeben Grössen für die nachfolgenden Berechnungen aufgelistet. Sie sind durch getroffene Annahmen entstanden, da noch nicht alle Koponenten und die dazugehörige Massen festgelgt sind.\\
 
     \begin{table}[H] \centering
         \begin{tabular}{|l|l|}
@@ -200,13 +202,14 @@
         \label{tab:groessen_beschleunigung}
         \end{table}
 
-    $F_{Rad}=\frac{F_{G}}{8}=\frac{m \cdot g=3kg \cdot 9.81m/s^2}{8}=0.375N$\\
+    $$F_{Rad}=\frac{F_{G}}{8}=\frac{m \cdot g=3kg \cdot 9.81m/s^2}{8}=0.375N$$
 
-    $F_{Reibung}=F_{Rad} \cdot k=0.375N \cdot 0.3=0.1125N$\\
+    $$F_{Reibung}=F_{Rad} \cdot k=0.375N \cdot 0.3=0.1125N$$
 
-    $M_{Rad}=F_{Rad} \cdot 2\cdot D_{Rad}= 0.1125N \cdot 2 \cdot 30mm = 6.75mNm$\\
+    $$M_{Rad}=F_{Rad} \cdot 2\cdot D_{Rad}= 0.1125N \cdot 2 \cdot 30mm = 6.75mNm$$
 
-    $a_{max}=\frac{F_{Reibung}}{\frac{F_{Rad}}{g}}=\frac{0.1125N}{\frac{0.375N}{9.81m/s^2}}=2.94m/s^2$\\
+    $$a_{max}=\frac{F_{Reibung}}{\frac{F_{Rad}}{g}}=\frac{0.1125N}{\frac{0.375N}{9.81m/s^2}}=2.94m/s^2$$
+    \\
 
     \label{GeschwindigkeitsberechnungFahrwerk}
     \textbf{Geschwindigkeitsberechnung}\\
@@ -235,26 +238,25 @@
         \label{tab:geschwindigkeitsberechnung}
         \end{table}
 
-    Die Gewichts- und Zentripedalkraft, welche das Gleichungssystem bilden, sind wie folgt definiert:\\
+    Die Gewichts- und Zentripedalkraft, welche das Gleichungssystem bilden, sind wie folgt definiert:
 
-    $F_{G}=m \cdot g=3kg \cdot 9.81m/s^2=29.4N$\\
+    $$F_{G}=m \cdot g=3kg \cdot 9.81m/s^2=29.4N$$
 
-    $F_{max z}=\frac{m \cdot v^2}{r}=\frac{3kg \cdot (1.28m/s)^2}{0.8}$\\
+    $$F_{max z}=\frac{F_{G} \cdot x}{y}=\frac{29.4N \cdot 0.025m+9.2N \cdot a}{0.08m}=9.2N$$
+    \\
+    Da das Drehmoment eine vektorielle Grösse ist, müssen die beiden entstehenden Momente am Drehpunkt ''P'' am Gleis zusammen Null ergeben. Oder anders gesagt müssen die beiden Momente gleich gross sein, damit das System ''statisch'' bestimmt ist. Die Berechnungen sind auf den kleinsten Kurvenradius ausgelegt, da dort die grösste Zentripedalkraft entsteht. Somit ergibt sich eine maximale Geschwindigkeit von 1.28 Meter pro Sekunde.
 
-    Da das Drehmoment eine vektorielle Grösse ist, müssen die beiden entstehenden Momente am Drehpunkt ''P'' am Gleis zusammen Null ergeben. Oder anders gesagt müssen die beiden Momente gleich gross sein, damit das System ''statisch'' bestimmt ist. Die Berechnungen sind auf den kleinsten Kurvenradius ausgelegt, da dort die grösste Zentripedalkraft entsteht.\\
-    % Nun werden die ob\\ % --> wird das benötigt?
+    $$F_{max z}=\frac{m \cdot v_{max}^2}{r}=\frac{3kg \cdot (1.28m/s)^2}{0.8}$$
 
-    $F_{max z}=\frac{F_{G} \cdot x}{y}=\frac{29.4N \cdot 0.025m+9.2N \cdot a}{0.08m}=9.2N$\\
+    $$v_{max}=\sqrt\frac{m \cdot v^2}{r}=\sqrt\frac{3kg \cdot (1.28m/s)^2}{0.8}$$
+
         \pagebreak
     \subsubsection{Ladungsträger}
-    Der Ladungsträger ist das Verbindungselement von Antriebswagen und Führungswagen. Er wird an beiden Enden drehbar mit je einem Radial- und Axialkugelager gelagert. Der Träger besteht aus drei Teilen (siehe Abbidlung \ref{fig:expl_ladungstraeger}). Der Hauptgrund ist die einfachere, materialsparende sowie kostengünstigere Herstellung.\\
-    % Andererseits muss der Träger \\ % --> muss der Träger was????
-
-    %Berechnung Kugellagerkräfte Radial wie auch Axial
+    Der Ladungsträger ist das Verbindungselement von Antriebswagen und Führungswagen. Er wird an beiden Enden drehbar mit je einem Radiallager gelagert. Die Flächen reiben Der Träger besteht aus drei Teilen (siehe Abbidlung \ref{fig:expl_ladungstraeger}). Der Hauptgrund ist die einfachere, materialsparende sowie kostengünstigere Herstellung.\\
 
     \begin{figure}[H] %Ladungsträger
         \centering
-        \includegraphics[width=0.9\textwidth]{ladungstraeger.png}
+        \includegraphics[width=1\textwidth]{ladungstraeger.png}
         \caption{Explosionsdarstellung Ladungsträger}
         \label{fig:expl_ladungstraeger}
     \end{figure}
