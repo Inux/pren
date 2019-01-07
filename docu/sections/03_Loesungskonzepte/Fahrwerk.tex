@@ -13,7 +13,7 @@
 
     \begin{figure}[H] %Lokomotive mit Positionsnummern
         \centering
-        \includegraphics[width=0.7\textwidth]{Lokomotive.png}
+        \includegraphics[width=0.82\textwidth]{Lokomotive.png}
         \caption{Baugruppe Lokomotive}
         \label{fig:bg_lokomotive}
     \end{figure}
@@ -37,11 +37,11 @@
         \label{tab:bg_lokomotive}
     \end{table}
 
-    In der Querschnittsdarstellung in Abbildung \ref{fig:schnitt_lokomotive} sind die Lagerungen zwischen dem Ladungsträger und dem Antriebswagen beziehungsweise dem Führungswagen besser sichtbar. Ebenfalls ist ersichtlich, wie der Antriebswagen durch einen Zahnriemen angetrieben wird. Der Aufbau der einzelnen Unterbaugruppen wird in den nächsten Abschnitten vorgestellt.\\
+    In der Querschnittsdarstellung in Abbildung \ref{fig:schnitt_lokomotive} sind die Lagerungen zwischen dem Ladungsträger und dem Antriebs- beziehungsweise dem Führungswagen besser sichtbar. Ebenfalls ist ersichtlich, dass der Antriebswagen durch einen Zahnriemen angetrieben wird. Der Aufbau der einzelnen Unterbaugruppen wird in den nächsten Abschnitten genauer vorgestellt.\\
 
     \begin{figure}[H] %Lokomotive im Schnitt
         \centering
-        \includegraphics[width=0.7\textwidth]{lokomotive_2.png}
+        \includegraphics[width=0.82\textwidth]{lokomotive_2.png}
         \caption{Schnittansicht der Lokomotive}
         \label{fig:schnitt_lokomotive}
     \end{figure}
@@ -62,9 +62,9 @@
         \hline
         \textbf{Position} & \textbf{Bezeichnung}\\
         \hline
-        Position 1          & Drehachse Wagen-Ladungsträger\\
+        Position 1          & Drehachse Wagen-Ladungsträger (eingepresst)\\
          \hline
-        Position 2          & Achsen mit Gewinden an beiden Enden und Anfräsfläche für Gabelschlüssel\\
+        Position 2          & Achsen (Gewinde an beiden Seiten, Anfräsfläche für Gabelschlüssel)\\
          \hline
         Position 3          & Sicherungsring für Rillenkugellager\\
         \hline
@@ -83,7 +83,7 @@
         \end{table}
     \newpage
 
-    Der Antriebswagen in Abbildung \ref{fig:antriebswagen} (siehe Tabelle \ref{tab:expl_antriebswagen}) ist, wie bereits erwähnt, grundsätzlich gleich aufgebaut wie der Führungswagen, jedoch ist der Rahmen aufgrund des Riemenantriebs H-Förmig aufgebaut. Das Ziel dieser Konstruktion ist es, den Riemen, falls nötig, schnell wechselbar zu montieren. Durch die H-Form können die Achsen und die Räder für die Riemenmontage am Rahmen montiert gelassen bleiben. Die Platte, welche am Rahmen angebracht ist, ist für die Kameras für die Signal- und Spurerkennung grösser dimensioniert. Die Kamera für die Spurerkennung wird einstellbar befestigt, damit bei der Testphase des Prototyps Optimierungen des Winkels vorgenommen werden können. Der Stromübetrag von der Schiene auf die Lokomotive erfolgt über vier Schleifkontakte, welche als Einkaufsteile von Lieferanten bezogen werden. Davon sind pro Wagen zwei jeweils zwischen den Rädern angebracht.\\
+    Der Antriebswagen in Abbildung \ref{fig:antriebswagen} (siehe Tabelle \ref{tab:expl_antriebswagen}) ist, wie bereits erwähnt, grundsätzlich gleich aufgebaut wie der Führungswagen, jedoch ist der Rahmen aufgrund des Riemenantriebs H-Förmig aufgebaut. Das heisst, die beiden Nuten des Wagenrahmens sind nach Aussen hin offen. Das Ziel dieser Konstruktion ist es, den Riemen, falls nötig, schnell wechselbar zu montieren. Durch die H-Form können die Achsen und die Räder für die Riemenmontage am Rahmen montiert gelassen bleiben. Die Platte, welche am Rahmen angebracht ist, ist für die Kameras für die Signal- und Spurerkennung grösser dimensioniert. Die Kamera für die Spurerkennung wird einstellbar befestigt, damit bei der Testphase des Prototyps Optimierungen des Winkels vorgenommen werden können. Der Stromübetrag von der Schiene auf die Lokomotive erfolgt über vier Schleifkontakte, welche als Einkaufsteile von Lieferanten bezogen werden. Davon sind pro Wagen zwei jeweils zwischen den Rädern angebracht.\\
 
     \begin{figure}[H] %Antriebswagen
         \centering
@@ -164,7 +164,7 @@
     \pagebreak
 
     \textbf{Beschleunigungsberechnung}\\
-    Wie schnell die Lokomotive beschleunigen kann, hängt von der Reibung zwischen Rad und Schiene und der Masse des Zuges ab. Die Grunddefinition der Beschleunigung ist der Quotient von Kraft und Masse. Die Reibung ist durch den Reibkoeffizienten bestimmt, welcher sich von Materialpaarung zu Materialpaarung unterscheidet. Zusätzlich ist der Reibkoeffizient von der Oberflächenbeschaffenheit, der Rauigkeit, abhängig. Je grösser die Rauigkeit, desto mehr Reibung entsteht und desto schneller kann beschleunigt werden.
+    Wie schnell die Lokomotive beschleunigen kann, hängt von der Reibung zwischen Rad und Schiene und der Masse des Zuges ab. Die Grunddefinition der Beschleunigung ist der Quotient von Kraft und Masse. Die Reibung ist durch den Reibkoeffizienten bestimmt, welcher sich von Materialpaarung zu Materialpaarung unterscheidet (siehe Tabelle \ref{tab:reibungskoeffizient}). Zusätzlich ist der Reibkoeffizient von der Oberflächenbeschaffenheit, der Rauigkeit, abhängig. Je grösser die Rauigkeit, desto mehr Reibung entsteht und desto schneller kann beschleunigt werden.\\
 
     \begin{table}[H] \centering
         \begin{tabular}{|l|l|l|}
@@ -182,10 +182,10 @@
         \end{tabular}
 
         \caption{Reibungskoeffizienten von Materialpaarungen (durch Versuche ermittelt)}
-        \label{tab:com_tiny_pi}
+        \label{tab:reibungskoeffizient}
         \end{table}
 
-    Um die maximale Beschleunigung zu berechnen, wird das Gesamtgewicht der Lokomotive auf die vier Räder aufgeteilt. In der Tabelle \ref{tab:groessen_beschleunigung} sind die gegeben Grössen für die nachfolgenden Berechnungen aufgelistet. Sie sind durch getroffene Annahmen entstanden, da noch nicht alle Koponenten und die dazugehörige Massen festgelgt sind.\\
+    Um die maximale Beschleunigung zu berechnen, wird das Gesamtgewicht der Lokomotive auf die vier Räder aufgeteilt. In der Tabelle \ref{tab:groessen_beschleunigung} sind die gegeben Grössen für die nachfolgenden Berechnungen aufgelistet.\\
 
     \begin{table}[H] \centering
         \begin{tabular}{|l|l|}
@@ -213,11 +213,8 @@
 
     \label{GeschwindigkeitsberechnungFahrwerk}
     \textbf{Geschwindigkeitsberechnung}\\
-    Die Fahrgeschwindigkeit der Lokomotive wird durch zwei Faktoren bestimmt. Einerseits muss die maximale Geschwindigkeit der Anforderungsliste eingehalten werden, und andererseits wird die Geschwindigkeit in der Kurvenfahrt durch den Schwerpunkt des Fahrzeuges eingeschränkt. Nachdem die Lokomotive auf die Fahrtgeschwindigkeit beschleunigt wurde, ist die Rollreibung das einzige, was der Motor mit seiner Leistung kompensieren muss.\\
-
-    In der Anforderungsliste wurde eine minimale Geschwindigkeit von 0.5 Meter pro Sekunde festgelegt. Der begrenzende Faktor der Geschwindigkeit in der Kurve ist der Schwerpunkt der Lokomotive. Je tiefer dieser ist, umso schneller kann die Kurve abgefahren werden. Über die Zentripedalkraft und die Gewichtskraft der Lokomotive wird die Momentengleichung aufgestellt und Anhand der gegebenen Werte in Tabelle \ref{tab:geschwindigkeitsberechnung} wird die maximal erreichbare Geschwindigkeit in der Kurve, ohne aus den Gleisen zu kippen, berechnet.\\
-
-    Das Kippmoment wird durch den Aufbau der Lokomotive minimiert, da der Schwerpunkt durch die beiden Wagen mehr in das Zentrum des Kreismittelpunktes rückt.\\
+    Die Fahrgeschwindigkeit der Lokomotive wird durch zwei Faktoren bestimmt. Einerseits muss die maximale Geschwindigkeit der Anforderungsliste eingehalten werden, und andererseits wird die Geschwindigkeit in der Kurvenfahrt durch den Schwerpunkt des Fahrzeuges eingeschränkt. Nachdem die Lokomotive auf die Fahrtgeschwindigkeit beschleunigt wurde, ist die Rollreibung das einzige, was der Motor mit seiner Leistung kompensieren muss. In der Anforderungsliste wurde eine minimale Geschwindigkeit von 0.5 Meter pro Sekunde festgelegt. Der begrenzende Faktor der Geschwindigkeit in der Kurve ist der Schwerpunkt der Lokomotive. Je tiefer dieser ist, umso schneller kann die Kurve abgefahren werden. Über die Zentripedalkraft und die Gewichtskraft der Lokomotive wird die Momentengleichung aufgestellt und Anhand der gegebenen Werte in Tabelle \ref{tab:geschwindigkeitsberechnung} wird die maximal erreichbare Geschwindigkeit in der Kurve, ohne aus den Gleisen zu kippen, berechnet. Sie sind durch getroffene Annahmen entstanden, da noch nicht alle Koponenten und die dazugehörige Massen festgelgt sind.\\
+    Das Kippmoment wird durch den Aufbau der Lokomotive minimiert, da der Schwerpunkt durch den Ladungsträger mehr in das Zentrum des Kreismittelpunktes rückt. Dies wird in den nachfolgenden Berechnungen nicht berücksichtigt.\\
 
     \begin{figure}[H] %Schwerpunkt
         \centering
@@ -235,9 +232,9 @@
          \hline
         Masse [m]                                           & 3 Kilogramm\\
         \hline
-        Schwerpunkt in x-Achse (maximaler Wert) [x]         & 0.025 Meter\\
+        Schwerpunkt in x-Achse (maximaler Wert) [x]         & 0.0225 Meter\\
         \hline
-        Schwerpunkt in y-Achse (maximaler Wert) [y]         & 0.08 Meter\\
+        Schwerpunkt in y-Achse (maximaler Wert) [y]         & 0.05 Meter\\
         \hline
         \end{tabular}
 
@@ -245,25 +242,25 @@
         \label{tab:geschwindigkeitsberechnung}
         \end{table}
 
-    Die Gewichts- und Zentripedalkraft, welche das Gleichungssystem bilden, sind wie folgt definiert:
+    Die Gewichts- und Zentripedalkraft, welche das Gleichungssystem für die Geschwindigkeitsberechnung bilden, sind wie folgt definiert:
 
     $$F_{G}=m \cdot g=3kg \cdot 9.81m/s^2=29.4N$$
 
-    $$F_{max, z}=\frac{F_{G} \cdot x}{y}=\frac{29.4N \cdot 0.025m}{0.08m}=9.2N$$
+    $$F_{max, z}=\frac{F_{G} \cdot x}{y}=\frac{29.4N \cdot 0.0225m}{0.05m}=13.24N$$
     \newpage
 
-    Da das Drehmoment eine vektorielle Grösse ist, müssen die beiden entstehenden Momente am Drehpunkt ''P'' am Gleis zusammen Null ergeben. Oder anders gesagt, müssen die beiden Momente gleich gross sein, damit das System ''statisch'' bestimmt ist. Die Berechnungen sind auf den kleinsten Kurvenradius ausgelegt, da dort die grösste Zentripedalkraft entsteht. Somit ergibt sich eine maximale Geschwindigkeit von 1.28 Meter pro Sekunde.
+    Da das Drehmoment eine vektorielle Grösse ist, müssen die beiden entstehenden Momente am Drehpunkt ''P'' am Gleis zusammen Null ergeben. Oder anders gesagt, müssen die beiden Momente gleich gross sein, damit das System ''statisch'' bestimmt ist. Die Berechnungen sind auf den kleinsten Kurvenradius ausgelegt, da dort die grösste Zentripedalkraft entsteht. Somit ergibt sich eine maximale Geschwindigkeit von 1.53 Meter pro Sekunde.
 
     $$F_{max, z}=\frac{m \cdot v_{max}^2}{r}$$
 
-    $$v_{max}=\sqrt\frac{F_{max, z}\cdot r}{m}=\sqrt\frac{9.2N \cdot 0.8m}{3kg}=1.28m/s^2$$
+    $$v_{max}=\sqrt\frac{F_{max, z}\cdot r}{m}=\sqrt\frac{13.24N \cdot 0.8m}{3kg}=1.53m/s$$
 
     \subsubsection{Ladungsträger}
-    Der Ladungsträger ist das Verbindungselement von Antriebswagen und Führungswagen. Er wird an beiden Enden drehbar mit je einem Radiallager gelagert. Die Flächen reiben Der Träger besteht aus drei Teilen (siehe Abbidlung \ref{fig:expl_ladungstraeger}). Der Hauptgrund ist die einfachere, materialsparende sowie kostengünstigere Herstellung.\\
+    Der Ladungsträger ist das Verbindungselement von Antriebswagen und Führungswagen. Er wird an beiden Enden drehbar mit je einem Radiallager gelagert. Die Flächen der Platten reiben auf den beiden Wagen. Durch eine optimale Materialparung wird diese Reibkraft jedoch vernachlässigbar klein. Der Träger besteht aus den drei Teilen mit Position 1,3 und 7 (siehe Abbidlung \ref{fig:expl_ladungstraeger}), welche durch Zylinderschrauben (Position 5) und einer Zwischenplatte (Position 2) zusammengebaut wird. Der Hauptgrund ist die einfachere, materialsparende sowie kostengünstigere Herstellung.\\
 
     \begin{figure}[H] %Ladungsträger
         \centering
-        \includegraphics[width=0.8\textwidth]{ladungstraeger.png}
+        \includegraphics[width=0.75\textwidth]{ladungstraeger.png}
         \caption{Explosionsdarstellung Ladungsträger}
         \label{fig:expl_ladungstraeger}
     \end{figure}
