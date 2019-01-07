@@ -171,9 +171,9 @@
         \hline
         \textbf{Material Schiene} & \textbf{Material Rad} & \textbf{Reibungskoeffizient}\\
         \hline
-        Stahl                                & Stahl        & 0.05\\
+        Stahl                                & Stahl        & 0.12\\
         \hline
-        Stahl                                & Holz         & 0.12\\
+        Stahl                                & Holz         & 0.3\\
         \hline
         Stahl                                & Kunststoff   & 0.08\\
         \hline
@@ -192,7 +192,7 @@
         \hline
         \textbf{Grösse} & \textbf{Wert}\\
         \hline
-        Durchmesser Rad [D]          & 30 Milimeter\\
+        Durchmesser Rad [D]          & 22 Milimeter\\
          \hline
         Reibungskoeffizient [k]      & 0.3\\
         \hline
@@ -206,7 +206,7 @@
 
     $$F_{Reibung}=F_{Rad} \cdot k=0.375N \cdot 0.3=0.1125N$$
 
-    $$M_{Rad}=F_{Rad} \cdot 2\cdot D_{Rad}= 0.1125N \cdot 2 \cdot 30mm = 6.75mNm$$
+    $$M_{Rad}=F_{Rad} \cdot 0.5 \cdot D_{Rad}= 0.1125N \cdot 0.5 \cdot 22mm = 1.24mNm$$
 
     $$a_{max}=\frac{F_{Reibung}}{\frac{F_{Rad}}{g}}=\frac{0.1125N}{\frac{0.375N}{9.81m/s^2}}=2.94m/s^2$$
     \\
@@ -218,6 +218,13 @@
     In der Anforderungsliste wurde eine minimale Geschwindigkeit von 0.5 Meter pro Sekunde festgelegt. Der begrenzende Faktor der Geschwindigkeit in der Kurve ist der Schwerpunkt der Lokomotive. Je tiefer dieser ist, umso schneller kann die Kurve abgefahren werden. Über die Zentripedalkraft und die Gewichtskraft der Lokomotive wird die Momentengleichung aufgestellt und Anhand der gegebenen Werte in Tabelle \ref{tab:geschwindigkeitsberechnung} wird die maximal erreichbare Geschwindigkeit in der Kurve, ohne aus den Gleisen zu kippen, berechnet.\\
 
     Das Kippmoment wird durch den Aufbau der Lokomotive minimiert, da der Schwerpunkt durch die beiden Wagen mehr in das Zentrum des Kreismittelpunktes rückt.\\
+
+    \begin{figure}[H] %Schwerpunkt
+        \centering
+        \includegraphics[width=0.65\textwidth]{schwerpunkt.png}
+        \caption{Schwerpunkt der Lokomotive (Symbolisch)}
+        \label{fig:schwerpunkt}
+    \end{figure}
 
     \begin{table}[H] \centering
         \begin{tabular}{|l|l|}
@@ -242,25 +249,24 @@
 
     $$F_{G}=m \cdot g=3kg \cdot 9.81m/s^2=29.4N$$
 
-    $$F_{max z}=\frac{F_{G} \cdot x}{y}=\frac{29.4N \cdot 0.025m+9.2N \cdot a}{0.08m}=9.2N$$
-    \\
+    $$F_{max, z}=\frac{F_{G} \cdot x}{y}=\frac{29.4N \cdot 0.025m}{0.08m}=9.2N$$
+    \newpage
+
     Da das Drehmoment eine vektorielle Grösse ist, müssen die beiden entstehenden Momente am Drehpunkt ''P'' am Gleis zusammen Null ergeben. Oder anders gesagt, müssen die beiden Momente gleich gross sein, damit das System ''statisch'' bestimmt ist. Die Berechnungen sind auf den kleinsten Kurvenradius ausgelegt, da dort die grösste Zentripedalkraft entsteht. Somit ergibt sich eine maximale Geschwindigkeit von 1.28 Meter pro Sekunde.
 
-    $$F_{max z}=\frac{m \cdot v_{max}^2}{r}=\frac{3kg \cdot (1.28m/s)^2}{0.8}$$
+    $$F_{max, z}=\frac{m \cdot v_{max}^2}{r}$$
 
-    $$v_{max}=\sqrt\frac{m \cdot v^2}{r}=\sqrt\frac{3kg \cdot (1.28m/s)^2}{0.8}$$
+    $$v_{max}=\sqrt\frac{F_{max, z}\cdot r}{m}=\sqrt\frac{9.2N \cdot 0.8m}{3kg}=1.28m/s^2$$
 
-        \pagebreak
     \subsubsection{Ladungsträger}
     Der Ladungsträger ist das Verbindungselement von Antriebswagen und Führungswagen. Er wird an beiden Enden drehbar mit je einem Radiallager gelagert. Die Flächen reiben Der Träger besteht aus drei Teilen (siehe Abbidlung \ref{fig:expl_ladungstraeger}). Der Hauptgrund ist die einfachere, materialsparende sowie kostengünstigere Herstellung.\\
 
     \begin{figure}[H] %Ladungsträger
         \centering
-        \includegraphics[width=1\textwidth]{ladungstraeger.png}
+        \includegraphics[width=0.8\textwidth]{ladungstraeger.png}
         \caption{Explosionsdarstellung Ladungsträger}
         \label{fig:expl_ladungstraeger}
     \end{figure}
-
     \begin{table}[H] \centering
         \begin{tabular}{|l|l|}
         \hline
