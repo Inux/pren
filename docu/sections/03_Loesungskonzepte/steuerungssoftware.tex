@@ -1,9 +1,9 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 \subsection{Software Lösungskonzepte}
-Die Steuerungssoftware welche auf dem Hauptrechner ausgeführt wird soll in mehrere Teilprogramme aufgeteilt werden.
-Einerseits können so die Teilprogramme unabhängig implementiert werden und andererseits einfacher getestet werden.
-Um anschliessend zwischen den Teilprogrammen zu kommunizieren wird eine Middleware verwendet. Die Middleware kann auch genutzt werden
+Die Steuerungssoftware, welche auf dem Hauptrechner ausgeführt wird, soll in mehrere Teilprogramme aufgeteilt werden.
+Einerseits können so die Teilprogramme unabhängig implementiert und andererseits einfacher getestet werden.
+Um anschliessend zwischen den Teilprogrammen zu kommunizieren, wird eine Middleware verwendet. Die Middleware kann auch genutzt werden,
 um die einzelnen Teilprogramme zu testen. Zusätzlich können verschiedene Programmiersprachen für die einzelnen Teilprogramme verwendet werden. 
 Dies erhöht zusätzlich die Flexibilität während der Entwicklung.
 
@@ -21,17 +21,17 @@ Im folgenden Diagramm wird die Architektur der Steuerungssoftware aufgezeigt
 \end{itemize}
 
 \subsubsection{Technologie}
-Während der Technologierecherche wurde eine Analyse gemacht um zu entscheiden welche Technologie eigesetzt werden soll. Bald wurde ZeroMQ
-auserkoren, da ZeroMQ schlank ist und ohne Performance Probleme auf kleinen Einplatinenrechner läuft. Ausserdem ist die Middleware bekannt
-und hat eine hervorragende Dokumentation. Um die Daten welche über die Middleware geschickt werden mit verschiedenen Programmiersprachen zu
-nutzen wird Protobuffers verwendet. Protobuffers ist ein Format zur Berschreibung von Daten. Dieses Format kann anschliessend verwendet werden um
+Während der Technologierecherche wurde eine Analyse gemacht, um zu entscheiden welche Technologie eingesetzt werden soll. Bald wurde ZeroMQ
+auserkoren, da diese schlank ist und ohne Performance Probleme auf kleinen Einplatinenrechner läuft. Ausserdem ist die Middleware bekannt
+und hat eine hervorragende Dokumentation. Um die Daten, welche über die Middleware geschickt werden, mit verschiedenen Programmiersprachen zu
+nutzen, wird Protobuffers verwendet. Protobuffers ist ein Format zur Berschreibung von Daten. Dieses Format kann anschliessend verwendet werden, um
 Klassen bzw. Funktionen für fast jede Programmiersprache zu benutzen. Das heisst, dass die Daten einmalig definiert werden und anschliessend von
 allen Teilprogrammen verwendet werden können.
 
 \textbf{Beispiel Protobuf:}
 \lstinputlisting{../src/raspi/pb/direction.proto}
-Man sieht nun das eine 'Direction' Mitteilung definiert wird. Dieser hat ein String Attribute, welches direction heisst. Mit dieser Definition
-wird mithilfe von einem 'protobuffer compiler' Code generiert. Dieser kann die definierte Message Serialisieren und Deserialisieren.
+Man sieht nun, dass eine 'Direction' Mitteilung definiert wird. Diese hat ein String Attribute, welches direction heisst. Mit dieser Definition
+wird mithilfe eines 'protobuffer compiler' Code generiert. Dieser kann die definierte Message Serialisieren und Deserialisieren.
 
 \textbf{Beispiel Generierung für Python:}
 \begin{lstlisting}
@@ -41,15 +41,15 @@ Mithilfe von diesem Beispiel wird die Protobuf Definition (direction.proto) zu P
 
 \textbf{Beispiel Generierter Python Code:}
 \lstinputlisting[language=Python]{../src/raspi/pb/direction_pb2.py}
-Das generierte Python File welches mithilfe des 'protobuffer compiler' erzeugt wurde.
+Das generierte Python File, welches mithilfe des 'protobuffer compiler' erzeugt wurde.
 
 \subsubsection{Proof-of-Concept}
-Um zu testen ob eine Kommunikation zwischen zwei Prozessen mithilfe der Middleware möglich ist, wurde eine kleine Testsoftware entwickelt.
-Dabei wurde das 'direction.proto' File verwendet um von einem Prozess eine Richtung (Direction) zu einem anderen Prozess zu senden.
+Um zu testen, ob eine Kommunikation zwischen zwei Prozessen mithilfe der Middleware möglich ist, wurde eine kleine Testsoftware entwickelt.
+Dabei wurde das 'direction.proto' File verwendet, um von einem Prozess eine Richtung (Direction) zu einem anderen Prozess zu senden.
 
 Der Sender der Richtung wurde im folgenden File implementiert: src/raspi/vision/linedetection/fakelinedetector.py
 Der Empfänger der Richtung wurde im folgenden File implementiert: src/raspi/webapp/middlewareadapter.py
-wobei der Empfänger von vom Webapp Server gestartet wird: src/raspi/webapp/server.py
+wobei der Empfänger vom Webapp Server gestartet wird: src/raspi/webapp/server.py
 
 \subsubsection{Performance}
 Die Performance wurde nicht gemessen und verifiziert. Jedoch wurden bei den Tests keine Limitationen gefunden. Deshalb kann davon ausgegangen werden,

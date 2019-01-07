@@ -2,22 +2,22 @@
 \begin{document}
 \subsection{Gleiserkennung}
 Ein Beschleunigungssensor für die Erfassung der Fahrdaten ist bereits in der Aufgabenstellung vorgeschrieben.
-Um aber eine ideale Regelung zu ermöglichen wird zusätzlich eine Gleiserkennung implementiert. Mit welchem schon im voraus
-erkennt werden kann ob eine Kurve bevorsteht oder ob sich der Hochgeschwindigkeitszug auf einer geraden befindet.
-Während der Konzept Phase wurden verschiedene Verfahren evaluiert und zum Teil ausprobiert. Jedoch gab es keine Lösung welche zusätzlich zur Richtung noch den Radius
-der Kurve bestimmen kann. Die Momentane Lösung welche angestrebt wird kann also nur sagen ob es geradeaus, nach links oder nach rechts geht.
-Diese Information wird in den Regelungskreis eingespeist. Dadurch wird die maximale Geschwindigkeit für den engsten Schienen-Radius festgelegt. Anschliessend wird mithilfe des Beschleunigungssensor versucht an das Limit der Zentripetalkraft zu regeln. Somit kann die
-bestmögliche Regelung implementiert werden ohne genauere Angaben zum aktuellen Kurvenradius zu haben.
-Mehr Details zum Regelkreis und dem Ganzen Ablauf sind im unter \ref{ablauf} zu finden.
+Um aber eine ideale Regelung zu ermöglichen, wird zusätzlich eine Gleiserkennung implementiert. Mit welchem schon im Voraus
+erkennt werden kann ob eine Kurve bevorsteht oder ob sich der Hochgeschwindigkeitszug auf einer Geraden befindet.
+Während der Konzept Phase wurden verschiedene Verfahren evaluiert und zum Teil ausprobiert. Jedoch gab es keine Lösung, welche zusätzlich zur Richtung noch den Radius
+der Kurve bestimmen kann. Die momentane Lösung, welche angestrebt wird, kann also nur sagen, ob es geradeaus, nach links oder nach rechts geht.
+Diese Information wird in den Regelungskreis eingespeist. Dadurch wird die maximale Geschwindigkeit für den engsten Schienen-Radius festgelegt. Anschliessend wird mithilfe des Beschleunigungssensors versucht, an das Limit der Zentripetalkraft zu regeln. Somit kann die
+bestmögliche Regelung implementiert werden, ohne genauere Angaben zum aktuellen Kurvenradius zu haben.
+Mehr Details zum Regelkreis und dem ganzen Ablauf sind im unter \ref{ablauf} zu finden.
 
 \subsubsection{Verfahren}
-Nachfolgend werden die einzelnen Schritte zur Bearbeitung eines einzelnen Bild aufgelistet.
+Nachfolgend werden die Schritte zur Bearbeitung eines einzelnen Bild aufgelistet.
 Die einzelnen Teilschritte werden für jedes Bild, welches aufgenommen wird, neu berechnet.
 \begin{itemize} %Verfahren kurz und knapp
-    \item Bild Skalieren
-    \item Umrechnen zu Schwarz Weiss
-    \item Kantenglättung Anwenden (Canny Algorithmus)
-    \item Konturen Erkennung (Suzukui85 Algorithmus)
+    \item Bild skalieren
+    \item Umrechnen zu Schwarz-Weiss
+    \item Kantenglättung anwenden (Canny Algorithmus)
+    \item Konturen erkennung (Suzukui85 Algorithmus)
     \item Kleine Konturen erkennen und verwerfen
     \item Bild in zwei Hälften unterteilen
     \item Berechnen der Anzahl Konturen in beiden Hälften
@@ -28,34 +28,34 @@ Die einzelnen Teilschritte werden für jedes Bild, welches aufgenommen wird, neu
         \end{itemize}
 \end{itemize}
 
-\textbf{Bild Skalieren}\\
-Das Bild muss für die Berechnungen runter skaliert werden um die Rechenzeit zu reduzieren. Das Format
-wird dabei beibehalten um Verzerrungen zu vermeiden. Zuerst wird also das Seitenverhältnis berechnet um dann
-die kürzere Seite auf einen Konfigurierbaren wert zu setzen. Die längere Seite wird dann mit dem Seitenverhältnis Faktor
+\textbf{Bild skalieren}\\
+Das Bild muss für die Berechnungen runter skaliert werden, um die Rechenzeit zu reduzieren. Das Format
+wird dabei beibehalten, um Verzerrungen zu vermeiden. Zuerst wird also das Seitenverhältnis berechnet, um dann
+die kürzere Seite auf einen konfigurierbaren Wert zu setzen. Die längere Seite wird dann mit dem Seitenverhältnis Faktor
 berechnet.
 
-\textbf{Umrechnen zu Schwarz Weiss}\\
-Der Canny Algorithmus für die Kantenglättung muss mit einem Schwarz-Weiss Bild gefüttert werden deshalb wird das farbige Bild
+\textbf{Umrechnen zu Schwarz-Weiss}\\
+Der Canny Algorithmus für die Kantenglättung muss mit einem Schwarz-Weiss Bild gefüttert werden. Deshalb wird das farbige Bild
 zu einem Schwarz-Weiss Bild umgerechnet.
 
-\textbf{Kantenglättung Anwenden (Canny Algorithmus)}\\
-Der Canny Algorithmus sucht Kanten im Bild und erzeugt ein Binäres Bild (Schwarz oder Weiss), wobei die Weissen Pixel eine Kanten
+\textbf{Kantenglättung anwenden (Canny Algorithmus)}\\
+Der Canny Algorithmus sucht Kanten im Bild und erzeugt ein binäres Bild (Schwarz oder Weiss), wobei die weissen Pixel eine Kante
 beschreiben.
 
-\textbf{Konturen Erkennung (Suzuki85 Algorithmus)}\\
-Das Binäre Bild welches mithilfe vom Canny Algorithmus erzeugt wird kann mit dem Suzuki85 Algorithmus analysiert werden um Kontueren zu erkennen.
-Die Konturen sind jeweils eine Liste von Punkten welche zusammen eine Kontur abbilden.
+\textbf{Konturen erkennung (Suzuki85 Algorithmus)}\\
+Das binäre Bild welches mithilfe vom Canny Algorithmus erzeugt wird, kann mit dem Suzuki85 Algorithmus analysiert werden, um Konturen zu erkennen.
+Die Konturen sind jeweils eine Liste von Punkten, welche zusammen eine Kontur abbilden.
 
 \textbf{Kleine Konturen erkennen und verwerfen}\\
-Die Anzahl Punkte einer Kontur werden mit einem Schwellwert verglichen. Sind die Anzahl Punkte innerhalb der Kontur zu gering wird sie verworfen.
+Die Anzahl Punkte einer Kontur werden mit einem Schwellwert verglichen. Sind die Anzahl Punkte innerhalb der Kontur zu gering wird, sie verworfen.
 Somit können kleine Störungen im Bild bzw. kurze Linien ignoriert werden.
 
 \textbf{Bild in zwei Hälften unterteilen}\\
-Das Bild wird nun in zwei Hälften geteilt um die Entscheidung zu treffen ob Geradeaus, nach Links oder nach Rechts gefahren wird.
+Das Bild wird nun in zwei Hälften geteilt, um die Entscheidung zu treffen ob geradeaus, nach links oder nach rechts gefahren wird.
 
 \textbf{Berechnen der Anzahl Konturen in beiden Hälften}\\
-Um die Entscheidung zu treffen wird einfach die Anzahl Punkte in jeder Hälfte verglichen. Hat es in der Linken hälfte mehr geht das Gleis nach Links.
-Sind es in der Rechten Hälfte mehr geht es nach Rechts. Ist die Anzahl ungefähr identisch, dann geht es Geradeaus. Da es nie genau viele Punkte haben wird
-git es eine minimal Differenz die es geben muss zwischen Rechts und Links damit eine Kurve detektiert wird.
+Um die Entscheidung zu treffen, wird einfach die Anzahl Punkte in jeder Hälfte verglichen. Hat es in der linken Hälfte mehr, geht das Gleis nach links.
+Sind es in der rechten Hälfte mehr, geht es nach Rechts. Ist die Anzahl ungefähr identisch, dann geht es geradeaus. Da es nie genau gleich viele Punkte haben wird,
+git es eine minimal Differenz, die es geben muss zwischen rechts und links damit eine Kurve detektiert wird.
 
 \end{document}
