@@ -9,7 +9,7 @@ Mithilfe elektronischer Komponenten kann Beschleunigung, Geschwindigkeit und Dis
 \paragraph{Anforderungen}
 \begin{itemize}
     \item Momentane Beschleunigung auslesen
-      \subitem in Fahrtrichtung
+      \subitem Fahrtrichtung
       \subitem Querbeschleunigung
     \item Beschleunigung in Geschwindigkeit und Distanz umrechnen
     \item Approximierte Position berechnen
@@ -80,7 +80,10 @@ Y Rotation:  3.59994842011
 \paragraph{Realisierung}
 Daten werden in einem von uns festgelegten Intervall über die $i^2c$ Schnittstelle eingelesen. Die $i^2c$ Schnittstelle muss in der Raspberry Pi Konfiguration aktiviert werden. Weiter müssen die benötigten Tools «i2c-tools» sowie «python-smbus» installiert werden. Dem Raspberry Pi wird eine Adresse auf dem $i^2c$ Datenbus zugewiesen, welche über «sudo i2cdetect -y 1» abgerufen werden kann.
 
-Softwaretechnisch wird die Schnittstelle in Python realisiert, denn Python verfügt über die mächtigsten Bibliotheken in den Bereichen Mathematik und $i^2c$. Der Beschleunigungssensor kann direkt über seine Adresse angesprochen werden und gibt die Daten in Form eines Words zurück. Der Beschleunigungssensor muss für jedes Word(z.B. gyroskop\_xout) eine Anfrage auf den Datenbus schreiben und lesen.
+Softwaretechnisch wird die Schnittstelle in Python realisiert. Python verfügt über mächtige Bibliotheken in den
+Bereichen Mathematik und $i^2c$. Der Beschleunigungssensor kann direkt über seine Adresse angesprochen werden und gibt
+die Daten in Form eines Words zurück. Der Beschleunigungssensor muss für jedes Word (z.B. gyroskop\_xout) eine Anfrage
+auf den Datenbus schreiben und lesen.
 
 Die erhaltenen Daten werden in momentane Geschwindigkeitsdaten (Beschleunigung, Geschwindigkeit, Distanz) umgerechnet und anschliessend analysiert.
 

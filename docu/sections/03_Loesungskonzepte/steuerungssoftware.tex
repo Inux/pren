@@ -4,7 +4,7 @@
 Die Steuerungssoftware, welche auf dem Hauptrechner ausgeführt wird, soll in mehrere Teilprogramme aufgeteilt werden.
 Einerseits können so die Teilprogramme unabhängig implementiert und andererseits einfacher getestet werden.
 Um anschliessend zwischen den Teilprogrammen zu kommunizieren, wird eine Middleware verwendet. Die Middleware kann auch genutzt werden,
-um die einzelnen Teilprogramme zu testen. Zusätzlich können verschiedene Programmiersprachen für die einzelnen Teilprogramme verwendet werden. 
+um die einzelnen Teilprogramme zu testen. Zusätzlich können verschiedene Programmiersprachen für die einzelnen Teilprogramme verwendet werden.
 Dies erhöht zusätzlich die Flexibilität während der Entwicklung.
 
 \subsubsection{Architektur}
@@ -45,11 +45,8 @@ Das generierte Python File, welches mithilfe des 'protobuffer compiler' erzeugt 
 
 \subsubsection{Proof-of-Concept}
 Um zu testen, ob eine Kommunikation zwischen zwei Prozessen mithilfe der Middleware möglich ist, wurde eine kleine Testsoftware entwickelt.
-Dabei wurde das 'direction.proto' File verwendet, um von einem Prozess eine Richtung (Direction) zu einem anderen Prozess zu senden.
-
-Der Sender der Richtung wurde im folgenden File implementiert: src/raspi/vision/linedetection/fakelinedetector.py
-Der Empfänger der Richtung wurde im folgenden File implementiert: src/raspi/webapp/middlewareadapter.py
-wobei der Empfänger vom Webapp Server gestartet wird: src/raspi/webapp/server.py
+Dabei wurde das 'direction.proto' File verwendet, um von einem Prozess eine Richtung (Direction) zu einem anderen
+Prozess zu senden und zu empfangen.
 
 \subsubsection{Performance}
 Die Performance wurde nicht gemessen und verifiziert. Jedoch wurden bei den Tests keine Limitationen gefunden. Deshalb kann davon ausgegangen werden,

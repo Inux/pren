@@ -8,24 +8,53 @@ Daraus kann der Flaschenhals bezüglich Grenzgeschwindigkeit herausgelesen und d
 bestimmt werden.
 
 \subsubsection{Auflistung}
-Nachfolgend werden die einzelnen Grenzgeschwindigkeiten, die berechnet wurden, aufgelistet
-\begin{itemize} %Die verschiedenen Grenzgeschwindigkeiten
-    \item Grenzgeschwindigkeit ohne Bildverarbeitung
-    \item Grenzgeschwindigkeit mit Signalerkennung
-    \item Grenzgeschwindigkeit mit Signalerkennung \& Gleiserkennung
-\end{itemize}
+Nachfolgend werden die einzelnen Grenzgeschwindigkeiten, die berechnet wurden, kurz beschrieben. Anschliessend wird in
+einem Fazit erläutert wo der Flaschenhals bezüglich der Geschwindigkeit liegt.
 
 \textbf{Grenzgeschwindigkeit ohne Bildverarbeitung} \\
 Die Grenzgeschwindigkeit ohne Bildverarbeitung basiert auf der Masse des Zuges, des Schwerpunktes, der Leistung des Motors und den Kurven Radien.
-Alle Berechnungen zu diesem Thema sind in den Kapitel \ref{GeschwindigkeitsberechnungFahrwerk}.
+Alle Berechnungen zu diesem Thema sind im Kapitel \ref{GeschwindigkeitsberechnungFahrwerk}.
+
+Gemässe den Berechnungen handelt es sich um 1.28m/s beim engsten Kurvenradius von 0.8m . Geradeaus kann wesentlich mehr
+erreicht werden. Wenn wir eine Gerade von 3m annehmen was wohl der maximal länge einer Geraden in PREN2 entspricht
+annehmen erreichen wir maximal 3m/s.
 
 \textbf{Grenzgeschwindigkeit mit Signalerkennung} \\
-Die Grenzgeschwindigkeit mit Signalerkennung basiert auf der Grenzgeschwindigkeit ohne Bildverarbeitung. Zusätzlich wird aber berücksichtigt, wie lange eine
-Aufnahme eines einzelnen Bildes dauert. Somit kann gewährleistet werden, dass ein verwendbares Bild aufgenommen werden kann. Die eigentliche Bildanalyse
-wird dabei vernachlässigt, weil dies nicht während den Hochgeschwindigkeitsrunden passiert, sondern anschliessend bei der Fahrt zum Haltesignal.
+Basierend auf der Grenzgeschwindigkeit ohne Bildverarbeitung, wird zusätzlich berücksichtigt, wie lange eine
+Aufnahme eines einzelnen Bildes dauert und wieviel Bilder gemacht werden müssen um die Umgebung genügend Abzudecken.
+Somit kann gewährleistet werden, dass ein verwendbares Bild aufgenommen werden kann während den Hochgeschwindigkeits-Runden. Die eigentliche Bildanalyse
+wird dabei vernachlässigt, weil dies nicht während den Hochgeschwindigkeits-Runden passiert, sondern anschliessend bei
+der Fahrt zum Haltesignal.
+
+Maximal Geschwindigkeit: 3m/s
+Umgebung Abdeckung: 10cm (des Weges)
+
+Pi Bildaufnahme: 20ms
+Bilder Pro Meter: 3m/s * 0.02s = 0.06m = 6cm
+
+Die normale Bildaufnahme ist also genügend schnell, deckt alle Bereiche ab da alle 6cm ein Bild gemacht werden kann bei
+der maximalen Geschwindigkeit und ist somit kein Hindernis für eine rasche Fahrt.
 
 \textbf{Grenzgeschwindigkeit mit Signalerkennung \& Gleiserkennung} \\
-Die Grenzgeschwindigkeit mit Signalerkennung \& Gleiserkennung basiert auf der Grenzgeschwindigkeit mit Signalerkennung. Dabei wird aber die Erkennung des Gleises
-mit berücksichtigt. Die Gleiserkennung dient dazu, Kurven zu erkennen und bietet somit einen weiteren Parameter für die Regelung.
+Zusätzlich zu den anderen beiden Grenzgeschwindigkeiten wird nun noch die Gleiserkennung berücksichtigt welche gemessen
+etwa 100ms
+pro Bild benötigt. Die Gleiserkennung dient dazu, Kurven zu erkennen und bietet somit einen weiteren Parameter für die
+Regelung um eine maximale Geschwindigkeit zu fahren. Die Kamera kann das Gleis mindestens 20cm im voraus genügend gut
+erkennen. Dies ist wie vorhin gezeigt wichtig bei der Berechnung.
+
+Maximal Geschwindigkeit: 3m/s
+Umgebung Abdeckung: 20cm (des Weges)
+
+Pi Bildaufnahme: 100ms
+Bilder Pro Meter: 3m/s * 0.1s = 0.1m = 10cm
+
+Die Gleiserkennung ist somit wie die Signalerkennung genügend schnell, um auch mit der maximalen Geschwindigkeit von 3m/s
+zu fahren.
+
+\subsubsection{Fazit}
+Die verschiedenen Grenzgeschwindigkeiten wurden analysiert und das Ergebnis ist klar. Der vermutliche Flaschenhals liegt
+bei der vorgegeben Leistung von 60 Watt und der daraus resultierenden Kombination von Motor \& Mechanik. Dennoch ist es bemerkenswert
+was für Geschwindigkeiten möglich sind. Ob wir diese auch erreichen wird sich in PREN2 zeigen, wir sind aber sicher eine
+gute Konstruktion, ein gutes elektrisches Design und passende Softwaremittel gewählt zu haben.
 
 \end{document}
