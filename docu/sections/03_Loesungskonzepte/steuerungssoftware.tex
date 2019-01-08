@@ -2,7 +2,7 @@
 \begin{document}
 \subsection{Software Lösungskonzepte}
 Die Steuerungssoftware, welche auf dem Hauptrechner ausgeführt wird, soll in mehrere Teilprogramme aufgeteilt werden.
-Einerseits können so die Teilprogramme unabhängig implementiert und andererseits einfacher getestet werden.
+Teilprogramme können so unabhängig voneinander implementiert und getestet werden.
 Um anschliessend zwischen den Teilprogrammen zu kommunizieren, wird eine Middleware verwendet. Die Middleware kann auch genutzt werden,
 um die einzelnen Teilprogramme zu testen. Zusätzlich können verschiedene Programmiersprachen für die einzelnen Teilprogramme verwendet werden.
 Dies erhöht zusätzlich die Flexibilität während der Entwicklung.
@@ -30,7 +30,7 @@ allen Teilprogrammen verwendet werden können.
 
 \textbf{Beispiel Protobuf:}
 \lstinputlisting{../src/raspi/pb/direction.proto}
-Man sieht nun, dass eine 'Direction' Mitteilung definiert wird. Diese hat ein String Attribute, welches direction heisst. Mit dieser Definition
+Man sieht nun, dass eine 'Direction' Mitteilung definiert wird. Diese hat ein String Attribut, welches direction heisst. Mit dieser Definition
 wird mithilfe eines 'protobuffer compiler' Code generiert. Dieser kann die definierte Message Serialisieren und Deserialisieren.
 
 \textbf{Beispiel Generierung für Python:}

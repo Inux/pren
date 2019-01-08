@@ -39,7 +39,7 @@
     \begin{figure}[H] %Vision Ablauf
         \centering
         \includegraphics[width=1\textwidth]{Ablauf_Tafelerkennung.png}
-        \caption{Ablauf Erkennung der Tafelerkennung}
+        \caption{Ablauf Tafelerkennung}
         \label{fig:ablauf_tafelerkennung}
     \end{figure}
 
@@ -49,11 +49,11 @@
                 \hline
                 \textbf{Funktion}  & \textbf{Beschreibung} \\\hline
                 Bild aufnehmen und digitalisieren & Die Umgebung wird mittels der Raspberry PI Kamera und der Bibliothek picamera aufgenommen und dem OpenCV übergeben \\\hline
-                BGR2GRAY & Die Farbinformationem des Bildes werden nicht benötigt und deshalb entfernt (Effizienz) \\ \hline
+                BGR2GRAY & Die Farbinformationen des Bildes werden nicht benötigt und deshalb entfernt (Effizienz) \\ \hline
                 threashold & Für die Konturenerkennung braucht es nur die Schattierungen des Bildes. Aus diesem Grund wird ein Threashold auf das Bild gelegt, damit ein Binery-Picture generiert werden kann. \\ \hline
-                find-contours & Nun wird die OpenCV Funktion find-contours angewendet. Dabei werden benachbarte Schwarz oder Weiss Pixel miteinander zusammengefügt, bis eine Kontur entstehen kann. \\ \hline
+                find-contours & Nun wird die OpenCV Funktion find-contours angewendet. Dabei werden benachbarte schwarze oder weisse Pixel miteinander zusammengefügt, bis eine Kontur entstehen kann. \\ \hline
                 morphologische Transformationen & Hier wird das Bild mittels morphologische Transformationen nachbearbeitet \\ \hline
-                filter & Die erkannten Konturen werden gefiltert nach der Grösse und Form der Tafel. \\ \hline
+                filter & Die erkannten Konturen werden gefiltert nach Grösse und Form der Tafel. \\ \hline
                 Tafel & Nun ist das Bild mit der Tafel erkannt worden und wird zur Nummererkennung vorbereitet. \\ \hline
             \end{tabular}
         \end{flushleft}
@@ -64,7 +64,7 @@
      In der Abbildung \ref{fig:tafelerkennung} links sieht man die erkannte Position der Nummer auf der Tafel. Rechts sieht man die gleiche Aufnahme nach der Filterung. Dieses Bild wird nun auf die Grösse des rechten erkannten Rechteckes zugeschnitten und dem Raspberry PI 3+ zur Nummererkennung übergeben.\\
 
      \textbf{Konfiguration Raspberry PI Kamera}\\
-     Eine weitere Schwierigkeit bei der Nummererkennung ist die Aufnahme mittels Kamera. Bei hohen Geschwindigkeiten neigt das Bild dazu unscharf zu werden. Dies liegt daran, dass die Verschlusszeit der Kamera zu lange ist. Mit der Raspberry PI Kamera und der Schnittstelle piCamera können viele Parameter eingestellt werden. Hier liegt der Schlüssel zur Behebung von unscharfen Bildern. Wenn Parameter wie Belichtungszeit, Helligkeit, Sättigung und Weissabgleich fest eingestellt werden, können in erster Linie reproduzierbare Bilder aufgenommen werden und die Belichtungszeit kann auf ein Minimum gesetzt werden. Wenn die Belichtungszeit kürzer gesetzt wird, ergibt dies aber dunklere Bilder. Mit digitaler Aufhellung oder sogar mit externer Beleuchtung kann aber diesem Effekt entgegengewirkt werden.
+     Eine weitere Schwierigkeit bei der Nummererkennung ist die Aufnahme mittels Kamera. Bei hohen Geschwindigkeiten neigt das Bild dazu unscharf zu werden. Dies liegt daran, dass die Verschlusszeit der Kamera zu lange ist. Mit der Raspberry PI Kamera und der Schnittstelle piCamera können viele Parameter eingestellt werden. Hier liegt der Schlüssel zur Behebung von unscharfen Bildern. Wenn Parameter wie Belichtungszeit, Helligkeit, Sättigung und Weissabgleich fest eingestellt werden, können in erster Linie reproduzierbare Bilder aufgenommen und die Belichtungszeit kann auf ein Minimum gesetzt werden. Wenn die Belichtungszeit kürzer gesetzt wird, ergibt dies aber dunklere Bilder. Mit digitaler Aufhellung oder sogar mit externer Beleuchtung kann aber diesem Effekt entgegengewirkt werden.
 
      \begin{figure}[H] %Vision Ablauf
         \centering
