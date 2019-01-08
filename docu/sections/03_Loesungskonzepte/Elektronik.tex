@@ -13,7 +13,7 @@
     \subsection{Elektronik Komponenten}
     In diesem Kapitel wird der Aufbau der Elektronik des Zuges beschrieben. Die Abbildung \ref{fig:et_komponenten} veranschaulicht den Aufbau der Elektronik. Darauf sind alle logischen Verbindungen eingezeichnet. Weitere elektrische Verbindungen für die Stromversorgung werden im Kapitel \ref{et_stromversorgung} erläutert.\\
     Zentral dabei ist der Mikrocontroller Tiny K22. Die Software auf dem Mikrocontroller initialisiert alle Komponenten, überwacht deren Status und sendet die nötigen Informationen an  das Pi. Diese Schnittstelle ist detailliert im Kapitel \ref{interface_pi_tiny} beschrieben.\\
-    Die Schnittstelle über den Debugger zum PC wird hier nicht weiter beschrieben, da diese Verbindung nur zum Entwickeln benutzt wird und für das endgültige Produkt nicht mehr von Bedeutung ist, sobald alles funktioniert.
+    Die Schnittstelle über den Debugger zum PC wird hier nicht weiter beschrieben, da diese Verbindung nur zum Entwickeln benutzt wird und für das endgültige Produkt nicht mehr von Bedeutung ist.
 
     \begin{figure}[H]
         \centering
@@ -51,7 +51,7 @@
     Gemäss der Aufgabenstellung stehen $20\pm2V$ bei bis zu $3A$ zur Verfügung. Aufgrund der grossen Toleranz von $4V$ muss die Spannung angepasst werden, um eine stabile Spannung sicherzustellen. Dafür wird ein DC-DC Converter verwendet. Dabei ist zu beachten, dass der Converter für den maximalen Strom von $3A$ ausgelegt ist.
 
     \textbf{Unterbrechungssicherheit}\\
-    Um sicherzustellen, dass ein allfälliger Wackelkontakt der Schleifkontakte überbrückt werden kann, und um grössere Spannungsschwankungen zu vermeiden, wird ein Kondensator als Stützung eingesetzt.
+    Um sicherzustellen, dass ein allfälliger Wackelkontakt der Schleifkontakte überbrückt werden kann und um grössere Spannungsschwankungen zu vermeiden, wird ein Kondensator zur Stützung eingesetzt.
 
     \textbf{Stromüberwachung}\\
     Um den Stromverbrauch des Antriebs zu überwachen, wird ein Strom Messwiderstand eingesetzt. Eine

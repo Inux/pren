@@ -55,7 +55,7 @@ Während der Konzeptionsphase, in welcher dieses Konzept entstanden ist, wurden 
     5    & Elektrotechnik    & Ultraschallsensor zu ungenau                         & - & Systematische Fehler mittels Software korrigieren / TOF Sensor verwenden \\ \hline
     6    & Maschinenbau      & zu wenig Reibung Räder => Schienen                   & Aufgummierung geplant & Oberfläche der Räder optimieren (Rauheit) \\ \hline
     7    & Maschinenbau     & Kupplungen schleifen                                  & Grössere Haftreibung durch erhöhte Rauheit & alternative Befestigungsmethode wählen (Gewindestifte) \\ \hline
-    8    & Maschinenbau & Gewichtsverteilung Zug nicht optimal                      & statische Berechnungen durchgeführt & Gegengewichte einsetzten \\ \hline
+    8    & Maschinenbau & Zug Gewichtsverteilung nicht optimal                      & statische Berechnungen durchgeführt & Gegengewichte einsetzten \\ \hline
     9   & Maschinenbau  & Kippen in der Kurve oder bei Würfelaufnahme               & Konzept mit Kraftausgleich ausgearbeitet & Alternatives Konzept verfolgen \\ \hline
     10  & Maschinenbau & Riemen defekt                                              & Ersatzriemen auf Lager            & Riemenart wechseln \\ \hline
     11  & Maschinenbau & Reibfläche zwischen Ladungsträger und Wägen                & Material mit günstigen Gleiteigenschaften verwendet & Axiallager einbauen \\ \hline
@@ -113,8 +113,10 @@ Nach der Konzeptionsphase im PREN1 folgt nun die Realisation des Zugs im PREN2. 
 Es hat sich gezeigt, dass eine enge Zusammenarbeit unter den Disziplinen entscheidend ist. Ein sehr gutes Beispiel dafür ist die Auswahl des Motors. Weder die Fachleute Elektrotechnik, noch die Fachleute Maschinentechnik können diese Auswahl alleine treffen. Bevor eine genauere Auswahl vorgenommen werden kann müssen zuerst von beiden Disziplinen alle Anforderungen und Limitierungen zusammengetragen und diskutiert werden. Im Team kann diese Auswahl dann sehr gut getroffen werden.
 
 \paragraph{Lessons learned Informatik}
-Für die Informatik ist es schwierig etwas Greifbares zu erschaffen ohne die Mithilfe von den anderen Disziplinen. Deshalb
-war die grösste Lektion, dass eine gute Softwarearchitektur Goldwert ist. In unserem Fall konnten wir dank der
+Für die Informatik ist es schwierig etwas Greifbares zu erschaffen ohne die Mithilfe der anderen Disziplinen. Wir
+versuchten Deshalb möglichst viel zu testen und haben auch begonnen die Architektur der finalen Lösung zu
+implementieren. Unsere grösste Lektion ist die Realisation des Wertes einer guten Softwarearchitektur. In unserem Fall konnten wir
+dank der
 Middleware Architektur schon finale Komponenten entwickeln und diese testen obwohl der Zug noch nicht vollständig gebaut
 ist. Dies gilt speziell für die Signalerkennung, Gleiserkennung, Akustik und die Sensorik.
 
