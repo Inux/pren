@@ -1,11 +1,32 @@
 \documentclass[../../main.tex]{subfiles}
+\lstset{basicstyle=\small,
+      showstringspaces=false,
+      commentstyle=\color{black},
+      keywordstyle=\color{blue}
+    }
+\emergencystretch 1em  % F"ur TeX <3.0 auskommentieren!
+\graphicspath{{include_pdf/}{../../include_pdf/}}
+
+
 \begin{document}
-    \subsection{Anhang}
-        Aufgabenstellung (Original)
-        Recherche-Ergebnisse
-        Anforderungsliste
-        Funktionsanalyse, Lösungsansätze und Bewertungen
-        Detaillierte Berechnungen
-        Versuche und Tests: Details, Messprotokolle etc.
-        Meilensteinberichte, Protokolle, Pendenzenlisten
+
+    \includepdf[pages={1-2},nup=2x1,pagecommand={\subsection{Aufgabenstellung}}]{Aufgabenstellung_PREN1_H18.pdf}
+    \includepdf[pages={3-},nup=2x2]{Aufgabenstellung_PREN1_H18.pdf}
+    \subfile{0602_technologie_recherche/technologie_recherche.tex}
+    \includepdf[pages=-,nup=1x2]{Technologierecherche.pdf}
+
+    \includepdf[pages=1,width=1\textwidth, pagecommand={\subsection{Anforderungsliste}}]{Anforderungsliste.pdf}
+    \includepdf[pages=2,width=1\textwidth]{Anforderungsliste.pdf}
+
+    \includepdf[pages=1,width=1.3\textwidth, pagecommand={\subsection{Berechnungen}},landscape=true]{Motorauslegung.pdf}
+
+    \subsection{Konzepte}
+        \subfile{0603_konzepte/MT_Konzepte_master.tex}
+        \subfile{0603_konzepte/Antrieb.tex}
+        \subfile{0603_konzepte/Fahrdaten.tex}
+        \subfile{0603_konzepte/Stromversorgung.tex}
+        \subfile{0603_konzepte/Akustik.tex}
+        \subfile{0603_konzepte/Vision.tex}
+        \subfile{0603_konzepte/Objekterkennung.tex}
+        \subfile{0603_konzepte/SoftwareArchitekturKonzept.tex}
 \end{document}
