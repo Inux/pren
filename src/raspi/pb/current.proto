@@ -1,0 +1,5 @@
+syntax = "proto3";
+
+message Current { // mA
+    int32 current = 1;
+}
