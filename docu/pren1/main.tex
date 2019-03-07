@@ -1,0 +1,158 @@
+\documentclass[11pt]{scrartcl}
+
+    \usepackage{ucs}
+    \usepackage[utf8]{inputenc}
+    \usepackage[T1]{fontenc}
+    \usepackage[ngerman]{babel}
+    \usepackage{amsmath,amssymb,amstext}
+    \usepackage{graphicx}
+    \usepackage{parskip}
+    \usepackage{hyperref}
+    \usepackage{float}
+    \usepackage{subfiles}
+    \usepackage{titling}
+    \usepackage{ccicons}
+    \usepackage{fontawesome}
+    \usepackage{subfig}
+    \usepackage[top=1in, bottom=1.25in, left=1.25in, right=1.25in]{geometry}
+    \usepackage{xcolor}
+    \usepackage{listings}
+    \usepackage{natbib}
+    \usepackage{enumerate}
+    \usepackage{longtable}
+    \usepackage[ddmmyyyy]{datetime}
+    \usepackage{pdfpages}
+    \renewcommand{\dateseparator}{.}
+
+    \lstset{basicstyle=\small,
+      showstringspaces=false,
+      commentstyle=\color{black},
+      keywordstyle=\color{blue}
+    }
+
+    \bibliographystyle{unsrtnat}
+    \graphicspath{{images/}{images/Antrieb/}{images/Fahrdaten}{images/Maschinentechnik}{images/Objekterkennung}{images/Stromversorgung}{images/Vision}{include_pdf/}}
+
+
+        %\title{Dokumentation - PREN}
+        \title{Schlussdokumentation PREN1 Gruppe 28}
+        \author{Andreas Rebsamen (Elektrotechnik) \\Joel Grepper (Informatik)\\ Manuel Omlin (Maschinentechnik)\\ Marco Schöni (Maschinentechnik)\\ Patrick Marty (Informatik)\\ Steve Ineichen (Informatik)}
+        \date{\today{}}
+
+    \begin{document}
+
+        \begin{titlingpage}
+            \begin{flushleft}
+                \begin{Huge} %Exakter Modulnamen und Modulnamen ausgeschrieben
+                    %TA.BA{\_}PREN1.H1801 \\
+                    \textbf{\thetitle} \\
+                \end{Huge}
+                \vspace{1.5cm}
+                \begin{large} %Author-Variable
+                    \theauthor \\
+                \end{large}
+                \vspace{1.5cm}
+                \begin{huge}
+                    \textbf{Hochgeschwindigkeitsschienenfahrzeug}\\
+                    \textbf{''SOUL TRAIN''}\\
+                \end{huge}
+                \vspace{0.5cm}
+                \begin{large}
+                    Hochschule Luzern – Technik \& Architektur\\
+                    TA.BA{\_}PREN1.H1801
+                \end{large}
+                \vspace{1.5cm}
+                \begin{figure}[H] %Titelbild
+                    \centering
+                    \includegraphics[width=1\textwidth]{images/soultrain.png}
+                \end{figure}
+                \vspace{3cm}
+                \begin{large} %Datumsvariable
+                    Horw, Hochschule Luzern – Technik \& Architektur, \thedate
+                \end{large}
+            \end{flushleft}
+        \end{titlingpage}
+
+        %Redlichkeitserklärung
+        \subfile{Redlichkeitserklaerung.tex}
+
+        %Inhaltsverzeichnis
+        \setcounter{tocdepth}{2}
+        \tableofcontents
+        \clearpage
+
+        \section{Management Summary}
+        \subfile{sections/01_ManagementSummery/managementSummery.tex}
+        \clearpage
+        \section{Einleitung}
+        \subfile{sections/02_Einleitung/einleitung.tex}
+        \clearpage
+        \section{Lösungskonzepte}
+        \subfile{sections/03_Loesungskonzepte/loesungskonzepte.tex}
+        \clearpage
+        \subfile{sections/03_Loesungskonzepte/Ablauf.tex}
+        \clearpage
+        \subfile{sections/03_Loesungskonzepte/Fahrwerk.tex}
+        \clearpage
+        \subfile{sections/03_Loesungskonzepte/Wuerfeltransport.tex}
+        \clearpage
+        \subfile{sections/03_Loesungskonzepte/akustik.tex}
+        \clearpage
+        \subfile{sections/03_Loesungskonzepte/beschleunigung.tex}
+        \clearpage
+        \subfile{sections/03_Loesungskonzepte/Elektronik.tex}
+        \clearpage
+        \subfile{sections/03_Loesungskonzepte/signalerkennung.tex}
+        \clearpage
+        \subfile{sections/03_Loesungskonzepte/gleiserkennung.tex}
+        \clearpage
+        \subfile{sections/03_Loesungskonzepte/Interface.tex}
+        \clearpage
+        \subfile{sections/03_Loesungskonzepte/steuerungssoftware.tex}
+        \clearpage
+        \subfile{sections/03_Loesungskonzepte/Grenzgeschwindigkeit.tex}
+        \clearpage
+        \section{Projektmanagement}
+        \subfile{sections/04_Projektmanagement/projektmanagement.tex}
+        \clearpage
+        \section{Schlussdiskussion}
+        \subfile{sections/05_Schlussdiskussion/schlussdiskussion.tex}
+        \clearpage
+        \section{Verzeichnisse}
+        \listoffigures
+        \clearpage
+        \listoftables
+        \clearpage
+        \bibliography{diverses/literatur-lib}
+        \clearpage
+
+
+
+        \section{Anhang}
+        \includepdf[pages={1-2},nup=2x1,pagecommand={\subsection{Aufgabenstellung}}]{Aufgabenstellung_PREN1_H18.pdf}
+        \includepdf[pages={3-},nup=2x2]{Aufgabenstellung_PREN1_H18.pdf}
+        \subfile{sections/06_Anhang/0602_technologie_recherche/technologie_recherche.tex}
+        \includepdf[pages=-,nup=1x2]{Technologierecherche.pdf}
+    
+        \includepdf[pages=1,width=1\textwidth, pagecommand={\subsection{Anforderungsliste}}]{Anforderungsliste.pdf}
+        \includepdf[pages=2,width=1\textwidth]{Anforderungsliste.pdf}
+    
+        \includepdf[pages=1,width=1.3\textwidth, pagecommand={\subsection{Berechnungen}},landscape=true]{Motorauslegung.pdf}
+    
+        \subfile{sections/06_Anhang/0603_konzepte/MT_Konzepte_master.tex}
+        \clearpage
+        \subfile{sections/06_Anhang/0603_konzepte/Antrieb.tex}
+        \clearpage
+        \subfile{sections/06_Anhang/0603_konzepte/Fahrdaten.tex}
+        \clearpage
+        \subfile{sections/06_Anhang/0603_konzepte/Stromversorgung.tex}
+        \clearpage
+        \subfile{sections/06_Anhang/0603_konzepte/Akustik.tex}
+        \clearpage
+        \subfile{sections/06_Anhang/0603_konzepte/Vision.tex}
+        \clearpage
+        \subfile{sections/06_Anhang/0603_konzepte/Objekterkennung.tex}
+        \clearpage
+        \subfile{sections/06_Anhang/0603_konzepte/SoftwareArchitekturKonzept.tex}
+
+    \end{document}
