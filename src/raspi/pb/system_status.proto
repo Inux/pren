@@ -1,0 +1,6 @@
+syntax = "proto3";
+
+message SystemStatus {
+    string phase = 1; //e.g startup, find_cube, grab_cube, round_one, round_two, find_stop, stopping, finished
+    string message = 2; //e.g anything - used for UI
+}

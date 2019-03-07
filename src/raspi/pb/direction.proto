@@ -1,5 +1,5 @@
 syntax = "proto3";
 
 message Direction {
-    string direction = 1;
+    string direction = 1; //straight, left, right
 }

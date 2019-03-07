@@ -1,0 +1,5 @@
+syntax = "proto3";
+
+message CraneCommand {
+    float command = 1; //e.g start
+}

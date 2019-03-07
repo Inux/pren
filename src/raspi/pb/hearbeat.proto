@@ -1,0 +1,6 @@
+syntax = "proto3";
+
+message Heartbeat {
+    string component = 1; //e.g linedetection, numberdetection, movement, acoustic, controlflow, webapp
+    string status = 2; //startup, running, error, finished
+}

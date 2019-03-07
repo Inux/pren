@@ -1,0 +1,5 @@
+syntax = "proto3";
+
+message AcousticCommand {
+    string number = 1; //e.g "1" - "9"
+}

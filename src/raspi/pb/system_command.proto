@@ -1,0 +1,6 @@
+syntax = "proto3";
+
+message SystemCommand {
+    string command = 1; //e.g start, stop
+    map<string, bool> phases = 2; //e.g startup, find_cube, grab_cube, round_one, round_two, find_stop, stopping, finished
+}

@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-message Acceleration {
+message Acceleration { // mm/s^2
     int32 x = 1;
     int32 y = 2;
     int32 z = 3;
