@@ -1,5 +1,5 @@
 syntax = "proto3";
 
 message Distance { // mm
-    float distance = 1
+    float distance = 1;
 }
