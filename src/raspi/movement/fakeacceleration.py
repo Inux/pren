@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Fake Line Detector
+"""Fake Acceleration
 """
 import time
 import sys
