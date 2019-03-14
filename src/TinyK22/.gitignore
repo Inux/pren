@@ -1,3 +1,4 @@
 /.metadata/
 /FreeRTOS_TAD_logs/
 /.mcuxpressoide_packages_support/
+/frdmk22f_uart_interrupt_rb_transfer/

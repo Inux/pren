@@ -173,7 +173,7 @@ void main(void)
       term();
 //      VL6180x_Main();
 
-      ImpulsCounterMain();
+      //ImpulsCounterMain();
 
     }
   }

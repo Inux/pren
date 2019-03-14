@@ -13,7 +13,7 @@
 
 void delay(void) // TODO: Remove, ugly
 {
-  for (uint32_t i = 0; i < 8000000; i++)
+  for (uint32_t i = 0; i < 4000000; i++)
   {
   }
 }
@@ -23,7 +23,7 @@ void testMotor_A() // TODO: Remove, ugly
   static int8_t value;
   static int8_t step = 1;
 
-  const int maxValue = 25;
+  const int maxValue = 50;
 
   if ((value >= maxValue && step > 0) ||
       (value <= -maxValue && step < 0))
@@ -37,13 +37,15 @@ void testMotor_A() // TODO: Remove, ugly
   static uint8_t counter = 0;
   if (!(counter++ % 5))
   {
-    PRINTF("%d\n", value);
+    //PRINTF("%d\n", value);
   }
 }
 
 void RunTestApp(void)
 {
   motor_A_init();
+  //motor_A_SetPwm(15);
+
   while(1) {
     LED_BLUE_TOGGLE();
     delay();

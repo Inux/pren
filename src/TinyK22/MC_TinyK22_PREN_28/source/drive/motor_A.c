@@ -15,7 +15,7 @@
 
 #define PORT_PCR_REG(base, pin)   base->PCR[pin]
 #define MOTOR_A_PIN_FORWARD_PCR   PORT_PCR_REG(MOTOR_A_PIN_FORWARD_PORT, MOTOR_A_PIN_FORWARD_PIN)
-#define MOTOR_A_PIN_REVERSE_PCR   PORT_PCR_REG(MOTOR_A_PIN_FORWARD_PORT, MOTOR_A_PIN_FORWARD_PIN)
+#define MOTOR_A_PIN_REVERSE_PCR   PORT_PCR_REG(MOTOR_A_PIN_REVERSE_PORT, MOTOR_A_PIN_REVERSE_PIN)
 
 #define MOTOR_F_PWM()           (MOTOR_A_PIN_FORWARD_PCR = PORT_PCR_MUX(3))  // PTDA[12]: FTM1_CH0
 #define MOTOR_F_GPIO()          (MOTOR_A_PIN_FORWARD_PCR = PORT_PCR_MUX(1))  // PTD0[1]: GPIO
@@ -32,6 +32,7 @@ static void motor_A_UpdatePwmDutyCycle(uint8_t percentage)
   }
 
   FTM_UpdatePwmDutycycle(FTM_1_MOTOR_PWM_PERIPHERAL, 0, kFTM_EdgeAlignedPwm, percentage);
+  FTM_SetSoftwareTrigger(FTM_1_MOTOR_PWM_PERIPHERAL, true);
 }
 
 /**
@@ -57,14 +58,12 @@ void motor_A_SetPwm(int8_t value)
   else if (value > 0)
   {
     // drive forward
-    // _todo ML#9.08 complete the else-if statement
     MOTOR_R_GPIO();
     MOTOR_F_PWM();
   }
   else
   {
     // stop
-    // _todo ML#9.09 complete the else statement
     MOTOR_F_GPIO();
     MOTOR_R_GPIO();
   }
@@ -74,5 +73,8 @@ void motor_A_SetPwm(int8_t value)
 void motor_A_init()
 {
   Motor_A_InitPins();
+  GPIO_PortClear(MOTOR_A_PIN_FORWARD_GPIO, 1<<MOTOR_A_PIN_FORWARD_PIN);
+  GPIO_PortClear(MOTOR_A_PIN_REVERSE_GPIO, 1<<MOTOR_A_PIN_REVERSE_PIN);
+
   motor_A_SetPwm(0);
 }
