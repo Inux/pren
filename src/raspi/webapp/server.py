@@ -12,10 +12,14 @@ from sanic.response import json
 from sanic.response import file
 
 from acoustic import sound
-import middlewareadapter as mwadapter
+from lib import heartbeat
+import webapp.middlewareadapter as mwadapter
 
 app = Sanic()
 app.name = "PrenTeam28WebApp"
+app.static('/static', './static')
+app.static('/Resources/sanic.png', 'static/Resources/sanic.png', name='sanic_png')
+app.static('/Scripts/main.js', 'static/Scripts/main.js', name='main_js')
 
 MIDDLEWARE_SCAN_INTERVAL = 0.100 # 100ms
 
@@ -49,13 +53,17 @@ async def api(request):
     direction = 'undefined'
     if middlewareData != None:
         direction = middlewareData.direction
-    return json({'direction': str(direction)})
+        #heartbeat = middlewareData.heartbeat
+    return json({
+        'direction': str(direction)
+        #'heartbeat': str(heartbeat)
+    })
 
 
 @app.route('/sound/<sound_nr>')
 async def play_sound(request, sound_nr):
     print('playing sound: ' + sound_nr)
-    sound.Sound.play_sound_by_number(sound_nr)
+    sound.play_sound_by_number(sound_nr)
     return json({'received': True})
 
 @app.route('/simulation/set', methods=["POST",])
@@ -83,6 +91,7 @@ async def periodic_middleware_task(app):
     print(app.name + '. Reading Middleware Messages...')
     middlewareData = mwadapter.get_data()
     print('Direction: ' + str(middlewareData.direction))
+    #print('Heartbeat: ' + str(middlewareData.heartbeat))
     time.sleep(MIDDLEWARE_SCAN_INTERVAL)
     app.add_task(periodic_middleware_task(app))
 

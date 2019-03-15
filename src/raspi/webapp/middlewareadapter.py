@@ -9,6 +9,7 @@ import select
 import zmq
 
 from pb import direction_pb2
+from pb import heartbeat_pb2
 
 
 PUBLISHER_IP = 'localhost'
@@ -36,6 +37,7 @@ def destroy():
 def get_data():
     global socket
     global dataDirection
+    global dataHeartbeat
 
     dataobj = Data()
 
@@ -49,8 +51,14 @@ def get_data():
 
         dataDirection = direction
 
+        #heartbeat = heartbeat_pb2.Heartbeat()
+        #heartbeat.component .ParseFromString(dataraw)
+
+        #dataHeartbeat = heartbeat
+
     #set Data object
     dataobj.direction = dataDirection
+    #dataobj.heartbeat = dataHeartbeat
 
     return dataobj
 

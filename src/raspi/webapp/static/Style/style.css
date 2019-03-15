@@ -1,0 +1,51 @@
+#startButton{
+    width: 100px;
+    height: 200px;
+    float: left;
+}
+
+.stateButton{
+    border-width: medium;
+}
+
+.componentDiv{
+    width: 150px;
+    height: 100px;
+    border: 2px black solid ;
+    background-color: lightgrey;
+    margin: 10px 10px;
+    float: left;
+    text-align: center;
+}
+
+.starting{
+    border-color: #00008b ;
+    background-color: #7373ff ;
+}
+
+.running{
+    border-color: black;
+    background-color: lightgrey;
+}
+
+.error{
+    border-color: red;
+    background-color: lightcoral;
+}
+
+.finished{
+    border-color: green;
+    background-color: lightgreen;
+}
+
+.disabled{
+    border-color: grey;
+    background-color: white;
+    color: grey;
+}
+
+.selected{
+    -webkit-box-shadow: 0px 0px 21px 1px rgba(0,0,0,0.61);
+    -moz-box-shadow: 0px 0px 21px 1px rgba(0,0,0,0.61);
+    box-shadow: 0px 0px 21px 1px rgba(0,0,0,0.61);
+}

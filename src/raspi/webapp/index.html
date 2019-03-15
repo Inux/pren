@@ -6,120 +6,58 @@
         </title>
     </head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="/Scripts/main.js"></script>
+    <link rel="stylesheet" type="text/css" href="static/Style/style.css">
     <body>
         <section id="curveDetection">
-            <h1 id="direction"></h1>
+            <h2 id="direction"></h2>
         </section>
-        <script>
-            //Variables & Constants
-            var updateInterval = 500 // 500ms
-            var isSimulating = false;
-            var simulationIntervalID;
-
-            //set values to initial value
-            document.getElementById("direction").innerText = "undefined";
-
-            //Helpers
-            function apiGet(callback) {
-                var xmlhttp = new XMLHttpRequest();
-                xmlhttp.onreadystatechange = function() {
-                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                        console.log('responseText:' + xmlhttp.responseText);
-                        try {
-                            var data = JSON.parse(xmlhttp.responseText);
-                        } catch(err) {
-                            console.log(err.message + " in " + xmlhttp.responseText);
-                            return;
-                        }
-                        callback(data);
-                    }
-                };
-                xmlhttp.open("GET", '/api', true);
-                xmlhttp.send();
-            }
-
-            // UI
-
-            //updateUI method (called by setInterval each 500ms)
-            function updateUI(data) {
-                console.log("Received Data:");
-                console.log(data);
-                updateDirection(data.direction);
-            }
-
-            function updateDirection(direction) {
-                document.getElementById("direction").innerText = direction;
-            }
-
-            //Plays the number pressed as sound (e.g. for #1 it plays "Number one") wow
-            function playSound(sound_nr){
-                xmlhttp = new XMLHttpRequest()
-                xmlhttp.open('GET', '/sound/' + sound_nr, true)
-                xmlhttp.send()
-                alert("playing Sound #1")
-            }
-
-            //Starts/stops simulation mode. Constantly updates movement values during simulation
-            function simulate() {
-
-                if(!isSimulating){
-                    $("#Simulate").html('Stop');
-                    movementSet();
-                    simulationIntervalID = setInterval(movementGet, updateInterval, updateMovement);
-                    isSimulating = true;
-                } else {
-                    $("#Simulate").html('Start');
-                    clearInterval(simulationIntervalID);
-                    isSimulating = false;
-                }
-            }
-
-            //Sets the initial values for later speed simulation
-            function movementSet(){
-                var xhr = new XMLHttpRequest();
-                var url = "/simulation/set";
-                xhr.open("POST", url, true);
-                xhr.setRequestHeader("Content-Type", "application/json");
-
-                var obj = new Object();
-                obj.acc =   $('#Acceleration').val();
-                obj.speed  = $('#Speed').val();
-                obj.distance = $('#Distance').val();
-                var jsonString= JSON.stringify(obj);
-                var data = JSON.stringify(jsonString);
-                xhr.send(data);
-            }
-
-            // gets movement values (Acceleration, Speed, Distance) in a 500ms interval
-            function movementGet(callback){
-                var xhr = new XMLHttpRequest();
-                var url = "/simulation/get";
-                xhr.open("GET", url, true);
-                xhr.setRequestHeader("Content-Type", "application/json");
-
-                xhr.onreadystatechange = function(){
-                    if (xhr.readyState === 4 && xhr.status === 200) {
-                        var json = JSON.parse(xhr.responseText);
-                        console.log(json.acc + json.speed + json.distance );
-                        callback(json);
-                    }
-                }
-
-                xhr.send();
-
-            }
-
-            //callback of movementGet, sets the movement values
-            function updateMovement(json) {
-                $('#Acceleration').val(json.acc);
-                $('#Speed').val(json.speed);
-                $('#Distance').val(json.distance);
-            };
-
-            //setInterval(apiGet, updateInterval, updateUI);
-        </script>
         <div>
-            <h1>Testing acoustic module:</h1>
+            <h1>Soultrain</h1>
+            <button id="startButton" onclick="start()">Start</button>
+            <img src="/Resources/sanic.png" height="200" width="250" >
+            Gotta go now -
+            No breaks on the soultrain!
+        </div>
+        <div>
+            <div>
+                <h2>Hearbeat monitoring</h2>
+
+                <button class="stateButton starting" onclick=''> Starting </button>
+                <button class="stateButton running" onclick=''> Running </button>
+                <button class="stateButton error" onclick=''> Error </button>
+                <button class="stateButton finished" onclick=''> Finished </button>
+            </div>
+            <div>
+                <div id="linedetectionDiv" class="componentDiv selected" onclick=''> Linedetection </div>
+                <div id="numberdetectionDiv" class="componentDiv" onclick=''> Numberdetection </div>
+                <div id="movementDiv" class="componentDiv" onclick=''> Movement </div>
+                <div id="acousticDiv" class="componentDiv" onclick=''> Acoustic </div>
+                <div id="controlflowDiv" class="componentDiv" onclick=''> Controlflow </div>
+            </div>
+            <button id="disableButton" onclick="disable()">disable</button>
+        </div>
+        <div>
+            <h2>Testing train movement:</h2>
+            <button onclick="moveForward()"> Forward </button>
+            <button onclick="breakTrain()"> Break </button>
+            <div>
+                <h3>Speed</h3>
+                <div><label for="Acceleration">Acceleration:</label><input id="Acceleration" name="inputAcc" value="0"> km/h^2 </div>
+                <div><label for="Speed">Speed: </label><input id="Speed" name="inputSpeed" value="0"> km/h </div>
+                <div><label for="Distance">Distance: </label><input id="Distance" name="inputDistance" value="0"> km </div>
+
+            </div>
+
+            <div>
+                <h3>Position: </h3>
+                <div><label for="X-Axis">Distance: </label><input id="X-Axis" value="0"> km/h </div>
+                <div><label for="Y-Axis">Distance: </label><input id="Y-Axis" value="0"> km/h </div>
+            </div>
+
+        </div>
+        <div>
+            <h2>Testing acoustic module:</h2>
             <button onclick='playSound(1)'> Play sound #1 </button>
             <button onclick='playSound(2)'> Play sound #2 </button>
             <button onclick='playSound(3)'> Play sound #3 </button>
@@ -131,23 +69,12 @@
             <button onclick='playSound(9)'> Play sound #9 </button>
         </div>
         <div>
-            <h1>Testing train movement:</h1>
-            <button onclick="moveForward()"> Forward </button>
-            <button onclick="breakTrain()"> Break </button>
-            <div>
-                <h2>Speed</h2>
-                <div><label for="Acceleration">Acceleration:</label><input id="Acceleration" name="inputAcc" value="0"> km/h^2 </div>
-                <div><label for="Speed">Speed: </label><input id="Speed" name="inputSpeed" value="0"> km/h </div>
-                <div><label for="Distance">Distance: </label><input id="Distance" name="inputDistance" value="0"> km </div>
-                <button id="Simulate" onclick="simulate()">Start</button>
-            </div>
-            <div>
-                <h2>Position: </h2>
-                <div><label for="X-Axis">Distance: </label><input id="X-Axis" value="0"> km/h </div>
-                <div><label for="Y-Axis">Distance: </label><input id="Y-Axis" value="0"> km/h </div>
-            </div>
+            <h2>Testing Camera functionality</h2>
+            <h3>Take Picture: </h3>
+            <button onclick="takePictureRailCamera()">Rail Camera</button>
+            <button onclick="takePictureNumberCamera()">Number Camera</button>
+            <h3>Picture: </h3>
 
-            <label></label>
         </div>
     </body>
 </html>
