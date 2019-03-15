@@ -1,6 +1,6 @@
 syntax = "proto3";
 
 message Acknowledge {
-    string action = 1; //e.g received_number, received_direction, received_acoustic_command, received_move_command,
+    string action = 1; //e.g received_number, received_direction, received_acoustic_command, received_move_command, received_system_command
     string component = 2; //e.g linedetection, numberdetection, movement, acoustic, controlflow, webapp
 }
