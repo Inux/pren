@@ -78,6 +78,26 @@ void BOARD_InitDEBUG_UARTPins(void);
  */
 void Motor_A_InitPins(void);
 
+#define SOPT5_UART0TXSRC_UART_TX 0x00u /*!<@brief UART 0 transmit data source select: UART0_TX pin */
+
+/*! @name PORTA1 (number 23), J2[4]/RED_LED
+  @{ */
+#define PI_LEDRGB_RED_PORT PORTA /*!<@brief PORT device name: PORTA */
+#define PI_LEDRGB_RED_PIN 1U     /*!<@brief PORTA pin index: 1 */
+                                 /* @} */
+
+/*! @name PORTA2 (number 24), J1[8]/GREEN_LED
+  @{ */
+#define PI_LEDRGB_GREEN_PORT PORTA /*!<@brief PORT device name: PORTA */
+#define PI_LEDRGB_GREEN_PIN 2U     /*!<@brief PORTA pin index: 2 */
+                                   /* @} */
+
+/*!
+ * @brief Configures pin routing and optionally pin electrical features.
+ *
+ */
+void Pi_Init_UARTPins(void);
+
 #if defined(__cplusplus)
 }
 #endif

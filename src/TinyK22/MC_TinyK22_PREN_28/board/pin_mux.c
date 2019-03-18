@@ -97,7 +97,6 @@ pin_labels:
 void BOARD_InitBootPins(void)
 {
     BOARD_InitPins();
-    BOARD_InitDEBUG_UARTPins();
 }
 
 /* clang-format off */
@@ -138,7 +137,7 @@ void BOARD_InitPins(void)
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 BOARD_InitDEBUG_UARTPins:
-- options: {callFromInitBoot: 'true', prefix: BOARD_, coreID: core0, enableClock: 'true'}
+- options: {callFromInitBoot: 'false', prefix: BOARD_, coreID: core0, enableClock: 'true'}
 - pin_list:
   - {pin_num: '46', peripheral: UART1, signal: RX, pin_signal: CMP1_IN1/PTC3/LLWU_P7/SPI0_PCS1/UART1_RX/FTM0_CH2/CLKOUT/I2S0_TX_BCLK/LPUART0_RX, identifier: DEBUG_UART_RX,
     slew_rate: fast, open_drain: disable, pull_select: down, pull_enable: disable}
@@ -255,6 +254,43 @@ void Motor_A_InitPins(void)
 
     /* PORTB0 (pin 35) is configured as PTB0 */
     PORT_SetPinMux(MOTOR_A_PIN_REVERSE_PORT, MOTOR_A_PIN_REVERSE_PIN, kPORT_MuxAsGpio);
+}
+
+/* clang-format off */
+/*
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+Pi_Init_UARTPins:
+- options: {callFromInitBoot: 'false', prefix: PI_, coreID: core0, enableClock: 'true'}
+- pin_list:
+  - {pin_num: '23', peripheral: UART0, signal: RX, pin_signal: PTA1/UART0_RX/FTM0_CH6/JTAG_TDI/EZP_DI}
+  - {pin_num: '24', peripheral: UART0, signal: TX, pin_signal: PTA2/UART0_TX/FTM0_CH7/JTAG_TDO/TRACE_SWO/EZP_DO}
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
+ */
+/* clang-format on */
+
+/* FUNCTION ************************************************************************************************************
+ *
+ * Function Name : Pi_Init_UARTPins
+ * Description   : Configures pin routing and optionally pin electrical features.
+ *
+ * END ****************************************************************************************************************/
+void Pi_Init_UARTPins(void)
+{
+    /* Port A Clock Gate Control: Clock enabled */
+    CLOCK_EnableClock(kCLOCK_PortA);
+
+    /* PORTA1 (pin 23) is configured as UART0_RX */
+    PORT_SetPinMux(PI_LEDRGB_RED_PORT, PI_LEDRGB_RED_PIN, kPORT_MuxAlt2);
+
+    /* PORTA2 (pin 24) is configured as UART0_TX */
+    PORT_SetPinMux(PI_LEDRGB_GREEN_PORT, PI_LEDRGB_GREEN_PIN, kPORT_MuxAlt2);
+
+    SIM->SOPT5 = ((SIM->SOPT5 &
+                   /* Mask bits to zero which are setting */
+                   (~(SIM_SOPT5_UART0TXSRC_MASK)))
+
+                  /* UART 0 transmit data source select: UART0_TX pin. */
+                  | SIM_SOPT5_UART0TXSRC(SOPT5_UART0TXSRC_UART_TX));
 }
 /***********************************************************************************************************************
  * EOF

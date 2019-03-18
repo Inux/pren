@@ -8,15 +8,13 @@
 #include <stdint.h>
 #include "fsl_debug_console.h"
 #include <stdio.h>
+#include <stdint.h>
 #include "board.h"
 #include "motor_A.h"
+#include "pi.h"
+#include "McuWait.h"
+#include "McuUtility.h"
 
-void delay(void) // TODO: Remove, ugly
-{
-  for (uint32_t i = 0; i < 4000000; i++)
-  {
-  }
-}
 
 void testMotor_A() // TODO: Remove, ugly
 {
@@ -41,14 +39,43 @@ void testMotor_A() // TODO: Remove, ugly
   }
 }
 
+static tframeLineHandler flh;       // terminal command line handler
+char *testTopic = "test";
+
+tError TestCommandHander(const unsigned char *frameValue)
+{
+  piWriteString(testTopic, frameValue);
+}
+
+static tframeLineHandler led_flh;       // terminal command line handler
+char *ledTopic = "led";
+
+tError LedCommandHander(const unsigned char *frameValue)
+{
+  int32_t val = -1;
+  McuUtility_ScanDecimal32sNumber(&frameValue, &val);
+  if (val == 1)
+  {
+    LED_BLUE_ON();
+  }
+  else if (val == 0)
+  {
+    LED_BLUE_OFF();
+  }
+}
+
 void RunTestApp(void)
 {
   motor_A_init();
   //motor_A_SetPwm(15);
+  McuWait_Init();
+  pi_init();
+  piRegisterFrameLineHandler(&flh, testTopic, "Just someting to test", TestCommandHander);
+  piRegisterFrameLineHandler(&led_flh, ledTopic, "turn it on", LedCommandHander);
 
   while(1) {
-    LED_BLUE_TOGGLE();
-    delay();
-    testMotor_A();
+    McuWait_Waitms(100);
+    //testMotor_A();
+    piDoWork();
   }
 }
