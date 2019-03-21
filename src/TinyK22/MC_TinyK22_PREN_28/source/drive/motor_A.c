@@ -101,5 +101,5 @@ void motor_A_init()
 
   motor_A_SetPwm(0);
 
-  piRegisterFrameLineHandler(&motor_A_FrameHandler, MOTOR_A_PI_TOPIC, "sets to motor PWM to the given value", motor_ACommandHandler);
+  piRegisterFrameLineHandler(&motor_A_FrameHandler, MOTOR_A_PI_TOPIC, "sets to motor PWM to the given value", &motor_ACommandHandler);
 }
