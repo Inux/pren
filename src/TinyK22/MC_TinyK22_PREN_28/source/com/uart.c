@@ -71,6 +71,7 @@ void COM_UART_IRQHandler(void)
       UART_DisableInterrupts(COM_UART, kUART_TxDataRegEmptyInterruptEnable);
     }
   }
+  __DSB();
   //OnExitUart1RxTxISR();
 }
 
@@ -262,8 +263,8 @@ void uart_inti(void)
 
   initPeriphery(COM_UART);
   UART_EnableInterrupts(COM_UART,
-      kUART_RxDataRegFullInterruptEnable | kUART_RxOverrunInterruptEnable);
-    EnableIRQ(COM_UART_IRQn);
+      kUART_RxDataRegFullInterruptEnable);// | kUART_RxOverrunInterruptEnable);
+  EnableIRQ(COM_UART_IRQn);
 
 #if USE_DEBUG_UART
     BOARD_InitDEBUG_UARTPins();
