@@ -94,6 +94,7 @@ void ackRegisterOutstanding(tAckHandler *ackHandler)
     }
 
     ackHandler->outstanding = true;
+    ackHandler->new = true;
   }
 }
 
