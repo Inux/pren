@@ -53,7 +53,6 @@ void piParseFrame(char *frame)
   uint8_t topicLength = 0;
   tError result = EC_INVALID_CMD;
   tframeLineHandler *clh = head;
-  char buf[16];
 
   while (clh != NULL)
   {
@@ -93,5 +92,4 @@ void pi_init(void)
 {
   McuUtility_Init();
   uart_inti();
-
 }

@@ -46,8 +46,8 @@ void COM_UART_IRQHandler(void)
   if (status & UART_S1_RDRF_MASK)
   {
     // store the received byte into receiver Queue (rxBuf)
-    // but only if the queue isn't full!
-    if (rxBufCount < COM_RX_BUF_SIZE)
+    // ignore string terminating characters
+    if (rxBufCount < COM_RX_BUF_SIZE && data != '\0')
     {
       rxBuf[rxBufWritePos++] = data;
       rxBufCount++;
@@ -60,6 +60,7 @@ void COM_UART_IRQHandler(void)
   {
     if (txBufCount > 0)
     {
+      // store bytes to send in tx buffer
       UART_WriteByte(COM_UART, txBuf[txBufReadPos++]);
       txBufCount--;
       if (txBufReadPos == COM_TX_BUF_SIZE)
@@ -67,9 +68,7 @@ void COM_UART_IRQHandler(void)
     }
     else
     {
-//      UART1_C2 &= ~UART_C2_TIE_MASK;
       UART_DisableInterrupts(COM_UART, kUART_TxDataRegEmptyInterruptEnable);
-
     }
   }
   //OnExitUart1RxTxISR();

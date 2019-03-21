@@ -9,14 +9,16 @@
 #include "fsl_debug_console.h"
 #include <stdio.h>
 #include <stdint.h>
+#include <string.h>
 #include "board.h"
 #include "motor_A.h"
 #include "pi.h"
 #include "McuWait.h"
 #include "McuUtility.h"
+#include "comAck.h"
 
 
-void testMotor_A() // TODO: Remove, ugly
+void testMotor_A()
 {
   static int8_t value;
   static int8_t step = 1;
@@ -39,16 +41,27 @@ void testMotor_A() // TODO: Remove, ugly
   }
 }
 
-static tframeLineHandler flh;       // terminal command line handler
+static tframeLineHandler flh;
 char *testTopic = "test";
+static tAckHandler test_ackh;
 
 tError TestCommandHander(const unsigned char *frameValue)
 {
-  piWriteString(testTopic, frameValue);
+  //piWriteString(testTopic, frameValue);
+
+  ackSend(&test_ackh);
+
+  return EC_SUCCESS;
 }
 
-static tframeLineHandler led_flh;       // terminal command line handler
+void TestAckTimeoutHandler()
+{
+  piWriteString("timeout", "test timeout occurred");
+}
+
+static tframeLineHandler led_flh;
 char *ledTopic = "led";
+static tAckHandler led_ackh;
 
 tError LedCommandHander(const unsigned char *frameValue)
 {
@@ -62,6 +75,10 @@ tError LedCommandHander(const unsigned char *frameValue)
   {
     LED_BLUE_OFF();
   }
+
+  ackSend(&led_ackh);
+
+  return EC_SUCCESS;
 }
 
 void RunTestApp(void)
@@ -70,12 +87,34 @@ void RunTestApp(void)
   //motor_A_SetPwm(15);
   McuWait_Init();
   pi_init();
+  ack_init();
   piRegisterFrameLineHandler(&flh, testTopic, "Just someting to test", TestCommandHander);
   piRegisterFrameLineHandler(&led_flh, ledTopic, "turn it on", LedCommandHander);
+
+  strncpy(test_ackh.topic, testTopic, sizeof(test_ackh.topic));
+  test_ackh.timeoutHandler = TestAckTimeoutHandler;
+
+  strncpy(led_ackh.topic, ledTopic, sizeof(led_ackh.topic));
+
+  ackRegisterHandler(&test_ackh);
+  ackRegisterHandler(&led_ackh);
 
   while(1) {
     McuWait_Waitms(100);
     //testMotor_A();
     piDoWork();
+
+    static int i = 0;
+    if (i++ > 10)
+    {
+      ackCheckQueue();
+    }
+
+    static int j = 0;
+    if (j++ > 30)
+    {
+      piWriteString(testTopic, "Test message, please ack with 'ack,test'");
+      ackRegisterOutstanding(&test_ackh);
+    }
   }
 }
