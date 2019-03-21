@@ -83,6 +83,9 @@ tError LedCommandHander(const unsigned char *frameValue)
 
 void RunTestApp(void)
 {
+  int i = 0;
+  int j = 0;
+
   motor_A_init();
   //motor_A_SetPwm(15);
   McuWait_Init();
@@ -104,15 +107,17 @@ void RunTestApp(void)
     //testMotor_A();
     piDoWork();
 
-    static int i = 0;
-    if (i++ > 10)
+    i++;
+    if (i > 10)
     {
+      i = 0;
       ackCheckQueue();
     }
 
-    static int j = 0;
-    if (j++ > 30)
+    j++;
+    if (j > 30)
     {
+      j = 0;
       piWriteString(testTopic, "Test message, please ack with 'ack,test'");
       ackRegisterOutstanding(&test_ackh);
     }
