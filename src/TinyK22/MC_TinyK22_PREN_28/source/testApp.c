@@ -118,7 +118,7 @@ void RunTestApp(void)
     if (j > 30)
     {
       j = 0;
-      piWriteString(testTopic, "Test message, please ack with 'ack,test'");
+      piWriteString(testTopic, "Test message please ack with 'ack,test'");
       ackRegisterOutstanding(&test_ackh);
     }
   }
