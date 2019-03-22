@@ -8,15 +8,16 @@
 #ifndef COM_COMACK_H_
 #define COM_COMACK_H_
 
-#include "pi.h"
 #include <stdbool.h>
+#include <stdint.h>
+#include "com.h"
 
 typedef void (*AckTimeoutHandler)(void);
 
 
 typedef struct ackHandler
 {
-  char topic[PI_TOPIC_MAX_LENGTH];
+  char topic[COM_PI_TOPIC_MAX_LENGTH];
   AckTimeoutHandler timeoutHandler;
   bool outstanding;
   uint8_t nbrOfRetries;

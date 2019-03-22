@@ -13,6 +13,17 @@
 #define NEW_LINE            '\n'
 #define SEP_TOKEN           ","
 
+#define COM_PI_TOPIC_MAX_LENGTH 16
+
+#define SPEED_TOPIC     "speed"
+#define CRANE_TOPIC     "crane"
+#define PHASE_TOPIC     "phase"
+#define IS_SPEED_TOPIC  "is_speed"
+#define CUBE_TOPIC      "cube"
+#define CURRENT_TOPIC   "current"
+#define LOG_TOPIC       "log"
+#define ACK_TOPIC       "ack"
+
 #define USE_DEBUG_UART      1
 
 #define DEBUG_UART          UART1

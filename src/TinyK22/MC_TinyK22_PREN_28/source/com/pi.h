@@ -10,23 +10,14 @@
 
 #include "com.h" /*all definitions in this file */
 #include "app.h"
+#include "comAck.h"
 
-#define PI_TOPIC_MAX_LENGTH 16
-
-#define SPEED_TOPIC     "speed"
-#define CRANE_TOPIC     "crane"
-#define PHASE_TOPIC     "phase"
-#define IS_SPEED_TOPIC  "is_speed"
-#define CUBE_TOPIC      "cube"
-#define CURRENT_TOPIC   "current"
-#define LOG_TOPIC       "log"
-#define ACK_TOPIC       "ack"
 
 typedef tError (*frameHandler)(const unsigned char *cmd);
 
 typedef struct frameLineHandler
 {
-  char topic[PI_TOPIC_MAX_LENGTH];
+  char topic[COM_PI_TOPIC_MAX_LENGTH];
   char frameDesc[32];
   frameHandler frameHandler;
   struct frameLineHandler *next;
