@@ -19,11 +19,6 @@
 
 #define LOG_LEVEL           LOG_LEVEL_ALL
 
-#define LOG_INFO(s)
-#define LOG_WARN(s)
-#define LOG_CRITICAL(s)
-#define LOG_ERROR(s)
-
 #if (LOG_LEVEL >= LOG_LEVEL_ALL)
 #define LOG_INFO(s)       piWriteString(LOG_TOPIC, "Info:"s, NULL);
 #endif
@@ -40,4 +35,16 @@
 #define LOG_ERROR(s)      piWriteString(LOG_TOPIC, "Error:"s, NULL);
 #endif
 
+#ifndef LOG_INFO
+#define LOG_INFO(s)
+#endif
+#ifndef LOG_WARN
+#define LOG_WARN(s)
+#endif
+#ifndef LOG_CRITICAL
+#define LOG_CRITICAL(s)
+#endif
+#ifndef LOG_ERROR
+#define LOG_ERROR(s)
+#endif
 #endif /* COM_COMLOG_H_ */
