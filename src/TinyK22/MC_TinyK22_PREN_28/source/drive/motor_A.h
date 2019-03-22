@@ -12,6 +12,8 @@
 #include "fsl_gpio.h"
 #include "pin_mux.h"
 
+#define MOTOR_A_PI_TOPIC "motor"
+
 #define MOTOR_MAX_VALUE               100
 
 void motor_A_SetPwm(int8_t value);

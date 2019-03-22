@@ -81,16 +81,29 @@
 								</option>
 								<option id="gnu.c.compiler.option.preprocessor.undef.symbol.1700539252" name="Undefined symbols (-U)" superClass="gnu.c.compiler.option.preprocessor.undef.symbol" useByScannerDiscovery="false"/>
 								<option id="gnu.c.compiler.option.include.paths.2125987735" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
-									<listOptionValue builtIn="false" value="../board"/>
-									<listOptionValue builtIn="false" value="../source/drive"/>
-									<listOptionValue builtIn="false" value="../source"/>
-									<listOptionValue builtIn="false" value="../"/>
 									<listOptionValue builtIn="false" value="../drivers"/>
+									<listOptionValue builtIn="false" value="../component/uart"/>
 									<listOptionValue builtIn="false" value="../device"/>
 									<listOptionValue builtIn="false" value="../CMSIS"/>
 									<listOptionValue builtIn="false" value="../component/serial_manager"/>
-									<listOptionValue builtIn="false" value="../component/uart"/>
 									<listOptionValue builtIn="false" value="../utilities"/>
+									<listOptionValue builtIn="false" value="../board"/>
+									<listOptionValue builtIn="false" value="../McuLib/config"/>
+									<listOptionValue builtIn="false" value="../McuLib/config/fonts"/>
+									<listOptionValue builtIn="false" value="../McuLib/src"/>
+									<listOptionValue builtIn="false" value="../McuLib/fonts"/>
+									<listOptionValue builtIn="false" value="../McuLib/FreeRTOS/Source/include"/>
+									<listOptionValue builtIn="false" value="../McuLib/FreeRTOS/Source/portable/GCC/ARM_CM4F"/>
+									<listOptionValue builtIn="false" value="../McuLib/SEGGER_RTT"/>
+									<listOptionValue builtIn="false" value="../McuLib/SEGGER_Sysview"/>
+									<listOptionValue builtIn="false" value="../McuLib/TraceRecorder/config"/>
+									<listOptionValue builtIn="false" value="../McuLib/TraceRecorder/include"/>
+									<listOptionValue builtIn="false" value="../McuLib/TraceRecorder/streamports/Jlink_RTT/include"/>
+									<listOptionValue builtIn="false" value="../McuLib/HD44780"/>
+									<listOptionValue builtIn="false" value="../source/drive"/>
+									<listOptionValue builtIn="false" value="../source"/>
+									<listOptionValue builtIn="false" value="../"/>
+									<listOptionValue builtIn="false" value="../source/com"/>
 								</option>
 								<option id="gnu.c.compiler.option.include.files.1049805555" name="Include files (-include)" superClass="gnu.c.compiler.option.include.files" useByScannerDiscovery="false"/>
 								<option id="com.crt.advproject.gcc.exe.debug.option.optimization.level.505414929" name="Optimization Level" superClass="com.crt.advproject.gcc.exe.debug.option.optimization.level" useByScannerDiscovery="false"/>
@@ -104,7 +117,7 @@
 								<option id="gnu.c.compiler.option.warnings.pedantic.1633282432" name="Pedantic (-pedantic)" superClass="gnu.c.compiler.option.warnings.pedantic" useByScannerDiscovery="false"/>
 								<option id="gnu.c.compiler.option.warnings.pedantic.error.1465797089" name="Pedantic warnings as errors (-pedantic-errors)" superClass="gnu.c.compiler.option.warnings.pedantic.error" useByScannerDiscovery="false"/>
 								<option id="gnu.c.compiler.option.warnings.nowarn.1266276156" name="Inhibit all warnings (-w)" superClass="gnu.c.compiler.option.warnings.nowarn" useByScannerDiscovery="false"/>
-								<option id="gnu.c.compiler.option.warnings.allwarn.979056876" name="All warnings (-Wall)" superClass="gnu.c.compiler.option.warnings.allwarn" useByScannerDiscovery="false"/>
+								<option id="gnu.c.compiler.option.warnings.allwarn.979056876" name="All warnings (-Wall)" superClass="gnu.c.compiler.option.warnings.allwarn" useByScannerDiscovery="false" value="false" valueType="boolean"/>
 								<option id="gnu.c.compiler.option.warnings.extrawarn.2045115106" name="Extra warnings (-Wextra)" superClass="gnu.c.compiler.option.warnings.extrawarn" useByScannerDiscovery="false"/>
 								<option id="gnu.c.compiler.option.warnings.toerrors.1764704242" name="Warnings as errors (-Werror)" superClass="gnu.c.compiler.option.warnings.toerrors" useByScannerDiscovery="false"/>
 								<option id="gnu.c.compiler.option.warnings.wconversion.190943881" name="Implicit conversion warnings (-Wconversion)" superClass="gnu.c.compiler.option.warnings.wconversion" useByScannerDiscovery="false"/>
@@ -128,15 +141,30 @@
 								<option id="com.crt.advproject.gas.arch.269759639" name="Architecture" superClass="com.crt.advproject.gas.arch" useByScannerDiscovery="false" value="com.crt.advproject.gas.target.cm4" valueType="enumerated"/>
 								<option id="gnu.both.asm.option.flags.crt.1887411339" name="Assembler flags" superClass="gnu.both.asm.option.flags.crt" useByScannerDiscovery="false" value="-c -x assembler-with-cpp -D__REDLIB__" valueType="string"/>
 								<option id="gnu.both.asm.option.include.paths.1082444688" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
-									<listOptionValue builtIn="false" value="../board"/>
-									<listOptionValue builtIn="false" value="../source"/>
-									<listOptionValue builtIn="false" value="../"/>
 									<listOptionValue builtIn="false" value="../drivers"/>
+									<listOptionValue builtIn="false" value="../component/uart"/>
 									<listOptionValue builtIn="false" value="../device"/>
 									<listOptionValue builtIn="false" value="../CMSIS"/>
 									<listOptionValue builtIn="false" value="../component/serial_manager"/>
-									<listOptionValue builtIn="false" value="../component/uart"/>
 									<listOptionValue builtIn="false" value="../utilities"/>
+									<listOptionValue builtIn="false" value="../board"/>
+									<listOptionValue builtIn="false" value="../McuLib/config"/>
+									<listOptionValue builtIn="false" value="../McuLib/config/fonts"/>
+									<listOptionValue builtIn="false" value="../McuLib/src"/>
+									<listOptionValue builtIn="false" value="../McuLib/fonts"/>
+									<listOptionValue builtIn="false" value="../McuLib/FreeRTOS/Source/include"/>
+									<listOptionValue builtIn="false" value="../McuLib/FreeRTOS/Source/portable/GCC/ARM_CM4F"/>
+									<listOptionValue builtIn="false" value="../McuLib/SEGGER_RTT"/>
+									<listOptionValue builtIn="false" value="../McuLib/SEGGER_Sysview"/>
+									<listOptionValue builtIn="false" value="../McuLib/TraceRecorder/config"/>
+									<listOptionValue builtIn="false" value="../McuLib/TraceRecorder/include"/>
+									<listOptionValue builtIn="false" value="../McuLib/TraceRecorder/streamports/Jlink_RTT/include"/>
+									<listOptionValue builtIn="false" value="../McuLib/HD44780"/>
+									<listOptionValue builtIn="false" value="../source/drive"/>
+									<listOptionValue builtIn="false" value="../source"/>
+									<listOptionValue builtIn="false" value="../"/>
+									<listOptionValue builtIn="false" value="c:/nxp/mcuxpressoide_10.3.0_2200/ide/plugins/com.nxp.mcuxpresso.tools.win32_10.3.0.201811011841/tools/redlib/include"/>
+									<listOptionValue builtIn="false" value="c:/nxp/mcuxpressoide_10.3.0_2200/ide/plugins/com.nxp.mcuxpresso.tools.win32_10.3.0.201811011841/tools/features/include"/>
 								</option>
 								<option id="gnu.both.asm.option.warnings.nowarn.1700538502" name="Suppress warnings (-W)" superClass="gnu.both.asm.option.warnings.nowarn" useByScannerDiscovery="false"/>
 								<option id="gnu.both.asm.option.version.298289171" name="Announce version (-v)" superClass="gnu.both.asm.option.version" useByScannerDiscovery="false"/>
@@ -259,13 +287,19 @@
 					</folderInfo>
 					<sourceEntries>
 						<entry flags="LOCAL|VALUE_WORKSPACE_PATH" kind="sourcePath" name="component"/>
-						<entry flags="LOCAL|VALUE_WORKSPACE_PATH" kind="sourcePath" name="startup"/>
 						<entry flags="LOCAL|VALUE_WORKSPACE_PATH" kind="sourcePath" name="CMSIS"/>
-						<entry flags="LOCAL|VALUE_WORKSPACE_PATH" kind="sourcePath" name="source"/>
 						<entry flags="LOCAL|VALUE_WORKSPACE_PATH" kind="sourcePath" name="utilities"/>
 						<entry flags="LOCAL|VALUE_WORKSPACE_PATH" kind="sourcePath" name="drivers"/>
 						<entry flags="LOCAL|VALUE_WORKSPACE_PATH" kind="sourcePath" name="device"/>
-						<entry flags="LOCAL|VALUE_WORKSPACE_PATH" kind="sourcePath" name="board"/>
+						<entry flags="LOCAL|VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="CMSIS"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="McuLib"/>
+						<entry flags="LOCAL|VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="board"/>
+						<entry flags="LOCAL|VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="component"/>
+						<entry flags="LOCAL|VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="device"/>
+						<entry flags="LOCAL|VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="drivers"/>
+						<entry flags="LOCAL|VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="source"/>
+						<entry flags="LOCAL|VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="startup"/>
+						<entry flags="LOCAL|VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="utilities"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -349,15 +383,28 @@
 								</option>
 								<option id="gnu.c.compiler.option.preprocessor.undef.symbol.2104564312" name="Undefined symbols (-U)" superClass="gnu.c.compiler.option.preprocessor.undef.symbol"/>
 								<option id="gnu.c.compiler.option.include.paths.1723141660" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="../board"/>
-									<listOptionValue builtIn="false" value="../source"/>
-									<listOptionValue builtIn="false" value="../"/>
 									<listOptionValue builtIn="false" value="../drivers"/>
+									<listOptionValue builtIn="false" value="../component/uart"/>
 									<listOptionValue builtIn="false" value="../device"/>
 									<listOptionValue builtIn="false" value="../CMSIS"/>
 									<listOptionValue builtIn="false" value="../component/serial_manager"/>
-									<listOptionValue builtIn="false" value="../component/uart"/>
 									<listOptionValue builtIn="false" value="../utilities"/>
+									<listOptionValue builtIn="false" value="../board"/>
+									<listOptionValue builtIn="false" value="../McuLib/config"/>
+									<listOptionValue builtIn="false" value="../McuLib/config/fonts"/>
+									<listOptionValue builtIn="false" value="../McuLib/src"/>
+									<listOptionValue builtIn="false" value="../McuLib/fonts"/>
+									<listOptionValue builtIn="false" value="../McuLib/FreeRTOS/Source/include"/>
+									<listOptionValue builtIn="false" value="../McuLib/FreeRTOS/Source/portable/GCC/ARM_CM4F"/>
+									<listOptionValue builtIn="false" value="../McuLib/SEGGER_RTT"/>
+									<listOptionValue builtIn="false" value="../McuLib/SEGGER_Sysview"/>
+									<listOptionValue builtIn="false" value="../McuLib/TraceRecorder/config"/>
+									<listOptionValue builtIn="false" value="../McuLib/TraceRecorder/include"/>
+									<listOptionValue builtIn="false" value="../McuLib/TraceRecorder/streamports/Jlink_RTT/include"/>
+									<listOptionValue builtIn="false" value="../McuLib/HD44780"/>
+									<listOptionValue builtIn="false" value="../source/drive"/>
+									<listOptionValue builtIn="false" value="../source"/>
+									<listOptionValue builtIn="false" value="../"/>
 								</option>
 								<option id="gnu.c.compiler.option.include.files.2112278126" name="Include files (-include)" superClass="gnu.c.compiler.option.include.files"/>
 								<option id="gnu.c.compiler.option.optimization.flags.1564870346" name="Other optimization flags" superClass="gnu.c.compiler.option.optimization.flags" value="-fno-common" valueType="string"/>
@@ -393,15 +440,30 @@
 								<option id="com.crt.advproject.gas.arch.1052658837" name="Architecture" superClass="com.crt.advproject.gas.arch" value="com.crt.advproject.gas.target.cm4" valueType="enumerated"/>
 								<option id="gnu.both.asm.option.flags.crt.574071455" name="Assembler flags" superClass="gnu.both.asm.option.flags.crt" value="-c -x assembler-with-cpp -D__REDLIB__" valueType="string"/>
 								<option id="gnu.both.asm.option.include.paths.593168816" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="../board"/>
-									<listOptionValue builtIn="false" value="../source"/>
-									<listOptionValue builtIn="false" value="../"/>
 									<listOptionValue builtIn="false" value="../drivers"/>
+									<listOptionValue builtIn="false" value="../component/uart"/>
 									<listOptionValue builtIn="false" value="../device"/>
 									<listOptionValue builtIn="false" value="../CMSIS"/>
 									<listOptionValue builtIn="false" value="../component/serial_manager"/>
-									<listOptionValue builtIn="false" value="../component/uart"/>
 									<listOptionValue builtIn="false" value="../utilities"/>
+									<listOptionValue builtIn="false" value="../board"/>
+									<listOptionValue builtIn="false" value="../McuLib/config"/>
+									<listOptionValue builtIn="false" value="../McuLib/config/fonts"/>
+									<listOptionValue builtIn="false" value="../McuLib/src"/>
+									<listOptionValue builtIn="false" value="../McuLib/fonts"/>
+									<listOptionValue builtIn="false" value="../McuLib/FreeRTOS/Source/include"/>
+									<listOptionValue builtIn="false" value="../McuLib/FreeRTOS/Source/portable/GCC/ARM_CM4F"/>
+									<listOptionValue builtIn="false" value="../McuLib/SEGGER_RTT"/>
+									<listOptionValue builtIn="false" value="../McuLib/SEGGER_Sysview"/>
+									<listOptionValue builtIn="false" value="../McuLib/TraceRecorder/config"/>
+									<listOptionValue builtIn="false" value="../McuLib/TraceRecorder/include"/>
+									<listOptionValue builtIn="false" value="../McuLib/TraceRecorder/streamports/Jlink_RTT/include"/>
+									<listOptionValue builtIn="false" value="../McuLib/HD44780"/>
+									<listOptionValue builtIn="false" value="../source/drive"/>
+									<listOptionValue builtIn="false" value="../source"/>
+									<listOptionValue builtIn="false" value="../"/>
+									<listOptionValue builtIn="false" value="c:/nxp/mcuxpressoide_10.3.0_2200/ide/plugins/com.nxp.mcuxpresso.tools.win32_10.3.0.201811011841/tools/redlib/include"/>
+									<listOptionValue builtIn="false" value="c:/nxp/mcuxpressoide_10.3.0_2200/ide/plugins/com.nxp.mcuxpresso.tools.win32_10.3.0.201811011841/tools/features/include"/>
 								</option>
 								<option id="gnu.both.asm.option.warnings.nowarn.1695614216" name="Suppress warnings (-W)" superClass="gnu.both.asm.option.warnings.nowarn"/>
 								<option id="gnu.both.asm.option.version.957471284" name="Announce version (-v)" superClass="gnu.both.asm.option.version"/>
@@ -521,12 +583,21 @@
 					</folderInfo>
 					<sourceEntries>
 						<entry flags="LOCAL|VALUE_WORKSPACE_PATH" kind="sourcePath" name="component"/>
-						<entry flags="LOCAL|VALUE_WORKSPACE_PATH" kind="sourcePath" name="startup"/>
 						<entry flags="LOCAL|VALUE_WORKSPACE_PATH" kind="sourcePath" name="CMSIS"/>
-						<entry flags="LOCAL|VALUE_WORKSPACE_PATH" kind="sourcePath" name="source"/>
 						<entry flags="LOCAL|VALUE_WORKSPACE_PATH" kind="sourcePath" name="utilities"/>
 						<entry flags="LOCAL|VALUE_WORKSPACE_PATH" kind="sourcePath" name="drivers"/>
 						<entry flags="LOCAL|VALUE_WORKSPACE_PATH" kind="sourcePath" name="device"/>
+						<entry flags="LOCAL|VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="CMSIS"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="McuLib"/>
+						<entry flags="LOCAL|VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="board"/>
+						<entry flags="LOCAL|VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="component"/>
+						<entry flags="LOCAL|VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="device"/>
+						<entry flags="LOCAL|VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="drivers"/>
+						<entry flags="LOCAL|VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="source"/>
+						<entry flags="LOCAL|VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="startup"/>
+						<entry flags="LOCAL|VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="utilities"/>
+						<entry flags="LOCAL|VALUE_WORKSPACE_PATH" kind="sourcePath" name="startup"/>
+						<entry flags="LOCAL|VALUE_WORKSPACE_PATH" kind="sourcePath" name="source"/>
 						<entry flags="LOCAL|VALUE_WORKSPACE_PATH" kind="sourcePath" name="board"/>
 					</sourceEntries>
 				</configuration>
@@ -639,7 +710,7 @@
 	<storageModule moduleId="com.nxp.mcuxpresso.core.datamodels">
 		<sdkName>SDK_2.x_MK22FN512xxx12</sdkName>
 		<sdkVersion>2.5.0</sdkVersion>
-		<sdkComponents>middleware.baremetal.MK22F51212;platform.drivers.clock.MK22F51212;device.MK22F51212_CMSIS.MK22F51212;platform.Include_common.MK22F51212;platform.Include_core_cm4.MK22F51212;platform.drivers.common.MK22F51212;platform.drivers.lpuart.MK22F51212;platform.drivers.uart.MK22F51212;platform.drivers.adc16.MK22F51212;platform.drivers.dspi.MK22F51212;platform.drivers.gpio.MK22F51212;platform.drivers.i2c.MK22F51212;platform.drivers.port.MK22F51212;platform.drivers.rtc.MK22F51212;platform.drivers.smc.MK22F51212;platform.drivers.ftm.MK22F51212;component.serial_manager.MK22F51212;component.serial_manager_uart.MK22F51212;component.uart_adapter.MK22F51212;utility.debug_console.MK22F51212;device.MK22F51212_startup.MK22F51212;project_template.frdmk22f.MK22F51212;</sdkComponents>
+		<sdkComponents>middleware.baremetal.MK22F51212;platform.drivers.clock.MK22F51212;device.MK22F51212_CMSIS.MK22F51212;platform.Include_common.MK22F51212;platform.Include_core_cm4.MK22F51212;platform.drivers.common.MK22F51212;platform.drivers.lpuart.MK22F51212;platform.drivers.uart.MK22F51212;platform.drivers.adc16.MK22F51212;platform.drivers.dspi.MK22F51212;platform.drivers.gpio.MK22F51212;platform.drivers.i2c.MK22F51212;platform.drivers.port.MK22F51212;platform.drivers.rtc.MK22F51212;platform.drivers.smc.MK22F51212;platform.drivers.ftm.MK22F51212;component.serial_manager.MK22F51212;component.serial_manager_uart.MK22F51212;component.uart_adapter.MK22F51212;utility.debug_console.MK22F51212;device.MK22F51212_startup.MK22F51212;project_template.frdmk22f.MK22F51212;platform.drivers.sim.MK22F51212;</sdkComponents>
 		<boardId>frdmk22f</boardId>
 		<package>MK22FN512VDC12</package>
 		<core>cm4</core>
