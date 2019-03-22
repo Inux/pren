@@ -16,6 +16,7 @@
 #include "McuWait.h"
 #include "McuUtility.h"
 #include "comAck.h"
+#include "comLog.h"
 
 
 void testMotor_A()
@@ -56,7 +57,10 @@ tError TestCommandHander(const unsigned char *frameValue)
 
 void TestAckTimeoutHandler()
 {
-  piWriteString("timeout", "test timeout occurred", NULL);
+  LOG_INFO("timeout occurred ");
+//  LOG_WARN("timeout occurred thats a waring");
+//  LOG_CRITICAL("timeout occurred thats a critical thing");
+//  LOG_ERROR("timeout occurred thats an error");
   test_ackh.outstanding = false;
 }
 
