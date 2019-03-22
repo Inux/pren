@@ -10,14 +10,16 @@
 #include "app.h"
 #include "pi.h"
 #include "McuUtility.h"
+#include "comAck.h"
 
 static tframeLineHandler *head = NULL;
 
 /**
  * registers a new Frame line handler
+ * if ackHandler is NULL -> no ack is expected for this frame
  */
 void piRegisterFrameLineHandler(tframeLineHandler *flh, unsigned char* topic,
-    unsigned char *frameDesc, frameHandler h)
+    unsigned char *frameDesc, frameHandler h, tAckHandler *ackHandler)
 {
   flh->next = head;
   head = flh;
@@ -26,20 +28,35 @@ void piRegisterFrameLineHandler(tframeLineHandler *flh, unsigned char* topic,
   strcat(flh->topic, SEP_TOKEN);
   strncpy(flh->frameDesc, frameDesc, sizeof(flh->frameDesc));
   flh->frameHandler = h;
+
+  if (ackHandler != NULL)
+  {
+    ackRegisterHandler(ackHandler);
+  }
 }
 
-void piWriteNum32s(const char *topic, int32_t value)
+/**
+ * sends a number for the given topic to the pi
+ * if ackHandler is NULL -> no ack is expected
+ */
+void piWriteNum32s(const char *topic, int32_t value, tAckHandler* ackHandler)
 {
   char str[sizeof("-2147483648")];
   McuUtility_Num32sToStr(str, sizeof(str), value);
-  piWriteString(topic, str);
+  piWriteString(topic, str, ackHandler);
 }
 
-void piWriteString(const char *topic, const char *str)
+/**
+ * sends a stirng for the given topic to the pi
+ * if ackHandler is NULL -> no ack is expected
+ */
+void piWriteString(const char *topic, const char *str, tAckHandler* ackHandler)
 {
   uartWrite(topic);
   uartWrite(SEP_TOKEN);
   uartWriteLine(str);
+
+  ackRegisterOutstanding(ackHandler);
 }
 
 /**

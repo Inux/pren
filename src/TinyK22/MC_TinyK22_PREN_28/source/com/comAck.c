@@ -45,7 +45,7 @@ void ackSend(tAckHandler *ackHandler)
 {
   if (ackHandler != NULL)
   {
-    piWriteString(ACK_TOPIC, ackHandler->topic);
+    piWriteString(ACK_TOPIC, ackHandler->topic, NULL);
   }
 }
 
@@ -130,5 +130,5 @@ tError AckFrameHandler(const unsigned char *topic)
  */
 void ack_init(void)
 {
-  piRegisterFrameLineHandler(&ack_flh, ACK_TOPIC, "handles ack messages", AckFrameHandler);
+  piRegisterFrameLineHandler(&ack_flh, ACK_TOPIC, "handles ack messages", AckFrameHandler, NULL);
 }

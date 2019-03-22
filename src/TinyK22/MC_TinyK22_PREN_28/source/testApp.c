@@ -56,7 +56,8 @@ tError TestCommandHander(const unsigned char *frameValue)
 
 void TestAckTimeoutHandler()
 {
-  piWriteString("timeout", "test timeout occurred");
+  piWriteString("timeout", "test timeout occurred", NULL);
+  test_ackh.outstanding = false;
 }
 
 static tframeLineHandler led_flh;
@@ -91,16 +92,15 @@ void RunTestApp(void)
   McuWait_Init();
   pi_init();
   ack_init();
-  piRegisterFrameLineHandler(&flh, testTopic, "Just someting to test", TestCommandHander);
-  piRegisterFrameLineHandler(&led_flh, ledTopic, "turn it on", LedCommandHander);
 
   strncpy(test_ackh.topic, testTopic, sizeof(test_ackh.topic));
   test_ackh.timeoutHandler = TestAckTimeoutHandler;
 
   strncpy(led_ackh.topic, ledTopic, sizeof(led_ackh.topic));
 
-  ackRegisterHandler(&test_ackh);
-  ackRegisterHandler(&led_ackh);
+  piRegisterFrameLineHandler(&flh, testTopic, "Just someting to test", TestCommandHander, &test_ackh);
+  piRegisterFrameLineHandler(&led_flh, ledTopic, "turn it on", LedCommandHander, &led_ackh);
+
 
   while(1) {
     McuWait_Waitms(100);
@@ -118,8 +118,7 @@ void RunTestApp(void)
     if (j > 30)
     {
       j = 0;
-      piWriteString(testTopic, "Test message please ack with 'ack,test'");
-      ackRegisterOutstanding(&test_ackh);
+      piWriteString(testTopic, "Test message please ack with 'ack,test'", &test_ackh);
     }
   }
 }

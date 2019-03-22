@@ -26,11 +26,11 @@ typedef struct frameLineHandler
 void pi_init(void);
 
 void piRegisterFrameLineHandler(tframeLineHandler *clh,
-    unsigned char* cmd, unsigned char *cmdDesc, frameHandler h);
+    unsigned char* cmd, unsigned char *cmdDesc, frameHandler h, tAckHandler *ackHandler);
 
-void piWriteNum32s(const char *topic, int32_t value);
+void piWriteNum32s(const char *topic, int32_t value, tAckHandler* ackHandler);
+void piWriteString(const char *topic, const char *str, tAckHandler* ackHandler);
 
-void piWriteString(const char *topic, const char *str);
 void piDoWork(void);
 
 #endif /* COM_PI_H_ */
