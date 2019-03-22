@@ -7,6 +7,7 @@
 
 #include "comAck.h"
 #include "pi.h"
+#include "comLog.h"
 
 static tframeLineHandler ack_flh;
 
@@ -51,7 +52,7 @@ void ackSend(tAckHandler *ackHandler)
 
 void ackDefaultTimeoutHandler()
 {
-  // todo: log ack timeout
+  LOG_INFO("ack timeout occurred - default handler");
 }
 
 /**
@@ -113,6 +114,7 @@ tError AckFrameHandler(const unsigned char *topic)
     {
       ackHandler->outstanding = false;
       ackHandler->nbrOfRetries = 0;
+      result = EC_SUCCESS;
       break;
     }
     ackHandler = ackHandler->next;
@@ -120,7 +122,7 @@ tError AckFrameHandler(const unsigned char *topic)
 
   if (result != EC_SUCCESS)
   {
-    //todo: log invalide topic in ack message
+    LOG_WARN("ack for unknown topic received");
   }
 }
 

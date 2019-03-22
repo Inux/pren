@@ -84,7 +84,7 @@ void piParseFrame(char *frame)
 
   if (result != EC_SUCCESS)
   {
-    //todo: log error
+    LOG_WARN("frame not successfully parsed");
   }
 }
 
