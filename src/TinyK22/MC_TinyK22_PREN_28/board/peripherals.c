@@ -112,12 +112,94 @@ void FTM_1_Motor_PWM_init(void) {
 }
 
 /***********************************************************************************************************************
+ * FTM_2_Encoder initialization code
+ **********************************************************************************************************************/
+/* clang-format off */
+/* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+instance:
+- name: 'FTM_2_Encoder'
+- type: 'ftm'
+- mode: 'EdgeAligned'
+- type_id: 'ftm_04a15ae4af2b404bf2ae403c3dbe98b3'
+- functional_group: 'BOARD_InitPeripherals'
+- peripheral: 'FTM2'
+- config_sets:
+  - ftm_main_config:
+    - ftm_config:
+      - clockSource: 'kFTM_SystemClock'
+      - clockSourceFreq: 'GetFreq'
+      - prescale: 'kFTM_Prescale_Divide_1'
+      - timerFrequency: '60000000'
+      - bdmMode: 'kFTM_BdmMode_3'
+      - pwmSyncMode: 'kFTM_SoftwareTrigger'
+      - reloadPoints: ''
+      - faultMode: 'kFTM_Fault_Disable'
+      - faultFilterValue: '0'
+      - deadTimePrescale: 'kFTM_Deadtime_Prescale_1'
+      - deadTimeValue: '0'
+      - extTriggers: ''
+      - chnlInitState: ''
+      - chnlPolarity: ''
+      - useGlobalTimeBase: 'false'
+    - timer_interrupts: ''
+    - enable_irq: 'true'
+    - ftm_interrupt:
+      - IRQn: 'FTM2_IRQn'
+      - enable_priority: 'false'
+      - enable_custom_name: 'false'
+    - EnableTimerInInit: 'true'
+  - ftm_edge_aligned_mode:
+    - ftm_edge_aligned_channels_config:
+      - 0:
+        - edge_aligned_mode: 'kFTM_InputCapture'
+        - input_capture:
+          - chnNumber: 'kFTM_Chnl_0'
+          - input_capture_edge: 'kFTM_RisingEdge'
+          - filterValue: '0'
+          - enable_chan_irq: 'true'
+      - 1:
+        - edge_aligned_mode: 'kFTM_InputCapture'
+        - input_capture:
+          - chnNumber: 'kFTM_Chnl_1'
+          - input_capture_edge: 'kFTM_RisingEdge'
+          - filterValue: '0'
+          - enable_chan_irq: 'true'
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
+/* clang-format on */
+const ftm_config_t FTM_2_Encoder_config = {
+  .prescale = kFTM_Prescale_Divide_1,
+  .bdmMode = kFTM_BdmMode_3,
+  .pwmSyncMode = kFTM_SoftwareTrigger,
+  .reloadPoints = 0,
+  .faultMode = kFTM_Fault_Disable,
+  .faultFilterValue = 0,
+  .deadTimePrescale = kFTM_Deadtime_Prescale_1,
+  .deadTimeValue = 0,
+  .extTriggers = 0,
+  .chnlInitState = 0,
+  .chnlPolarity = 0,
+  .useGlobalTimeBase = false
+};
+
+void FTM_2_Encoder_init(void) {
+  FTM_Init(FTM_2_ENCODER_PERIPHERAL, &FTM_2_Encoder_config);
+  FTM_SetupInputCapture(FTM_2_ENCODER_PERIPHERAL, kFTM_Chnl_0, kFTM_RisingEdge, 0);
+  FTM_SetupInputCapture(FTM_2_ENCODER_PERIPHERAL, kFTM_Chnl_1, kFTM_RisingEdge, 0);
+  FTM_SetTimerPeriod(FTM_2_ENCODER_PERIPHERAL, ((FTM_2_ENCODER_CLOCK_SOURCE/ (1U << (FTM_2_ENCODER_PERIPHERAL->SC & FTM_SC_PS_MASK))) / 60000000) + 1);
+  FTM_EnableInterrupts(FTM_2_ENCODER_PERIPHERAL, kFTM_Chnl0InterruptEnable | kFTM_Chnl1InterruptEnable);
+  /* Enable interrupt FTM2_IRQn request in the NVIC */
+  EnableIRQ(FTM_2_ENCODER_IRQN);
+  FTM_StartTimer(FTM_2_ENCODER_PERIPHERAL, kFTM_SystemClock);
+}
+
+/***********************************************************************************************************************
  * Initialization functions
  **********************************************************************************************************************/
 void BOARD_InitPeripherals(void)
 {
   /* Initialize components */
   FTM_1_Motor_PWM_init();
+  FTM_2_Encoder_init();
 }
 
 /***********************************************************************************************************************

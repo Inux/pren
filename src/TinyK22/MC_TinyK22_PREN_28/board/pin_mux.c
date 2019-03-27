@@ -107,6 +107,8 @@ BOARD_InitPins:
 - pin_list:
   - {pin_num: '45', peripheral: GPIOC, signal: 'GPIO, 2', pin_signal: ADC0_SE4b/CMP1_IN0/PTC2/SPI0_PCS2/UART1_CTS_b/FTM0_CH1/FB_AD12/I2S0_TX_FS/LPUART0_CTS_b, direction: OUTPUT,
     gpio_init_state: 'true'}
+  - {pin_num: '41', peripheral: FTM2, signal: 'CH, 0', pin_signal: PTB18/FTM2_CH0/I2S0_TX_BCLK/FB_AD15/FTM2_QD_PHA}
+  - {pin_num: '42', peripheral: FTM2, signal: 'CH, 1', pin_signal: PTB19/FTM2_CH1/I2S0_TX_FS/FB_OE_b/FTM2_QD_PHB}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -119,6 +121,8 @@ BOARD_InitPins:
  * END ****************************************************************************************************************/
 void BOARD_InitPins(void)
 {
+    /* Port B Clock Gate Control: Clock enabled */
+    CLOCK_EnableClock(kCLOCK_PortB);
     /* Port C Clock Gate Control: Clock enabled */
     CLOCK_EnableClock(kCLOCK_PortC);
 
@@ -129,8 +133,24 @@ void BOARD_InitPins(void)
     /* Initialize GPIO functionality on pin PTC2 (pin 45)  */
     GPIO_PinInit(BOARD_LED_BLUE_GPIO, BOARD_LED_BLUE_PIN, &LED_BLUE_config);
 
+    /* PORTB18 (pin 41) is configured as FTM2_CH0 */
+    PORT_SetPinMux(PORTB, 18U, kPORT_MuxAlt3);
+
+    /* PORTB19 (pin 42) is configured as FTM2_CH1 */
+    PORT_SetPinMux(PORTB, 19U, kPORT_MuxAlt3);
+
     /* PORTC2 (pin 45) is configured as PTC2 */
     PORT_SetPinMux(BOARD_LED_BLUE_PORT, BOARD_LED_BLUE_PIN, kPORT_MuxAsGpio);
+
+    SIM->SOPT4 = ((SIM->SOPT4 &
+                   /* Mask bits to zero which are setting */
+                   (~(SIM_SOPT4_FTM2CH0SRC_MASK | SIM_SOPT4_FTM2CH1SRC_MASK)))
+
+                  /* FTM2 channel 0 input capture source select: FTM2_CH0 signal. */
+                  | SIM_SOPT4_FTM2CH0SRC(SOPT4_FTM2CH0SRC_FTM)
+
+                  /* FTM2 channel 1 input capture source select: FTM2_CH1 signal. */
+                  | SIM_SOPT4_FTM2CH1SRC(SOPT4_FTM2CH1SRC_FTM));
 }
 
 /* clang-format off */

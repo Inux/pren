@@ -25,6 +25,9 @@ extern "C" {
  */
 void BOARD_InitBootPins(void);
 
+#define SOPT4_FTM2CH0SRC_FTM 0x00u /*!<@brief FTM2 channel 0 input capture source select: FTM2_CH0 signal */
+#define SOPT4_FTM2CH1SRC_FTM 0x00u /*!<@brief FTM2 channel 1 input capture source select: FTM2_CH1 signal */
+
 /*! @name PORTC2 (number 45), J24[8]
   @{ */
 #define BOARD_LED_BLUE_GPIO GPIOC /*!<@brief GPIO device name: GPIOC */
