@@ -11,6 +11,7 @@
 #include "pi.h"
 #include "McuUtility.h"
 #include "comAck.h"
+#include "comLog.h"
 
 static tframeLineHandler *head = NULL;
 
