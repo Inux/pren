@@ -7,12 +7,11 @@
 import time
 from datetime import timedelta
 import sys
-sys.path.append('..')
 
-from lib import base_app
-from lib import zmq_socket
-from lib import periodic_job
-from lib import heartbeat as hb
+from src.raspi.lib import base_app
+from src.raspi.lib import zmq_socket
+from src.raspi.lib import periodic_job
+from src.raspi.lib import heartbeat as hb
 
 socket = zmq_socket.make_socket()
 

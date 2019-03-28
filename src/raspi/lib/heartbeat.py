@@ -1,7 +1,6 @@
 import sys
-sys.path.append('..')
 
-from pb import heartbeat_pb2
+from src.raspi.pb import heartbeat_pb2
 
 STATUS_STARTING = "starting"
 STATUS_RUNNING = "running"

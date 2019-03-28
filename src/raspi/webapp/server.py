@@ -2,7 +2,6 @@
 """Server for the Raspi Webapp
 """
 import sys
-sys.path.append('..')
 import os
 import signal
 import time
@@ -11,9 +10,9 @@ from sanic import Sanic
 from sanic.response import json
 from sanic.response import file
 
-from acoustic import sound
-from lib import heartbeat
-import webapp.middlewareadapter as mwadapter
+from src.raspi.acoustic import sound
+from src.raspi.lib import heartbeat
+import src.raspi.webapp.middlewareadapter as mwadapter
 
 app = Sanic()
 app.name = "PrenTeam28WebApp"
