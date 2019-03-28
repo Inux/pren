@@ -17,6 +17,9 @@
 #include "McuUtility.h"
 #include "comAck.h"
 #include "comLog.h"
+#include "quad.h"
+#include "fsl_ftm.h"
+#include "peripherals.h"
 
 
 void testMotor_A()
@@ -90,12 +93,15 @@ void RunTestApp(void)
 {
   int i = 0;
   int j = 0;
+  int k = 0;
+  int l = 0;
 
   motor_A_init();
   //motor_A_SetPwm(15);
   McuWait_Init();
   pi_init();
   ack_init();
+  quad_Init();
 
   strncpy(test_ackh.topic, testTopic, sizeof(test_ackh.topic));
   test_ackh.timeoutHandler = TestAckTimeoutHandler;
@@ -107,22 +113,37 @@ void RunTestApp(void)
 
 
   while(1) {
-    McuWait_Waitms(100);
+    McuWait_Waitms(1);
     //testMotor_A();
-    piDoWork();
+
+    l++;
+    if (l > 100)
+    {
+      l = 0;
+      uint16_t speed = Encoder_A_GetAbsSpeed();
+      piWriteNum32s(IS_SPEED_TOPIC, speed, NULL);
+//      piWriteNum32s("Counter", FTM_GetCurrentTimerCount(FTM_2_ENCODER_PERIPHERAL), NULL);
+    }
+
+    k++;
+    if (k > 50)
+    {
+      k = 0;
+      piDoWork();
+    }
 
     i++;
-    if (i > 10)
+    if (i > 10*100)
     {
       i = 0;
       ackCheckQueue();
     }
 
     j++;
-    if (j > 30)
+    if (j > 30*100)
     {
       j = 0;
-      piWriteString(testTopic, "Test message please ack with 'ack,test'", &test_ackh);
+      //piWriteString(testTopic, "Test message please ack with 'ack,test'", &test_ackh);
     }
   }
 }

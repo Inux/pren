@@ -101,6 +101,18 @@ void Pi_Init_UARTPins(void);
 #define SOPT4_FTM2CH0SRC_FTM 0x00u /*!<@brief FTM2 channel 0 input capture source select: FTM2_CH0 signal */
 #define SOPT4_FTM2CH1SRC_FTM 0x00u /*!<@brief FTM2 channel 1 input capture source select: FTM2_CH1 signal */
 
+/*! @name PORTB18 (number 41), J1[12]
+  @{ */
+#define ENCODER_quad_S_PORT PORTB /*!<@brief PORT device name: PORTB */
+#define ENCODER_quad_S_PIN 18U    /*!<@brief PORTB pin index: 18 */
+                                  /* @} */
+
+/*! @name PORTB19 (number 42), J2[2]
+  @{ */
+#define ENCODER_quad_A_PORT PORTB /*!<@brief PORT device name: PORTB */
+#define ENCODER_quad_A_PIN 19U    /*!<@brief PORTB pin index: 19 */
+                                  /* @} */
+
 /*!
  * @brief Configures pin routing and optionally pin electrical features.
  *

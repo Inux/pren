@@ -76,7 +76,7 @@ void motor_A_SetPwm(int8_t value)
   motor_A_UpdatePwmDutyCycle(value);
 }
 
-tError motor_ACommandHandler(unsigned char *frameValue)
+tError motor_ACommandHandler(const unsigned char *frameValue)
 {
   int32_t val = 0;
   McuUtility_ScanDecimal32sNumber(&frameValue, &val);

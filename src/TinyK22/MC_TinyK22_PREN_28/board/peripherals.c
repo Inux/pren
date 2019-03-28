@@ -129,8 +129,8 @@ instance:
       - clockSource: 'kFTM_SystemClock'
       - clockSourceFreq: 'GetFreq'
       - prescale: 'kFTM_Prescale_Divide_1'
-      - timerFrequency: '60000000'
-      - bdmMode: 'kFTM_BdmMode_3'
+      - timerFrequency: '1'
+      - bdmMode: 'kFTM_BdmMode_0'
       - pwmSyncMode: 'kFTM_SoftwareTrigger'
       - reloadPoints: ''
       - faultMode: 'kFTM_Fault_Disable'
@@ -145,7 +145,8 @@ instance:
     - enable_irq: 'true'
     - ftm_interrupt:
       - IRQn: 'FTM2_IRQn'
-      - enable_priority: 'false'
+      - enable_priority: 'true'
+      - priority: '2'
       - enable_custom_name: 'false'
     - EnableTimerInInit: 'true'
   - ftm_edge_aligned_mode:
@@ -168,7 +169,7 @@ instance:
 /* clang-format on */
 const ftm_config_t FTM_2_Encoder_config = {
   .prescale = kFTM_Prescale_Divide_1,
-  .bdmMode = kFTM_BdmMode_3,
+  .bdmMode = kFTM_BdmMode_0,
   .pwmSyncMode = kFTM_SoftwareTrigger,
   .reloadPoints = 0,
   .faultMode = kFTM_Fault_Disable,
@@ -185,8 +186,10 @@ void FTM_2_Encoder_init(void) {
   FTM_Init(FTM_2_ENCODER_PERIPHERAL, &FTM_2_Encoder_config);
   FTM_SetupInputCapture(FTM_2_ENCODER_PERIPHERAL, kFTM_Chnl_0, kFTM_RisingEdge, 0);
   FTM_SetupInputCapture(FTM_2_ENCODER_PERIPHERAL, kFTM_Chnl_1, kFTM_RisingEdge, 0);
-  FTM_SetTimerPeriod(FTM_2_ENCODER_PERIPHERAL, ((FTM_2_ENCODER_CLOCK_SOURCE/ (1U << (FTM_2_ENCODER_PERIPHERAL->SC & FTM_SC_PS_MASK))) / 60000000) + 1);
+  FTM_SetTimerPeriod(FTM_2_ENCODER_PERIPHERAL, ((FTM_2_ENCODER_CLOCK_SOURCE/ (1U << (FTM_2_ENCODER_PERIPHERAL->SC & FTM_SC_PS_MASK))) / 1) + 1);
   FTM_EnableInterrupts(FTM_2_ENCODER_PERIPHERAL, kFTM_Chnl0InterruptEnable | kFTM_Chnl1InterruptEnable);
+  /* Interrupt vector FTM2_IRQn priority settings in the NVIC */
+  NVIC_SetPriority(FTM_2_ENCODER_IRQN, FTM_2_ENCODER_IRQ_PRIORITY);
   /* Enable interrupt FTM2_IRQn request in the NVIC */
   EnableIRQ(FTM_2_ENCODER_IRQN);
   FTM_StartTimer(FTM_2_ENCODER_PERIPHERAL, kFTM_SystemClock);
