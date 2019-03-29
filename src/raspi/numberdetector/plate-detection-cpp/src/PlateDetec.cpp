@@ -3,7 +3,7 @@
 
 
 PlateDetec::PlateDetec(void){
-   cap = VideoCapture(0);
+   cap = VideoCapture(-1);
 }
 
 void on_trckbar(int, void*){
@@ -17,11 +17,13 @@ void PlateDetec::setRPICameraSettings(void){
    cap.set(CAP_PROP_SATURATION,0.5);
 }
 
-void PlateDetec::enableWindow(void){
-   namedWindow(frameWindow,1);
-   createTrackbar("Thres",frameWindow,0,255,on_trckbar);
-   createTrackbar("hmax",frameWindow,0,255,on_trckbar);
-   createTrackbar("hmin",frameWindow,0,255,on_trckbar);
+void PlateDetec::enableWindow(std::string windowName, bool withTrackbar){
+   namedWindow(windowName,1);
+   if(withTrackbar) {
+       createTrackbar("Thres", windowName, 0, 255, on_trckbar);
+       createTrackbar("hmax", windowName, 0, 255, on_trckbar);
+       createTrackbar("hmin", windowName, 0, 255, on_trckbar);
+   }
 }
 
 Mat PlateDetec::applyFilters(Mat pic, double thresValue) {
@@ -30,35 +32,39 @@ Mat PlateDetec::applyFilters(Mat pic, double thresValue) {
     return pic;
 }
 
-Mat PlateDetec::FindandDrawcontours(Mat pic, Mat original){
+void PlateDetec::FindandDrawcontours(Mat sourceFrame, Mat drawFrame, int hmax, int hmin){
     std::vector<std::vector<Point>> contours;
     std::vector<Vec4i> hierarchy;
 
-    findContours(pic,contours,hierarchy,RETR_TREE,CHAIN_APPROX_SIMPLE,Point(0,0));
-    int hmax = getTrackbarPos("hmax",frameWindow);
-    int hmin = getTrackbarPos("hmin",frameWindow);
+    findContours(sourceFrame,contours,hierarchy,RETR_TREE,CHAIN_APPROX_SIMPLE,Point(0,0));
     for(int i = 0; i < hierarchy.size(); i++) {
         Rect rect = boundingRect(contours[i]);
         if((rect.height > hmin) && (rect.height < hmax)){
-            rectangle(original,rect,(0,255,0),2,LINE_8,0);
+            rectangle(drawFrame,rect,(0,255,0),2,LINE_8,0);
         }
     }
-
-
 }
 
 int PlateDetec::showImage(void){
    if(!cap.isOpened()) return -1;
+    enableWindow(WORKWINDOW,true);
+    enableWindow(THRESWINDOW, false);
+    Mat frame;
+    Mat original;
 
    for(;;){
-      Mat frame;
-      Mat original;
       cap >> frame;
       original = frame;
-      double i = (double) getTrackbarPos("Thres",frameWindow);
-      Mat filter = applyFilters(frame,i);
-      FindandDrawcontours(filter,original);
-      imshow(frameWindow,original);
+
+      double thres = (double) getTrackbarPos("Thres",WORKWINDOW);
+      int hmax = getTrackbarPos("hmax",WORKWINDOW);
+      int hmin = getTrackbarPos("hmin",WORKWINDOW);
+
+      Mat filter = applyFilters(frame,thres);
+
+      FindandDrawcontours(filter,original,hmax,hmin);
+      imshow(THRESWINDOW,filter);
+      imshow(WORKWINDOW,original);
       if(waitKey(30) >= 0) break;
    }
    return 0;

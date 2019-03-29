@@ -150,33 +150,6 @@ src/PlateDetec.cpp.s:
 	$(MAKE) -f CMakeFiles/Main.dir/build.make CMakeFiles/Main.dir/src/PlateDetec.cpp.s
 .PHONY : src/PlateDetec.cpp.s
 
-src/ZeroMQ.o: src/ZeroMQ.cpp.o
-
-.PHONY : src/ZeroMQ.o
-
-# target to build an object file
-src/ZeroMQ.cpp.o:
-	$(MAKE) -f CMakeFiles/Main.dir/build.make CMakeFiles/Main.dir/src/ZeroMQ.cpp.o
-.PHONY : src/ZeroMQ.cpp.o
-
-src/ZeroMQ.i: src/ZeroMQ.cpp.i
-
-.PHONY : src/ZeroMQ.i
-
-# target to preprocess a source file
-src/ZeroMQ.cpp.i:
-	$(MAKE) -f CMakeFiles/Main.dir/build.make CMakeFiles/Main.dir/src/ZeroMQ.cpp.i
-.PHONY : src/ZeroMQ.cpp.i
-
-src/ZeroMQ.s: src/ZeroMQ.cpp.s
-
-.PHONY : src/ZeroMQ.s
-
-# target to generate assembly for a file
-src/ZeroMQ.cpp.s:
-	$(MAKE) -f CMakeFiles/Main.dir/build.make CMakeFiles/Main.dir/src/ZeroMQ.cpp.s
-.PHONY : src/ZeroMQ.cpp.s
-
 src/main.o: src/main.cpp.o
 
 .PHONY : src/main.o
@@ -216,9 +189,6 @@ help:
 	@echo "... src/PlateDetec.o"
 	@echo "... src/PlateDetec.i"
 	@echo "... src/PlateDetec.s"
-	@echo "... src/ZeroMQ.o"
-	@echo "... src/ZeroMQ.i"
-	@echo "... src/ZeroMQ.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

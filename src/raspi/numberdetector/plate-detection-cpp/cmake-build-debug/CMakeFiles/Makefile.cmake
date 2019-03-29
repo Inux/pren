@@ -16,7 +16,6 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/opt/clion-2019.1/bin/cmake/linux/share/cmake-3.13/Modules/CMakeCommonLanguageInclude.cmake"
   "/opt/clion-2019.1/bin/cmake/linux/share/cmake-3.13/Modules/CMakeExtraGeneratorDetermineCompilerMacrosAndIncludeDirs.cmake"
   "/opt/clion-2019.1/bin/cmake/linux/share/cmake-3.13/Modules/CMakeFindCodeBlocks.cmake"
-  "/opt/clion-2019.1/bin/cmake/linux/share/cmake-3.13/Modules/CMakeFindDependencyMacro.cmake"
   "/opt/clion-2019.1/bin/cmake/linux/share/cmake-3.13/Modules/CMakeGenericSystem.cmake"
   "/opt/clion-2019.1/bin/cmake/linux/share/cmake-3.13/Modules/CMakeInitializeConfigs.cmake"
   "/opt/clion-2019.1/bin/cmake/linux/share/cmake-3.13/Modules/CMakeLanguageInformation.cmake"
@@ -38,13 +37,6 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/usr/local/lib/cmake/opencv4/OpenCVConfig.cmake"
   "/usr/local/lib/cmake/opencv4/OpenCVModules-release.cmake"
   "/usr/local/lib/cmake/opencv4/OpenCVModules.cmake"
-  "/usr/local/share/cmake/ZeroMQ/ZeroMQConfig.cmake"
-  "/usr/local/share/cmake/ZeroMQ/ZeroMQConfigVersion.cmake"
-  "/usr/local/share/cmake/ZeroMQ/ZeroMQTargets-release.cmake"
-  "/usr/local/share/cmake/ZeroMQ/ZeroMQTargets.cmake"
-  "/usr/local/share/cmake/cppzmq/cppzmqConfig.cmake"
-  "/usr/local/share/cmake/cppzmq/cppzmqConfigVersion.cmake"
-  "/usr/local/share/cmake/cppzmq/cppzmqTargets.cmake"
   )
 
 # The corresponding makefile is:

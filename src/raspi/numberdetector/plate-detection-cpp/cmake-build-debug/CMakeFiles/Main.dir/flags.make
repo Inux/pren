@@ -6,5 +6,5 @@ CXX_FLAGS = -g
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/patrick/Programming/pren/src/raspi/numberdetector/plate-detection-cpp/include -I/home/patrick/Programming/pren/src/raspi/numberdetector/plate-detection-cpp/lib/protobuf/pb -isystem /usr/local/include/opencv4 -isystem /usr/local/include 
+CXX_INCLUDES = -I/home/patrick/Programming/pren/src/raspi/numberdetector/plate-detection-cpp/include -isystem /usr/local/include/opencv4 
 

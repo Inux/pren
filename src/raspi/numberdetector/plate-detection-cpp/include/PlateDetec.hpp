@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <stdlib.h>
+#include <ctime>
 #include <opencv4/opencv2/opencv.hpp>
 #include <opencv4/opencv2/video.hpp>
 #include <opencv4/opencv2/imgproc.hpp>
@@ -15,18 +16,20 @@ class PlateDetec{
 
         void setRPICameraSettings(void);
 
-        void enableWindow(void);
+        void enableWindow(std::string windowName, bool withTrackbar);
 
         int showImage(void);
 
         Mat takePicture(void);
 
-        Mat FindandDrawcontours(Mat pic, Mat original);
+        void FindandDrawcontours(Mat sourceFrame, Mat drawFrame, int hmax, int hmin);
 
 
 
     private:
-        const std::string frameWindow = "FrameWindow";
+
+        const std::string THRESWINDOW       = "ThresWindow";
+        const std::string WORKWINDOW        = "Workwindow";
 
         VideoCapture cap;
 

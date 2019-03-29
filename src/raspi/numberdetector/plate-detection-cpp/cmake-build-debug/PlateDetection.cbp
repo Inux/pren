@@ -5,7 +5,7 @@
 		<Option title="PlateDetection"/>
 		<Option makefile_is_custom="1"/>
 		<Option compiler="gcc"/>
-		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\..\..\usr\;CMake Files\..\..\..\..\..\..\..\..\usr\local\;CMake Files\..\..\..\..\..\..\..\..\usr\local\lib\;CMake Files\..\..\..\..\..\..\..\..\usr\local\lib\cmake\;CMake Files\..\..\..\..\..\..\..\..\usr\local\lib\cmake\opencv4\;CMake Files\..\..\..\..\..\..\..\..\usr\local\share\;CMake Files\..\..\..\..\..\..\..\..\usr\local\share\cmake\;CMake Files\..\..\..\..\..\..\..\..\usr\local\share\cmake\cppzmq\;CMake Files\..\..\..\..\..\..\..\..\usr\local\share\cmake\ZeroMQ\;"/>
+		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\..\..\usr\;CMake Files\..\..\..\..\..\..\..\..\usr\local\;CMake Files\..\..\..\..\..\..\..\..\usr\local\lib\;CMake Files\..\..\..\..\..\..\..\..\usr\local\lib\cmake\;CMake Files\..\..\..\..\..\..\..\..\usr\local\lib\cmake\opencv4\;"/>
 		<Build>
 			<Target title="all">
 				<Option working_dir="/home/patrick/Programming/pren/src/raspi/numberdetector/plate-detection-cpp/cmake-build-debug"/>
@@ -35,13 +35,12 @@
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add directory="/home/patrick/Programming/pren/src/raspi/numberdetector/plate-detection-cpp/include"/>
-					<Add directory="/home/patrick/Programming/pren/src/raspi/numberdetector/plate-detection-cpp/lib/protobuf/pb"/>
 					<Add directory="/usr/local/include/opencv4"/>
-					<Add directory="/usr/local/include"/>
 					<Add directory="/usr/include/c++/8"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/c++/8"/>
 					<Add directory="/usr/include/c++/8/backward"/>
 					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/8/include"/>
+					<Add directory="/usr/local/include"/>
 					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/8/include-fixed"/>
 					<Add directory="/usr/include/x86_64-linux-gnu"/>
 					<Add directory="/usr/include"/>
@@ -61,13 +60,12 @@
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add directory="/home/patrick/Programming/pren/src/raspi/numberdetector/plate-detection-cpp/include"/>
-					<Add directory="/home/patrick/Programming/pren/src/raspi/numberdetector/plate-detection-cpp/lib/protobuf/pb"/>
 					<Add directory="/usr/local/include/opencv4"/>
-					<Add directory="/usr/local/include"/>
 					<Add directory="/usr/include/c++/8"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/c++/8"/>
 					<Add directory="/usr/include/c++/8/backward"/>
 					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/8/include"/>
+					<Add directory="/usr/local/include"/>
 					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/8/include-fixed"/>
 					<Add directory="/usr/include/x86_64-linux-gnu"/>
 					<Add directory="/usr/include"/>
@@ -93,12 +91,6 @@
 		<Unit filename="/home/patrick/Programming/pren/src/raspi/numberdetector/plate-detection-cpp/src/PlateDetec.cpp">
 			<Option target="Main"/>
 		</Unit>
-		<Unit filename="/home/patrick/Programming/pren/src/raspi/numberdetector/plate-detection-cpp/src/ZeroMQ.cpp">
-			<Option target="Main"/>
-		</Unit>
-		<Unit filename="/home/patrick/Programming/pren/src/raspi/numberdetector/plate-detection-cpp/src/ZeroMQ.h">
-			<Option target="Main"/>
-		</Unit>
 		<Unit filename="/home/patrick/Programming/pren/src/raspi/numberdetector/plate-detection-cpp/src/main.cpp">
 			<Option target="Main"/>
 		</Unit>
@@ -116,27 +108,6 @@
 		</Unit>
 		<Unit filename="/home/patrick/Programming/pren/src/raspi/numberdetector/plate-detection-cpp/../../../../../../../../usr/local/lib/cmake/opencv4/OpenCVModules.cmake">
 			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\..\usr\local\lib\cmake\opencv4\"/>
-		</Unit>
-		<Unit filename="/home/patrick/Programming/pren/src/raspi/numberdetector/plate-detection-cpp/../../../../../../../../usr/local/share/cmake/cppzmq/cppzmqConfig.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\..\usr\local\share\cmake\cppzmq\"/>
-		</Unit>
-		<Unit filename="/home/patrick/Programming/pren/src/raspi/numberdetector/plate-detection-cpp/../../../../../../../../usr/local/share/cmake/cppzmq/cppzmqConfigVersion.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\..\usr\local\share\cmake\cppzmq\"/>
-		</Unit>
-		<Unit filename="/home/patrick/Programming/pren/src/raspi/numberdetector/plate-detection-cpp/../../../../../../../../usr/local/share/cmake/cppzmq/cppzmqTargets.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\..\usr\local\share\cmake\cppzmq\"/>
-		</Unit>
-		<Unit filename="/home/patrick/Programming/pren/src/raspi/numberdetector/plate-detection-cpp/../../../../../../../../usr/local/share/cmake/ZeroMQ/ZeroMQConfig.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\..\usr\local\share\cmake\ZeroMQ\"/>
-		</Unit>
-		<Unit filename="/home/patrick/Programming/pren/src/raspi/numberdetector/plate-detection-cpp/../../../../../../../../usr/local/share/cmake/ZeroMQ/ZeroMQConfigVersion.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\..\usr\local\share\cmake\ZeroMQ\"/>
-		</Unit>
-		<Unit filename="/home/patrick/Programming/pren/src/raspi/numberdetector/plate-detection-cpp/../../../../../../../../usr/local/share/cmake/ZeroMQ/ZeroMQTargets-release.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\..\usr\local\share\cmake\ZeroMQ\"/>
-		</Unit>
-		<Unit filename="/home/patrick/Programming/pren/src/raspi/numberdetector/plate-detection-cpp/../../../../../../../../usr/local/share/cmake/ZeroMQ/ZeroMQTargets.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\..\usr\local\share\cmake\ZeroMQ\"/>
 		</Unit>
 	</Project>
 </CodeBlocks_project_file>

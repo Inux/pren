@@ -1,7 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/Main.dir/src/main.cpp.o"
   "CMakeFiles/Main.dir/src/PlateDetec.cpp.o"
-  "CMakeFiles/Main.dir/src/ZeroMQ.cpp.o"
   "Main.pdb"
   "Main"
 )
