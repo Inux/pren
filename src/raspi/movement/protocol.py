@@ -6,12 +6,16 @@ import time
 import serial
 
 from src.raspi.movement.messages import Message
+import src.raspi.lib.log as logger
 
 class Protocol():
     '''
     The protocol itself
     '''
     def __init__(self, device, baud):
+        self.log = logger.getLogger('SoulTrain.movement.protocol')
+        self.logTiny = logger.getLogger('SoulTrain.movement.tiny')
+
         self.device = device
         self.baud = baud
         self.conn = None
@@ -25,6 +29,11 @@ class Protocol():
             Message.CURRENT : self.__set_recv_current,
             Message.LOG : self.__set_recv_log
         }
+
+        #Internal values received from tiny
+        self.is_speed = None
+        self.cube = None
+        self.current = None
 
     def connect(self):
         '''
@@ -71,7 +80,7 @@ class Protocol():
             self.conn.write(str(message.value)+","+str(value)+"\n")
             self.ack_map[message.value] = time.time()
 
-    def receive_handler(self):
+    def rcv_handler(self):
         '''
         handles the received lines
         '''
@@ -85,20 +94,25 @@ class Protocol():
             l = line.split(',')
             msg = l[0]
             val = l[1]
+            self.recv_map[msg](val) #call specific recv handler
         except Exception as e:
-
+            self.log.error("Could not parse line: '%s'. Exception: %s", line, e)
 
     def __set_recv_speed(self, val):
-        pass
+        self.is_speed = int(val)
+        self.send_ack(Message.IS_SPEED.value)
 
     def __set_recv_cube(self, val):
-        pass
+        self.cube = int(val)
+        self.send_ack(Message.CUBE.value)
 
     def __set_recv_current(self, val):
-        pass
+        self.current = int(val)
+        self.send_ack(Message.CURRENT.value)
 
     def __set_recv_log(self, val):
-        pass
+        self.logTiny.info(val) #log tiny log messages
+        self.send_ack(Message.LOG.value)
 
     def __set_recv_ack(self, val):
         pass
