@@ -670,8 +670,8 @@
                         <struct name="ftm_config">
                            <setting name="clockSource" value="kFTM_SystemClock"/>
                            <setting name="clockSourceFreq" value="GetFreq"/>
-                           <setting name="prescale" value="kFTM_Prescale_Divide_1"/>
-                           <setting name="timerFrequency" value="1"/>
+                           <setting name="prescale" value="kFTM_Prescale_Divide_128"/>
+                           <setting name="timerFrequency" value="100"/>
                            <setting name="bdmMode" value="kFTM_BdmMode_0"/>
                            <set name="pwmSyncMode">
                               <selected>
@@ -697,7 +697,9 @@
                            <setting name="useGlobalTimeBase" value="false"/>
                         </struct>
                         <set name="timer_interrupts">
-                           <selected/>
+                           <selected>
+                              <id>kFTM_TimeOverflowInterruptEnable</id>
+                           </selected>
                         </set>
                         <setting name="enable_irq" value="true"/>
                         <struct name="ftm_interrupt">

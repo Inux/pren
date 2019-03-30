@@ -8,8 +8,9 @@
 #ifndef DRIVE_QUAD_H_
 #define DRIVE_QUAD_H_
 
+#include <stdint.h>
 
-void quad_Init(void);
+void Encoder_Init(void);
 uint16_t Encoder_A_GetAbsSpeed(void);
 
 #endif /* DRIVE_QUAD_H_ */

@@ -20,6 +20,8 @@
 #include "quad.h"
 #include "fsl_ftm.h"
 #include "peripherals.h"
+#include "drive.h"
+#include "driveCom.h"
 
 
 void testMotor_A()
@@ -95,13 +97,12 @@ void RunTestApp(void)
   int j = 0;
   int k = 0;
   int l = 0;
+  int m = 0;
 
-  motor_A_init();
-  //motor_A_SetPwm(15);
   McuWait_Init();
   pi_init();
   ack_init();
-  quad_Init();
+  driveInit();
 
   strncpy(test_ackh.topic, testTopic, sizeof(test_ackh.topic));
   test_ackh.timeoutHandler = TestAckTimeoutHandler;
@@ -111,18 +112,17 @@ void RunTestApp(void)
   piRegisterFrameLineHandler(&flh, testTopic, "Just someting to test", TestCommandHander, &test_ackh);
   piRegisterFrameLineHandler(&led_flh, ledTopic, "turn it on", LedCommandHander, &led_ackh);
 
+  LOG_INFO("TinyK22 PREN Team 18... ready");
 
   while(1) {
     McuWait_Waitms(1);
     //testMotor_A();
 
-    l++;
-    if (l > 100)
+    m++;
+    if (m > 25)
     {
-      l = 0;
-      uint16_t speed = Encoder_A_GetAbsSpeed();
-      piWriteNum32s(IS_SPEED_TOPIC, speed, NULL);
-//      piWriteNum32s("Counter", FTM_GetCurrentTimerCount(FTM_2_ENCODER_PERIPHERAL), NULL);
+      m = 0;
+      driveToWork();
     }
 
     k++;
@@ -133,7 +133,7 @@ void RunTestApp(void)
     }
 
     i++;
-    if (i > 10*100)
+    if (i > 50)
     {
       i = 0;
       ackCheckQueue();

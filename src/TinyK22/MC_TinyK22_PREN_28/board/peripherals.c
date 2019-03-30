@@ -128,8 +128,8 @@ instance:
     - ftm_config:
       - clockSource: 'kFTM_SystemClock'
       - clockSourceFreq: 'GetFreq'
-      - prescale: 'kFTM_Prescale_Divide_1'
-      - timerFrequency: '1'
+      - prescale: 'kFTM_Prescale_Divide_128'
+      - timerFrequency: '100'
       - bdmMode: 'kFTM_BdmMode_0'
       - pwmSyncMode: 'kFTM_SoftwareTrigger'
       - reloadPoints: ''
@@ -141,7 +141,7 @@ instance:
       - chnlInitState: ''
       - chnlPolarity: ''
       - useGlobalTimeBase: 'false'
-    - timer_interrupts: ''
+    - timer_interrupts: 'kFTM_TimeOverflowInterruptEnable'
     - enable_irq: 'true'
     - ftm_interrupt:
       - IRQn: 'FTM2_IRQn'
@@ -168,7 +168,7 @@ instance:
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
 const ftm_config_t FTM_2_Encoder_config = {
-  .prescale = kFTM_Prescale_Divide_1,
+  .prescale = kFTM_Prescale_Divide_128,
   .bdmMode = kFTM_BdmMode_0,
   .pwmSyncMode = kFTM_SoftwareTrigger,
   .reloadPoints = 0,
@@ -186,8 +186,8 @@ void FTM_2_Encoder_init(void) {
   FTM_Init(FTM_2_ENCODER_PERIPHERAL, &FTM_2_Encoder_config);
   FTM_SetupInputCapture(FTM_2_ENCODER_PERIPHERAL, kFTM_Chnl_0, kFTM_RisingEdge, 0);
   FTM_SetupInputCapture(FTM_2_ENCODER_PERIPHERAL, kFTM_Chnl_1, kFTM_RisingEdge, 0);
-  FTM_SetTimerPeriod(FTM_2_ENCODER_PERIPHERAL, ((FTM_2_ENCODER_CLOCK_SOURCE/ (1U << (FTM_2_ENCODER_PERIPHERAL->SC & FTM_SC_PS_MASK))) / 1) + 1);
-  FTM_EnableInterrupts(FTM_2_ENCODER_PERIPHERAL, kFTM_Chnl0InterruptEnable | kFTM_Chnl1InterruptEnable);
+  FTM_SetTimerPeriod(FTM_2_ENCODER_PERIPHERAL, ((FTM_2_ENCODER_CLOCK_SOURCE/ (1U << (FTM_2_ENCODER_PERIPHERAL->SC & FTM_SC_PS_MASK))) / 100) + 1);
+  FTM_EnableInterrupts(FTM_2_ENCODER_PERIPHERAL, kFTM_Chnl0InterruptEnable | kFTM_Chnl1InterruptEnable | kFTM_TimeOverflowInterruptEnable);
   /* Interrupt vector FTM2_IRQn priority settings in the NVIC */
   NVIC_SetPriority(FTM_2_ENCODER_IRQN, FTM_2_ENCODER_IRQ_PRIORITY);
   /* Enable interrupt FTM2_IRQn request in the NVIC */
