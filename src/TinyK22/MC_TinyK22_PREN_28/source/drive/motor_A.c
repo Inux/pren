@@ -30,14 +30,23 @@ tframeLineHandler motor_A_FrameHandler;
 
 static int8_t valueMot;
 
-static void motor_A_UpdatePwmDutyCycle(uint8_t percentage)
+static void motor_A_UpdatePwmDutyCycle(uint32_t value)
 {
-  if (percentage > 100)
+  if (value > MOTOR_MAX_VALUE)
   {
-    percentage = 100;
+    value = MOTOR_MAX_VALUE;
   }
 
-  FTM_UpdatePwmDutycycle(FTM_1_MOTOR_PWM_PERIPHERAL, 0, kFTM_EdgeAlignedPwm, percentage);
+  uint32_t mod = FTM_1_MOTOR_PWM_PERIPHERAL->MOD;
+  uint32_t cnv = (mod * value) / MOTOR_MAX_VALUE;
+  /* For 100% duty cycle */
+  if (cnv >= mod)
+  {
+      cnv = mod + 1;
+  }
+  FTM_1_MOTOR_PWM_PERIPHERAL->CONTROLS[0].CnV = cnv;
+
+//  FTM_UpdatePwmDutycycle(FTM_1_MOTOR_PWM_PERIPHERAL, 0, kFTM_EdgeAlignedPwm, value);
   FTM_SetSoftwareTrigger(FTM_1_MOTOR_PWM_PERIPHERAL, true);
 }
 
@@ -48,7 +57,7 @@ static void motor_A_UpdatePwmDutyCycle(uint8_t percentage)
  *   the value between -MOTOR_MAX_VALUE..0..+MOTOR_MAX_VALUE
  *   A value of '0' stops the wheel.
  */
-void motor_A_SetPwm(int8_t value)
+void motor_A_SetPwm(int32_t value)
 {
   if (value > MOTOR_MAX_VALUE) value = MOTOR_MAX_VALUE;
   if (value < -MOTOR_MAX_VALUE) value = -MOTOR_MAX_VALUE;
@@ -76,7 +85,7 @@ void motor_A_SetPwm(int8_t value)
   motor_A_UpdatePwmDutyCycle(value);
 }
 
-tError motor_ACommandHandler(unsigned char *frameValue)
+tError motor_ACommandHandler(const unsigned char *frameValue)
 {
   int32_t val = 0;
   McuUtility_ScanDecimal32sNumber(&frameValue, &val);

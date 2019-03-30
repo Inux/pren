@@ -39,8 +39,8 @@
                <pin_label pin_num="38" pin_signal="ADC0_SE13/PTB3/I2C0_SDA/UART0_CTS_b/FTM0_FLT0" label="J24[10]/U8[6]/ADC0_SE13/I2C0_SDA/AUD/ACCEL_I2C" identifier="ACCEL_SDA;AUDIO_SDA"/>
                <pin_label pin_num="39" pin_signal="PTB16/SPI1_SOUT/UART0_RX/FTM_CLKIN0/FB_AD17/EWM_IN" label="J1[6]/J8[G1]/SD_CARD_DETECT" identifier="SD_CARD_DETECT"/>
                <pin_label pin_num="40" pin_signal="PTB17/SPI1_SIN/UART0_TX/FTM_CLKIN1/FB_AD16/EWM_OUT_b" label="PUSH_BUTTON1" identifier="SW3"/>
-               <pin_label pin_num="41" pin_signal="PTB18/FTM2_CH0/I2S0_TX_BCLK/FB_AD15/FTM2_QD_PHA" label="J1[12]"/>
-               <pin_label pin_num="42" pin_signal="PTB19/FTM2_CH1/I2S0_TX_FS/FB_OE_b/FTM2_QD_PHB" label="J2[2]"/>
+               <pin_label pin_num="41" pin_signal="PTB18/FTM2_CH0/I2S0_TX_BCLK/FB_AD15/FTM2_QD_PHA" label="J1[12]" identifier="quad_S"/>
+               <pin_label pin_num="42" pin_signal="PTB19/FTM2_CH1/I2S0_TX_FS/FB_OE_b/FTM2_QD_PHB" label="J2[2]" identifier="quad_A"/>
                <pin_label pin_num="43" pin_signal="ADC0_SE14/PTC0/SPI0_PCS4/PDB0_EXTRG/USB_SOF_OUT/FB_AD14" label="J2[5]/U13[3]"/>
                <pin_label pin_num="44" pin_signal="ADC0_SE15/PTC1/LLWU_P6/SPI0_PCS3/UART1_RTS_b/FTM0_CH0/FB_AD13/I2S0_TXD0/LPUART0_RTS_b" label="J24[6]/LLWU_P6/ADC0_SE15/PUSH_BUTTON2" identifier="SW2"/>
                <pin_label pin_num="45" pin_signal="ADC0_SE4b/CMP1_IN0/PTC2/SPI0_PCS2/UART1_CTS_b/FTM0_CH1/FB_AD12/I2S0_TX_FS/LPUART0_CTS_b" label="J24[8]" identifier="LED_BLUE"/>
@@ -238,6 +238,44 @@
                <pins>
                   <pin peripheral="UART0" signal="RX" pin_num="23" pin_signal="PTA1/UART0_RX/FTM0_CH6/JTAG_TDI/EZP_DI"/>
                   <pin peripheral="UART0" signal="TX" pin_num="24" pin_signal="PTA2/UART0_TX/FTM0_CH7/JTAG_TDO/TRACE_SWO/EZP_DO"/>
+               </pins>
+            </function>
+            <function name="Encoder_InitPins">
+               <description>Configures pin routing and optionally pin electrical features.</description>
+               <options>
+                  <callFromInitBoot>false</callFromInitBoot>
+                  <prefix>ENCODER_</prefix>
+                  <coreID>core0</coreID>
+                  <enableClock>true</enableClock>
+               </options>
+               <dependencies>
+                  <dependency resourceType="Peripheral" resourceId="FTM2" description="Peripheral FTM2 is not initialized" problem_level="1" source="Pins:Encoder_InitPins">
+                     <feature name="initialized" evaluation="equal">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.common" description="Pins initialization requires the COMMON Driver in the project." problem_level="2" source="Pins:Encoder_InitPins">
+                     <feature name="enabled" evaluation="equal" configuration="core0">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.port" description="Pins initialization requires the PORT Driver in the project." problem_level="2" source="Pins:Encoder_InitPins">
+                     <feature name="enabled" evaluation="equal" configuration="core0">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+               </dependencies>
+               <pins>
+                  <pin peripheral="FTM2" signal="CH, 0" pin_num="41" pin_signal="PTB18/FTM2_CH0/I2S0_TX_BCLK/FB_AD15/FTM2_QD_PHA">
+                     <pin_features>
+                        <pin_feature name="direction" value="INPUT"/>
+                     </pin_features>
+                  </pin>
+                  <pin peripheral="FTM2" signal="CH, 1" pin_num="42" pin_signal="PTB19/FTM2_CH1/I2S0_TX_FS/FB_OE_b/FTM2_QD_PHB">
+                     <pin_features>
+                        <pin_feature name="direction" value="INPUT"/>
+                     </pin_features>
+                  </pin>
                </pins>
             </function>
          </functions_list>
@@ -554,6 +592,21 @@
                         <data type="Boolean">true</data>
                      </feature>
                   </dependency>
+                  <dependency resourceType="ClockOutput" resourceId="Bus_clock" description="Bus clock is inactive." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
+                     <feature name="frequency" evaluation="greaterThan">
+                        <data type="Frequency" unit="Hz">0</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="FTM2.tmr_ch.0" description="Signal CH0 of peripheral FTM2 is not routed" problem_level="1" source="Peripherals:BOARD_InitPeripherals">
+                     <feature name="routed" evaluation="equal">
+                        <data type="Boolean">true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="FTM2.tmr_ch.1" description="Signal CH1 of peripheral FTM2 is not routed" problem_level="1" source="Peripherals:BOARD_InitPeripherals">
+                     <feature name="routed" evaluation="equal">
+                        <data type="Boolean">true</data>
+                     </feature>
+                  </dependency>
                </dependencies>
                <instances>
                   <instance name="FTM_1_Motor_PWM" type="ftm" type_id="ftm_04a15ae4af2b404bf2ae403c3dbe98b3" mode="EdgeAligned" peripheral="FTM1" enabled="true">
@@ -607,6 +660,74 @@
                                  <setting name="level" value="kFTM_HighTrue"/>
                                  <setting name="dutyCyclePercent" value="0"/>
                                  <setting name="enable_chan_irq" value="false"/>
+                              </struct>
+                           </struct>
+                        </array>
+                     </config_set>
+                  </instance>
+                  <instance name="FTM_2_Encoder" type="ftm" type_id="ftm_04a15ae4af2b404bf2ae403c3dbe98b3" mode="EdgeAligned" peripheral="FTM2" enabled="true">
+                     <config_set name="ftm_main_config">
+                        <struct name="ftm_config">
+                           <setting name="clockSource" value="kFTM_SystemClock"/>
+                           <setting name="clockSourceFreq" value="GetFreq"/>
+                           <setting name="prescale" value="kFTM_Prescale_Divide_128"/>
+                           <setting name="timerFrequency" value="100"/>
+                           <setting name="bdmMode" value="kFTM_BdmMode_0"/>
+                           <set name="pwmSyncMode">
+                              <selected>
+                                 <id>kFTM_SoftwareTrigger</id>
+                              </selected>
+                           </set>
+                           <set name="reloadPoints">
+                              <selected/>
+                           </set>
+                           <setting name="faultMode" value="kFTM_Fault_Disable"/>
+                           <setting name="faultFilterValue" value="0"/>
+                           <setting name="deadTimePrescale" value="kFTM_Deadtime_Prescale_1"/>
+                           <setting name="deadTimeValue" value="0"/>
+                           <set name="extTriggers">
+                              <selected/>
+                           </set>
+                           <set name="chnlInitState">
+                              <selected/>
+                           </set>
+                           <set name="chnlPolarity">
+                              <selected/>
+                           </set>
+                           <setting name="useGlobalTimeBase" value="false"/>
+                        </struct>
+                        <set name="timer_interrupts">
+                           <selected>
+                              <id>kFTM_TimeOverflowInterruptEnable</id>
+                           </selected>
+                        </set>
+                        <setting name="enable_irq" value="true"/>
+                        <struct name="ftm_interrupt">
+                           <setting name="IRQn" value="FTM2_IRQn"/>
+                           <setting name="enable_priority" value="true"/>
+                           <setting name="priority" value="2"/>
+                           <setting name="enable_custom_name" value="false"/>
+                        </struct>
+                        <setting name="EnableTimerInInit" value="true"/>
+                     </config_set>
+                     <config_set name="ftm_edge_aligned_mode">
+                        <array name="ftm_edge_aligned_channels_config">
+                           <struct name="0">
+                              <setting name="edge_aligned_mode" value="kFTM_InputCapture"/>
+                              <struct name="input_capture">
+                                 <setting name="chnNumber" value="kFTM_Chnl_0"/>
+                                 <setting name="input_capture_edge" value="kFTM_RisingEdge"/>
+                                 <setting name="filterValue" value="0"/>
+                                 <setting name="enable_chan_irq" value="true"/>
+                              </struct>
+                           </struct>
+                           <struct name="1">
+                              <setting name="edge_aligned_mode" value="kFTM_InputCapture"/>
+                              <struct name="input_capture">
+                                 <setting name="chnNumber" value="kFTM_Chnl_1"/>
+                                 <setting name="input_capture_edge" value="kFTM_RisingEdge"/>
+                                 <setting name="filterValue" value="0"/>
+                                 <setting name="enable_chan_irq" value="true"/>
                               </struct>
                            </struct>
                         </array>

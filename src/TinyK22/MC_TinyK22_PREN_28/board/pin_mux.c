@@ -30,8 +30,8 @@ pin_labels:
 - {pin_num: '38', pin_signal: ADC0_SE13/PTB3/I2C0_SDA/UART0_CTS_b/FTM0_FLT0, label: 'J24[10]/U8[6]/ADC0_SE13/I2C0_SDA/AUD/ACCEL_I2C', identifier: ACCEL_SDA;AUDIO_SDA}
 - {pin_num: '39', pin_signal: PTB16/SPI1_SOUT/UART0_RX/FTM_CLKIN0/FB_AD17/EWM_IN, label: 'J1[6]/J8[G1]/SD_CARD_DETECT', identifier: SD_CARD_DETECT}
 - {pin_num: '40', pin_signal: PTB17/SPI1_SIN/UART0_TX/FTM_CLKIN1/FB_AD16/EWM_OUT_b, label: PUSH_BUTTON1, identifier: SW3}
-- {pin_num: '41', pin_signal: PTB18/FTM2_CH0/I2S0_TX_BCLK/FB_AD15/FTM2_QD_PHA, label: 'J1[12]'}
-- {pin_num: '42', pin_signal: PTB19/FTM2_CH1/I2S0_TX_FS/FB_OE_b/FTM2_QD_PHB, label: 'J2[2]'}
+- {pin_num: '41', pin_signal: PTB18/FTM2_CH0/I2S0_TX_BCLK/FB_AD15/FTM2_QD_PHA, label: 'J1[12]', identifier: quad_S}
+- {pin_num: '42', pin_signal: PTB19/FTM2_CH1/I2S0_TX_FS/FB_OE_b/FTM2_QD_PHB, label: 'J2[2]', identifier: quad_A}
 - {pin_num: '43', pin_signal: ADC0_SE14/PTC0/SPI0_PCS4/PDB0_EXTRG/USB_SOF_OUT/FB_AD14, label: 'J2[5]/U13[3]'}
 - {pin_num: '44', pin_signal: ADC0_SE15/PTC1/LLWU_P6/SPI0_PCS3/UART1_RTS_b/FTM0_CH0/FB_AD13/I2S0_TXD0/LPUART0_RTS_b, label: 'J24[6]/LLWU_P6/ADC0_SE15/PUSH_BUTTON2',
   identifier: SW2}
@@ -291,6 +291,46 @@ void Pi_Init_UARTPins(void)
 
                   /* UART 0 transmit data source select: UART0_TX pin. */
                   | SIM_SOPT5_UART0TXSRC(SOPT5_UART0TXSRC_UART_TX));
+}
+
+/* clang-format off */
+/*
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+Encoder_InitPins:
+- options: {callFromInitBoot: 'false', prefix: ENCODER_, coreID: core0, enableClock: 'true'}
+- pin_list:
+  - {pin_num: '41', peripheral: FTM2, signal: 'CH, 0', pin_signal: PTB18/FTM2_CH0/I2S0_TX_BCLK/FB_AD15/FTM2_QD_PHA, direction: INPUT}
+  - {pin_num: '42', peripheral: FTM2, signal: 'CH, 1', pin_signal: PTB19/FTM2_CH1/I2S0_TX_FS/FB_OE_b/FTM2_QD_PHB, direction: INPUT}
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
+ */
+/* clang-format on */
+
+/* FUNCTION ************************************************************************************************************
+ *
+ * Function Name : Encoder_InitPins
+ * Description   : Configures pin routing and optionally pin electrical features.
+ *
+ * END ****************************************************************************************************************/
+void Encoder_InitPins(void)
+{
+    /* Port B Clock Gate Control: Clock enabled */
+    CLOCK_EnableClock(kCLOCK_PortB);
+
+    /* PORTB18 (pin 41) is configured as FTM2_CH0 */
+    PORT_SetPinMux(ENCODER_quad_S_PORT, ENCODER_quad_S_PIN, kPORT_MuxAlt3);
+
+    /* PORTB19 (pin 42) is configured as FTM2_CH1 */
+    PORT_SetPinMux(ENCODER_quad_A_PORT, ENCODER_quad_A_PIN, kPORT_MuxAlt3);
+
+    SIM->SOPT4 = ((SIM->SOPT4 &
+                   /* Mask bits to zero which are setting */
+                   (~(SIM_SOPT4_FTM2CH0SRC_MASK | SIM_SOPT4_FTM2CH1SRC_MASK)))
+
+                  /* FTM2 channel 0 input capture source select: FTM2_CH0 signal. */
+                  | SIM_SOPT4_FTM2CH0SRC(SOPT4_FTM2CH0SRC_FTM)
+
+                  /* FTM2 channel 1 input capture source select: FTM2_CH1 signal. */
+                  | SIM_SOPT4_FTM2CH1SRC(SOPT4_FTM2CH1SRC_FTM));
 }
 /***********************************************************************************************************************
  * EOF

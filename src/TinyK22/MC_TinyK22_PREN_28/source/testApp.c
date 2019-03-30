@@ -17,6 +17,11 @@
 #include "McuUtility.h"
 #include "comAck.h"
 #include "comLog.h"
+#include "quad.h"
+#include "fsl_ftm.h"
+#include "peripherals.h"
+#include "drive.h"
+#include "driveCom.h"
 
 
 void testMotor_A()
@@ -90,12 +95,14 @@ void RunTestApp(void)
 {
   int i = 0;
   int j = 0;
+  int k = 0;
+  int l = 0;
+  int m = 0;
 
-  motor_A_init();
-  //motor_A_SetPwm(15);
   McuWait_Init();
   pi_init();
   ack_init();
+  driveInit();
 
   strncpy(test_ackh.topic, testTopic, sizeof(test_ackh.topic));
   test_ackh.timeoutHandler = TestAckTimeoutHandler;
@@ -105,24 +112,38 @@ void RunTestApp(void)
   piRegisterFrameLineHandler(&flh, testTopic, "Just someting to test", TestCommandHander, &test_ackh);
   piRegisterFrameLineHandler(&led_flh, ledTopic, "turn it on", LedCommandHander, &led_ackh);
 
+  LOG_INFO("TinyK22 PREN Team 18... ready");
 
   while(1) {
-    McuWait_Waitms(100);
+    McuWait_Waitms(1);
     //testMotor_A();
-    piDoWork();
+
+    m++;
+    if (m > 25)
+    {
+      m = 0;
+      driveToWork();
+    }
+
+    k++;
+    if (k > 50)
+    {
+      k = 0;
+      piDoWork();
+    }
 
     i++;
-    if (i > 10)
+    if (i > 50)
     {
       i = 0;
       ackCheckQueue();
     }
 
     j++;
-    if (j > 30)
+    if (j > 30*100)
     {
       j = 0;
-      piWriteString(testTopic, "Test message please ack with 'ack,test'", &test_ackh);
+      //piWriteString(testTopic, "Test message please ack with 'ack,test'", &test_ackh);
     }
   }
 }
