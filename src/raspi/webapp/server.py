@@ -5,7 +5,6 @@ import sys
 import os
 import signal
 import time
-
 from sanic import Sanic
 from sanic.response import json
 from sanic.response import file
@@ -16,11 +15,10 @@ import src.raspi.webapp.middlewareadapter as mwadapter
 
 app = Sanic()
 app.name = "PrenTeam28WebApp"
-app.static('/static', './static')
-app.static('/Resources/sanic.png', 'static/Resources/sanic.png', name='sanic_png')
-app.static('/Scripts/main.js', 'static/Scripts/main.js', name='main_js')
 
-MIDDLEWARE_SCAN_INTERVAL = 0.100 # 100ms
+app.static('/static', os.path.join(os.path.dirname(__file__), 'static'))
+
+MIDDLEWARE_SCAN_INTERVAL = 0.250 # 250ms
 
 middlewareData = None
 
@@ -50,7 +48,7 @@ async def api(request):
     global middlewareData
     ''' api returns the API JSON available under /api '''
     direction = 'undefined'
-    if middlewareData != None:
+    if middlewareData is not None:
         direction = middlewareData.direction
         #heartbeat = middlewareData.heartbeat
     return json({

@@ -49,6 +49,15 @@ class Protocol():
         if self.conn is not None:
             self.conn.close()
 
+    def get_speed(self):
+        return self.is_speed
+
+    def get_cube(self):
+        return self.cube
+
+    def get_current(self):
+        return self.current
+
     def send_speed(self, speed):
         '''
         write speed to tiny (mm/s)
