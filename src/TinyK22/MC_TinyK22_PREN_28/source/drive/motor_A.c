@@ -102,7 +102,7 @@ tError motor_ACommandHandler(const unsigned char *frameValue)
   motor_A_SetPwm(val);
 }
 
-void motor_A_init()
+void motor_A_Init()
 {
   Motor_A_InitPins();
   GPIO_PortClear(MOTOR_A_PIN_FORWARD_GPIO, 1<<MOTOR_A_PIN_FORWARD_PIN);

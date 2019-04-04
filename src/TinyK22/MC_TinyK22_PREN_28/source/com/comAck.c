@@ -130,7 +130,7 @@ tError AckFrameHandler(const unsigned char *topic)
  * Initializes the ack manager
  * registers itselfe at the pi-framhandler
  */
-void ack_init(void)
+void ack_Init(void)
 {
   piRegisterFrameLineHandler(&ack_flh, ACK_TOPIC, "handles ack messages", AckFrameHandler, NULL);
 }

@@ -18,6 +18,6 @@
 
 void motor_A_SetPwm(int32_t value);
 
-void motor_A_init(void);
+void motor_A_Init(void);
 
 #endif /* DRIVE_MOTOR_A_H_ */

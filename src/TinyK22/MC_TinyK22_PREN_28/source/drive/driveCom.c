@@ -17,7 +17,8 @@
 static tframeLineHandler flh;
 static tframeLineHandler flh_ki;
 static tframeLineHandler flh_kp;
-static tAckHandler ackH;
+static tAckHandler isSpeedAckH;
+static tAckHandler setSpeedAckH;
 
 tError driveHandleKpFrame(const unsigned char *frameValue)
 {
@@ -60,7 +61,7 @@ tError driveHandleSpeedFrame(const unsigned char *frameValue)
   if (error == ERR_OK)
   {
     driveSetSpeed(speed);
-    ackSend(&ackH);
+    ackSend(&setSpeedAckH);
   }
   else
   {
@@ -73,16 +74,39 @@ tError driveHandleSpeedFrame(const unsigned char *frameValue)
 
 void driveSendSpeedUpdate(int32_t isSpeed)
 {
-  // todo make sure direction is in there
-  piWriteNum32s(IS_SPEED_TOPIC, isSpeed, NULL); //todo add ack for this
+  piWriteNum32s(IS_SPEED_TOPIC, isSpeed, &isSpeedAckH);
+}
+
+void driveComAckTimeoutHandler(void)
+{
+ if (isSpeedAckH.nbrOfRetries < 10)
+ {
+   //It'll be alright, just be patient
+   isSpeedAckH.nbrOfRetries++;
+ }
+ else
+ {
+   driveSetSpeed(0);
+   LOG_CRITICAL("no speed ack afer 500ms. stop the train");
+   //todo maybe set nbrOfRetries to zero to reduce panic
+   //todo maybe reset only in test mode
+   isSpeedAckH.nbrOfRetries=0;
+
+ }
 }
 
 void driveCom_Init()
 {
-  strncpy(ackH.topic, SPEED_TOPIC, sizeof(ackH.topic));
-  ackH.timeoutHandler = NULL;
-  piRegisterFrameLineHandler(&flh, SPEED_TOPIC, "sets the speed", driveHandleSpeedFrame, &ackH);
+  strncpy(setSpeedAckH.topic, SPEED_TOPIC, sizeof(setSpeedAckH.topic));
+  isSpeedAckH.timeoutHandler = NULL;
+  piRegisterFrameLineHandler(&flh, SPEED_TOPIC, "sets the speed", driveHandleSpeedFrame, &setSpeedAckH);
 
+  strncpy(isSpeedAckH.topic, IS_SPEED_TOPIC, sizeof(isSpeedAckH.topic));
+  isSpeedAckH.timeoutHandler = driveComAckTimeoutHandler;
+  ackRegisterHandler(&isSpeedAckH);
+
+#if TEST
   piRegisterFrameLineHandler(&flh_kp, "kp", "sets the kp", driveHandleKpFrame, NULL);
   piRegisterFrameLineHandler(&flh_ki, "ki", "sets the ki", driveHandleKiFrame, NULL);
+#endif
 }

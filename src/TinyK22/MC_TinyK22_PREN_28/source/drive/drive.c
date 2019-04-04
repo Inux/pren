@@ -9,13 +9,12 @@
 #include "quad.h"
 #include "motor_A.h"
 #include "driveCom.h"
+#include "app.h"
 
 static int32_t targetSpeed;
 static int8_t targetDir = 1;
 static uint8_t kp, ki, kd;
 static int32_t val;
-
-#define DELAT_T             25
 
 /**
  * Sets the speed
@@ -73,13 +72,13 @@ void driveToWork(void)
 
   if (targetSpeed > setSpeed)
   {                                        // accelerate
-    setSpeed += DELAT_T;
+    setSpeed += DELTA_T_MS;
     if (targetSpeed < setSpeed)
       setSpeed = targetSpeed;
   }
   if (targetSpeed < setSpeed)
   {                                        // decelerate
-    setSpeed -= DELAT_T;
+    setSpeed -= DELTA_T_MS;
     if (targetSpeed > setSpeed)
       setSpeed = targetSpeed;
   }
@@ -130,7 +129,9 @@ void driveToWork(void)
 
   motor_A_SetPwm(val);
 
+#if TEST
   piWriteNum32s("motorSetValue", val, NULL); //todo clean
+#endif
 
   static int updateCounter = 0;
   updateCounter++;
@@ -143,15 +144,17 @@ void driveToWork(void)
 /**
  * Initializes the drive components
  */
-void driveInit(void)
+void drive_Init(void)
 {
   kp = 22;
   ki = 5;
   kd = 0;
   targetSpeed = 0;
 
-  motor_A_init();
-  Encoder_Init();
+  motor_A_Init();
+  encoder_Init();
   driveCom_Init();
+
+  driveSetSpeed(0);
 }
 

@@ -10,6 +10,9 @@
 
 #include <stdint.h>
 
+
+#define DELTA_T_MS             25
+
 void driveToWork(void);
 
 void driveSetSpeed(int32_t speed);
@@ -17,7 +20,7 @@ void driveSetSpeed(int32_t speed);
 void driveSetKp(uint8_t KpR);
 void driveSetKi(uint8_t KiR);
 
-void driveInit(void);
+void drive_Init(void);
 
 
 

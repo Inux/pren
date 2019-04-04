@@ -25,7 +25,7 @@ typedef struct ackHandler
   struct ackHandler *next;
 } tAckHandler;
 
-void ack_init(void);
+void ack_Init(void);
 
 void ackCheckQueue(void);
 

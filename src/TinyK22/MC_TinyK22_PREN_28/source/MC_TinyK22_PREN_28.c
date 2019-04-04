@@ -49,7 +49,6 @@
 #include "motor_A.h"
 
 /* TODO: insert other definitions and declarations here. */
-#define TEST 1
 
 
 /*

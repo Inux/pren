@@ -10,7 +10,7 @@
 
 #include <stdint.h>
 
-void Encoder_Init(void);
+void encoder_Init(void);
 uint16_t Encoder_A_GetAbsSpeed(void);
 
 #endif /* DRIVE_QUAD_H_ */

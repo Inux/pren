@@ -117,7 +117,7 @@ void FTM_2_ENCODER_IRQHANDLER(void)
 /**
  * Initializes the Encoder module
  */
-void Encoder_Init(void)
+void encoder_Init(void)
 {
   Encoder_InitPins();
 

@@ -100,9 +100,9 @@ void RunTestApp(void)
   int m = 0;
 
   McuWait_Init();
-  pi_init();
-  ack_init();
-  driveInit();
+  pi_Init();
+  ack_Init();
+  drive_Init();
 
   strncpy(test_ackh.topic, testTopic, sizeof(test_ackh.topic));
   test_ackh.timeoutHandler = TestAckTimeoutHandler;
@@ -112,7 +112,7 @@ void RunTestApp(void)
   piRegisterFrameLineHandler(&flh, testTopic, "Just someting to test", TestCommandHander, &test_ackh);
   piRegisterFrameLineHandler(&led_flh, ledTopic, "turn it on", LedCommandHander, &led_ackh);
 
-  LOG_INFO("TinyK22 PREN Team 18... ready");
+  LOG_INFO("TinyK22 PREN Team 28... ready in TEST Mode");
 
   while(1) {
     McuWait_Waitms(1);
