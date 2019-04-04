@@ -1,51 +1,77 @@
-#startButton{
+#startButton {
     width: 100px;
     height: 200px;
     float: left;
 }
 
-.stateButton{
+.stateButton {
     border-width: medium;
 }
 
-.componentDiv{
+.componentDiv {
     width: 150px;
     height: 100px;
-    border: 2px black solid ;
+    border: 2px black solid;
     background-color: lightgrey;
     margin: 10px 10px;
     float: left;
     text-align: center;
 }
 
-.starting{
-    border-color: #00008b ;
-    background-color: #7373ff ;
+.starting {
+    border-color: #00008b;
+    background-color: #7373ff;
 }
 
-.running{
+.running {
     border-color: black;
     background-color: lightgrey;
 }
 
-.error{
+.error {
     border-color: red;
     background-color: lightcoral;
 }
 
-.finished{
+.finished {
     border-color: green;
     background-color: lightgreen;
 }
 
-.disabled{
+.disabled {
     border-color: grey;
     background-color: white;
     color: grey;
 }
 
-.selected{
-    -webkit-box-shadow: 0px 0px 21px 1px rgba(0,0,0,0.61);
-    -moz-box-shadow: 0px 0px 21px 1px rgba(0,0,0,0.61);
-    box-shadow: 0px 0px 21px 1px rgba(0,0,0,0.61);
+.selected {
+    -webkit-box-shadow: 0px 0px 21px 1px rgba(0, 0, 0, 0.61);
+    -moz-box-shadow: 0px 0px 21px 1px rgba(0, 0, 0, 0.61);
+    box-shadow: 0px 0px 21px 1px rgba(0, 0, 0, 0.61);
+}
+
+dl {
+    width: 100%;
+    overflow: hidden;
+    background: #eee;
+    padding: 0;
+    margin: 0;
+}
+
+dt {
+    float: left;
+    width: 50%;
+    /* adjust the width; make sure the total of both is 100% */
+    background: #eee;
+    padding: 0;
+    margin: 0;
+}
+
+dd {
+    float: left;
+    width: 50%;
+    /* adjust the width; make sure the total of both is 100% */
+    background: #eee;
+    padding: 0;
+    margin: 0;
 }

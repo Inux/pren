@@ -1,91 +1,102 @@
 //Variables & Constants
-            var updateInterval = 500 // 500ms
-            var isSimulating = false;
-            var simulationIntervalID;
+var updateInterval = 500; // 500ms
+var isSimulating = false;
+var simulationIntervalID;
 
-            //set values to initial value
-            document.getElementById("direction").innerText = "undefined";
-
-            //Helpers
-            function apiGet(callback) {
-                var xmlhttp = new XMLHttpRequest();
-                xmlhttp.onreadystatechange = function() {
-                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                        console.log('responseText:' + xmlhttp.responseText);
-                        try {
-                            var data = JSON.parse(xmlhttp.responseText);
-                        } catch(err) {
-                            console.log(err.message + " in " + xmlhttp.responseText);
-                            return;
-                        }
-                        callback(data);
-                    }
-                };
-                xmlhttp.open("GET", '/api', true);
-                xmlhttp.send();
+//Helper for API get method
+function apiGet(callback) {
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            try {
+                var data = JSON.parse(xmlhttp.responseText);
+            } catch (err) {
+                console.log(err.message + " in " + xmlhttp.responseText);
+                return;
             }
+            callback(data);
+        }
+    };
+    xmlhttp.open("GET", '/api', true);
+    xmlhttp.send();
+}
 
-            // UI
+// UI
 
-            //updateUI method (called by setInterval each 500ms)
-            function updateUI(data) {
-                console.log("Received Data:");
-                console.log(data);
-                updateDirection(data.direction);
-            }
+//updateUI method (called by setInterval each 500ms)
+function updateUI(data) {
+    console.log("Received Data:");
+    console.log(data);
 
-            function updateDirection(direction) {
-                document.getElementById("direction").innerText = direction;
-            }
+    updateSoulTrainData(data);
+    updateHeartBeats(data);
+}
 
-            //Plays the number pressed as sound (e.g. for #1 it plays "Number one") wow
-            function playSound(sound_nr){
-                xmlhttp = new XMLHttpRequest()
-                xmlhttp.open('GET', '/sound/' + sound_nr, true)
-                xmlhttp.send()
-                alert("playing Sound #1")
-            }
+function updateSoulTrainData(data) {
+    document.getElementById("state").innerText = data.state;
+    document.getElementById("stateMessage").innerText = data.stateMessage;
+    document.getElementById("speed").innerText = data.speed;
+    document.getElementById("position").innerText = data.position;
+    document.getElementById("xAcceleration").innerText = data.xAcceleration;
+    document.getElementById("yAcceleration").innerText = data.yAcceleration;
+    document.getElementById("zAcceleration").innerText = data.zAcceleration;
+    document.getElementById("direction").innerText = data.direction;
+}
 
-            //Starts/stops simulation mode. Constantly updates movement values during simulation
-            function start() {
+function updateHeartBeats(data) {
+    lineDetectionDiv = document.getElementById("lineDetectionDiv");
+    numberDetectionDiv = document.getElementById("numberDetectionDiv");
+    movementDiv = document.getElementById("movementDiv");
+    acousticDiv = document.getElementById("acousticDiv");
+    controlFlowDiv = document.getElementById("controlflowDiv");
 
-                if(!isSimulating){
-                    $("#Simulate").html('Stop');
-                    movementSet();
-                    simulationIntervalID = setInterval(movementGet, updateInterval, updateMovement);
-                    isSimulating = true;
-                } else {
-                    $("#Simulate").html('Start');
-                    clearInterval(simulationIntervalID);
-                    isSimulating = false;
-                }
-            }
+    elements = [lineDetectionDiv, numberDetectionDiv, movementDiv, acousticDiv, controlFlowDiv];
 
-            // gets movement values (Acceleration, Speed, Distance) in a 500ms interval
-            function movementGet(callback){
-                var xhr = new XMLHttpRequest();
-                var url = "/simulation/get";
-                xhr.open("GET", url, true);
-                xhr.setRequestHeader("Content-Type", "application/json");
+    elements.forEach((item, index) => {
+        if(item == null) {
+            console.warn("Item " + index + " is null! cannot remove classes!")
+        } else {
+            item.classList.remove("starting", "running", "error", "finished");
+        }
+    });
 
-                xhr.onreadystatechange = function(){
-                    if (xhr.readyState === 4 && xhr.status === 200) {
-                        var json = JSON.parse(xhr.responseText);
-                        console.log(json.acc + json.speed + json.distance );
-                        callback(json);
-                    }
-                }
+    lineDetectionDiv.classList.add(data.heartBeatLineDetection);
+    numberDetectionDiv.classList.add(data.heartBeatNumberDetection);
+    movementDiv.classList.add(data.heartBeatMovement);
+    acousticDiv.classList.add(data.heartBeatAcoustic);
+    controlFlowDiv.classList.add(data.heartBeatControlFlow);
+}
 
-                xhr.send();
+//callback of movementGet, sets the movement values
+function updateMovement(json) {
+    $('#Acceleration').val(json.acceleration);
+    $('#Speed').val(json.speed);
+    $('#Distance').val(json.distance);
+};
 
-            }
+//Plays the number pressed as sound (e.g. for #1 it plays "Number one") wow
+function playSound(sound_nr) {
+    xmlhttp = new XMLHttpRequest()
+    xmlhttp.open('GET', '/sound/' + sound_nr, true)
+    xmlhttp.send()
+    alert("playing Sound #1")
+}
 
-            //callback of movementGet, sets the movement values
-            function updateMovement(json) {
-                $('#Acceleration').val(json.acc);
-                $('#Speed').val(json.speed);
-                $('#Distance').val(json.distance);
-            };
+//Starts/stops simulation mode. Constantly updates movement values during simulation
+function start() {
 
-            //setInterval(apiGet, updateInterval, updateUI);
-            setInterval(apiGet, updateInterval, )
+    if (!isSimulating) {
+        $("#Simulate").html('Stop');
+        movementSet();
+        simulationIntervalID = setInterval(movementGet, updateInterval, updateMovement);
+        isSimulating = true;
+    } else {
+        $("#Simulate").html('Start');
+        clearInterval(simulationIntervalID);
+        isSimulating = false;
+    }
+}
+
+setInterval(function(){
+    apiGet(updateUI);
+}, updateInterval);

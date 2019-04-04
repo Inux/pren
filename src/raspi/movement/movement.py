@@ -15,7 +15,7 @@ from src.raspi.lib import periodic_job
 from src.raspi.lib import heartbeat as hb
 from src.raspi.movement import protocol
 
-socket = zmq_socket.make_socket()
+socket = zmq_socket.get_movement_sender()
 
 def send_hb():
     hb.send_heartbeat(socket, hb.COMPONENT_MOVEMENT, hb.STATUS_RUNNING)
