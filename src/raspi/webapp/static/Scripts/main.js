@@ -1,9 +1,52 @@
 //Variables & Constants
 var updateInterval = 250; // 250ms
-var isSimulating = false;
+var isSimulating = true;
 var simulationIntervalID;
 
-//Plays the number pressed as sound (e.g. for #1 it plays "Number one") wow
+/* Main functions ----------------------------- */
+
+// Initialization
+function init() {
+    if (isSimulating) {
+        enableSimulation();
+    } else {
+        enableControlFlow();
+    }
+}
+
+// Enable simulation mode, disable controlflow
+function enableSimulation() {
+    var state = document.getElementById('webAppState');
+    state.innerHTML = "Simulating"
+
+    var controlFlow = document.getElementById('controlFlow');
+    controlFlow.style.display = 'none';
+
+    var simulation = document.getElementById('simulation');
+    simulation.style.display = 'block';
+}
+
+// Enable controlflow, disable simulation mode
+function enableControlFlow() {
+    var state = document.getElementById('webAppState');
+    state.innerHTML = "ControlFlow"
+
+    var simulation = document.getElementById('simulation');
+    simulation.style.display = 'none';
+
+    var controlFlow = document.getElementById('controlFlow');
+    controlFlow.style.display = 'block';
+}
+
+// start ControlFlow
+function startControlFlow() {
+
+}
+
+
+/* Simulation commands ------------------------ */
+
+// Plays the number pressed as sound (e.g. for #1 it plays "Number one") wow
 function playSound(sound_nr) {
     xmlhttp = new XMLHttpRequest()
     xmlhttp.open('GET', '/sound/' + sound_nr, true)
@@ -11,7 +54,22 @@ function playSound(sound_nr) {
     alert("playing Sound #1")
 }
 
-// start ControlFlow
-function start() {
+/* Events ------------------------------------- */
 
-}
+simMode = document.getElementById('simMode');
+simMode.addEventListener('change', e => {
+    e.preventDefault();
+
+    if (e.target.checked) {
+        isSimulating = true;
+    } else {
+        isSimulating = false;
+    }
+
+    init();
+});
+
+/* Start Main Flow ---------------------------- */
+
+// Call init the first time
+init();
