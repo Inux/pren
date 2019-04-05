@@ -1,7 +1,7 @@
 #Deploy
 #
-IP="10.3.141.1" #IP Raspi in RaspiTeam28 Wlan
-PWD="raspberry"
+IP="team28master" #IP Raspi in RaspiTeam28 Wlan
+PWD='team28team$$'
 
 #delete files/folders on raspi
 sshpass -p $PWD ssh pi@$IP 'rm -rf ~/team28/acoustic'

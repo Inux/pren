@@ -1,21 +1,48 @@
-#startButton {
+/* General Styling */
+
+.fullWidthDiv {
+    position: relative;
+    margin-left: 15px;
+    width: calc(100% - 15px);
+    height: auto;
+}
+
+h4 {
+    margin-left: 10px;
+}
+
+h5 {
+    margin-left: 15px;
+}
+
+/* --------------- */
+
+/* Start Button */
+
+.startButton {
     width: 100px;
-    height: 200px;
+    height: 100px;
     float: left;
 }
+
+/* ------------ */
+
+/* Heartbeat and State Handling */
 
 .stateButton {
     border-width: medium;
+    margin-right: 10px;
 }
 
 .componentDiv {
-    width: 150px;
-    height: 100px;
+    width: 18%;
+    height: 50px;
     border: 2px black solid;
     background-color: lightgrey;
-    margin: 10px 10px;
-    float: left;
+    margin-top: 10px;
+    margin-right: 10px;
     text-align: center;
+    display: inline-block;
 }
 
 .starting {
@@ -49,6 +76,9 @@
     -moz-box-shadow: 0px 0px 21px 1px rgba(0, 0, 0, 0.61);
     box-shadow: 0px 0px 21px 1px rgba(0, 0, 0, 0.61);
 }
+/* ---------------------------- */
+
+/* SoulTrain Data */
 
 dl {
     width: 100%;
@@ -75,3 +105,5 @@ dd {
     padding: 0;
     margin: 0;
 }
+
+/* -------------- */
