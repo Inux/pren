@@ -1,79 +1,54 @@
 #!/usr/bin/env python
 
 import logging
-import sys
-sys.path.append('..')
 import os
 import select
-
 import zmq
 
-from pb import direction_pb2
-from pb import heartbeat_pb2
+from src.raspi.lib import zmq_socket
+from src.raspi.pb import direction_pb2
+from src.raspi.pb import heartbeat_pb2
 
-
-PUBLISHER_IP = 'localhost'
-PORT = 8282
-
-#Topics
+# Topics
 DIRECTION_TOPIC = b'direction'
+HEARTBEAT_TOPIC = b'heartbeat'
 
-socket = None
+# Sockets
+reader_linedetector = zmq_socket.get_linedetector_reader()
 
-#Data Fields
-dataDirection = ''
+data = {}
+data['direction'] = "undefined"
+data['state'] = "undefined"
+data['state_message'] = "undefined"
+data['speed'] = 0
+data['position'] = 0
+data['x_acceleration'] = 0
+data['y_acceleration'] = 0
+data['z_acceleration'] = 0
+data['direction'] = 'undefined'
+data['heartbeat_linedetection'] = 'error'
+data['heartbeat_numberdetection'] = 'error'
+data['heartbeat_movement'] = 'error'
+data['heartbeat_acoustic'] = 'error'
+data['heartbeat_controlflow'] = 'error'
 
-class Data(object):
-    pass
-
-def create():
-    global socket
-    socket = _make_socket()
-
-def destroy():
-    global socket
-    socket.close()
-
+# Data Fields
 def get_data():
-    global socket
-    global dataDirection
-    global dataHeartbeat
+    global data
 
-    dataobj = Data()
-
-    if socket.poll(timeout=1, flags=zmq.POLLIN) & zmq.POLLIN == zmq.POLLIN:
-        topic_and_data = socket.recv()
-        print(topic_and_data)
+    if reader_linedetector.poll(timeout=1, flags=zmq.POLLIN) & zmq.POLLIN == zmq.POLLIN:
+        topic_and_data = reader_linedetector.recv()
         dataraw = topic_and_data.split(b' ', 1)[1]
 
-        direction = direction_pb2.Direction()
-        direction.ParseFromString(dataraw)
+        dir_obj = direction_pb2.Direction()
+        dir_obj.ParseFromString(dataraw)
 
-        dataDirection = direction
+        data['direction'] = dir_obj.direction
 
         #heartbeat = heartbeat_pb2.Heartbeat()
         #heartbeat.component .ParseFromString(dataraw)
 
         #dataHeartbeat = heartbeat
 
-    #set Data object
-    dataobj.direction = dataDirection
-    #dataobj.heartbeat = dataHeartbeat
 
-    return dataobj
-
-#private methods
-
-def _make_socket():
-    context = zmq.Context()
-
-    socket = context.socket(zmq.SUB)
-
-    _connect_and_subscribe_socket(socket)
-
-    return socket
-
-def _connect_and_subscribe_socket(socket):
-    socket.connect("tcp://{ip}:{port}".format(ip=PUBLISHER_IP, port=PORT))
-
-    socket.setsockopt(zmq.SUBSCRIBE, DIRECTION_TOPIC)
+    return data

@@ -2,17 +2,17 @@
 """Fake Acceleration
 """
 import time
-import sys
-sys.path.append('../..')
 
 import zmq
-import zmq.auth
-from pb import direction_pb2
+from src.raspi.pb import direction_pb2
 
 PORT = 8282
 DIRECTION_TOPIC = b'direction'
 
 movement = {}
+
+OFFSET = 0
+DIRECTIONS = ['right', 'left', 'straight']
 
 def _main():
     socket = make_socket()

@@ -7,14 +7,15 @@
 import time
 from datetime import timedelta
 import sys
-sys.path.append('..')
 
-from lib import base_app
-from lib import zmq_socket
-from lib import periodic_job
-from lib import heartbeat as hb
+import src.raspi.config.config as config
+from src.raspi.lib import base_app
+from src.raspi.lib import zmq_socket
+from src.raspi.lib import periodic_job
+from src.raspi.lib import heartbeat as hb
+from src.raspi.movement import protocol
 
-socket = zmq_socket.make_socket()
+socket = zmq_socket.get_movement_sender()
 
 def send_hb():
     hb.send_heartbeat(socket, hb.COMPONENT_MOVEMENT, hb.STATUS_RUNNING)
@@ -25,6 +26,8 @@ class Movement(base_app.App):
 
         self.job = periodic_job.PeriodicJob(interval=timedelta(milliseconds=50), execute=send_hb)
         self.job.start()
+
+        self.tiny = protocol.Protocol(config.MASTER_UART_INTERFACE_TINY, config.MASTER_UART_BAUD)
 
     def movement_loop(self, *args, **kwargs):
         time.sleep(5)

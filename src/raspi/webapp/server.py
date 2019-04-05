@@ -2,26 +2,23 @@
 """Server for the Raspi Webapp
 """
 import sys
-sys.path.append('..')
 import os
 import signal
 import time
-
 from sanic import Sanic
 from sanic.response import json
 from sanic.response import file
 
-from acoustic import sound
-from lib import heartbeat
-import webapp.middlewareadapter as mwadapter
+from src.raspi.acoustic import sound
+from src.raspi.lib import heartbeat
+import src.raspi.webapp.middlewareadapter as mwadapter
 
 app = Sanic()
 app.name = "PrenTeam28WebApp"
-app.static('/static', './static')
-app.static('/Resources/sanic.png', 'static/Resources/sanic.png', name='sanic_png')
-app.static('/Scripts/main.js', 'static/Scripts/main.js', name='main_js')
 
-MIDDLEWARE_SCAN_INTERVAL = 0.100 # 100ms
+app.static('/static', os.path.join(os.path.dirname(__file__), 'static'))
+
+MIDDLEWARE_SCAN_INTERVAL = 0.250 # 250ms
 
 middlewareData = None
 
@@ -30,9 +27,6 @@ middlewareData = None
 def signal_int_handler(sig, frame):
     print("Ctrl+C Pressed. Exit...")
     sys.exit(0)
-
-# Start middleware adapter
-mwadapter.create()
 
 # Routes
 
@@ -51,37 +45,42 @@ async def api(request):
     global middlewareData
     ''' api returns the API JSON available under /api '''
     direction = 'undefined'
-    if middlewareData != None:
-        direction = middlewareData.direction
-        #heartbeat = middlewareData.heartbeat
-    return json({
-        'direction': str(direction)
-        #'heartbeat': str(heartbeat)
-    })
+    if middlewareData is not None:
+        state = middlewareData['state']
+        state_message = middlewareData['state_message']
+        speed = middlewareData['speed']
+        position = middlewareData['position']
+        x_acceleration = middlewareData['x_acceleration']
+        y_acceleration = middlewareData['y_acceleration']
+        z_acceleration = middlewareData['z_acceleration']
+        direction = middlewareData['direction']
+        heartbeat_linedetection = middlewareData['heartbeat_linedetection']
+        heartbeat_numberdetection = middlewareData['heartbeat_numberdetection']
+        heartbeat_movement = middlewareData['heartbeat_movement']
+        heartbeat_acoustic = middlewareData['heartbeat_acoustic']
+        heartbeat_controlflow = middlewareData['heartbeat_controlflow']
 
+    return json({
+        'state': str(state),
+        'stateMessage': str(state_message),
+        'speed': str(speed),
+        'position': str(position),
+        'xAcceleration': str(x_acceleration),
+        'yAcceleration': str(y_acceleration),
+        'zAcceleration': str(z_acceleration),
+        'direction': str(direction),
+        'heartBeatLineDetection': str(heartbeat_linedetection),
+        'heartBeatNumberDetection': str(heartbeat_numberdetection),
+        'heartBeatMovement': str(heartbeat_movement),
+        'heartBeatAcoustic': str(heartbeat_acoustic),
+        'heartBeatControlFlow': str(heartbeat_controlflow)
+    })
 
 @app.route('/sound/<sound_nr>')
 async def play_sound(request, sound_nr):
     print('playing sound: ' + sound_nr)
     sound.play_sound_by_number(sound_nr)
     return json({'received': True})
-
-@app.route('/simulation/set', methods=["POST",])
-async def simulationSet(request):
-    print('simulating')
-    print(request.json)
-
-    return json({'received': True})
-
-@app.route('/simulation/get')
-async def simulationGet(request):
-    print('getting sim data')
-
-    mov_dict = {}
-    mov_dict['acc'] = 20
-    mov_dict['speed'] = 20
-    mov_dict['distance'] = 20
-    return json(mov_dict)
 
 # Middleware handling
 
@@ -90,7 +89,7 @@ async def periodic_middleware_task(app):
     ''' periodic task for retrieving middleware messages '''
     print(app.name + '. Reading Middleware Messages...')
     middlewareData = mwadapter.get_data()
-    print('Direction: ' + str(middlewareData.direction))
+    print('Direction: ' + str(middlewareData['direction']))
     #print('Heartbeat: ' + str(middlewareData.heartbeat))
     time.sleep(MIDDLEWARE_SCAN_INTERVAL)
     app.add_task(periodic_middleware_task(app))

@@ -2,14 +2,12 @@
 """Fake Line Detector
 """
 import time
-import sys
-sys.path.append('../..')
 
 import zmq
 import zmq.auth
 
-#import direction_pb2
-from pb import direction_pb2
+from src.raspi.lib import zmq_socket
+from src.raspi.pb import direction_pb2
 
 PORT = 8282
 DIRECTION_TOPIC = b'direction'
@@ -18,7 +16,7 @@ OFFSET = 0
 DIRECTIONS = ['straight', 'left', 'right']
 
 def _main():
-    socket = make_socket()
+    socket = zmq_socket.get_linedetector_sender()
 
     try:
         while True:
@@ -27,13 +25,6 @@ def _main():
 
     except KeyboardInterrupt:
         raise
-
-def make_socket():
-    context = zmq.Context()
-    socket = context.socket(zmq.PUB)
-    socket.bind("tcp://*:{}".format(PORT))
-
-    return socket
 
 def send_messages(socket):
     direction = get_direction_update()
