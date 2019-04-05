@@ -67,13 +67,6 @@ function updateHeartBeats(data) {
     controlFlowDiv.classList.add(data.heartBeatControlFlow);
 }
 
-//callback of movementGet, sets the movement values
-function updateMovement(json) {
-    $('#Acceleration').val(json.acceleration);
-    $('#Speed').val(json.speed);
-    $('#Distance').val(json.distance);
-};
-
 //Plays the number pressed as sound (e.g. for #1 it plays "Number one") wow
 function playSound(sound_nr) {
     xmlhttp = new XMLHttpRequest()
@@ -82,19 +75,9 @@ function playSound(sound_nr) {
     alert("playing Sound #1")
 }
 
-//Starts/stops simulation mode. Constantly updates movement values during simulation
+// start ControlFlow
 function start() {
 
-    if (!isSimulating) {
-        $("#Simulate").html('Stop');
-        movementSet();
-        simulationIntervalID = setInterval(movementGet, updateInterval, updateMovement);
-        isSimulating = true;
-    } else {
-        $("#Simulate").html('Start');
-        clearInterval(simulationIntervalID);
-        isSimulating = false;
-    }
 }
 
 setInterval(function(){

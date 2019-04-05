@@ -92,7 +92,8 @@ class Protocol():
     def __write_cmd(self, message, value):
         if self.conn is not None:
             msg = str(message.value)+","+str(value)+"\n"
-            self.conn.write(bytes(msg, 'utf-8'))
+            self.log.info("Sending over uart. Msg: " + msg)
+            self.conn.write(msg.rstrip(' \t\r\0').encode())
             self.ack_map[message.value] = time.time()
 
     def rcv_handler(self):
