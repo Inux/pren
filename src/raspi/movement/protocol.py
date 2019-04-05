@@ -24,10 +24,11 @@ class Protocol():
         #Maps the received message to the function which either
         #sets the internal value or does a handling with the received value directly
         self.recv_map = {
-            Message.IS_SPEED : self.__set_recv_speed,
-            Message.CUBE : self.__set_recv_cube,
-            Message.CURRENT : self.__set_recv_current,
-            Message.LOG : self.__set_recv_log
+            Message.IS_SPEED.value : self.__set_recv_speed,
+            Message.CUBE.value : self.__set_recv_cube,
+            Message.CURRENT.value : self.__set_recv_current,
+            Message.LOG.value : self.__set_recv_log,
+            Message.ACK.value : self.__set_recv_ack
         }
 
         #Internal values received from tiny
@@ -84,9 +85,14 @@ class Protocol():
         '''
         self.__write_cmd(Message.ACK, message)
 
+    def print_ack_map(self):
+        for key, value in self.ack_map.items():
+            self.log.info("Awaiting HeartBeat for '%s' since '%s'", key, str(time.ctime(value)))
+
     def __write_cmd(self, message, value):
         if self.conn is not None:
-            self.conn.write(str(message.value)+","+str(value)+"\n")
+            msg = str(message.value)+","+str(value)+"\n"
+            self.conn.write(bytes(msg, 'utf-8'))
             self.ack_map[message.value] = time.time()
 
     def rcv_handler(self):
@@ -94,16 +100,24 @@ class Protocol():
         handles the received lines
         '''
         if self.conn is not None:
-            line = self.conn.readline(timeout=1)
-            if line != "" and line is not None:
-                self.__parse_line(line)
+            while self.conn.in_waiting:
+                line = self.conn.readline()
+                if line != "" and line is not None:
+                    self.__parse_line(line)
 
     def __parse_line(self, line):
         try:
-            l = line.split(',')
-            msg = l[0]
-            val = l[1]
-            self.recv_map[msg](val) #call specific recv handler
+            line = line.decode('utf-8')
+            key_value = line.split(',')
+            if len(key_value) >= 2:
+                msg = key_value[0].replace("\n", "").replace("\t", "").replace(" ", "")
+                val = key_value[1].replace("\n", "").replace("\t", "").replace(" ", "")
+
+                self.log.info("Parsed line with Msg: '%s', Value: '%s'", msg, val)
+                if msg in self.recv_map.keys():
+                    self.log.info("Execution method of Msg: '%s'", msg)
+                    self.recv_map[msg](val) #call specific recv handler
+
         except Exception as e:
             self.log.error("Could not parse line: '%s'. Exception: %s", line, e)
 
@@ -124,4 +138,5 @@ class Protocol():
         self.send_ack(Message.LOG.value)
 
     def __set_recv_ack(self, val):
-        pass
+        if val in self.ack_map.keys():
+            del self.ack_map[val]
