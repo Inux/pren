@@ -1,5 +1,33 @@
 #Raspberry
 
+## Ausführen auf dem Raspberry (master)
+### Deploy
+```cmd
+./deploy_master.sh
+```
+
+### setup.sh ausführen
+```cmd
+ssh pi@prenTeam28master
+wpren
+./setup.sh
+```
+
+### run.sh ausführen
+```cmd
+ssh pi@prenTeam28master
+wpren
+./run.sh
+```
+
+### Beliebiges script ausführen
+* setup.sh muss schonmal ausgeführt worden sein!
+```cmd
+ssh pi@prenTeam28master
+wpren
+python3 webapp/server.py
+```
+
 ## Python
 ## Python Abhängigkeiten
 Alle Python Abhängigkeiten müssen im requirements.txt angegeben werden!
