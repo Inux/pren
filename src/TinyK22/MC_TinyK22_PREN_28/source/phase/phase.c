@@ -27,6 +27,6 @@ void phase_Init(void)
 {
   strncpy(phaseAckHandler.topic, PHASE_TOPIC, sizeof(phaseAckHandler.topic));
   phaseAckHandler.timeoutHandler = NULL;
-  piRegisterFrameLineHandler(&phaseFrameHandler, CRANE_TOPIC, "", phaseFrameLineHandler, &phaseAckHandler);
+  piRegisterFrameLineHandler(&phaseFrameHandler, PHASE_TOPIC, "", phaseFrameLineHandler, &phaseAckHandler);
 }
 
