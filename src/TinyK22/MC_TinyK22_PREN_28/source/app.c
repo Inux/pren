@@ -19,8 +19,9 @@ void ack_main()
 {
   static int i = 0;
   i++;
-  if (i < 50)
+  if (i > 50)
   {
+    i = 0;
     ackCheckQueue();
   }
 }
@@ -29,8 +30,9 @@ void pi_main()
 {
   static int i = 0;
   i++;
-  if (i < 10)
+  if (i > 10)
   {
+    i = 0;
     piDoWork();
   }
 }
@@ -39,8 +41,9 @@ void drive_main()
 {
   static int i = 0;
   i++;
-  if (i < DELTA_T_MS)
+  if (i > DELTA_T_MS)
   {
+    i = 0;
     driveToWork();
   }
 }
