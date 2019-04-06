@@ -135,7 +135,7 @@ void driveToWork(void)
 
   static int updateCounter = 0;
   updateCounter++;
-  if (updateCounter > 4)
+  if (updateCounter % 2)
   {
     driveSendSpeedUpdate(trueSpeed);
   }
