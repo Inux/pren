@@ -12,7 +12,8 @@ class Protocol():
     '''
     The protocol itself
     '''
-    def __init__(self, device, baud):
+    def __init__(self, device, baud,
+                 onNewSpeed=None, onNewCurrent=None):
         self.log = logger.getLogger('SoulTrain.movement.protocol')
         self.logTiny = logger.getLogger('SoulTrain.movement.tiny')
 
@@ -35,6 +36,10 @@ class Protocol():
         self.is_speed = None
         self.cube = None
         self.current = None
+
+        #CallBacks
+        self.onNewSpeed = onNewSpeed
+        self.onNewCurrent = onNewCurrent
 
     def connect(self):
         '''
@@ -123,7 +128,11 @@ class Protocol():
             self.log.error("Could not parse line: '%s'. Exception: %s", line, e)
 
     def __set_recv_speed(self, val):
-        self.is_speed = int(val)
+        if self.is_speed != int(val):
+            self.is_speed = int(val)
+            if self.onNewSpeed is not None:
+                self.onNewSpeed(int(val))
+
         self.send_ack(Message.IS_SPEED.value)
 
     def __set_recv_cube(self, val):
@@ -131,7 +140,11 @@ class Protocol():
         self.send_ack(Message.CUBE.value)
 
     def __set_recv_current(self, val):
-        self.current = int(val)
+        if self.current != int(val):
+            self.current = int(val)
+            if self.onNewCurrent is not None:
+                self.onNewCurrent(int(val))
+
         self.send_ack(Message.CURRENT.value)
 
     def __set_recv_log(self, val):

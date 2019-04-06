@@ -150,8 +150,8 @@ dd {
 }
 
 .running {
-    border-color: black;
-    background-color: lightgrey;
+    border-color: green;
+    background-color: lightgreen;
 }
 
 .error {
@@ -160,8 +160,8 @@ dd {
 }
 
 .finished {
-    border-color: green;
-    background-color: lightgreen;
+    border-color: black;
+    background-color: lightgrey;
 }
 
 .disabled {

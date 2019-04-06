@@ -7,10 +7,10 @@ import zmq
 import zmq.auth
 
 from src.raspi.lib import zmq_socket
+from src.raspi.lib import zmq_topics
 from src.raspi.pb import direction_pb2
 
 PORT = 8282
-DIRECTION_TOPIC = b'direction'
 
 OFFSET = 0
 DIRECTIONS = ['straight', 'left', 'right']
@@ -28,7 +28,7 @@ def _main():
 
 def send_messages(socket):
     direction = get_direction_update()
-    socket.send(DIRECTION_TOPIC + b' ' + direction)
+    socket.send(zmq_topics.DIRECTION_TOPIC + b' ' + direction)
 
 def get_direction_update():
     direction = direction_pb2.Direction()
