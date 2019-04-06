@@ -16,7 +16,7 @@
 #include "McuCriticalSection.h"
 
 #define FTM2_CLOCK      (60000000)
-#define WHEEL_RADIUS    (11)
+#define WHEEL_RADIUS    (13)
 #define TICKS_PER_REV   (1024)
 #define PI              (3.14159)
 
