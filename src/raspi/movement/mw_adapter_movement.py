@@ -1,10 +1,9 @@
 #!/usr/bin/env python
-
-import logging
 import os
 import select
 import zmq
 
+import src.raspi.lib.log as log
 from src.raspi.lib import zmq_socket
 from src.raspi.lib import zmq_topics
 from src.raspi.pb import speed_pb2
@@ -12,6 +11,8 @@ from src.raspi.pb import current_pb2
 from src.raspi.pb import acceleration_pb2
 from src.raspi.pb import heartbeat_pb2
 from src.raspi.pb import move_command_pb2
+
+logger = log.getLogger("SoulTrain.movement.mw_adapter_movement")
 
 # Sockets
 sender_movement = zmq_socket.get_movement_sender()
@@ -51,7 +52,7 @@ def get_data():
     global data
 
     if reader_webapp.poll(timeout=1, flags=zmq.POLLIN) & zmq.POLLIN == zmq.POLLIN:
-        topic_and_data = reader_linedetector.recv()
+        topic_and_data = reader_webapp.recv()
         topic_and_data = topic_and_data.split(b' ')
         topic = topic_and_data[0]
         dataraw = topic_and_data[1]
@@ -61,6 +62,7 @@ def get_data():
         move_cmd.ParseFromString(dataraw)
 
         if move_cmd is not None:
+            logger.info("received move command. Speed: '%s'", move_cmd.speed)
             data['speed'] = move_cmd.speed
             return data
 

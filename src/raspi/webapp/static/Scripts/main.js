@@ -9,6 +9,7 @@ var simulationIntervalID;
 function init() {
     if (isSimulating) {
         enableSimulation();
+        sendSpeed(0); // send speed 0
     } else {
         enableControlFlow();
     }
@@ -52,6 +53,23 @@ function playSound(sound_nr) {
     xmlhttp.open('GET', '/sound/' + sound_nr, true)
     xmlhttp.send()
     alert("playing Sound #1")
+}
+
+function sendSpeed(speed) {
+    xmlhttp = new XMLHttpRequest()
+    xmlhttp.open('GET', '/speed/' + speed, true)
+    xmlhttp.send()
+}
+
+function moveStart() {
+    var speedValue = document.getElementById("speedValue").value
+    sendSpeed(speedValue)
+}
+
+function moveStop() {
+    var speedValue = document.getElementById("speedValue");
+    speedValue.value = 0;
+    sendSpeed(0);
 }
 
 /* Events ------------------------------------- */

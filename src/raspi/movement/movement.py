@@ -29,12 +29,20 @@ class Movement(base_app.App):
         self.job.start()
 
         self.tiny = protocol.Protocol(config.MASTER_UART_INTERFACE_TINY, config.MASTER_UART_BAUD, onNewSpeed=self.onNewSpeed, onNewCurrent=self.onNewCurrent)
+        self.tiny.connect()
+
+        self.data = {}
+        self.data['speed'] = None
 
     def movement_loop(self, *args, **kwargs):
         self.tiny.rcv_handler()
 
-        data = mw_adapter_movement.get_data()
-        self.tiny.send_speed(int(data['speed']))
+        data_tmp = mw_adapter_movement.get_data()
+
+        # only send data if the change
+        if self.data['speed'] != int(data_tmp['speed']):
+            self.data['speed'] = int(data_tmp['speed'])
+            self.tiny.send_speed(self.data['speed'])
 
     def onNewSpeed(self, speed):
         mw_adapter_movement.send_speed(speed)

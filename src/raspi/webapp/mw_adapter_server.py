@@ -7,14 +7,19 @@ import zmq
 
 import src.raspi.lib.log as log
 from src.raspi.lib import zmq_socket
+from src.raspi.lib import zmq_topics
 from src.raspi.pb import direction_pb2
+from src.raspi.pb import move_command_pb2
 from src.raspi.pb import heartbeat_pb2
+from src.raspi.pb import speed_pb2
+from src.raspi.pb import current_pb2
 
 logger = log.getLogger("SoulTrain.webapp.mw_adapter_server")
 
 # Sockets
 reader_linedetector = zmq_socket.get_linedetector_reader()
 reader_movement = zmq_socket.get_movement_reader()
+sender_webapp = zmq_socket.get_webapp_sender()
 
 data = {}
 data['direction'] = "undefined"
@@ -73,4 +78,29 @@ def get_data():
             data[heartbeat.component] = heartbeat.status
             return data
 
+        #Try Parse Speed
+        speed = speed_pb2.Speed()
+        speed.ParseFromString(dataraw)
+
+        if speed is not None:
+            logger.debug("received speed '%s'", speed.speed)
+            data['speed'] = speed.speed
+            return data
+
+        #Try Parse Current
+        current = current_pb2.Current()
+        current.ParseFromString(dataraw)
+
+        if current is not None:
+            logger.debug("received current '%s'", current.current)
+            data['current'] = current.current
+            return data
+
     return data
+
+def send_move_cmd(speed):
+    move_cmd = move_command_pb2.MoveCommand()
+    move_cmd.speed = speed
+    msg = move_cmd.SerializeToString()
+    logger.info("Sending move command. Speed: '%s'", move_cmd.speed)
+    sender_webapp.send(zmq_topics.MOVE_CMD_TOPIC + b' ' + msg)

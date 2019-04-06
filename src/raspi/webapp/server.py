@@ -78,8 +78,12 @@ async def api(request):
 
 @app.route('/sound/<sound_nr>')
 async def play_sound(request, sound_nr):
-    print('playing sound: ' + sound_nr)
     sound.play_sound_by_number(sound_nr)
+    return json({'received': True})
+
+@app.route('/speed/<speed>')
+async def play_sound(request, speed):
+    mwadapter.send_move_cmd(int(speed))
     return json({'received': True})
 
 # Middleware handling
