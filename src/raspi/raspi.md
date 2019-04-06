@@ -1,6 +1,10 @@
 #Raspberry
 
 ## Python
+## Python Abhängigkeiten
+Alle Python Abhängigkeiten müssen im requirements.txt angegeben werden!
+Somit können diese einfach installiert werden (siehe setup.sh).
+
 ## PYTHONPATH
 Um es zu vereinfachen die entwickelten Pakete zu nutzen sollte der PYTHONPATH gesetzt werden (Umgebungsvariable)
 
@@ -14,4 +18,4 @@ PYTHONPATH=$CURRENT_LOC/..:$CURRENT_LOC/../..:$CURRENT_LOC/acoustic:$CURRENT_LOC
 ```
 
 ### Raspberry
-Auf dem Raspberry wird die Umgebungsvariable durch das run.sh Skript gesetzt.
+Auf dem Raspberry wird die Umgebungsvariable durch das run_master.sh oder run_slave.sh Skript gesetzt.

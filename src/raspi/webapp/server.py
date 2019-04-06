@@ -11,7 +11,7 @@ from sanic.response import file
 
 from src.raspi.acoustic import sound
 from src.raspi.lib import heartbeat
-import src.raspi.webapp.middlewareadapter as mwadapter
+import src.raspi.webapp.mw_adapter_server as mwadapter
 
 app = Sanic()
 app.name = "PrenTeam28WebApp"
@@ -54,11 +54,11 @@ async def api(request):
         y_acceleration = middlewareData['y_acceleration']
         z_acceleration = middlewareData['z_acceleration']
         direction = middlewareData['direction']
-        heartbeat_linedetection = middlewareData['heartbeat_linedetection']
-        heartbeat_numberdetection = middlewareData['heartbeat_numberdetection']
-        heartbeat_movement = middlewareData['heartbeat_movement']
-        heartbeat_acoustic = middlewareData['heartbeat_acoustic']
-        heartbeat_controlflow = middlewareData['heartbeat_controlflow']
+        linedetection = middlewareData['linedetection']
+        numberdetection = middlewareData['numberdetection']
+        movement = middlewareData['movement']
+        acoustic = middlewareData['acoustic']
+        controlflow = middlewareData['controlflow']
 
     return json({
         'state': str(state),
@@ -69,11 +69,11 @@ async def api(request):
         'yAcceleration': str(y_acceleration),
         'zAcceleration': str(z_acceleration),
         'direction': str(direction),
-        'heartBeatLineDetection': str(heartbeat_linedetection),
-        'heartBeatNumberDetection': str(heartbeat_numberdetection),
-        'heartBeatMovement': str(heartbeat_movement),
-        'heartBeatAcoustic': str(heartbeat_acoustic),
-        'heartBeatControlFlow': str(heartbeat_controlflow)
+        'heartBeatLineDetection': str(linedetection),
+        'heartBeatNumberDetection': str(numberdetection),
+        'heartBeatMovement': str(movement),
+        'heartBeatAcoustic': str(acoustic),
+        'heartBeatControlFlow': str(controlflow)
     })
 
 @app.route('/sound/<sound_nr>')
@@ -87,10 +87,7 @@ async def play_sound(request, sound_nr):
 async def periodic_middleware_task(app):
     global middlewareData
     ''' periodic task for retrieving middleware messages '''
-    print(app.name + '. Reading Middleware Messages...')
     middlewareData = mwadapter.get_data()
-    print('Direction: ' + str(middlewareData['direction']))
-    #print('Heartbeat: ' + str(middlewareData.heartbeat))
     time.sleep(MIDDLEWARE_SCAN_INTERVAL)
     app.add_task(periodic_middleware_task(app))
 

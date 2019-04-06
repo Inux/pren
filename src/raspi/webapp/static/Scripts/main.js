@@ -1,80 +1,52 @@
 //Variables & Constants
-var updateInterval = 500; // 500ms
-var isSimulating = false;
+var updateInterval = 250; // 250ms
+var isSimulating = true;
 var simulationIntervalID;
 
-//Helper for API get method
-function apiGet(callback) {
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function () {
-        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-            try {
-                var data = JSON.parse(xmlhttp.responseText);
-            } catch (err) {
-                console.log(err.message + " in " + xmlhttp.responseText);
-                return;
-            }
-            callback(data);
-        }
-    };
-    xmlhttp.open("GET", '/api', true);
-    xmlhttp.send();
+/* Main functions ----------------------------- */
+
+// Initialization
+function init() {
+    if (isSimulating) {
+        enableSimulation();
+    } else {
+        enableControlFlow();
+    }
 }
 
-// UI
+// Enable simulation mode, disable controlflow
+function enableSimulation() {
+    var state = document.getElementById('webAppState');
+    state.innerHTML = "Simulating"
 
-//updateUI method (called by setInterval each 500ms)
-function updateUI(data) {
-    console.log("Received Data:");
-    console.log(data);
+    var controlFlow = document.getElementById('controlFlow');
+    controlFlow.style.display = 'none';
 
-    updateSoulTrainData(data);
-    updateHeartBeats(data);
+    var simulation = document.getElementById('simulation');
+    simulation.style.display = 'block';
 }
 
-function updateSoulTrainData(data) {
-    document.getElementById("state").innerText = data.state;
-    document.getElementById("stateMessage").innerText = data.stateMessage;
-    document.getElementById("speed").innerText = data.speed;
-    document.getElementById("position").innerText = data.position;
-    document.getElementById("xAcceleration").innerText = data.xAcceleration;
-    document.getElementById("yAcceleration").innerText = data.yAcceleration;
-    document.getElementById("zAcceleration").innerText = data.zAcceleration;
-    document.getElementById("direction").innerText = data.direction;
+// Enable controlflow, disable simulation mode
+function enableControlFlow() {
+    var state = document.getElementById('webAppState');
+    state.innerHTML = "ControlFlow"
+
+    var simulation = document.getElementById('simulation');
+    simulation.style.display = 'none';
+
+    var controlFlow = document.getElementById('controlFlow');
+    controlFlow.style.display = 'block';
 }
 
-function updateHeartBeats(data) {
-    lineDetectionDiv = document.getElementById("lineDetectionDiv");
-    numberDetectionDiv = document.getElementById("numberDetectionDiv");
-    movementDiv = document.getElementById("movementDiv");
-    acousticDiv = document.getElementById("acousticDiv");
-    controlFlowDiv = document.getElementById("controlflowDiv");
+// start ControlFlow
+function startControlFlow() {
 
-    elements = [lineDetectionDiv, numberDetectionDiv, movementDiv, acousticDiv, controlFlowDiv];
-
-    elements.forEach((item, index) => {
-        if(item == null) {
-            console.warn("Item " + index + " is null! cannot remove classes!")
-        } else {
-            item.classList.remove("starting", "running", "error", "finished");
-        }
-    });
-
-    lineDetectionDiv.classList.add(data.heartBeatLineDetection);
-    numberDetectionDiv.classList.add(data.heartBeatNumberDetection);
-    movementDiv.classList.add(data.heartBeatMovement);
-    acousticDiv.classList.add(data.heartBeatAcoustic);
-    controlFlowDiv.classList.add(data.heartBeatControlFlow);
 }
 
-//callback of movementGet, sets the movement values
-function updateMovement(json) {
-    $('#Acceleration').val(json.acceleration);
-    $('#Speed').val(json.speed);
-    $('#Distance').val(json.distance);
-};
 
-//Plays the number pressed as sound (e.g. for #1 it plays "Number one") wow
+/* Simulation commands ------------------------ */
+
+// Plays the number pressed as sound (e.g. for #1 it plays "Number one") wow
 function playSound(sound_nr) {
     xmlhttp = new XMLHttpRequest()
     xmlhttp.open('GET', '/sound/' + sound_nr, true)
@@ -82,21 +54,22 @@ function playSound(sound_nr) {
     alert("playing Sound #1")
 }
 
-//Starts/stops simulation mode. Constantly updates movement values during simulation
-function start() {
+/* Events ------------------------------------- */
 
-    if (!isSimulating) {
-        $("#Simulate").html('Stop');
-        movementSet();
-        simulationIntervalID = setInterval(movementGet, updateInterval, updateMovement);
+simMode = document.getElementById('simMode');
+simMode.addEventListener('change', e => {
+    e.preventDefault();
+
+    if (e.target.checked) {
         isSimulating = true;
     } else {
-        $("#Simulate").html('Start');
-        clearInterval(simulationIntervalID);
         isSimulating = false;
     }
-}
 
-setInterval(function(){
-    apiGet(updateUI);
-}, updateInterval);
+    init();
+});
+
+/* Start Main Flow ---------------------------- */
+
+// Call init the first time
+init();

@@ -1,21 +1,147 @@
-#startButton {
+/* General Styling */
+
+/* Layout */
+
+/* Mobile */
+
+body {
+    overflow: hidden;
+}
+
+@media only screen and (max-width: 600px) {
+    .title {
+        position: relative;
+        width: 100%;
+        height: 120px;
+    }
+    .leftPart {
+        position: relative;
+        width: 100%;
+        height: auto;
+    }
+    .rightPart {
+        position: relative;
+        width: 100%;
+        height: auto;
+    }
+}
+
+/* Desktop */
+
+@media only screen and (min-width: 601px) {
+    .title {
+        position: absolute;
+        width: 100%;
+        height: 150px;
+    }
+    .leftPart {
+        position: absolute;
+        width: 45%;
+        height: 100%;
+        left: 2%;
+        top: 150px;
+    }
+    .rightPart {
+        position: absolute;
+        width: 47%;
+        height: 100%;
+        right: 2%;
+        top: 150px;
+    }
+}
+
+/* Helpers & Aligning */
+
+h4 {
+    margin-left: 10px;
+}
+
+h5 {
+    margin-left: 15px;
+}
+
+.inline {
+    display: inline-block;
+}
+
+.notVisible {
+    display: none;
+}
+
+dl {
+    width: 100%;
+    overflow: hidden;
+    background: #eee;
+    padding: 0;
+    margin: 0;
+}
+
+dt {
+    float: left;
+    width: 30%;
+    /* adjust the width; make sure the total of both is 100% */
+    background: #eee;
+    padding: 0;
+    margin: 0;
+}
+
+dd {
+    float: left;
+    width: 70%;
+    /* adjust the width; make sure the total of both is 100% */
+    background: #eee;
+    padding: 0;
+    margin: 0;
+}
+
+/* --------------- */
+
+/* Title */
+
+.title img {
+    position: relative;
+    width: auto;
+    height: 150px;
+    top: 0;
+    left: 0;
+    background: #555;
+}
+
+/* --------------- */
+
+/* Start Button */
+
+.startButton {
     width: 100px;
-    height: 200px;
+    height: 100px;
     float: left;
 }
+
+/* ------------ */
+
+/* Heartbeat and State Handling */
 
 .stateButton {
     border-width: medium;
+    margin-right: 10px;
+}
+
+.heartBeats {
+    margin: 0;
 }
 
 .componentDiv {
-    width: 150px;
-    height: 100px;
+    width: 16.6%;
+    height: 40px;
     border: 2px black solid;
     background-color: lightgrey;
-    margin: 10px 10px;
-    float: left;
+    margin-top: 2%;
+    margin-right: 1%;
     text-align: center;
+    vertical-align: middle;
+    line-height: auto;
+    font-size: 1.3vh;
+    overflow: none;
 }
 
 .starting {
@@ -24,8 +150,8 @@
 }
 
 .running {
-    border-color: black;
-    background-color: lightgrey;
+    border-color: green;
+    background-color: lightgreen;
 }
 
 .error {
@@ -34,8 +160,8 @@
 }
 
 .finished {
-    border-color: green;
-    background-color: lightgreen;
+    border-color: black;
+    background-color: lightgrey;
 }
 
 .disabled {
@@ -50,28 +176,4 @@
     box-shadow: 0px 0px 21px 1px rgba(0, 0, 0, 0.61);
 }
 
-dl {
-    width: 100%;
-    overflow: hidden;
-    background: #eee;
-    padding: 0;
-    margin: 0;
-}
-
-dt {
-    float: left;
-    width: 50%;
-    /* adjust the width; make sure the total of both is 100% */
-    background: #eee;
-    padding: 0;
-    margin: 0;
-}
-
-dd {
-    float: left;
-    width: 50%;
-    /* adjust the width; make sure the total of both is 100% */
-    background: #eee;
-    padding: 0;
-    margin: 0;
-}
+/* ---------------------------- */
