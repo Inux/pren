@@ -54,17 +54,18 @@ def get_data():
     if reader_webapp.poll(timeout=1, flags=zmq.POLLIN) & zmq.POLLIN == zmq.POLLIN:
         topic_and_data = reader_webapp.recv()
         topic_and_data = topic_and_data.split(b' ')
-        topic = topic_and_data[0]
-        dataraw = topic_and_data[1]
+        topic = topic_and_data.split(b' ', 1)[0]
+        dataraw = topic_and_data.split(b' ', 1)[1]
 
-        #Try parse move command
-        move_cmd = move_command_pb2.MoveCommand()
-        move_cmd.ParseFromString(dataraw)
+        if topic == zmq_topics.MOVE_CMD_TOPIC:
+            #Try parse move command
+            move_cmd = move_command_pb2.MoveCommand()
+            move_cmd.ParseFromString(dataraw)
 
-        if move_cmd is not None:
-            logger.info("received move command. Speed: '%s'", move_cmd.speed)
-            data['speed'] = move_cmd.speed
-            return data
+            if move_cmd is not None:
+                logger.info("received move command. Speed: '%s'", move_cmd.speed)
+                data['speed'] = move_cmd.speed
+                return data
 
     return data
 

@@ -44,57 +44,64 @@ def get_data():
     #Handle LineDetector in Messages
     if reader_linedetector.poll(timeout=1, flags=zmq.POLLIN) & zmq.POLLIN == zmq.POLLIN:
         topic_and_data = reader_linedetector.recv()
+        topic = topic_and_data.split(b' ', 1)[0]
         dataraw = topic_and_data.split(b' ', 1)[1]
 
-        #Try Parse Direction
-        dir_obj = direction_pb2.Direction()
-        dir_obj.ParseFromString(dataraw)
+        if topic == zmq_topics.DIRECTION_TOPIC:
+            #Try Parse Direction
+            dir_obj = direction_pb2.Direction()
+            dir_obj.ParseFromString(dataraw)
 
-        if dir_obj is not None:
-            logger.debug("received direction: '%s'", dir_obj.direction)
-            data['direction'] = dir_obj.direction
-            return data
+            if dir_obj is not None:
+                logger.debug("received direction: '%s'", dir_obj.direction)
+                data['direction'] = dir_obj.direction
+                return data
 
-        #Try Parse HeartBeat
-        heartbeat = heartbeat_pb2.Heartbeat()
-        heartbeat.ParseFromString(dataraw)
+        if topic == zmq_topics.HEARTBEAT_TOPIC:
+            #Try Parse HeartBeat
+            heartbeat = heartbeat_pb2.Heartbeat()
+            heartbeat.ParseFromString(dataraw)
 
-        if heartbeat is not None:
-            logger.debug("received heartbeat from '%s' with status '%s'", heartbeat.component, heartbeat.status)
-            data[heartbeat.component] = heartbeat.status
-            return data
+            if heartbeat is not None:
+                logger.debug("received heartbeat from '%s' with status '%s'", heartbeat.component, heartbeat.status)
+                data[heartbeat.component] = heartbeat.status
+                return data
 
     #Handle Movement in Messages
     if reader_movement.poll(timeout=1, flags=zmq.POLLIN) & zmq.POLLIN == zmq.POLLIN:
         topic_and_data = reader_movement.recv()
+        topic = topic_and_data.split(b' ', 1)[0]
         dataraw = topic_and_data.split(b' ', 1)[1]
 
-        #Try Parse HeartBeat
-        heartbeat = heartbeat_pb2.Heartbeat()
-        heartbeat.ParseFromString(dataraw)
+        if topic == zmq_topics.HEARTBEAT_TOPIC:
+            #Try Parse HeartBeat
+            heartbeat = heartbeat_pb2.Heartbeat()
+            heartbeat.ParseFromString(dataraw)
 
-        if heartbeat is not None:
-            logger.debug("received heartbeat from '%s' with status '%s'", heartbeat.component, heartbeat.status)
-            data[heartbeat.component] = heartbeat.status
-            return data
+            if heartbeat is not None:
+                logger.debug("received heartbeat from '%s' with status '%s'", heartbeat.component, heartbeat.status)
+                data[heartbeat.component] = heartbeat.status
+                return data
 
-        #Try Parse Speed
-        speed = speed_pb2.Speed()
-        speed.ParseFromString(dataraw)
+        if topic == zmq_topics.SPEED_TOPIC:
+            #Try Parse Speed
+            speed = speed_pb2.Speed()
+            speed.ParseFromString(dataraw)
 
-        if speed is not None:
-            logger.debug("received speed '%s'", speed.speed)
-            data['speed'] = speed.speed
-            return data
+            if speed is not None:
+                logger.debug("received speed '%s'", speed.speed)
+                data['speed'] = speed.speed
+                return data
 
-        #Try Parse Current
-        current = current_pb2.Current()
-        current.ParseFromString(dataraw)
+        if topic == zmq_topics.CURRENT_TOPIC:
+            #Try Parse Current
+            current = current_pb2.Current()
+            current.ParseFromString(dataraw)
 
-        if current is not None:
-            logger.debug("received current '%s'", current.current)
-            data['current'] = current.current
-            return data
+            if current is not None:
+                logger.debug("received current '%s'", current.current)
+                data['current'] = current.current
+                return data
 
     return data
 
