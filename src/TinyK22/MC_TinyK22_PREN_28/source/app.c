@@ -52,7 +52,6 @@ void RunApp(void)
 {
   McuWait_Init();
   pi_Init();
-  ack_Init();
   drive_Init();
   phase_Init();
   crane_Init();
