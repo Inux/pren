@@ -11,6 +11,7 @@
 #include "pin_mux.h"
 #include "peripherals.h"
 #include "MK22F51212.h"
+#include "board.h"
 
 #include "pi.h"
 #include "McuUtility.h"
@@ -32,9 +33,14 @@ static int8_t valueMot;
 
 static void motor_A_UpdatePwmDutyCycle(uint32_t value)
 {
-  if (value > MOTOR_MAX_VALUE)
+  if (value >= MOTOR_MAX_VALUE)
   {
     value = MOTOR_MAX_VALUE;
+    LED_BLUE_ON();
+  }
+  else
+  {
+    LED_BLUE_OFF();
   }
 
   uint32_t mod = FTM_1_MOTOR_PWM_PERIPHERAL->MOD;
