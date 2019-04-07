@@ -1,80 +1,125 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>
-            Team 28
-        </title>
-    </head>
+
+<head>
+    <title>
+        Team 28
+    </title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="/Scripts/main.js"></script>
-    <link rel="stylesheet" type="text/css" href="static/Style/style.css">
-    <body>
-        <section id="curveDetection">
-            <h2 id="direction"></h2>
-        </section>
-        <div>
-            <h1>Soultrain</h1>
-            <button id="startButton" onclick="start()">Start</button>
-            <img src="/Resources/sanic.png" height="200" width="250" >
-            Gotta go now -
-            No breaks on the soultrain!
-        </div>
-        <div>
-            <div>
-                <h2>Hearbeat monitoring</h2>
+    <link rel="stylesheet" type="text/css" href="/static/Style/style.css">
+</head>
 
-                <button class="stateButton starting" onclick=''> Starting </button>
-                <button class="stateButton running" onclick=''> Running </button>
-                <button class="stateButton error" onclick=''> Error </button>
-                <button class="stateButton finished" onclick=''> Finished </button>
+<body>
+    <!--Title-->
+    <div class="title">
+        <img src="/static/Resources/soultrain.png" />
+    </div>
+
+    <div class="leftPart">
+        <!--WebApp Data/Control-->
+        <div>
+            <h3>WebApp:</h3>
+            <dl>
+                <dt>State:</dt>
+                <dd id="webAppState"></dd>
+
+                <dt>Simulation Mode:</dt>
+                <dd>
+                    <input type="checkbox" id="simMode" name="simMode" checked>
+                </dd>
+            </dl>
+            <h3>SoulTrain Data:</h3>
+            <dl>
+                <dt>State:</dt>
+                <dd id="state">-</dd>
+
+                <dt>State Message:</dt>
+                <dd id="stateMessage">-</dd>
+
+                <dt>Speed:</dt>
+                <dd id="speed">-</dd>
+
+                <dt>Position:</dt>
+                <dd id=position>-</dd>
+
+                <dt>x-Acceleration:</dt>
+                <dd id="xAcceleration">-</dd>
+
+                <dt>y-Acceleration:</dt>
+                <dd id=yAcceleration>-</dd>
+
+                <dt>z-Acceleration:</dt>
+                <dd id=zAcceleration>-</dd>
+
+                <dt>Direction:</dt>
+                <dd id=direction>-</dd>
+            </dl>
+        </div>
+
+        <!--HeartBeats Overview-->
+        <div>
+            <h3>HeartBeats:</h3>
+            <button class="stateButton starting" onclick=''> Starting </button>
+            <button class="stateButton running" onclick=''> Running </button>
+            <button class="stateButton error" onclick=''> Error </button>
+            <button class="stateButton finished" onclick=''> Finished </button>
+
+            <div class="heartBeats">
+                <div id="lineDetectionDiv" class="componentDiv inline" onclick=''>Line Detection</div>
+                <div id="numberDetectionDiv" class="componentDiv inline" onclick=''>Number Detection</div>
+                <div id="movementDiv" class="componentDiv inline" onclick=''>Movement</div>
+                <div id="acousticDiv" class="componentDiv inline" onclick=''>Acoustic</div>
+                <div id="controlflowDiv" class="componentDiv inline" onclick=''>ControlFlow</div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="rightPart">
+        <!--ControlFlow Control/Data (default not visible)-->
+        <div class="notVisible" id="controlFlow">
+            <h3>ControlFlow</h3>
+            <div>
+                <button class="startButton" id="startButton" onclick="start()">Start</button>
+                <img src="/static/Resources/sanic.png" height="100" width="125">
+                Gotta go now -
+                No brakes on the SoulTrain!
+            </div>
+        </div>
+
+        <!--Simulation Control/Data (default not visible)-->
+        <div class="notVisible" id="simulation">
+            <h3>Simulation:</h3>
+            <div>
+                <h4>Speed:</h4>
+                <div>
+                    <input id="speedValue" name="speedValue" value="0">
+                    <label for="speedValue">mm/s</label>
+                </div>
+                <button onclick="moveStart()">Start</button>
+                <button onclick="moveStop()">Stop</button>
             </div>
             <div>
-                <div id="linedetectionDiv" class="componentDiv selected" onclick=''> Linedetection </div>
-                <div id="numberdetectionDiv" class="componentDiv" onclick=''> Numberdetection </div>
-                <div id="movementDiv" class="componentDiv" onclick=''> Movement </div>
-                <div id="acousticDiv" class="componentDiv" onclick=''> Acoustic </div>
-                <div id="controlflowDiv" class="componentDiv" onclick=''> Controlflow </div>
+                <h4>Acoustic:</h4>
+                <button onclick='playSound(1)'> Play sound #1 </button>
+                <button onclick='playSound(2)'> Play sound #2 </button>
+                <button onclick='playSound(3)'> Play sound #3 </button>
+                <button onclick='playSound(4)'> Play sound #4 </button>
+                <button onclick='playSound(5)'> Play sound #5 </button>
+                <button onclick='playSound(6)'> Play sound #6 </button>
+                <button onclick='playSound(7)'> Play sound #7 </button>
+                <button onclick='playSound(8)'> Play sound #8 </button>
+                <button onclick='playSound(9)'> Play sound #9 </button>
             </div>
-            <button id="disableButton" onclick="disable()">disable</button>
         </div>
-        <div>
-            <h2>Testing train movement:</h2>
-            <button onclick="moveForward()"> Forward </button>
-            <button onclick="breakTrain()"> Break </button>
-            <div>
-                <h3>Speed</h3>
-                <div><label for="Acceleration">Acceleration:</label><input id="Acceleration" name="inputAcc" value="0"> km/h^2 </div>
-                <div><label for="Speed">Speed: </label><input id="Speed" name="inputSpeed" value="0"> km/h </div>
-                <div><label for="Distance">Distance: </label><input id="Distance" name="inputDistance" value="0"> km </div>
+    </div>
 
-            </div>
+    <!--Include Scripts after DOM is available-->
+    <script src="/static/Scripts/main.js"></script>
+    <script src="/static/Scripts/uiDataUpdate.js"></script>
+</body>
 
-            <div>
-                <h3>Position: </h3>
-                <div><label for="X-Axis">Distance: </label><input id="X-Axis" value="0"> km/h </div>
-                <div><label for="Y-Axis">Distance: </label><input id="Y-Axis" value="0"> km/h </div>
-            </div>
-
-        </div>
-        <div>
-            <h2>Testing acoustic module:</h2>
-            <button onclick='playSound(1)'> Play sound #1 </button>
-            <button onclick='playSound(2)'> Play sound #2 </button>
-            <button onclick='playSound(3)'> Play sound #3 </button>
-            <button onclick='playSound(4)'> Play sound #4 </button>
-            <button onclick='playSound(5)'> Play sound #5 </button>
-            <button onclick='playSound(6)'> Play sound #6 </button>
-            <button onclick='playSound(7)'> Play sound #7 </button>
-            <button onclick='playSound(8)'> Play sound #8 </button>
-            <button onclick='playSound(9)'> Play sound #9 </button>
-        </div>
-        <div>
-            <h2>Testing Camera functionality</h2>
-            <h3>Take Picture: </h3>
-            <button onclick="takePictureRailCamera()">Rail Camera</button>
-            <button onclick="takePictureNumberCamera()">Number Camera</button>
-            <h3>Picture: </h3>
-
-        </div>
-    </body>
 </html>

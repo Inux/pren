@@ -2,48 +2,22 @@
 """Fake Line Detector
 """
 import time
-import sys
-sys.path.append('../..')
+from datetime import timedelta
 
 import zmq
 import zmq.auth
 
-#import direction_pb2
-from pb import direction_pb2
+from src.raspi.lib import base_app
+from src.raspi.lib import periodic_job
+from src.raspi.lib import zmq_socket
+from src.raspi.lib import zmq_topics
+import src.raspi.lib.heartbeat as hb
+from src.raspi.pb import direction_pb2
 
-PORT = 8282
-DIRECTION_TOPIC = b'direction'
+import src.raspi.linedetector.mw_adapter_linedetector as mwadapter
 
 OFFSET = 0
 DIRECTIONS = ['straight', 'left', 'right']
-
-def _main():
-    socket = make_socket()
-
-    try:
-        while True:
-            send_messages(socket)
-            time.sleep(5)
-
-    except KeyboardInterrupt:
-        raise
-
-def make_socket():
-    context = zmq.Context()
-    socket = context.socket(zmq.PUB)
-    socket.bind("tcp://*:{}".format(PORT))
-
-    return socket
-
-def send_messages(socket):
-    direction = get_direction_update()
-    socket.send(DIRECTION_TOPIC + b' ' + direction)
-
-def get_direction_update():
-    direction = direction_pb2.Direction()
-    direction.direction = get_dir()
-    directionBytes = direction.SerializeToString()
-    return directionBytes
 
 def get_dir():
     global OFFSET
@@ -56,5 +30,21 @@ def get_dir():
 
     return d
 
+socket = zmq_socket.get_linedetector_sender()
+
+def send_hb():
+    hb.send_heartbeat(socket, hb.COMPONENT_LINEDETECTION, hb.STATUS_RUNNING)
+
+class LineDetector(base_app.App):
+    def __init__(self, *args, **kwargs):
+        super().__init__("LineDetection", self.linedetection_loop, *args, **kwargs)
+
+        self.job = periodic_job.PeriodicJob(interval=timedelta(milliseconds=50), execute=send_hb)
+        self.job.start()
+
+    def linedetection_loop(self, *args, **kwargs):
+        mwadapter.send_direction(get_dir())
+        time.sleep(1)
+
 if __name__ == '__main__':
-    _main()
+    LineDetector().run()
