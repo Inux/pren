@@ -36,15 +36,14 @@ static uint16_t txBufReadPos;
  * @brief UART Interrupt Service Routine
  * - Received bytes are stored in the queue rxBuf
  * - Bytes in the queue txBuf are sent
- * from: MC - C. Jost
  */
 void COM_UART_IRQHandler(void)
 {
   //OnEnterUart1RxTxISR();
   uint8_t status = UART_GetStatusFlags(COM_UART);
-  uint8_t data = UART_ReadByte(COM_UART);
   if (status & UART_S1_RDRF_MASK)
   {
+    uint8_t data = UART_ReadByte(COM_UART);
     // store the received byte into receiver Queue (rxBuf)
     // ignore string terminating characters
     if (rxBufCount < COM_RX_BUF_SIZE && data != '\0')
