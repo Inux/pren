@@ -49,6 +49,7 @@ void COM_UART_IRQHandler(void)
     // ignore string terminating characters
     if (rxBufCount < COM_RX_BUF_SIZE && data != '\0')
     {
+      if (data == '\r') data = '\n'; //todo ugly hack test with actual raspi software
       rxBuf[rxBufWritePos++] = data;
       rxBufCount++;
       if (rxBufWritePos == COM_RX_BUF_SIZE)
