@@ -1,91 +1,93 @@
 //Variables & Constants
-            var updateInterval = 500 // 500ms
-            var isSimulating = false;
-            var simulationIntervalID;
+var updateInterval = 250; // 250ms
+var isSimulating = true;
+var simulationIntervalID;
 
-            //set values to initial value
-            document.getElementById("direction").innerText = "undefined";
+/* Main functions ----------------------------- */
 
-            //Helpers
-            function apiGet(callback) {
-                var xmlhttp = new XMLHttpRequest();
-                xmlhttp.onreadystatechange = function() {
-                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                        console.log('responseText:' + xmlhttp.responseText);
-                        try {
-                            var data = JSON.parse(xmlhttp.responseText);
-                        } catch(err) {
-                            console.log(err.message + " in " + xmlhttp.responseText);
-                            return;
-                        }
-                        callback(data);
-                    }
-                };
-                xmlhttp.open("GET", '/api', true);
-                xmlhttp.send();
-            }
+// Initialization
+function init() {
+    if (isSimulating) {
+        enableSimulation();
+        sendSpeed(0); // send speed 0
+    } else {
+        enableControlFlow();
+    }
+}
 
-            // UI
+// Enable simulation mode, disable controlflow
+function enableSimulation() {
+    var state = document.getElementById('webAppState');
+    state.innerHTML = "Simulating"
 
-            //updateUI method (called by setInterval each 500ms)
-            function updateUI(data) {
-                console.log("Received Data:");
-                console.log(data);
-                updateDirection(data.direction);
-            }
+    var controlFlow = document.getElementById('controlFlow');
+    controlFlow.style.display = 'none';
 
-            function updateDirection(direction) {
-                document.getElementById("direction").innerText = direction;
-            }
+    var simulation = document.getElementById('simulation');
+    simulation.style.display = 'block';
+}
 
-            //Plays the number pressed as sound (e.g. for #1 it plays "Number one") wow
-            function playSound(sound_nr){
-                xmlhttp = new XMLHttpRequest()
-                xmlhttp.open('GET', '/sound/' + sound_nr, true)
-                xmlhttp.send()
-                alert("playing Sound #1")
-            }
+// Enable controlflow, disable simulation mode
+function enableControlFlow() {
+    var state = document.getElementById('webAppState');
+    state.innerHTML = "ControlFlow"
 
-            //Starts/stops simulation mode. Constantly updates movement values during simulation
-            function start() {
+    var simulation = document.getElementById('simulation');
+    simulation.style.display = 'none';
 
-                if(!isSimulating){
-                    $("#Simulate").html('Stop');
-                    movementSet();
-                    simulationIntervalID = setInterval(movementGet, updateInterval, updateMovement);
-                    isSimulating = true;
-                } else {
-                    $("#Simulate").html('Start');
-                    clearInterval(simulationIntervalID);
-                    isSimulating = false;
-                }
-            }
+    var controlFlow = document.getElementById('controlFlow');
+    controlFlow.style.display = 'block';
+}
 
-            // gets movement values (Acceleration, Speed, Distance) in a 500ms interval
-            function movementGet(callback){
-                var xhr = new XMLHttpRequest();
-                var url = "/simulation/get";
-                xhr.open("GET", url, true);
-                xhr.setRequestHeader("Content-Type", "application/json");
+// start ControlFlow
+function startControlFlow() {
 
-                xhr.onreadystatechange = function(){
-                    if (xhr.readyState === 4 && xhr.status === 200) {
-                        var json = JSON.parse(xhr.responseText);
-                        console.log(json.acc + json.speed + json.distance );
-                        callback(json);
-                    }
-                }
+}
 
-                xhr.send();
 
-            }
+/* Simulation commands ------------------------ */
 
-            //callback of movementGet, sets the movement values
-            function updateMovement(json) {
-                $('#Acceleration').val(json.acc);
-                $('#Speed').val(json.speed);
-                $('#Distance').val(json.distance);
-            };
+// Plays the number pressed as sound (e.g. for #1 it plays "Number one") wow
+function playSound(sound_nr) {
+    xmlhttp = new XMLHttpRequest()
+    xmlhttp.open('GET', '/sound/' + sound_nr, true)
+    xmlhttp.send()
+    alert("playing Sound #1")
+}
 
-            //setInterval(apiGet, updateInterval, updateUI);
-            setInterval(apiGet, updateInterval, )
+function sendSpeed(speed) {
+    xmlhttp = new XMLHttpRequest()
+    xmlhttp.open('GET', '/speed/' + speed, true)
+    xmlhttp.send()
+}
+
+function moveStart() {
+    var speedValue = document.getElementById("speedValue").value
+    sendSpeed(speedValue)
+}
+
+function moveStop() {
+    var speedValue = document.getElementById("speedValue");
+    speedValue.value = 0;
+    sendSpeed(0);
+}
+
+/* Events ------------------------------------- */
+
+simMode = document.getElementById('simMode');
+simMode.addEventListener('change', e => {
+    e.preventDefault();
+
+    if (e.target.checked) {
+        isSimulating = true;
+    } else {
+        isSimulating = false;
+    }
+
+    init();
+});
+
+/* Start Main Flow ---------------------------- */
+
+// Call init the first time
+init();

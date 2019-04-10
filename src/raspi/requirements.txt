@@ -1,3 +1,5 @@
-sanic>=0.7.0 #Webframework https://github.com/huge-success/sanic
-protobuf>=3.3.0 #middleware
-pyzmq>=17.1.0 #middleware
+sanic==18.12.0 #Webframework https://github.com/huge-success/sanic
+protobuf==3.6.1 #middleware
+pyzmq==17.1.2 #middleware
+pyserial==3.4 #interface raspi and tiny
+pyttsx3==2.7 #playing sound on raspberry

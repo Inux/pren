@@ -1,7 +1,8 @@
 import sys
-sys.path.append('..')
 
-from pb import heartbeat_pb2
+import src.raspi.lib.log as log
+import src.raspi.lib.zmq_topics as zmq_topics
+from src.raspi.pb import heartbeat_pb2
 
 STATUS_STARTING = "starting"
 STATUS_RUNNING = "running"
@@ -15,11 +16,12 @@ COMPONENT_ACOUSTIC = "acoustic"
 COMPONENT_CONTROLFLOW = "controlflow"
 COMPONENT_WEBAPP = "webapp"
 
-HEARTBEAT_TOPIC = b'heartbeat'
+logger = log.getLogger('SoulTrain.lib.heartbeat')
 
 def send_heartbeat(socket, component, status):
     msg = get_heartbeat_msg(component, status)
-    socket.send(HEARTBEAT_TOPIC + b' ' + msg)
+    logger.debug("Sending HeartBeat for '%s' with status '%s'", component, status)
+    socket.send(zmq_topics.HEARTBEAT_TOPIC + b' ' + msg)
 
 def get_heartbeat_msg(component, status):
     heartbeat = heartbeat_pb2.Heartbeat()

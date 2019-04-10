@@ -106,8 +106,10 @@ void piDoWork(void)
   }
 }
 
-void pi_init(void)
+void pi_Init(void)
 {
   McuUtility_Init();
   uart_inti();
+  ack_Init();
+  LOG_INFO("Pi Comunication ready");
 }

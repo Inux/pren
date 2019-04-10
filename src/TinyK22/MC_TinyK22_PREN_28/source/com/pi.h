@@ -23,7 +23,7 @@ typedef struct frameLineHandler
   struct frameLineHandler *next;
 } tframeLineHandler;
 
-void pi_init(void);
+void pi_Init(void);
 
 void piRegisterFrameLineHandler(tframeLineHandler *clh,
     unsigned char* cmd, unsigned char *cmdDesc, frameHandler h, tAckHandler *ackHandler);

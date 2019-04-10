@@ -1,6 +1,4 @@
 import pyttsx3
-import sys
-sys.path.append('../..')
 
 import zmq
 import zmq.auth

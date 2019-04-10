@@ -29,11 +29,22 @@ extern "C" {
 #define FTM_1_MOTOR_PWM_IRQN FTM1_IRQn
 /* FTM_1_Motor_PWM interrupt handler identifier. */
 #define FTM_1_MOTOR_PWM_IRQHANDLER FTM1_IRQHandler
+/* Definition of peripheral ID */
+#define FTM_2_ENCODER_PERIPHERAL FTM2
+/* Definition of the clock source frequency */
+#define FTM_2_ENCODER_CLOCK_SOURCE CLOCK_GetFreq(kCLOCK_BusClk)
+/* FTM_2_Encoder interrupt vector ID (number). */
+#define FTM_2_ENCODER_IRQN FTM2_IRQn
+/* FTM_2_Encoder interrupt vector priority. */
+#define FTM_2_ENCODER_IRQ_PRIORITY 2
+/* FTM_2_Encoder interrupt handler identifier. */
+#define FTM_2_ENCODER_IRQHANDLER FTM2_IRQHandler
 
 /***********************************************************************************************************************
  * Global variables
  **********************************************************************************************************************/
 extern const ftm_config_t FTM_1_Motor_PWM_config;
+extern const ftm_config_t FTM_2_Encoder_config;
 
 /***********************************************************************************************************************
  * Initialization functions

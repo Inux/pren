@@ -8,6 +8,8 @@
 #ifndef APP_H_
 #define APP_H_
 
+#define TEST 0
+
 typedef enum
 {
   EC_SUCCESS = 0,           // no error
