@@ -13,6 +13,7 @@ from src.raspi.pb import move_command_pb2
 from src.raspi.pb import heartbeat_pb2
 from src.raspi.pb import speed_pb2
 from src.raspi.pb import current_pb2
+from src.raspi.lib import zmq_heartbeat_listener
 
 logger = log.getLogger("SoulTrain.webapp.mw_adapter_server")
 
@@ -20,8 +21,9 @@ logger = log.getLogger("SoulTrain.webapp.mw_adapter_server")
 reader_linedetector = zmq_socket.get_linedetector_reader()
 reader_movement = zmq_socket.get_movement_reader()
 sender_webapp = zmq_socket.get_webapp_sender()
+hb_listener = zmq_heartbeat_listener.HeartBeatListener()
 
-data = {}
+data = {} # data will be updated by HeartBeatListener
 data['direction'] = "undefined"
 data['state'] = "undefined"
 data['state_message'] = "undefined"
@@ -31,15 +33,12 @@ data['x_acceleration'] = 0
 data['y_acceleration'] = 0
 data['z_acceleration'] = 0
 data['direction'] = 'undefined'
-data['linedetection'] = 'error'
-data['numberdetection'] = 'error'
-data['movement'] = 'error'
-data['acoustic'] = 'error'
-data['controlflow'] = 'error'
 
 # Data Fields
 def get_data():
     global data
+
+    data.update(hb_listener.get_data()) #append heartbeat data to data object
 
     #Handle LineDetector in Messages
     if reader_linedetector.poll(timeout=1, flags=zmq.POLLIN) & zmq.POLLIN == zmq.POLLIN:
@@ -57,31 +56,11 @@ def get_data():
                 data['direction'] = dir_obj.direction
                 return data
 
-        if topic == zmq_topics.HEARTBEAT_TOPIC:
-            #Try Parse HeartBeat
-            heartbeat = heartbeat_pb2.Heartbeat()
-            heartbeat.ParseFromString(dataraw)
-
-            if heartbeat is not None:
-                logger.debug("received heartbeat from '%s' with status '%s'", heartbeat.component, heartbeat.status)
-                data[heartbeat.component] = heartbeat.status
-                return data
-
     #Handle Movement in Messages
     if reader_movement.poll(timeout=1, flags=zmq.POLLIN) & zmq.POLLIN == zmq.POLLIN:
         topic_and_data = reader_movement.recv()
         topic = topic_and_data.split(b' ', 1)[0]
         dataraw = topic_and_data.split(b' ', 1)[1]
-
-        if topic == zmq_topics.HEARTBEAT_TOPIC:
-            #Try Parse HeartBeat
-            heartbeat = heartbeat_pb2.Heartbeat()
-            heartbeat.ParseFromString(dataraw)
-
-            if heartbeat is not None:
-                logger.debug("received heartbeat from '%s' with status '%s'", heartbeat.component, heartbeat.status)
-                data[heartbeat.component] = heartbeat.status
-                return data
 
         if topic == zmq_topics.SPEED_TOPIC:
             #Try Parse Speed

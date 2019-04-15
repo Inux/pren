@@ -54,8 +54,8 @@ async def api(request):
         y_acceleration = middlewareData['y_acceleration']
         z_acceleration = middlewareData['z_acceleration']
         direction = middlewareData['direction']
-        linedetection = middlewareData['linedetection']
-        numberdetection = middlewareData['numberdetection']
+        linedetector = middlewareData['linedetector']
+        numberdetector = middlewareData['numberdetector']
         movement = middlewareData['movement']
         acoustic = middlewareData['acoustic']
         controlflow = middlewareData['controlflow']
@@ -69,8 +69,8 @@ async def api(request):
         'yAcceleration': str(y_acceleration),
         'zAcceleration': str(z_acceleration),
         'direction': str(direction),
-        'heartBeatLineDetection': str(linedetection),
-        'heartBeatNumberDetection': str(numberdetection),
+        'heartBeatLineDetector': str(linedetector),
+        'heartBeatNumberDetector': str(numberdetector),
         'heartBeatMovement': str(movement),
         'heartBeatAcoustic': str(acoustic),
         'heartBeatControlFlow': str(controlflow)
