@@ -44,7 +44,7 @@ class LineDetector(base_app.App):
 
     def linedetection_loop(self, *args, **kwargs):
         mwadapter.send_direction(get_dir())
-        time.sleep(1)
+        time.sleep(3)
 
 if __name__ == '__main__':
     LineDetector().run()
