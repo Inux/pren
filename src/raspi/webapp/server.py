@@ -18,7 +18,7 @@ app.name = "PrenTeam28WebApp"
 
 app.static('/static', os.path.join(os.path.dirname(__file__), 'static'))
 
-MIDDLEWARE_SCAN_INTERVAL = 0.250 # 250ms
+MIDDLEWARE_SCAN_INTERVAL = 0.010 # 50ms
 
 middlewareData = None
 
@@ -82,7 +82,7 @@ async def play_sound(request, sound_nr):
     return json({'received': True})
 
 @app.route('/speed/<speed>')
-async def play_sound(request, speed):
+async def send_speed(request, speed):
     mwadapter.send_move_cmd(int(speed))
     return json({'received': True})
 

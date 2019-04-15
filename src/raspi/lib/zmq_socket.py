@@ -57,7 +57,7 @@ def get_movement_reader():
 
 def get_numberdetector_reader():
     __nr = __get_reader(PORT_NUMBERDETECTOR)
-    __nr.setsockopt(zmq.SUBSCRIBE, zmq_topics.NUMBER_DETECTION_TOPIC)
+    __nr.setsockopt(zmq.SUBSCRIBE, zmq_topics.NUMBER_DETECTOR_TOPIC)
     __nr.setsockopt(zmq.SUBSCRIBE, zmq_topics.HEARTBEAT_TOPIC)
     return __nr
 

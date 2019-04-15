@@ -38,7 +38,8 @@ data['direction'] = 'undefined'
 def get_data():
     global data
 
-    data.update(hb_listener.get_data()) #append heartbeat data to data object
+    heartbeats = hb_listener.get_data()
+    data.update(heartbeats) # append heartbeats data to data object
 
     #Handle LineDetector in Messages
     if reader_linedetector.poll(timeout=1, flags=zmq.POLLIN) & zmq.POLLIN == zmq.POLLIN:
