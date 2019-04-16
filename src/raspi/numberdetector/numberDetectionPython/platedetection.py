@@ -1,18 +1,22 @@
 
 import cv2
 import numpy as np
-#import pydevd_pycharm
-#pydevd_pycharm.settrace('192.168.0.31', port=3265, stdoutToServer=True, stderrToServer=True)
-
+from multiprocessing import Queue
+from threading import Thread
+# import pydevd_pycharm
+# pydevd_pycharm.settrace('192.168.0.31', port=3265, stdoutToServer=True, stderrToServer=True)
 
 
 def nothing(x):
     pass
 
+
 class PlateDetection:
 
     def __init__(self):
         self.cap = cv2.VideoCapture(-1)
+        self.camQueue = Queue(maxsize=10)
+
         self.windowTrackbar = "trackbarWindow"
         self.windowWorkFrame = "workFrameWindow"
         self.windowOriginalFrame = "OriginalFrameWindow"
@@ -47,12 +51,20 @@ class PlateDetection:
             self.kernelTrackbar: cv2.getTrackbarPos(self.threshTrackbar,self.windowTrackbar)
         }.get(trackbar,0)
 
-    def filterAndMorphOP(self,frame,threshold,kernel,iterator):
+    def filterAndMorphOP(self, frame, threshold, kernel, iterator):
         kernel1 = np.ones((kernel, kernel), np.uint8)
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         ret, thresh1 = cv2.threshold(gray, threshold, 255, cv2.THRESH_TOZERO)
         thresh1 = cv2.dilate(thresh1, kernel1, iterations=iterator)
         return thresh1
+
+    def camWorker(self):
+        while True:
+            try:
+                ret, frame = self.cap.read()
+                self.camQueue.put(frame)
+            except self.camQueue.Full:
+                print("CamQueue is Full")
 
     def showWebcam(self):
 
@@ -64,7 +76,6 @@ class PlateDetection:
             orignFram = frame
             thresholdFrame = self.filterAndMorphOP(frame,self.getTrackbarValues(self.threshTrackbar),self.getTrackbarValues(self.kernelTrackbar),self.getTrackbarValues(self.iteratorTrackbar))
 
-            
             contours, hierarchy = cv2.findContours(thresholdFrame,cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
             try:
                 for val in contours:
@@ -83,14 +94,11 @@ class PlateDetection:
         self.cap.release()
 
 
-
-
-
-
-
 def main():
     plateDetection = PlateDetection()
-    plateDetection.showWebcam()
+    thread = Thread(target=plateDetection.camWorker)
+    thread.start()
+
 
 if __name__=='__main__':
     main()

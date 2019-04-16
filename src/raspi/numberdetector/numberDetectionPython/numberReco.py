@@ -9,8 +9,6 @@ from keras import backend as K
 
 class NumberReco:
 
-
-
     def __init__(self):
         # load json and create model
         json_file = open('model.json', 'r')
@@ -21,17 +19,13 @@ class NumberReco:
         self.model.load_weights("model.h5")
         print("Loaded model from disk")
 
-        self.model.compile(loss='categorical_crossentropy',
-                      optimizer='adam',
-                      metrics=['accuracy'])
-
-
+        self.model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 
     """
     thresPicture: thresPicture
     rect: array: x,y,w,h
     """
-    def recoNumber(self,thresPicture,rect):
+    def recoNumber(self, thresPicture, rect):
         newImage = thresPicture[rect[1]:rect[1] + rect[3], rect[0]:rect[0] + rect[2]]
         newImage = cv2.resize(newImage, (28, 28))
         newImage = np.array(newImage)
