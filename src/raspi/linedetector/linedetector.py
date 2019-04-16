@@ -14,7 +14,7 @@ from src.raspi.lib import heartbeat as hb
 socket = zmq_socket.make_socket()
 
 def send_hb():
-    hb.send_heartbeat(socket, hb.COMPONENT_LINEDETECTION, hb.STATUS_RUNNING)
+    hb.send_heartbeat(socket, hb.COMPONENT_LINEDETECTOR, hb.STATUS_RUNNING)
 
 class Linedetection(base_app.App):
     def __init__(self, *args, **kwargs):

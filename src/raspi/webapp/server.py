@@ -18,7 +18,7 @@ app.name = "PrenTeam28WebApp"
 
 app.static('/static', os.path.join(os.path.dirname(__file__), 'static'))
 
-MIDDLEWARE_SCAN_INTERVAL = 0.250 # 250ms
+MIDDLEWARE_SCAN_INTERVAL = 0.010 # 50ms
 
 middlewareData = None
 
@@ -54,8 +54,8 @@ async def api(request):
         y_acceleration = middlewareData['y_acceleration']
         z_acceleration = middlewareData['z_acceleration']
         direction = middlewareData['direction']
-        linedetection = middlewareData['linedetection']
-        numberdetection = middlewareData['numberdetection']
+        linedetector = middlewareData['linedetector']
+        numberdetector = middlewareData['numberdetector']
         movement = middlewareData['movement']
         acoustic = middlewareData['acoustic']
         controlflow = middlewareData['controlflow']
@@ -69,8 +69,8 @@ async def api(request):
         'yAcceleration': str(y_acceleration),
         'zAcceleration': str(z_acceleration),
         'direction': str(direction),
-        'heartBeatLineDetection': str(linedetection),
-        'heartBeatNumberDetection': str(numberdetection),
+        'heartBeatLineDetector': str(linedetector),
+        'heartBeatNumberDetector': str(numberdetector),
         'heartBeatMovement': str(movement),
         'heartBeatAcoustic': str(acoustic),
         'heartBeatControlFlow': str(controlflow)
@@ -82,7 +82,7 @@ async def play_sound(request, sound_nr):
     return json({'received': True})
 
 @app.route('/speed/<speed>')
-async def play_sound(request, speed):
+async def send_speed(request, speed):
     mwadapter.send_move_cmd(int(speed))
     return json({'received': True})
 

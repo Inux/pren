@@ -4,13 +4,15 @@ import src.raspi.lib.log as log
 import src.raspi.lib.zmq_topics as zmq_topics
 from src.raspi.pb import heartbeat_pb2
 
+# Dont change - has impact on conditional logic
 STATUS_STARTING = "starting"
 STATUS_RUNNING = "running"
 STATUS_ERROR = "error"
 STATUS_FINISHED = "finished"
 
-COMPONENT_LINEDETECTION = "linedetection"
-COMPONENT_NUMBERDETECTION = "numberdetection"
+# Dont change - has impact on conditional logic
+COMPONENT_LINEDETECTOR = "linedetector"
+COMPONENT_NUMBERDETECTOR = "numberdetector"
 COMPONENT_MOVEMENT = "movement"
 COMPONENT_ACOUSTIC = "acoustic"
 COMPONENT_CONTROLFLOW = "controlflow"
