@@ -3,11 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="ab147fde-410e-4d52-be96-56fd493f6ce0" name="Default Changelist" comment="">
 <<<<<<< Updated upstream
-<<<<<<< Updated upstream
       <change afterPath="$PROJECT_DIR$/.idea/other.xml" afterDir="false" />
 =======
-=======
->>>>>>> Stashed changes
       <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.idea/markdown-navigator.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.idea/markdown-navigator/profiles_settings.xml" afterDir="false" />
@@ -168,14 +165,8 @@
       <workItem from="1555141242480" duration="1086000" />
       <workItem from="1555142450956" duration="5953000" />
 <<<<<<< Updated upstream
-<<<<<<< Updated upstream
       <workItem from="1555235235639" duration="3259000" />
       <workItem from="1555306746009" duration="30000" />
-=======
-      <workItem from="1555416786166" duration="84000" />
-      <workItem from="1555416886574" duration="130000" />
-      <workItem from="1555417046231" duration="108000" />
->>>>>>> Stashed changes
 =======
       <workItem from="1555416786166" duration="84000" />
       <workItem from="1555416886574" duration="130000" />
@@ -186,7 +177,6 @@
   </component>
   <component name="TimeTrackingManager">
 <<<<<<< Updated upstream
-<<<<<<< Updated upstream
     <option name="totallyTimeSpent" value="12015000" />
   </component>
   <component name="ToolWindowManager">
@@ -195,11 +185,6 @@
     <option name="totallyTimeSpent" value="9048000" />
   </component>
   <component name="ToolWindowManager">
-=======
-    <option name="totallyTimeSpent" value="9048000" />
-  </component>
-  <component name="ToolWindowManager">
->>>>>>> Stashed changes
     <frame x="-8" y="-8" width="2576" height="1416" extended-state="6" />
     <editor active="true" />
 >>>>>>> Stashed changes
@@ -225,9 +210,6 @@
 =======
       <window_info active="true" anchor="bottom" id="File Transfer" order="13" visible="true" weight="0.3290735" />
       <window_info anchor="right" id="Json Parser" />
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
 >>>>>>> Stashed changes
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -240,12 +222,9 @@
     <option name="version" value="1" />
   </component>
 <<<<<<< Updated upstream
-<<<<<<< Updated upstream
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/numberDetectionPython$platedetection.coverage" NAME="platedetection Coverage Results" MODIFIED="1555238442188" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
-=======
->>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
   <component name="editorHistoryManager">
@@ -259,7 +238,6 @@
     <entry file="file://$PROJECT_DIR$/platedetection.py">
       <provider selected="true" editor-type-id="text-editor">
 <<<<<<< Updated upstream
-<<<<<<< Updated upstream
         <state relative-caret-position="516">
           <caret line="63" column="29" selection-start-line="63" selection-start-column="29" selection-end-line="63" selection-end-column="29" />
           <folding>
@@ -268,11 +246,6 @@
         <state relative-caret-position="460">
           <caret line="125" lean-forward="true" selection-start-line="125" selection-end-line="125" />
           <folding>
-=======
-        <state relative-caret-position="460">
-          <caret line="125" lean-forward="true" selection-start-line="125" selection-end-line="125" />
-          <folding>
->>>>>>> Stashed changes
             <element signature="e#31#65#0" />
             <element signature="e#206#210#0" />
             <element signature="e#271#628#0" />
@@ -285,9 +258,6 @@
             <element signature="e#3073#3349#0" />
             <element signature="e#3184#3349#0" />
             <element signature="e#3842#3907#0" />
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
 >>>>>>> Stashed changes
           </folding>
         </state>
