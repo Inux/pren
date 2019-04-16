@@ -42,13 +42,13 @@ function updateSoulTrainData(data) {
 
 // Update the classes to display HearBeat status
 function updateHeartBeats(data) {
-    lineDetectionDiv = document.getElementById("lineDetectionDiv");
-    numberDetectionDiv = document.getElementById("numberDetectionDiv");
+    lineDetectorDiv = document.getElementById("lineDetectorDiv");
+    numberDetectorDiv = document.getElementById("numberDetectorDiv");
     movementDiv = document.getElementById("movementDiv");
     acousticDiv = document.getElementById("acousticDiv");
     controlFlowDiv = document.getElementById("controlflowDiv");
 
-    elements = [lineDetectionDiv, numberDetectionDiv, movementDiv, acousticDiv, controlFlowDiv];
+    elements = [lineDetectorDiv, numberDetectorDiv, movementDiv, acousticDiv, controlFlowDiv];
 
     elements.forEach((item, index) => {
         if(item == null) {
@@ -58,8 +58,8 @@ function updateHeartBeats(data) {
         }
     });
 
-    lineDetectionDiv.classList.add(data.heartBeatLineDetection);
-    numberDetectionDiv.classList.add(data.heartBeatNumberDetection);
+    lineDetectorDiv.classList.add(data.heartBeatLineDetector);
+    numberDetectorDiv.classList.add(data.heartBeatNumberDetector);
     movementDiv.classList.add(data.heartBeatMovement);
     acousticDiv.classList.add(data.heartBeatAcoustic);
     controlFlowDiv.classList.add(data.heartBeatControlFlow);
