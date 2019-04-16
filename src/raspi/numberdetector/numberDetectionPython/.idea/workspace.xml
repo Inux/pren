@@ -2,9 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ab147fde-410e-4d52-be96-56fd493f6ce0" name="Default Changelist" comment="">
+<<<<<<< Updated upstream
       <change afterPath="$PROJECT_DIR$/.idea/other.xml" afterDir="false" />
+=======
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/markdown-navigator.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/markdown-navigator/profiles_settings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/numberDetectionPython.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/numberDetectionPython.iml" afterDir="false" />
+>>>>>>> Stashed changes
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platedetection.py" beforeDir="false" afterPath="$PROJECT_DIR$/platedetection.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -13,7 +20,35 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
+<<<<<<< Updated upstream
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+=======
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/platedetection.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="460">
+              <caret line="125" lean-forward="true" selection-start-line="125" selection-end-line="125" />
+              <folding>
+                <element signature="e#31#65#0" />
+                <element signature="e#206#210#0" />
+                <element signature="e#271#628#0" />
+                <element signature="e#661#1263#0" />
+                <element signature="e#1018#1061#0" />
+                <element signature="e#1313#1739#0" />
+                <element signature="e#1777#3821#0" />
+                <element signature="e#2424#3791#0" />
+                <element signature="e#3032#3349#0" />
+                <element signature="e#3073#3349#0" />
+                <element signature="e#3184#3349#0" />
+                <element signature="e#3842#3907#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+>>>>>>> Stashed changes
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../.." />
@@ -25,18 +60,34 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="4">
-    <option name="x" value="1312" />
-    <option name="y" value="27" />
-    <option name="width" value="1248" />
-    <option name="height" value="1413" />
+  <component name="ProjectFrameBounds" extendedState="7">
+    <option name="x" value="-7" />
+    <option name="width" value="1294" />
+    <option name="height" value="1407" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
+<<<<<<< Updated upstream
     <panes />
+=======
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="numberDetectionPython" type="b2602c69:ProjectViewProjectNode" />
+              <item name="numberDetectionPython" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+>>>>>>> Stashed changes
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
@@ -44,7 +95,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../../PythonProjects/django-start" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Color Scheme Font" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -113,18 +164,32 @@
       <workItem from="1555141186414" duration="25000" />
       <workItem from="1555141242480" duration="1086000" />
       <workItem from="1555142450956" duration="5953000" />
+<<<<<<< Updated upstream
       <workItem from="1555235235639" duration="3259000" />
       <workItem from="1555306746009" duration="30000" />
+=======
+      <workItem from="1555416786166" duration="84000" />
+      <workItem from="1555416886574" duration="130000" />
+      <workItem from="1555417046231" duration="108000" />
+>>>>>>> Stashed changes
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
+<<<<<<< Updated upstream
     <option name="totallyTimeSpent" value="12015000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1312" y="27" width="1248" height="1413" extended-state="4" />
+=======
+    <option name="totallyTimeSpent" value="9048000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="2576" height="1416" extended-state="6" />
+    <editor active="true" />
+>>>>>>> Stashed changes
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.2579035" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13036565" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -140,7 +205,12 @@
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Terminal" order="11" />
       <window_info anchor="bottom" id="Python Console" order="12" />
+<<<<<<< Updated upstream
       <window_info anchor="bottom" id="File Transfer" order="13" weight="0.3290735" />
+=======
+      <window_info active="true" anchor="bottom" id="File Transfer" order="13" visible="true" weight="0.3290735" />
+      <window_info anchor="right" id="Json Parser" />
+>>>>>>> Stashed changes
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -151,9 +221,12 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
+<<<<<<< Updated upstream
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/numberDetectionPython$platedetection.coverage" NAME="platedetection Coverage Results" MODIFIED="1555238442188" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
+=======
+>>>>>>> Stashed changes
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/numberReco.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -164,10 +237,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/platedetection.py">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< Updated upstream
         <state relative-caret-position="516">
           <caret line="63" column="29" selection-start-line="63" selection-start-column="29" selection-end-line="63" selection-end-column="29" />
           <folding>
             <element signature="e#1#11#0" expanded="true" />
+=======
+        <state relative-caret-position="460">
+          <caret line="125" lean-forward="true" selection-start-line="125" selection-end-line="125" />
+          <folding>
+            <element signature="e#31#65#0" />
+            <element signature="e#206#210#0" />
+            <element signature="e#271#628#0" />
+            <element signature="e#661#1263#0" />
+            <element signature="e#1018#1061#0" />
+            <element signature="e#1313#1739#0" />
+            <element signature="e#1777#3821#0" />
+            <element signature="e#2424#3791#0" />
+            <element signature="e#3032#3349#0" />
+            <element signature="e#3073#3349#0" />
+            <element signature="e#3184#3349#0" />
+            <element signature="e#3842#3907#0" />
+>>>>>>> Stashed changes
           </folding>
         </state>
       </provider>
