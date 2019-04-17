@@ -1,7 +1,7 @@
 
 import cv2
 import numpy as np
-from multiprocessing import Queue
+from queue import Queue
 from threading import Thread
 # import pydevd_pycharm
 # pydevd_pycharm.settrace('192.168.0.31', port=3265, stdoutToServer=True, stderrToServer=True)
@@ -14,8 +14,9 @@ def nothing(x):
 class PlateDetection:
 
     def __init__(self):
-        self.cap = cv2.VideoCapture(-1)
+        self.cap = cv2.VideoCapture(0)
         self.camQueue = Queue(maxsize=10)
+        print(str(self.camQueue.empty))
 
         self.windowTrackbar = "trackbarWindow"
         self.windowWorkFrame = "workFrameWindow"
@@ -60,11 +61,16 @@ class PlateDetection:
 
     def camWorker(self):
         while True:
+            ret, frame = self.cap.read()
+            self.camQueue.put(frame)
+
+    def filterWorker(self):
+        while True:
             try:
-                ret, frame = self.cap.read()
-                self.camQueue.put(frame)
-            except self.camQueue.Full:
-                print("CamQueue is Full")
+                frame = self.camQueue.get()
+                self.filterAndMorphOP(frame, self.getTrackbarValues(self.threshTrackbar), self.getTrackbarValues(self.kernelTrackbar), self.getTrackbarValues(self.iteratorTrackbar))
+            except:
+                pass
 
     def showWebcam(self):
 
@@ -96,8 +102,15 @@ class PlateDetection:
 
 def main():
     plateDetection = PlateDetection()
-    thread = Thread(target=plateDetection.camWorker)
-    thread.start()
+    plateDetection.initCam()
+    plateDetection.createTrackbar()
+
+    camThread = Thread(target=plateDetection.camWorker)
+    filterThread = Thread(target=plateDetection.filterWorker)
+    camThread.start()
+    filterThread.start()
+    camThread.join()
+    filterThread.join()
 
 
 if __name__=='__main__':
