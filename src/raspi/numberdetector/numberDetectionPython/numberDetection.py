@@ -28,12 +28,9 @@ class Movement(base_app.App):
         self.job = periodic_job.PeriodicJob(interval=timedelta(milliseconds=50), execute=send_hb)
         self.job.start()
 
-        self.data = {}
-        self.data['speed'] = None
-
     def detection_loop(self, *args, **kwargs):
+        pass
         
-
 
 if __name__ == '__main__':
     Movement().run()
