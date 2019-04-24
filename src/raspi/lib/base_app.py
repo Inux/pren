@@ -5,11 +5,14 @@ from datetime import timedelta
 
 WAIT_TIME_SECONDS = 1
 
+
 class ProgramKilled(Exception):
     pass
 
+
 def signal_handler(signum, frame):
     raise ProgramKilled
+
 
 class App(object):
     def __init__(self, name, loop, *args, **kwargs):

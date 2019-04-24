@@ -1,0 +1,34 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../include/PlateDetec.hpp
+iostream
+-
+string
+-
+stdlib.h
+-
+opencv4/opencv2/opencv.hpp
+-
+opencv4/opencv2/video.hpp
+-
+opencv4/opencv2/imgproc.hpp
+-
+opencv4/opencv2/highgui.hpp
+-
+
+/home/patrick/Programming/pren/src/raspi/numberdetector/plate-detection-cpp/src/PlateDetec.cpp
+PlateDetec.hpp
+/home/patrick/Programming/pren/src/raspi/numberdetector/plate-detection-cpp/src/PlateDetec.hpp
+
+/home/patrick/Programming/pren/src/raspi/numberdetector/plate-detection-cpp/src/main.cpp
+iostream
+-
+PlateDetec.hpp
+/home/patrick/Programming/pren/src/raspi/numberdetector/plate-detection-cpp/src/PlateDetec.hpp
+
