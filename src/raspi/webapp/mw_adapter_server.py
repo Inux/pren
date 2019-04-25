@@ -13,6 +13,7 @@ from src.raspi.pb import move_command_pb2
 from src.raspi.pb import heartbeat_pb2
 from src.raspi.pb import speed_pb2
 from src.raspi.pb import current_pb2
+from src.raspi.pb import acceleration_pb2
 from src.raspi.lib import zmq_heartbeat_listener
 
 logger = log.getLogger("SoulTrain.webapp.mw_adapter_server")
@@ -71,8 +72,19 @@ def get_data():
             if speed is not None:
                 logger.debug("received speed '%s'", speed.speed)
                 data['speed'] = speed.speed
-                return data
 
+        if topic == zmq_topics.ACCELERATION_TOPIC:
+            # Try Parse Acceleration
+            acceleration = acceleration_pb2.Acceleration()
+            acceleration.ParseFromString(dataraw)
+
+            if acceleration is not None:
+                logger.debug("received acceleration in x-axis '%s'", acceleration.x)
+                logger.debug("received acceleration in y-axis '%s'", acceleration.y)
+                logger.debug("received acceleration in z-axis '%s'", acceleration.z)
+                data['x_acceleration'] = acceleration.x
+                data['y_acceleration'] = acceleration.y
+                data['z_acceleration'] = acceleration.z
         if topic == zmq_topics.CURRENT_TOPIC:
             #Try Parse Current
             current = current_pb2.Current()
@@ -81,7 +93,6 @@ def get_data():
             if current is not None:
                 logger.debug("received current '%s'", current.current)
                 data['current'] = current.current
-                return data
 
     return data
 

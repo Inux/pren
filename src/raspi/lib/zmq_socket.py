@@ -51,6 +51,7 @@ def get_movement_reader():
     __mr = __get_reader(PORT_MOVEMENT)
     __mr.setsockopt(zmq.SUBSCRIBE, zmq_topics.SPEED_TOPIC)
     __mr.setsockopt(zmq.SUBSCRIBE, zmq_topics.CURRENT_TOPIC)
+    __mr.setsockopt(zmq.SUBSCRIBE, zmq_topics.ACCELERATION_TOPIC)
     __mr.setsockopt(zmq.SUBSCRIBE, zmq_topics.HEARTBEAT_TOPIC)
     __mr.setsockopt(zmq.SUBSCRIBE, zmq_topics.ACKNOWLEDGE_TOPIC)
     return __mr

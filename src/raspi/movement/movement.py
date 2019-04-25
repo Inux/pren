@@ -14,6 +14,7 @@ from src.raspi.lib import zmq_socket
 from src.raspi.lib import periodic_job
 from src.raspi.lib import heartbeat as hb
 from src.raspi.movement import protocol
+from src.raspi.movement.accelerometer import AccelerationReader
 from src.raspi.movement import mw_adapter_movement
 
 socket = zmq_socket.get_movement_sender()
@@ -24,15 +25,20 @@ def send_hb():
 class Movement(base_app.App):
     def __init__(self, *args, **kwargs):
         super().__init__("Movement", self.movement_loop, *args, **kwargs)
-
         self.job = periodic_job.PeriodicJob(interval=timedelta(milliseconds=50), execute=send_hb)
         self.job.start()
+
+        ar = AccelerationReader()
+        ar.start()
+
 
         self.tiny = protocol.Protocol(config.MASTER_UART_INTERFACE_TINY, config.MASTER_UART_BAUD, onNewSpeed=self.onNewSpeed, onNewCurrent=self.onNewCurrent)
         self.tiny.connect()
 
         self.data = {}
         self.data['speed'] = None
+
+
 
     def movement_loop(self, *args, **kwargs):
         self.tiny.rcv_handler()
