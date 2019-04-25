@@ -243,7 +243,7 @@
             <function name="Encoder_InitPins">
                <description>Configures pin routing and optionally pin electrical features.</description>
                <options>
-                  <callFromInitBoot>false</callFromInitBoot>
+                  <callFromInitBoot>true</callFromInitBoot>
                   <prefix>ENCODER_</prefix>
                   <coreID>core0</coreID>
                   <enableClock>true</enableClock>
@@ -704,7 +704,7 @@
                               <setting name="edge_aligned_mode" value="kFTM_EdgeAlignedPwm"/>
                               <struct name="edge_aligned_pwm">
                                  <setting name="chnlNumber" value="kFTM_Chnl_1"/>
-                                 <setting name="level" value="kFTM_HighTrue"/>
+                                 <setting name="level" value="kFTM_LowTrue"/>
                                  <setting name="dutyCyclePercent" value="0"/>
                                  <setting name="enable_chan_irq" value="false"/>
                               </struct>

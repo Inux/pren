@@ -97,6 +97,7 @@ pin_labels:
 void BOARD_InitBootPins(void)
 {
     BOARD_InitPins();
+    Encoder_InitPins();
     Motor_S_InitPins();
 }
 
@@ -298,7 +299,7 @@ void Pi_Init_UARTPins(void)
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 Encoder_InitPins:
-- options: {callFromInitBoot: 'false', prefix: ENCODER_, coreID: core0, enableClock: 'true'}
+- options: {callFromInitBoot: 'true', prefix: ENCODER_, coreID: core0, enableClock: 'true'}
 - pin_list:
   - {pin_num: '41', peripheral: FTM2, signal: 'CH, 0', pin_signal: PTB18/FTM2_CH0/I2S0_TX_BCLK/FB_AD15/FTM2_QD_PHA, direction: INPUT}
   - {pin_num: '42', peripheral: FTM2, signal: 'CH, 1', pin_signal: PTB19/FTM2_CH1/I2S0_TX_FS/FB_OE_b/FTM2_QD_PHB, direction: INPUT}
