@@ -22,7 +22,12 @@
 #include "peripherals.h"
 #include "drive.h"
 #include "driveCom.h"
+#include "crane.h"
 
+void Test_Motor_S(void)
+{
+  piWriteNum32s("craneTicks", (int32_t)Encoder_S_GetNbrOfTicks(), NULL);
+}
 
 void testMotor_A()
 {
@@ -55,6 +60,7 @@ tError TestCommandHander(const unsigned char *frameValue)
 {
   //piWriteString(testTopic, frameValue);
 
+  Encoder_S_StartCountingTicks();
   ackSend(&test_ackh);
 
   return EC_SUCCESS;
@@ -101,8 +107,8 @@ void RunTestApp(void)
 
   McuWait_Init();
   pi_Init();
-  ack_Init();
   drive_Init();
+  crane_Init();
 
   strncpy(test_ackh.topic, testTopic, sizeof(test_ackh.topic));
   test_ackh.timeoutHandler = TestAckTimeoutHandler;
@@ -116,13 +122,18 @@ void RunTestApp(void)
 
   while(1) {
     McuWait_Waitms(1);
-    //testMotor_A();
 
-    m++;
-    if (m > 25)
+    j++;
+    if (j > 100)
     {
-      m = 0;
-      driveToWork();
+      j = 0;
+      Test_Motor_S();
+    }
+
+    l++;
+    if (l > 25)
+    {
+      craneDoWork();
     }
 
     k++;
@@ -137,13 +148,6 @@ void RunTestApp(void)
     {
       i = 0;
       ackCheckQueue();
-    }
-
-    j++;
-    if (j > 30*100)
-    {
-      j = 0;
-      //piWriteString(testTopic, "Test message please ack with 'ack,test'", &test_ackh);
     }
   }
 }
