@@ -2,4 +2,4 @@ sanic==18.12.0 #Webframework https://github.com/huge-success/sanic
 protobuf==3.6.1 #middleware
 pyzmq==17.1.2 #middleware
 pyserial==3.4 #interface raspi and tiny
-pyttsx3==2.7 #playing sound on raspberry
+smbus2==0.2.3 #i2c interface for raspberry
