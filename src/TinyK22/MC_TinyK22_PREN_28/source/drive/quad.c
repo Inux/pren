@@ -14,6 +14,7 @@
 #include "pi.h"
 #include "comLog.h"
 #include "McuCriticalSection.h"
+#include "quad.h"
 
 #define FTM2_CLOCK      (60000000)
 #define WHEEL_RADIUS    (13)
@@ -119,7 +120,7 @@ void FTM_2_ENCODER_IRQHANDLER(void)
  */
 void encoder_Init(void)
 {
-  Encoder_InitPins();
+//  Encoder_InitPins(); // todo this is currently done in default init
 
   nbrTicks_A = 0;
   nbrTicks_S = 0;
