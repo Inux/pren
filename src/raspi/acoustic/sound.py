@@ -1,37 +1,40 @@
-import pyttsx3
+import random
+from datetime import timedelta
 
-import zmq
-import zmq.auth
+import src.raspi.lib.log as log
+import zmq_socket
+from src.raspi.lib import periodic_job
+from src.raspi.lib import heartbeat as hb
+import active_buzzer
+import src.raspi.acoustic.mw_adapter_acoustic as mw_adapter
 
-#import direction_pb2
-#from pb import direction_pb2
+logger = log.getLogger('SoulTrain.acoustic.sound')
 
-PORT = 8282
-DIRECTION_TOPIC = b'sound'
+socket = zmq_socket.get_acoustic_sender()
 
-OFFSET = 0
-DIRECTIONS = ['straight', 'left', 'right']
+def send_hb():
+    hb.send_heartbeat(socket, hb.COMPONENT_MOVEMENT, hb.STATUS_RUNNING)
 
-def main():
-    make_socket()
+class Buzzer:
+    def __init__(self):
+        super().__init__("Acoustic", self.acoustic_loop, *args, **kwargs)
 
+        self.job = periodic_job.PeriodicJob(interval=timedelta(milliseconds=50), execute=send_hb)
+        self.job.start()
 
-def make_socket():
-    context = zmq.Context()
-    socket = context.socket(zmq.PUB)
-    socket.bind("tcp://*:{}".format(PORT))
+    def acoustic_loop(self, *args, **kwargs):
+        self.tiny.rcv_handler()
 
-    return socket
+        data_tmp = mw_adapter.get_data()
 
-def play_sound_by_number(number):
-    engine = pyttsx3.init()
-    engine.say('Number ' + str(number))
-    print('start playing')
-    engine.runAndWait()
-    print('stopped playing')
+        # only send data if the change
+        if self.data['number'] != int(data_tmp['number']):
+            self.data['number'] = int(data_tmp['number'])
+            self.buzz()
 
-def buzz_by_number(number):
-    print('buzzing ' + str(number) + ' times')
-    for i in range(number):
-        print('bzzzz')
+    def buzz(self, number):
+        for x in range(0, number):
+            active_buzzer.beep(number)
 
+if __name__ == '__main__':
+    Buzzer()
