@@ -25,18 +25,22 @@ def send_hb():
 class Movement(base_app.App):
     def __init__(self, *args, **kwargs):
         super().__init__("Movement", self.movement_loop, *args, **kwargs)
+
+        self.acc_reader = AccelerationReader()
+        self.acc_reader.start()
+
         self.job = periodic_job.PeriodicJob(interval=timedelta(milliseconds=50), execute=send_hb)
         self.job.start()
 
-        ar = AccelerationReader()
-        ar.start()
-
+        self.job = periodic_job.PeriodicJob(interval=timedelta(milliseconds=50), execute=self.calc_distance)
+        self.job.start()
 
         self.tiny = protocol.Protocol(config.MASTER_UART_INTERFACE_TINY, config.MASTER_UART_BAUD, onNewSpeed=self.onNewSpeed, onNewCurrent=self.onNewCurrent)
         self.tiny.connect()
 
         self.data = {}
-        self.data['speed'] = None
+        self.data['speed'] = 0
+        self.data['distance'] = 0
 
 
 
@@ -50,11 +54,23 @@ class Movement(base_app.App):
             self.data['speed'] = int(data_tmp['speed'])
             self.tiny.send_speed(self.data['speed'])
 
+        if self.data['acceleration'] != int(data_tmp['acceleration']):
+            self.data['acceleration'] = int(data_tmp['acceleration'])
+            self.calc_distance()
+
     def onNewSpeed(self, speed):
         mw_adapter_movement.send_speed(speed)
 
     def onNewCurrent(self, current):
         mw_adapter_movement.send_current(current)
+
+    def calc_distance(self):
+        # multiplying current speed with time offset to get distance for current section
+        section_distance = self.data['speed'] * 0.05
+        # adding distance of measured section to overall distance
+        self.data['distance'] += section_distance
+        mw_adapter_movement.send_distance()
+
 
 if __name__ == '__main__':
     Movement().run()

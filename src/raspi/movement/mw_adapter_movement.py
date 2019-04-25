@@ -20,6 +20,9 @@ reader_webapp = zmq_socket.get_webapp_reader()
 
 data = {}
 data['speed'] = 0
+data['x_acceleration'] = 0
+data['y_acceleration'] = 0
+data['z_acceleration'] = 0
 
 def send_speed(speed):
     speed = speed_pb2.Speed()
@@ -65,7 +68,19 @@ def get_data():
             if move_cmd is not None:
                 logger.info("received move command. Speed: '%s'", move_cmd.speed)
                 data['speed'] = move_cmd.speed
-                return data
+
+        if topic == zmq_topics.ACCELERATION_TOPIC:
+            #Try parse accceleration
+            acceleration = acceleration_pb2.Acceleration()
+            acceleration.ParseFromString(dataraw)
+
+            if acceleration is not None:
+                logger.debug("received acceleration in x-axis '%s'", acceleration.x)
+                logger.debug("received acceleration in y-axis '%s'", acceleration.y)
+                logger.debug("received acceleration in z-axis '%s'", acceleration.z)
+                data['x_acceleration'] = acceleration.x
+                data['y_acceleration'] = acceleration.y
+                data['z_acceleration'] = acceleration.z
 
     return data
 

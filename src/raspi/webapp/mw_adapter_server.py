@@ -33,7 +33,7 @@ data['position'] = 0
 data['x_acceleration'] = 0
 data['y_acceleration'] = 0
 data['z_acceleration'] = 0
-data['direction'] = 'undefined'
+data['number'] = 0
 
 # Data Fields
 def get_data():
@@ -85,6 +85,7 @@ def get_data():
                 data['x_acceleration'] = acceleration.x
                 data['y_acceleration'] = acceleration.y
                 data['z_acceleration'] = acceleration.z
+
         if topic == zmq_topics.CURRENT_TOPIC:
             #Try Parse Current
             current = current_pb2.Current()
