@@ -14,12 +14,13 @@
 #include "pin_mux.h"
 #include "peripherals.h"
 #include "crane.h"
+#include "quad.h"
 
-#define MOTOR_S_MAX_VALUE   (100000)
+#define MOTOR_S_MAX_VALUE   (100000/8)
 
 #define TICK_PER_REV        (512*21)
 #define ANGLE_TO_DRIVE      (180)
-#define TICKS_TO_DRIVE      (TICK_PER_REV*360/ANGLE_TO_DRIVE)
+#define TICKS_TO_DRIVE      (TICK_PER_REV*ANGLE_TO_DRIVE/360)
 
 static tAckHandler craneAckHandler;
 static tframeLineHandler craneFrameHandler;
@@ -59,19 +60,34 @@ void craneDoWork(void)
 
   if (truePos >= targetPos)
   {
+    //destination reached
+    //reset controler to original state
     motor_A_UpdatePwmDutyCycle(0);
+    targetPos = 0;
+    setPos = 0;
+    oldError = 0;
+    intError = 0;
+    ctrl_i = 0;
     return; //todo this is not nice
   }
 
   if (targetPos > setPos)
   {                                        // accelerate
-    setPos += 25;
+    setPos += 20;
     if (targetPos < setPos)
       setPos = targetPos;
   }
 
+  if (setPos < truePos)
+  {
+    currentError = 0;
+    intError = 0;
+  }
+  else
+  {
+    currentError = (setPos-truePos);
+  }
 
-  currentError = (setPos-truePos);
   // calculate Controller
   ctrl_p = kp*currentError;
   intError += currentError;
@@ -123,8 +139,8 @@ tError craneFrameLineHandler(unsigned char *value)
 
 void crane_Init(void)
 {
-  kp = 300;
-  ki = 50;
+  kp = 10;
+  ki = 1;
   kd = 0;
   targetPos = 0;
 
