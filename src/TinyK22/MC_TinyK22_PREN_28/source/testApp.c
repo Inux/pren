@@ -133,6 +133,7 @@ void RunTestApp(void)
     l++;
     if (l > 25)
     {
+      l = 0;
       craneDoWork();
     }
 
