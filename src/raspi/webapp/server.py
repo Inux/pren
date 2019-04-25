@@ -9,8 +9,6 @@ from sanic import Sanic
 from sanic.response import json
 from sanic.response import file
 
-from src.raspi.acoustic import sound
-from src.raspi.lib import heartbeat
 import src.raspi.webapp.mw_adapter_server as mwadapter
 
 app = Sanic()
@@ -78,7 +76,7 @@ async def api(request):
 
 @app.route('/sound/<sound_nr>')
 async def play_sound(request, sound_nr):
-    sound.play_sound_by_number(sound_nr)
+    mwadapter.send_acoustic_number(sound_nr)
     return json({'received': True})
 
 @app.route('/speed/<speed>')

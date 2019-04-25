@@ -14,7 +14,9 @@ from src.raspi.pb import heartbeat_pb2
 from src.raspi.pb import speed_pb2
 from src.raspi.pb import current_pb2
 from src.raspi.pb import acceleration_pb2
+from src.raspi.pb import number_detection_pb2
 from src.raspi.lib import zmq_heartbeat_listener
+from src.raspi.numberdetector.numberDetectionPython import mw_adapter_numberdetection
 
 logger = log.getLogger("SoulTrain.webapp.mw_adapter_server")
 
@@ -103,3 +105,6 @@ def send_move_cmd(speed):
     msg = move_cmd.SerializeToString()
     logger.info("Sending move command. Speed: '%s'", move_cmd.speed)
     sender_webapp.send(zmq_topics.MOVE_CMD_TOPIC + b' ' + msg)
+
+def send_acoustic_number(number):
+    mw_adapter_numberdetection.send_number(number)
