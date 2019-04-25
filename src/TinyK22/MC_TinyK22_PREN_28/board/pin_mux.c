@@ -25,7 +25,7 @@ pin_labels:
 - {pin_num: '32', pin_signal: EXTAL0/PTA18/FTM0_FLT2/FTM_CLKIN0, label: 'Y1[3]/EXTAL', identifier: EXTAL0}
 - {pin_num: '33', pin_signal: XTAL0/PTA19/FTM1_FLT0/FTM_CLKIN1/LPTMR0_ALT1, label: 'Y1[1]/XTAL', identifier: XTAL0}
 - {pin_num: '35', pin_signal: ADC0_SE8/ADC1_SE8/PTB0/LLWU_P5/I2C0_SCL/FTM1_CH0/FTM1_QD_PHA, label: 'J24[2]/LLWU_P5', identifier: PIN_REVERSE}
-- {pin_num: '36', pin_signal: ADC0_SE9/ADC1_SE9/PTB1/I2C0_SDA/FTM1_CH1/FTM1_QD_PHB, label: 'J24[4]'}
+- {pin_num: '36', pin_signal: ADC0_SE9/ADC1_SE9/PTB1/I2C0_SDA/FTM1_CH1/FTM1_QD_PHB, label: 'J24[4]', identifier: MOTOR_S}
 - {pin_num: '37', pin_signal: ADC0_SE12/PTB2/I2C0_SCL/UART0_RTS_b/FTM0_FLT3, label: 'J24[12]/U8[4]/ADC0_SE12/I2C0_SCL/AUD/ACCEL_I2C/POT_5K', identifier: ACCEL_SCL;AUDIO_SCL;POT_5K}
 - {pin_num: '38', pin_signal: ADC0_SE13/PTB3/I2C0_SDA/UART0_CTS_b/FTM0_FLT0, label: 'J24[10]/U8[6]/ADC0_SE13/I2C0_SDA/AUD/ACCEL_I2C', identifier: ACCEL_SDA;AUDIO_SDA}
 - {pin_num: '39', pin_signal: PTB16/SPI1_SOUT/UART0_RX/FTM_CLKIN0/FB_AD17/EWM_IN, label: 'J1[6]/J8[G1]/SD_CARD_DETECT', identifier: SD_CARD_DETECT}
@@ -97,6 +97,7 @@ pin_labels:
 void BOARD_InitBootPins(void)
 {
     BOARD_InitPins();
+    Motor_S_InitPins();
 }
 
 /* clang-format off */
@@ -331,6 +332,32 @@ void Encoder_InitPins(void)
 
                   /* FTM2 channel 1 input capture source select: FTM2_CH1 signal. */
                   | SIM_SOPT4_FTM2CH1SRC(SOPT4_FTM2CH1SRC_FTM));
+}
+
+/* clang-format off */
+/*
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+Motor_S_InitPins:
+- options: {callFromInitBoot: 'true', prefix: MOTOR_S_, coreID: core0, enableClock: 'true'}
+- pin_list:
+  - {pin_num: '36', peripheral: FTM1, signal: 'CH, 1', pin_signal: ADC0_SE9/ADC1_SE9/PTB1/I2C0_SDA/FTM1_CH1/FTM1_QD_PHB, direction: OUTPUT}
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
+ */
+/* clang-format on */
+
+/* FUNCTION ************************************************************************************************************
+ *
+ * Function Name : Motor_S_InitPins
+ * Description   : Configures pin routing and optionally pin electrical features.
+ *
+ * END ****************************************************************************************************************/
+void Motor_S_InitPins(void)
+{
+    /* Port B Clock Gate Control: Clock enabled */
+    CLOCK_EnableClock(kCLOCK_PortB);
+
+    /* PORTB1 (pin 36) is configured as FTM1_CH1 */
+    PORT_SetPinMux(MOTOR_S_MOTOR_S_PORT, MOTOR_S_MOTOR_S_PIN, kPORT_MuxAlt3);
 }
 /***********************************************************************************************************************
  * EOF
