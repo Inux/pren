@@ -73,9 +73,18 @@ def destory():
     GPIO.cleanup()				# Release resource
 
 
+
+def play_number(number):
+    print('\n    Playing bumber: ' %number)
+    for i in range(1, number):  # Play song 1
+        Buzz.ChangeFrequency(CM[3])  # Change the frequency along the song note
+        time.sleep(1)  # delay a note for beat * 0.5s
+        Buzz.stop()
+    time.sleep(1)
+
 if __name__ == '__main__':		# Program start from here
     setup()
     try:
-        loop()
+        play_number(4)
     except KeyboardInterrupt:  	# When 'Ctrl+C' is pressed, the child program destroy() will be  executed.
         destory()
