@@ -12,6 +12,7 @@ class AccelerationReader:
         self.gyro = ADXL345()
 
         self.job = periodic_job.PeriodicJob(interval=timedelta(milliseconds=50), execute=self.read_acceleration)
+        self.job.start()
 
     def start(self):
         self.job.start()
