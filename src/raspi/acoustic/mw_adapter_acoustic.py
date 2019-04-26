@@ -12,7 +12,7 @@ logger = log.getLogger("SoulTrain.movement.mw_adapter_movement")
 
 # Sockets
 sender_movement = zmq_socket.get_movement_sender()
-reader_numberdetector = zmq_socket.get_numberdetector_reader()
+reader_acoustic = zmq_socket.get_acoustic_reader()
 
 data = {}
 data['number'] = 0
@@ -21,8 +21,8 @@ data['number'] = 0
 def get_data():
     global data
 
-    if reader_numberdetector.poll(timeout=1, flags=zmq.POLLIN) & zmq.POLLIN == zmq.POLLIN:
-        topic_and_data = reader_numberdetector.recv()
+    if reader_acoustic.poll(timeout=1, flags=zmq.POLLIN) & zmq.POLLIN == zmq.POLLIN:
+        topic_and_data = reader_acoustic.recv()
         topic_and_data = topic_and_data.split(b' ')
         topic = topic_and_data.split(b' ', 1)[0]
         dataraw = topic_and_data.split(b' ', 1)[1]

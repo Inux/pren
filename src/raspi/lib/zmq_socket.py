@@ -28,8 +28,9 @@ def __get_sender(port):
 # Reader
 
 def get_acoustic_reader():
-    __ar =  __get_reader(PORT_ACOUSTIC)
+    __ar = __get_reader(PORT_ACOUSTIC)
     __ar.setsockopt(zmq.SUBSCRIBE, zmq_topics.HEARTBEAT_TOPIC)
+    __ar.setsockopt(zmq.SUBSCRIBE, zmq_topics.NUMBER_DETECTOR_TOPIC)
     __ar.setsockopt(zmq.SUBSCRIBE, zmq_topics.ACKNOWLEDGE_TOPIC)
     return __ar
 
@@ -58,7 +59,6 @@ def get_movement_reader():
 
 def get_numberdetector_reader():
     __nr = __get_reader(PORT_NUMBERDETECTOR)
-    __nr.setsockopt(zmq.SUBSCRIBE, zmq_topics.NUMBER_DETECTOR_TOPIC)
     __nr.setsockopt(zmq.SUBSCRIBE, zmq_topics.HEARTBEAT_TOPIC)
     return __nr
 
