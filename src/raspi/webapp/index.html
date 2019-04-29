@@ -6,6 +6,7 @@
         Team 28
     </title>
 
+    <meta charset='utf-8'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -104,15 +105,24 @@
             </div>
             <div>
                 <h4>Acoustic:</h4>
-                <button onclick='playSound(1)'> Play sound #1 </button>
-                <button onclick='playSound(2)'> Play sound #2 </button>
-                <button onclick='playSound(3)'> Play sound #3 </button>
-                <button onclick='playSound(4)'> Play sound #4 </button>
-                <button onclick='playSound(5)'> Play sound #5 </button>
-                <button onclick='playSound(6)'> Play sound #6 </button>
-                <button onclick='playSound(7)'> Play sound #7 </button>
-                <button onclick='playSound(8)'> Play sound #8 </button>
-                <button onclick='playSound(9)'> Play sound #9 </button>
+                <div>
+                    <label for="sound">Select Sound:</label>
+                    <input id="sound" type="range" min="1" max="9" step="1" value="6">
+                    <label id="soundValue"></label>
+                </div>
+                <div>
+                    <label for="soundButton">Play it 🎚👉</label>
+                    <button id="soundButton">🔊🔊🔊</button>
+                </div>
+                <div>
+                    <label>Sound Status:</label>
+                    <label id="soundStatus"></label>
+                </div>
+            </div>
+            <div>
+                <h4>Crane:</h4>
+                <button onclick="craneOn()">Move Crane</button>
+                <button onclick="craneReset()">Reset</button>
             </div>
         </div>
     </div>
