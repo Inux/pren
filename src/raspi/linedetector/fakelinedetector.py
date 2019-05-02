@@ -42,6 +42,8 @@ class LineDetector(base_app.App):
         self.job = periodic_job.PeriodicJob(interval=timedelta(milliseconds=50), execute=send_hb)
         self.job.start()
 
+        self.run()
+
     def linedetection_loop(self, *args, **kwargs):
         mwadapter.send_direction(get_dir())
         time.sleep(3)

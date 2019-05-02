@@ -33,7 +33,7 @@ function updateSoulTrainData(data) {
     document.getElementById("state").innerText = data.state;
     document.getElementById("stateMessage").innerText = data.stateMessage;
     document.getElementById("speed").innerText = data.speed;
-    document.getElementById("position").innerText = data.position;
+    document.getElementById("distance").innerText = data.distance;
     document.getElementById("xAcceleration").innerText = data.xAcceleration;
     document.getElementById("yAcceleration").innerText = data.yAcceleration;
     document.getElementById("zAcceleration").innerText = data.zAcceleration;

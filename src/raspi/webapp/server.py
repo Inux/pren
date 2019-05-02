@@ -10,6 +10,8 @@ from sanic.response import json
 from sanic.response import file
 
 import src.raspi.webapp.mw_adapter_server as mwadapter
+from src.raspi.lib import zmq_ack
+from src.raspi.lib import heartbeat as hb
 
 app = Sanic()
 app.name = "PrenTeam28WebApp"
@@ -47,7 +49,7 @@ async def api(request):
         state = middlewareData['state']
         state_message = middlewareData['state_message']
         speed = middlewareData['speed']
-        position = middlewareData['position']
+        distance = middlewareData['distance']
         x_acceleration = middlewareData['x_acceleration']
         y_acceleration = middlewareData['y_acceleration']
         z_acceleration = middlewareData['z_acceleration']
@@ -65,7 +67,7 @@ async def api(request):
         'state': str(state),
         'stateMessage': str(state_message),
         'speed': str(speed),
-        'position': str(position),
+        'distance': str(distance),
         'xAcceleration': str(x_acceleration),
         'yAcceleration': str(y_acceleration),
         'zAcceleration': str(z_acceleration),
@@ -105,6 +107,14 @@ async def periodic_middleware_task(app):
     global middlewareData
     ''' periodic task for retrieving middleware messages '''
     middlewareData = mwadapter.get_data()
+
+    #Change crane value if we receive acknowledge
+    if middlewareData[zmq_ack.ACK_RECV_CRANE_CMD+","+hb.COMPONENT_MOVEMENT] == True:
+        if middlewareData["crane"] == 0:
+            middlewareData["crane"] = 1
+        else:
+            middlewareData["crane"] = 0
+
     time.sleep(MIDDLEWARE_SCAN_INTERVAL)
     app.add_task(periodic_middleware_task(app))
 

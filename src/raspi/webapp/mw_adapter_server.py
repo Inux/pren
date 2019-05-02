@@ -17,7 +17,11 @@ from src.raspi.pb import acceleration_pb2
 from src.raspi.pb import number_detection_pb2
 from src.raspi.pb import acoustic_command_pb2
 from src.raspi.pb import crane_command_pb2
+from src.raspi.pb import distance_pb2
+from src.raspi.pb import acknowledge_pb2
 from src.raspi.lib import zmq_heartbeat_listener
+from src.raspi.lib import heartbeat as hb
+from src.raspi.lib import zmq_ack
 
 logger = log.getLogger("SoulTrain.webapp.mw_adapter_server")
 
@@ -31,7 +35,7 @@ data = {} # data will be updated by HeartBeatListener
 data['state'] = "undefined"
 data['state_message'] = "undefined"
 data['speed'] = 0
-data['position'] = 0
+data['distance'] = 0
 data['x_acceleration'] = 0
 data['y_acceleration'] = 0
 data['z_acceleration'] = 0
@@ -39,6 +43,7 @@ data['direction'] = "undefined"
 data['number'] = 0
 data['cube'] = 0
 data['crane'] = 0
+data[zmq_ack.ACK_RECV_CRANE_CMD+","+hb.COMPONENT_MOVEMENT] = False
 
 # Data Fields
 def get_data():
@@ -100,6 +105,24 @@ def get_data():
                 logger.debug("received current '%s'", current.current)
                 data['current'] = current.current
 
+        if topic == zmq_topics.DISTANCE_TOPIC:
+            #Try Parse Distance
+            distance = distance_pb2.Distance()
+            distance.ParseFromString(dataraw)
+
+            if distance is not None:
+                logger.debug("received distance '%s'", distance.distance)
+                data['distance'] = distance.distance
+
+        if topic == zmq_topics.ACKNOWLEDGE_TOPIC:
+            #Try Parse Acknowledge
+            ack = acknowledge_pb2.Acknowledge()
+            ack.ParseFromString(dataraw)
+
+            if ack is not None:
+                logger.debug("received ack -> action: '%s', component: '%s'", ack.action, ack.component)
+                data[ack.action+","+ack.component] = True
+
     return data
 
 def send_move_cmd(speed):
@@ -117,9 +140,6 @@ def send_acoustic_cmd(number):
     sender_webapp.send(zmq_topics.ACOUSTIC_TOPIC + b' ' + msg)
 
 def send_crane_cmd(state):
-    global data
-    data['crane'] = state #set crane state directly
-
     crane_cmd = crane_command_pb2.CraneCommand()
     crane_cmd.command = state
     msg = crane_cmd.SerializeToString()

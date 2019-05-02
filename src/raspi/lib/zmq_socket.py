@@ -21,7 +21,7 @@ def __get_reader(port):
 def __get_sender(port):
     context = zmq.Context()
     socket = context.socket(zmq.PUB)
-    socket.bind("tcp://*:{}".format(port))
+    socket.bind("tcp://127.0.0.1:{}".format(port))
 
     return socket
 
@@ -30,7 +30,7 @@ def __get_sender(port):
 def get_acoustic_reader():
     __ar = __get_reader(PORT_ACOUSTIC)
     __ar.setsockopt(zmq.SUBSCRIBE, zmq_topics.HEARTBEAT_TOPIC)
-    __ar.setsockopt(zmq.SUBSCRIBE, zmq_topics.NUMBER_DETECTOR_TOPIC)
+    __ar.setsockopt(zmq.SUBSCRIBE, zmq_topics.ACOUSTIC_TOPIC)
     __ar.setsockopt(zmq.SUBSCRIBE, zmq_topics.ACKNOWLEDGE_TOPIC)
     return __ar
 
@@ -53,6 +53,7 @@ def get_movement_reader():
     __mr.setsockopt(zmq.SUBSCRIBE, zmq_topics.SPEED_TOPIC)
     __mr.setsockopt(zmq.SUBSCRIBE, zmq_topics.CURRENT_TOPIC)
     __mr.setsockopt(zmq.SUBSCRIBE, zmq_topics.ACCELERATION_TOPIC)
+    __mr.setsockopt(zmq.SUBSCRIBE, zmq_topics.DISTANCE_TOPIC)
     __mr.setsockopt(zmq.SUBSCRIBE, zmq_topics.HEARTBEAT_TOPIC)
     __mr.setsockopt(zmq.SUBSCRIBE, zmq_topics.ACKNOWLEDGE_TOPIC)
     return __mr
@@ -60,6 +61,8 @@ def get_movement_reader():
 def get_numberdetector_reader():
     __nr = __get_reader(PORT_NUMBERDETECTOR)
     __nr.setsockopt(zmq.SUBSCRIBE, zmq_topics.HEARTBEAT_TOPIC)
+    __nr.setsockopt(zmq.SUBSCRIBE, zmq_topics.NUMBER_DETECTOR_TOPIC)
+    __nr.setsockopt(zmq.SUBSCRIBE, zmq_topics.ACKNOWLEDGE_TOPIC)
     return __nr
 
 def get_webapp_reader():
@@ -67,7 +70,7 @@ def get_webapp_reader():
     __wr.setsockopt(zmq.SUBSCRIBE, zmq_topics.MOVE_CMD_TOPIC)
     __wr.setsockopt(zmq.SUBSCRIBE, zmq_topics.ACOUSTIC_TOPIC)
     __wr.setsockopt(zmq.SUBSCRIBE, zmq_topics.SYSTEM_CMD_TOPIC)
-    __wr.setsockopt(zmq.SUBSCRIBE, zmq_topics.NUMBER_DETECTOR_TOPIC)
+    __wr.setsockopt(zmq.SUBSCRIBE, zmq_topics.CRANE_CMD_TOPIC)
     return __wr
 
 # Sender

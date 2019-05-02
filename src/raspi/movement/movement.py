@@ -12,6 +12,7 @@ import os
 import src.raspi.config.config as config
 from src.raspi.lib import base_app
 from src.raspi.lib import zmq_socket
+from src.raspi.lib import zmq_ack
 from src.raspi.lib import periodic_job
 from src.raspi.lib import heartbeat as hb
 from src.raspi.movement import protocol
@@ -47,6 +48,9 @@ class Movement(base_app.App):
         self.data = {}
         self.data['speed'] = 0 #mm/s
         self.data['distance'] = 0.0 #mm
+        self.data['crane'] = 0 #mm
+
+        self.run() #run movement loop
 
     def movement_loop(self, *args, **kwargs):
         self.tiny.rcv_handler()
@@ -58,18 +62,24 @@ class Movement(base_app.App):
             self.data['speed'] = int(data_tmp['speed'])
             self.tiny.send_speed(self.data['speed'])
 
+        if self.data['crane'] != int(data_tmp['crane']):
+            self.data['crane'] = int(data_tmp['crane'])
+            mw_adapter_movement.send_ack(zmq_ack.ACK_RECV_CRANE_CMD, hb.COMPONENT_MOVEMENT)
+
     def on_new_speed(self, speed):
         mw_adapter_movement.send_speed(speed)
 
     def on_new_current(self, current):
         mw_adapter_movement.send_current(current)
 
-    def acceleration_callback(self, time_delta, acc_x, acc_y, acc_z):
+    def acceleration_callback(self, time_delta_us, acc_x, acc_y, acc_z):
         # multiplying current speed with time offset to get distance for current section
-        section_distance = float(self.data['speed']) * time_delta
+        section_distance = float(self.data['speed']) * (float(time_delta_us) / 1000000.0)
         # adding distance of measured section to overall distance
-        self.data['distance'] += section_distance
+        self.data['distance'] = self.data['distance'] + section_distance
         mw_adapter_movement.send_distance(self.data['distance'])
+        print(section_distance)
+        print(self.data['distance'])
 
         mw_adapter_movement.send_acceleration(acc_x, acc_y, acc_z)
 
