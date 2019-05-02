@@ -16,11 +16,12 @@
 #include "crane.h"
 #include "quad.h"
 
-#define MOTOR_S_MAX_VALUE   (100000/8)
+#define MOTOR_S_MAX_VALUE   (100000/4)
 
 #define TICK_PER_REV        (512*21)
 #define ANGLE_TO_DRIVE      (180)
-#define TICKS_TO_DRIVE      (TICK_PER_REV*ANGLE_TO_DRIVE/360)
+#define TICKS_TO_DRIVE      (5435-25)
+                            //(TICK_PER_REV*ANGLE_TO_DRIVE/360)
 
 static tAckHandler craneAckHandler;
 static tframeLineHandler craneFrameHandler;
@@ -55,7 +56,7 @@ void craneDoWork(void)
   int ctrl_i = 0;
   int ctrl_d;
   int currentError;
-
+  //todo check for timeout and let it be if timeout expires
   truePos = Encoder_S_GetNbrOfTicks();
 
   if (truePos >= targetPos)
@@ -72,8 +73,8 @@ void craneDoWork(void)
   }
 
   if (targetPos > setPos)
-  {                                        // accelerate
-    setPos += 20;
+  {
+    setPos += 40;
     if (targetPos < setPos)
       setPos = targetPos;
   }
@@ -139,7 +140,7 @@ tError craneFrameLineHandler(unsigned char *value)
 
 void crane_Init(void)
 {
-  kp = 10;
+  kp = 15;
   ki = 1;
   kd = 0;
   targetPos = 0;
