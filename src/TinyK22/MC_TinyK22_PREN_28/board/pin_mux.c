@@ -40,7 +40,7 @@ pin_labels:
 - {pin_num: '49', pin_signal: PTC4/LLWU_P8/SPI0_PCS0/UART1_TX/FTM0_CH3/FB_AD11/CMP1_OUT/LPUART0_TX, label: 'J8[P2]/J24[9]/uSD_card_CS', identifier: SD_CARD_DAT3;DEBUG_UART_TX}
 - {pin_num: '50', pin_signal: PTC5/LLWU_P9/SPI0_SCK/LPTMR0_ALT2/I2S0_RXD0/FB_AD10/CMP0_OUT/FTM0_CH2, label: 'J1[15]/I2S0_RXD0', identifier: AC_I2S_DOUT}
 - {pin_num: '52', pin_signal: CMP0_IN1/PTC7/SPI0_SIN/USB_SOF_OUT/I2S0_RX_FS/FB_AD8, label: 'J1[11]/I2S0_RX_FS'}
-- {pin_num: '53', pin_signal: ADC1_SE4b/CMP0_IN2/PTC8/FTM3_CH4/I2S0_MCLK/FB_AD7, label: 'J1[7]/I2S0_MCLK', identifier: AC_SYS_MCLK}
+- {pin_num: '53', pin_signal: ADC1_SE4b/CMP0_IN2/PTC8/FTM3_CH4/I2S0_MCLK/FB_AD7, label: quad_S_A, identifier: AC_SYS_MCLK;QUAD_S_A}
 - {pin_num: '54', pin_signal: ADC1_SE5b/CMP0_IN3/PTC9/FTM3_CH5/I2S0_RX_BCLK/FB_AD6/FTM2_FLT0, label: 'J1[9]/I2S0_RX_BCLK'}
 - {pin_num: '55', pin_signal: ADC1_SE6b/PTC10/I2C1_SCL/FTM3_CH6/I2S0_RX_FS/FB_AD5, label: 'J1[13]/I2C1_SCL/I2S0_RX_FS'}
 - {pin_num: '56', pin_signal: ADC1_SE7b/PTC11/LLWU_P11/I2C1_SDA/FTM3_CH7/FB_RW_b, label: 'J2[7]/I2C1_SDA', identifier: RF_CE}
@@ -303,6 +303,7 @@ Encoder_InitPins:
 - pin_list:
   - {pin_num: '41', peripheral: FTM2, signal: 'CH, 0', pin_signal: PTB18/FTM2_CH0/I2S0_TX_BCLK/FB_AD15/FTM2_QD_PHA, direction: INPUT}
   - {pin_num: '42', peripheral: FTM2, signal: 'CH, 1', pin_signal: PTB19/FTM2_CH1/I2S0_TX_FS/FB_OE_b/FTM2_QD_PHB, direction: INPUT}
+  - {pin_num: '53', peripheral: GPIOC, signal: 'GPIO, 8', pin_signal: ADC1_SE4b/CMP0_IN2/PTC8/FTM3_CH4/I2S0_MCLK/FB_AD7, identifier: QUAD_S_A, direction: INPUT}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -317,12 +318,24 @@ void Encoder_InitPins(void)
 {
     /* Port B Clock Gate Control: Clock enabled */
     CLOCK_EnableClock(kCLOCK_PortB);
+    /* Port C Clock Gate Control: Clock enabled */
+    CLOCK_EnableClock(kCLOCK_PortC);
+
+    gpio_pin_config_t QUAD_S_A_config = {
+        .pinDirection = kGPIO_DigitalInput,
+        .outputLogic = 0U
+    };
+    /* Initialize GPIO functionality on pin PTC8 (pin 53)  */
+    GPIO_PinInit(ENCODER_QUAD_S_A_GPIO, ENCODER_QUAD_S_A_PIN, &QUAD_S_A_config);
 
     /* PORTB18 (pin 41) is configured as FTM2_CH0 */
     PORT_SetPinMux(ENCODER_quad_S_PORT, ENCODER_quad_S_PIN, kPORT_MuxAlt3);
 
     /* PORTB19 (pin 42) is configured as FTM2_CH1 */
     PORT_SetPinMux(ENCODER_quad_A_PORT, ENCODER_quad_A_PIN, kPORT_MuxAlt3);
+
+    /* PORTC8 (pin 53) is configured as PTC8 */
+    PORT_SetPinMux(ENCODER_QUAD_S_A_PORT, ENCODER_QUAD_S_A_PIN, kPORT_MuxAsGpio);
 
     SIM->SOPT4 = ((SIM->SOPT4 &
                    /* Mask bits to zero which are setting */

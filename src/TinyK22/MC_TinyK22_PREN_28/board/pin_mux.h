@@ -113,6 +113,13 @@ void Pi_Init_UARTPins(void);
 #define ENCODER_quad_A_PIN 19U    /*!<@brief PORTB pin index: 19 */
                                   /* @} */
 
+/*! @name PORTC8 (number 53), quad_S_A
+  @{ */
+#define ENCODER_QUAD_S_A_GPIO GPIOC /*!<@brief GPIO device name: GPIOC */
+#define ENCODER_QUAD_S_A_PORT PORTC /*!<@brief PORT device name: PORTC */
+#define ENCODER_QUAD_S_A_PIN 8U     /*!<@brief PORTC pin index: 8 */
+                                    /* @} */
+
 /*!
  * @brief Configures pin routing and optionally pin electrical features.
  *
