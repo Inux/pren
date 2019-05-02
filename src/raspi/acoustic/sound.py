@@ -19,8 +19,8 @@ class Buzzer(base_app.App):
     def __init__(self, *args, **kwargs):
         super().__init__("Acoustic", self.acoustic_loop, *args, **kwargs)
 
-        #self.job = periodic_job.PeriodicJob(interval=timedelta(milliseconds=50), execute=send_hb)
-        #self.job.start()
+        self.job = periodic_job.PeriodicJob(interval=timedelta(milliseconds=50), execute=send_hb)
+        self.job.start()
 
         self.data = {}
         self.data['number'] = 0
