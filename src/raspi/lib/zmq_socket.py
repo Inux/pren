@@ -70,7 +70,10 @@ def get_webapp_reader():
     __wr.setsockopt(zmq.SUBSCRIBE, zmq_topics.MOVE_CMD_TOPIC)
     __wr.setsockopt(zmq.SUBSCRIBE, zmq_topics.ACOUSTIC_TOPIC)
     __wr.setsockopt(zmq.SUBSCRIBE, zmq_topics.SYSTEM_CMD_TOPIC)
+<<<<<<< HEAD
     __wr.setsockopt(zmq.SUBSCRIBE, zmq_topics.NUMBER_DETECTOR_TOPIC)
+=======
+>>>>>>> small fixes and crane cmd handling
     __wr.setsockopt(zmq.SUBSCRIBE, zmq_topics.CRANE_CMD_TOPIC)
     return __wr
 

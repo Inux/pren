@@ -56,6 +56,7 @@ class FakeSerial:
         return s.encode('utf-8')
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     ## in_waiting
     # checks if there is still a full line to read
     @property
@@ -63,6 +64,11 @@ class FakeSerial:
     ## in_waiting()
     # checks if there is still a full line to read
 >>>>>>> run fake serial and fake accelometer on desktops
+=======
+    ## in_waiting
+    # checks if there is still a full line to read
+    @property
+>>>>>>> small fixes and crane cmd handling
     def in_waiting( self ):
         try:
             returnIndex = self._data.index( "\n" )
