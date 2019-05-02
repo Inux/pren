@@ -5,12 +5,15 @@ import src.raspi.lib.log as log
 from src.raspi.lib import periodic_job
 import src.raspi.movement.mw_adapter_movement as mwadapter
 
-logger = log.getLogger('SoulTrain.movement.accelerometer')
+logger = log.getLogger('SoulTrain.movement.fakeacceleration')
 
-class AccelerationReader:
-    def __init__(self):
-        self.job = periodic_job.PeriodicJob(interval=timedelta(milliseconds=50), execute=self.read_acceleration)
-        self.job.start()
+POLL_TIME = timedelta(milliseconds=25)
+
+class FakeAccelerationmeter:
+    def __init__(self, onNewAcceleration):
+        self.call_back = onNewAcceleration
+
+        self.job = periodic_job.PeriodicJob(POLL_TIME, execute=self.read_acceleration)
 
     def start(self):
         self.job.start()
@@ -21,24 +24,10 @@ class AccelerationReader:
     def read_acceleration(self):
         #x_axis, y_axis, z_axis = gyro.read()
         x_axis, y_axis, z_axis = self.mock_gyro()
-        self.send_acceleration(x_axis, y_axis, z_axis)
-
-    def send_acceleration(self, x_axis, y_axis, z_axis):
-        """
-        :param x_axis:
-        :param y_axis:
-        :param z_axis:
-        :return:
-        """
-
-        logger.info("Acceleration in X-Axis : %d" % x_axis)
-        logger.info("Acceleration in Y-Axis : %d" % y_axis)
-        logger.info("Acceleration in Z-Axis : %d" % z_axis)
-        mwadapter.send_acceleration(x_axis, y_axis, z_axis)
+        logger.info("Acceleration x: %d, y: %d, z: %d", x_axis, y_axis, z_axis)
+        self.call_back(POLL_TIME.total_seconds(), x_axis, y_axis, z_axis)
 
     def mock_gyro(self):
         fak = random.random()
         return int(fak * 1000), int(fak * 2000), int(fak * 3000)
 
-if __name__ == '__main__':
-    AccelerationReader()
