@@ -67,6 +67,7 @@ def get_webapp_reader():
     __wr.setsockopt(zmq.SUBSCRIBE, zmq_topics.MOVE_CMD_TOPIC)
     __wr.setsockopt(zmq.SUBSCRIBE, zmq_topics.ACOUSTIC_TOPIC)
     __wr.setsockopt(zmq.SUBSCRIBE, zmq_topics.SYSTEM_CMD_TOPIC)
+    __wr.setsockopt(zmq.SUBSCRIBE, zmq_topics.NUMBER_DETECTOR_TOPIC)
     return __wr
 
 # Sender

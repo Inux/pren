@@ -107,4 +107,7 @@ def send_move_cmd(speed):
     sender_webapp.send(zmq_topics.MOVE_CMD_TOPIC + b' ' + msg)
 
 def send_acoustic_number(number):
-    mw_adapter_numberdetection.send_number(number)
+    msg_number = number_detection_pb2.NumberDetection()
+    msg_number.number = number
+    msg = msg_number.SerializeToString()
+    sender_webapp.send(zmq_topics.NUMBER_DETECTOR_TOPIC + b' ' + msg)
