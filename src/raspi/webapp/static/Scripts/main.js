@@ -106,7 +106,7 @@ soundButton.onclick = () => {
     soundValue = document.getElementById("soundValue");
     soundStatus = document.getElementById("soundStatus");
     playSound(soundValue.innerHTML);
-    soundStatus = "played number: " + soundValue.innerHTML;
+    soundStatus.innerHTML = "played number: " + soundValue.innerHTML;
 };
 
 let craneOnButton = document.getElementById('craneOn');
