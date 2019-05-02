@@ -55,9 +55,14 @@ class FakeSerial:
         #print( "read: now self._data = ", self._data )
         return s.encode('utf-8')
 
+<<<<<<< HEAD
     ## in_waiting
     # checks if there is still a full line to read
     @property
+=======
+    ## in_waiting()
+    # checks if there is still a full line to read
+>>>>>>> run fake serial and fake accelometer on desktops
     def in_waiting( self ):
         try:
             returnIndex = self._data.index( "\n" )
