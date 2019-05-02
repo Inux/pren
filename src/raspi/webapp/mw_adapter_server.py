@@ -16,6 +16,7 @@ from src.raspi.pb import current_pb2
 from src.raspi.pb import acceleration_pb2
 from src.raspi.pb import number_detection_pb2
 from src.raspi.pb import acoustic_command_pb2
+from src.raspi.pb import crane_command_pb2
 from src.raspi.lib import zmq_heartbeat_listener
 
 logger = log.getLogger("SoulTrain.webapp.mw_adapter_server")
@@ -27,7 +28,6 @@ sender_webapp = zmq_socket.get_webapp_sender()
 hb_listener = zmq_heartbeat_listener.HeartBeatListener()
 
 data = {} # data will be updated by HeartBeatListener
-data['direction'] = "undefined"
 data['state'] = "undefined"
 data['state_message'] = "undefined"
 data['speed'] = 0
@@ -35,7 +35,9 @@ data['position'] = 0
 data['x_acceleration'] = 0
 data['y_acceleration'] = 0
 data['z_acceleration'] = 0
+data['direction'] = "undefined"
 data['number'] = 0
+data['cube'] = 0
 data['crane'] = 0
 
 # Data Fields
@@ -115,4 +117,11 @@ def send_acoustic_cmd(number):
     sender_webapp.send(zmq_topics.ACOUSTIC_TOPIC + b' ' + msg)
 
 def send_crane_cmd(state):
-    logger.info("Sending crane command. Number: '%s'", state)
+    global data
+    data['crane'] = state #set crane state directly
+
+    crane_cmd = crane_command_pb2.CraneCommand()
+    crane_cmd.command = state
+    msg = crane_cmd.SerializeToString()
+    logger.info("Sending crane command. Number: '%s'", crane_cmd.command)
+    sender_webapp.send(zmq_topics.CRANE_CMD_TOPIC + b' ' + msg)

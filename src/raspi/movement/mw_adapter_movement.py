@@ -11,6 +11,7 @@ from src.raspi.pb import current_pb2
 from src.raspi.pb import acceleration_pb2
 from src.raspi.pb import heartbeat_pb2
 from src.raspi.pb import move_command_pb2
+from src.raspi.pb import distance_pb2
 
 logger = log.getLogger("SoulTrain.movement.mw_adapter_movement")
 
@@ -45,9 +46,9 @@ def send_acceleration(x, y, z):
     sender_movement.send(zmq_topics.ACCELERATION_TOPIC + b' ' + msg)
 
 def send_distance(distance):
-    distance = distance.Speed()
-    distance.distance = distance
-    msg = distance.SerializeToString()
+    dist = distance_pb2.Distance()
+    dist.distance = distance
+    msg = dist.SerializeToString()
     sender_movement.send(zmq_topics.DISTANCE_TOPIC + b' ' + msg)
 
 # Data Fields
@@ -81,6 +82,8 @@ def get_data():
                 data['x_acceleration'] = acceleration.x
                 data['y_acceleration'] = acceleration.y
                 data['z_acceleration'] = acceleration.z
+
+
 
     return data
 
