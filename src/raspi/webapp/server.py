@@ -85,6 +85,14 @@ async def send_speed(request, speed):
     mwadapter.send_move_cmd(int(speed))
     return json({'received': True})
 
+@app.route('/crane/<state>')
+async def send_crane_cmd(request, state):
+    if int(state) == 1:
+        mwadapter.send_crane_cmd(1)
+    else:
+        mwadapter.send_crane_cmd(0)
+    return json({'received': True})
+
 # Middleware handling
 
 async def periodic_middleware_task(app):
