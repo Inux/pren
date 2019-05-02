@@ -17,8 +17,11 @@ from src.raspi.pb import acceleration_pb2
 from src.raspi.pb import number_detection_pb2
 from src.raspi.pb import acoustic_command_pb2
 from src.raspi.pb import crane_command_pb2
+<<<<<<< HEAD
 from src.raspi.pb import distance_pb2
 from src.raspi.pb import acknowledge_pb2
+=======
+>>>>>>> added more ui data
 from src.raspi.lib import zmq_heartbeat_listener
 from src.raspi.lib import heartbeat as hb
 from src.raspi.lib import zmq_ack
@@ -140,12 +143,8 @@ def send_acoustic_cmd(number):
     sender_webapp.send(zmq_topics.ACOUSTIC_TOPIC + b' ' + msg)
 
 def send_crane_cmd(state):
-<<<<<<< HEAD
     crane_cmd = crane_command_pb2.CraneCommand()
     crane_cmd.command = state
     msg = crane_cmd.SerializeToString()
     logger.info("Sending crane command. Number: '%s'", crane_cmd.command)
     sender_webapp.send(zmq_topics.CRANE_CMD_TOPIC + b' ' + msg)
-=======
-    logger.info("Sending crane command. Number: '%s'", state)
->>>>>>> sending crane state from webapp

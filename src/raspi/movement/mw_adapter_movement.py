@@ -93,5 +93,7 @@ def get_data():
                 logger.info("received crane command. Command: '%s'", crane_cmd.command)
                 data['crane'] = crane_cmd.command
 
+
+
     return data
 
