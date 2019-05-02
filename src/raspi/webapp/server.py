@@ -52,6 +52,9 @@ async def api(request):
         y_acceleration = middlewareData['y_acceleration']
         z_acceleration = middlewareData['z_acceleration']
         direction = middlewareData['direction']
+        number = middlewareData['number']
+        cube = middlewareData['cube']
+        crane = middlewareData['crane']
         linedetector = middlewareData['linedetector']
         numberdetector = middlewareData['numberdetector']
         movement = middlewareData['movement']
@@ -67,6 +70,9 @@ async def api(request):
         'yAcceleration': str(y_acceleration),
         'zAcceleration': str(z_acceleration),
         'direction': str(direction),
+        'number': str(number),
+        'cube': str(cube),
+        'crane': str(crane),
         'heartBeatLineDetector': str(linedetector),
         'heartBeatNumberDetector': str(numberdetector),
         'heartBeatMovement': str(movement),
