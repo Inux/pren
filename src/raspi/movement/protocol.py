@@ -4,6 +4,7 @@ Implements the protocol between raspi and the tiny
 import time
 
 import serial
+from src.raspi.movement.fakeserialdevice import FakeSerial
 
 from src.raspi.movement.messages import Message
 import src.raspi.lib.log as logger
@@ -13,9 +14,11 @@ class Protocol():
     The protocol itself
     '''
     def __init__(self, device, baud,
-                 onNewSpeed=None, onNewCurrent=None):
+                 onNewSpeed=None, onNewCurrent=None, real_device=True):
         self.log = logger.getLogger('SoulTrain.movement.protocol')
         self.logTiny = logger.getLogger('SoulTrain.movement.tiny')
+
+        self.real_device = real_device
 
         self.device = device
         self.baud = baud
@@ -46,7 +49,10 @@ class Protocol():
         connects to the serial port
         '''
         if self.conn is None:
-            self.conn = serial.Serial(self.device, baudrate=self.baud, timeout=3.0)
+            if self.real_device:
+                self.conn = serial.Serial(self.device, baudrate=self.baud, timeout=3.0)
+            else:
+                self.conn = FakeSerial()
 
     def disconnect(self):
         '''
@@ -97,8 +103,14 @@ class Protocol():
     def __write_cmd(self, message, value):
         if self.conn is not None:
             msg = str(message.value)+","+str(value)+"\n"
-            self.log.info("Sending over uart. Msg: " + msg)
-            self.conn.write(msg.rstrip(' \t\r\0').encode())
+
+            if self.real_device:
+                self.log.info("Sending over uart. Msg: " + msg)
+                self.conn.write(msg.rstrip(' \t\r\0').encode())
+            else:
+                self.log.info("Sending over fake console. Msg: " + msg)
+                self.conn.write(msg)
+
             self.ack_map[message.value] = time.time()
 
     def rcv_handler(self):
