@@ -38,6 +38,9 @@ function updateSoulTrainData(data) {
     document.getElementById("yAcceleration").innerText = data.yAcceleration;
     document.getElementById("zAcceleration").innerText = data.zAcceleration;
     document.getElementById("direction").innerText = data.direction;
+    document.getElementById("number").innerText = data.number;
+    document.getElementById("cube").innerText = data.cube;
+    document.getElementById("crane").innerText = data.crane;
 }
 
 // Update the classes to display HearBeat status
