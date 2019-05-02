@@ -29,4 +29,4 @@ class AccelerationReader:
         :return:
         """
         x_axis, y_axis, z_axis = self.gyro.read()
-        self.call_back(POLL_TIME.total_seconds(), x_axis, y_axis, z_axis)
+        self.call_back(POLL_TIME.microseconds, x_axis, y_axis, z_axis)

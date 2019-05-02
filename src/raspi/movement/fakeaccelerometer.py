@@ -25,7 +25,7 @@ class FakeAccelerationmeter:
         #x_axis, y_axis, z_axis = gyro.read()
         x_axis, y_axis, z_axis = self.mock_gyro()
         logger.info("Acceleration x: %d, y: %d, z: %d", x_axis, y_axis, z_axis)
-        self.call_back(POLL_TIME.total_seconds(), x_axis, y_axis, z_axis)
+        self.call_back(POLL_TIME.microseconds, x_axis, y_axis, z_axis)
 
     def mock_gyro(self):
         fak = random.random()
