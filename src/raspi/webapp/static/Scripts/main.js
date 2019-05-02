@@ -17,24 +17,30 @@ function init() {
 
 // Enable simulation mode, disable controlflow
 function enableSimulation() {
+    //Update Status to "Simulating"
     var state = document.getElementById('webAppState');
     state.innerHTML = "Simulating"
 
+    //Remove ControlFlow from View
     var controlFlow = document.getElementById('controlFlow');
     controlFlow.style.display = 'none';
 
+    //Enable Simulation View
     var simulation = document.getElementById('simulation');
     simulation.style.display = 'block';
 }
 
 // Enable controlflow, disable simulation mode
 function enableControlFlow() {
+    //Update Status to "ControlFlow"
     var state = document.getElementById('webAppState');
     state.innerHTML = "ControlFlow"
 
+    //Remove Simulation from View
     var simulation = document.getElementById('simulation');
     simulation.style.display = 'none';
 
+    //Enable ControlFlow View
     var controlFlow = document.getElementById('controlFlow');
     controlFlow.style.display = 'block';
 }
@@ -52,7 +58,6 @@ function playSound(sound_nr) {
     xmlhttp = new XMLHttpRequest()
     xmlhttp.open('GET', '/sound/' + sound_nr, true)
     xmlhttp.send()
-    alert("playing Sound #1")
 }
 
 function sendSpeed(speed) {
@@ -75,7 +80,7 @@ function moveStop() {
 /* Events ------------------------------------- */
 
 simMode = document.getElementById('simMode');
-simMode.addEventListener('change', e => {
+simMode.onchange = (e) => {
     e.preventDefault();
 
     if (e.target.checked) {
@@ -85,7 +90,24 @@ simMode.addEventListener('change', e => {
     }
 
     init();
-});
+};
+
+let sound = document.getElementById('sound');
+sound.onchange = () => {
+    soundValue = document.getElementById("soundValue");
+    soundStatus = document.getElementById("soundStatus");
+    soundValue.innerHTML = sound.value;
+    soundStatus.innerHTML = "selected number " + soundValue.innerHTML;
+}
+sound.onchange();
+
+let soundButton = document.getElementById('soundButton');
+soundButton.onclick = () => {
+    soundValue = document.getElementById("soundValue");
+    soundStatus = document.getElementById("soundStatus");
+    playSound(soundValue.innerHTML);
+    soundStatus = "played number: " + soundValue.innerHTML;
+}
 
 /* Start Main Flow ---------------------------- */
 

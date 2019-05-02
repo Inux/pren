@@ -76,7 +76,7 @@ async def api(request):
 
 @app.route('/sound/<sound_nr>')
 async def play_sound(request, sound_nr):
-    mwadapter.send_acoustic_number(sound_nr)
+    mwadapter.send_acoustic_cmd(sound_nr)
     return json({'received': True})
 
 @app.route('/speed/<speed>')

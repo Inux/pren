@@ -62,8 +62,4 @@ class ADXL345:
         if zAccl > 511:
             zAccl -= 1024
 
-        # Output data to screen
-        print("Acceleration in X-Axis : %d" % xAccl)
-        print("Acceleration in Y-Axis : %d" % yAccl)
-        print("Acceleration in Z-Axis : %d" % zAccl)
         return xAccl, yAccl, zAccl

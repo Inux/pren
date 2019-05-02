@@ -1,11 +1,11 @@
 import random
 from datetime import timedelta
 
-#import src.raspi.lib.log as log
+import src.raspi.lib.log as log
 from src.raspi.lib import periodic_job
 import src.raspi.movement.mw_adapter_movement as mwadapter
 
-#logger = log.getLogger('SoulTrain.movement.accelerometer')
+logger = log.getLogger('SoulTrain.movement.accelerometer')
 
 class AccelerationReader:
     def __init__(self):
@@ -31,9 +31,9 @@ class AccelerationReader:
         :return:
         """
 
-        print("Acceleration in X-Axis : %d" % x_axis)
-        print("Acceleration in Y-Axis : %d" % y_axis)
-        print("Acceleration in Z-Axis : %d" % z_axis)
+        logger.info("Acceleration in X-Axis : %d" % x_axis)
+        logger.info("Acceleration in Y-Axis : %d" % y_axis)
+        logger.info("Acceleration in Z-Axis : %d" % z_axis)
         mwadapter.send_acceleration(x_axis, y_axis, z_axis)
 
     def mock_gyro(self):
