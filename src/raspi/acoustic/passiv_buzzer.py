@@ -75,7 +75,7 @@ def destory():
 
 
 def play_number(number):
-    print('\n    Playing bumber: ' %number)
+    setup()
     for i in range(1, number):  # Play song 1
         Buzz.ChangeFrequency(CM[3])  # Change the frequency along the song note
         time.sleep(1)  # delay a note for beat * 0.5s
