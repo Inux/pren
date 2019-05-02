@@ -36,6 +36,7 @@ data['x_acceleration'] = 0
 data['y_acceleration'] = 0
 data['z_acceleration'] = 0
 data['number'] = 0
+data['crane'] = 0
 
 # Data Fields
 def get_data():
@@ -112,3 +113,6 @@ def send_acoustic_cmd(number):
     msg = acoustic_cmd.SerializeToString()
     logger.info("Sending acoustic command. Number: '%s'", acoustic_cmd.number)
     sender_webapp.send(zmq_topics.ACOUSTIC_TOPIC + b' ' + msg)
+
+def send_crane_cmd(state):
+    logger.info("Sending crane command. Number: '%s'", state)
