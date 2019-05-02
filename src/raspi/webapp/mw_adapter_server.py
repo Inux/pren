@@ -43,7 +43,7 @@ data['direction'] = "undefined"
 data['number'] = 0
 data['cube'] = 0
 data['crane'] = 0
-data[zmq_ack.ACK_RECV_CRANE_CMD+","+hb.COMPONENT_MOVEMENT] = False
+data[zmq_ack.KEY_CRANE_CMD_MOVEMENT] = False
 
 # Data Fields
 def get_data():
@@ -140,8 +140,12 @@ def send_acoustic_cmd(number):
     sender_webapp.send(zmq_topics.ACOUSTIC_TOPIC + b' ' + msg)
 
 def send_crane_cmd(state):
+<<<<<<< HEAD
     crane_cmd = crane_command_pb2.CraneCommand()
     crane_cmd.command = state
     msg = crane_cmd.SerializeToString()
     logger.info("Sending crane command. Number: '%s'", crane_cmd.command)
     sender_webapp.send(zmq_topics.CRANE_CMD_TOPIC + b' ' + msg)
+=======
+    logger.info("Sending crane command. Number: '%s'", state)
+>>>>>>> sending crane state from webapp
