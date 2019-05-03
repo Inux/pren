@@ -7,7 +7,7 @@ import src.raspi.movement.mw_adapter_movement as mwadapter
 
 logger = log.getLogger('SoulTrain.movement.accelerometer')
 
-POLL_TIME = timedelta(milliseconds=25)
+POLL_TIME = timedelta(milliseconds=50)
 
 class AccelerationReader:
     def __init__(self, onNewAcceleration):

@@ -121,7 +121,7 @@ def get_data():
 
             if ack is not None:
                 logger.debug("received ack -> action: '%s', component: '%s'", ack.action, ack.component)
-                data[ack.action+","+ack.component] = True
+                data[ack.action+ack.component] = True
 
     return data
 
