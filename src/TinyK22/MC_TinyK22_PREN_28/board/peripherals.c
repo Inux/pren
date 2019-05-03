@@ -80,6 +80,13 @@ instance:
           - level: 'kFTM_HighTrue'
           - dutyCyclePercent: '0'
           - enable_chan_irq: 'false'
+      - 1:
+        - edge_aligned_mode: 'kFTM_EdgeAlignedPwm'
+        - edge_aligned_pwm:
+          - chnlNumber: 'kFTM_Chnl_1'
+          - level: 'kFTM_LowTrue'
+          - dutyCyclePercent: '0'
+          - enable_chan_irq: 'false'
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
 const ftm_config_t FTM_1_Motor_PWM_config = {
@@ -101,6 +108,11 @@ const ftm_chnl_pwm_signal_param_t FTM_1_Motor_PWM_pwmSignalParams[] = {
   {
     .chnlNumber = kFTM_Chnl_0,
     .level = kFTM_HighTrue,
+    .dutyCyclePercent = 0
+  },
+  {
+    .chnlNumber = kFTM_Chnl_1,
+    .level = kFTM_LowTrue,
     .dutyCyclePercent = 0
   }
 };

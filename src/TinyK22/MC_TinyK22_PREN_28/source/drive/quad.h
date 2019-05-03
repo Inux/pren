@@ -13,4 +13,10 @@
 void encoder_Init(void);
 uint16_t Encoder_A_GetAbsSpeed(void);
 
+uint32_t Encoder_S_GetNbrOfTicks(void);
+
+void Encoder_S_StartCountingTicks(void);
+
+
+
 #endif /* DRIVE_QUAD_H_ */

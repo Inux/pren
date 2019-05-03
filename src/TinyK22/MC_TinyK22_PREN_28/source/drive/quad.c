@@ -14,6 +14,8 @@
 #include "pi.h"
 #include "comLog.h"
 #include "McuCriticalSection.h"
+#include "quad.h"
+#include "fsl_gpio.h"
 
 #define FTM2_CLOCK      (60000000)
 #define WHEEL_RADIUS    (13)
@@ -67,7 +69,14 @@ void Encoder_S_IRQHandler(void)
 {
   if (FTM_GetStatusFlags(FTM_2_ENCODER_PERIPHERAL) & kFTM_Chnl0Flag)
   {
-    nbrTicks_S++;
+    if (GPIO_PinRead(ENCODER_QUAD_S_A_GPIO, ENCODER_QUAD_S_A_PIN))
+    {
+      nbrTicks_S--;
+    }
+    else
+    {
+      nbrTicks_S++;
+    }
     FTM_ClearStatusFlags(FTM_2_ENCODER_PERIPHERAL, kFTM_Chnl0Flag);
   }
 }
@@ -119,7 +128,7 @@ void FTM_2_ENCODER_IRQHANDLER(void)
  */
 void encoder_Init(void)
 {
-  Encoder_InitPins();
+//  Encoder_InitPins(); // todo this is currently done in default init
 
   nbrTicks_A = 0;
   nbrTicks_S = 0;

@@ -10,4 +10,6 @@
 
 void crane_Init(void);
 
+void craneDoWork(void);
+
 #endif /* CRANE_CRANE_H_ */
