@@ -65,15 +65,10 @@ def send_ack(action, component):
 def get_data():
     global data
 
-    logger.info("check for messages...")
-
-    if reader_webapp.poll(timeout=1, flags=zmq.POLLIN) & zmq.POLLIN == zmq.POLLIN:
+    if reader_webapp.poll(timeout=10, flags=zmq.POLLIN) & zmq.POLLIN == zmq.POLLIN:
         topic_and_data = reader_webapp.recv()
-        topic_and_data = topic_and_data.split(b' ')
         topic = topic_and_data.split(b' ', 1)[0]
         dataraw = topic_and_data.split(b' ', 1)[1]
-
-        logger.info("received msg: %s, %s", topic, dataraw)
 
         if topic == zmq_topics.MOVE_CMD_TOPIC:
             #Try parse move command
