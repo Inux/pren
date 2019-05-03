@@ -48,6 +48,17 @@ void drive_main()
   }
 }
 
+void crane_main()
+{
+  static int i = 0;
+  i++;
+  if (i > 25)
+  {
+    i = 0;
+    craneDoWork();
+  }
+}
+
 void RunApp(void)
 {
   McuWait_Init();
@@ -65,5 +76,6 @@ void RunApp(void)
     pi_main();
     ack_main();
     drive_main();
+    crane_main();
   }
 }
