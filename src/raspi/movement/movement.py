@@ -78,8 +78,6 @@ class Movement(base_app.App):
         # adding distance of measured section to overall distance
         self.data['distance'] = self.data['distance'] + section_distance
         mw_adapter_movement.send_distance(self.data['distance'])
-        print(section_distance)
-        print(self.data['distance'])
 
         mw_adapter_movement.send_acceleration(acc_x, acc_y, acc_z)
 

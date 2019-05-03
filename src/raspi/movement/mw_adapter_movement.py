@@ -24,9 +24,6 @@ reader_webapp = zmq_socket.get_webapp_reader()
 data = {}
 data['speed'] = 0
 data['crane'] = 0
-data['x_acceleration'] = 0
-data['y_acceleration'] = 0
-data['z_acceleration'] = 0
 
 def send_speed(speed):
     speed = speed_pb2.Speed()

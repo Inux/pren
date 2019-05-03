@@ -43,7 +43,6 @@ data['direction'] = "undefined"
 data['number'] = 0
 data['cube'] = 0
 data['crane'] = 0
-data[zmq_ack.ACK_RECV_CRANE_CMD+","+hb.COMPONENT_MOVEMENT] = False
 
 # Data Fields
 def get_data():
@@ -121,7 +120,7 @@ def get_data():
 
             if ack is not None:
                 logger.debug("received ack -> action: '%s', component: '%s'", ack.action, ack.component)
-                data[ack.action+","+ack.component] = True
+                data[ack.action+ack.component] = True
 
     return data
 

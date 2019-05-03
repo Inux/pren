@@ -18,7 +18,7 @@ app.name = "PrenTeam28WebApp"
 
 app.static('/static', os.path.join(os.path.dirname(__file__), 'static'))
 
-MIDDLEWARE_SCAN_INTERVAL = 0.010 # 50ms
+MIDDLEWARE_SCAN_INTERVAL = 0.050 # 50ms
 
 middlewareData = None
 
@@ -84,7 +84,6 @@ async def api(request):
 
 @app.route('/sound/<sound_nr>')
 async def play_sound(request, sound_nr):
-    print("Sending number:" + sound_nr)
     mwadapter.send_acoustic_cmd(sound_nr)
     return json({'received': True})
 
@@ -109,11 +108,12 @@ async def periodic_middleware_task(app):
     middlewareData = mwadapter.get_data()
 
     #Change crane value if we receive acknowledge
-    if middlewareData[zmq_ack.ACK_RECV_CRANE_CMD+","+hb.COMPONENT_MOVEMENT] == True:
-        if middlewareData["crane"] == 0:
-            middlewareData["crane"] = 1
+    key = zmq_ack.ACK_RECV_CRANE_CMD+hb.COMPONENT_MOVEMENT
+    if key in middlewareData and middlewareData[key]:
+        if middlewareData['crane'] == 0:
+            middlewareData['crane'] = 1
         else:
-            middlewareData["crane"] = 0
+            middlewareData['crane'] = 0
 
     time.sleep(MIDDLEWARE_SCAN_INTERVAL)
     app.add_task(periodic_middleware_task(app))

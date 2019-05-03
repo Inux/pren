@@ -49,4 +49,4 @@ class LineDetector(base_app.App):
         time.sleep(3)
 
 if __name__ == '__main__':
-    LineDetector().run()
+    LineDetector()
