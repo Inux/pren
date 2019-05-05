@@ -55,20 +55,20 @@ function startControlFlow() {
 
 // Plays the number pressed as sound (e.g. for #1 it plays "Number one") wow
 function playSound(sound_nr) {
-    xmlhttp = new XMLHttpRequest()
-    xmlhttp.open('GET', '/sound/' + sound_nr, true)
-    xmlhttp.send()
+    xmlhttp = new XMLHttpRequest();
+    xmlhttp.open('GET', '/sound/' + sound_nr, true);
+    xmlhttp.send();
 }
 
 function sendSpeed(speed) {
-    xmlhttp = new XMLHttpRequest()
-    xmlhttp.open('GET', '/speed/' + speed, true)
-    xmlhttp.send()
+    xmlhttp = new XMLHttpRequest();
+    xmlhttp.open('GET', '/speed/' + speed, true);
+    xmlhttp.send();
 }
 
 function moveStart() {
-    var speedValue = document.getElementById("speedValue").value
-    sendSpeed(speedValue)
+    var speedValue = document.getElementById("speedValue").value;
+    sendSpeed(speedValue);
 }
 
 function moveStop() {
@@ -98,7 +98,7 @@ sound.onchange = () => {
     soundStatus = document.getElementById("soundStatus");
     soundValue.innerHTML = sound.value;
     soundStatus.innerHTML = "selected number " + soundValue.innerHTML;
-}
+};
 sound.onchange();
 
 let soundButton = document.getElementById('soundButton');
@@ -106,8 +106,35 @@ soundButton.onclick = () => {
     soundValue = document.getElementById("soundValue");
     soundStatus = document.getElementById("soundStatus");
     playSound(soundValue.innerHTML);
-    soundStatus = "played number: " + soundValue.innerHTML;
-}
+    soundStatus.innerHTML = "played number: " + soundValue.innerHTML;
+};
+
+let craneOnButton = document.getElementById('craneOn');
+let craneResetButton = document.getElementById('craneReset');
+craneOnButton.disabled = true;
+craneResetButton.disabled = true;
+
+let craneStatus = document.getElementById("crane");
+
+craneOnButton.onclick = () => {
+    if(document.getElementById("crane").innerText === "0") {
+        xmlhttp = new XMLHttpRequest();
+        xmlhttp.open('GET', '/crane/1', true);
+        xmlhttp.send();
+
+        craneOnButton.disabled = true;
+    }
+};
+
+craneResetButton.onclick = () => {
+    if(document.getElementById("crane").innerText === "1") {
+        xmlhttp = new XMLHttpRequest();
+        xmlhttp.open('GET', '/crane/0', true);
+        xmlhttp.send();
+
+        craneResetButton.disabled = true;
+    }
+};
 
 /* Start Main Flow ---------------------------- */
 

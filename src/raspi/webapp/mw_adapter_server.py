@@ -16,7 +16,12 @@ from src.raspi.pb import current_pb2
 from src.raspi.pb import acceleration_pb2
 from src.raspi.pb import number_detection_pb2
 from src.raspi.pb import acoustic_command_pb2
+from src.raspi.pb import crane_command_pb2
+from src.raspi.pb import distance_pb2
+from src.raspi.pb import acknowledge_pb2
 from src.raspi.lib import zmq_heartbeat_listener
+from src.raspi.lib import heartbeat as hb
+from src.raspi.lib import zmq_ack
 
 logger = log.getLogger("SoulTrain.webapp.mw_adapter_server")
 
@@ -27,15 +32,18 @@ sender_webapp = zmq_socket.get_webapp_sender()
 hb_listener = zmq_heartbeat_listener.HeartBeatListener()
 
 data = {} # data will be updated by HeartBeatListener
-data['direction'] = "undefined"
 data['state'] = "undefined"
 data['state_message'] = "undefined"
 data['speed'] = 0
-data['position'] = 0
+data['distance'] = 0
 data['x_acceleration'] = 0
 data['y_acceleration'] = 0
 data['z_acceleration'] = 0
+data['direction'] = "undefined"
 data['number'] = 0
+data['cube'] = 0
+data['crane'] = 0
+data[zmq_ack.KEY_CRANE_CMD_MOVEMENT] = False
 
 # Data Fields
 def get_data():
@@ -88,6 +96,26 @@ def get_data():
                 data['y_acceleration'] = acceleration.y
                 data['z_acceleration'] = acceleration.z
 
+        if topic == zmq_topics.DISTANCE_TOPIC:
+            #Try Parse Distance
+            distance = distance_pb2.Distance()
+            distance.ParseFromString(dataraw)
+
+            if distance is not None:
+                logger.debug("received distance '%s'", distance.distance)
+                data['distance'] = distance.distance
+
+        if topic == zmq_topics.ACKNOWLEDGE_TOPIC:
+            #Try Parse Acknowledge
+            ack = acknowledge_pb2.Acknowledge()
+            ack.ParseFromString(dataraw)
+
+            if ack is not None:
+                logger.debug("received ack -> action: '%s', component: '%s'", ack.action, ack.component)
+                if ack.action+ack.component in zmq_ack.KEY_CRANE_CMD_MOVEMENT:
+                    logger.debug("received crane cmd ack from movement!")
+                data[ack.action+ack.component] = True
+
         if topic == zmq_topics.CURRENT_TOPIC:
             #Try Parse Current
             current = current_pb2.Current()
@@ -101,14 +129,21 @@ def get_data():
 
 def send_move_cmd(speed):
     move_cmd = move_command_pb2.MoveCommand()
-    move_cmd.speed = speed
+    move_cmd.speed = int(speed)
     msg = move_cmd.SerializeToString()
     logger.info("Sending move command. Speed: '%s'", move_cmd.speed)
     sender_webapp.send(zmq_topics.MOVE_CMD_TOPIC + b' ' + msg)
 
 def send_acoustic_cmd(number):
     acoustic_cmd = acoustic_command_pb2.AcousticCommand()
-    acoustic_cmd.number = number
+    acoustic_cmd.number = int(number)
     msg = acoustic_cmd.SerializeToString()
     logger.info("Sending acoustic command. Number: '%s'", acoustic_cmd.number)
     sender_webapp.send(zmq_topics.ACOUSTIC_TOPIC + b' ' + msg)
+
+def send_crane_cmd(state):
+    crane_cmd = crane_command_pb2.CraneCommand()
+    crane_cmd.command = int(state)
+    msg = crane_cmd.SerializeToString()
+    logger.info("Sending crane command. Command: '%s'", crane_cmd.command)
+    sender_webapp.send(zmq_topics.CRANE_CMD_TOPIC + b' ' + msg)

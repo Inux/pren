@@ -10,13 +10,16 @@ from sanic.response import json
 from sanic.response import file
 
 import src.raspi.webapp.mw_adapter_server as mwadapter
+from src.raspi.lib import zmq_ack
+from src.raspi.lib import heartbeat as hb
+import src.raspi.lib.log as log
+
+logger = log.getLogger("SoulTrain.webapp.server")
 
 app = Sanic()
 app.name = "PrenTeam28WebApp"
 
 app.static('/static', os.path.join(os.path.dirname(__file__), 'static'))
-
-MIDDLEWARE_SCAN_INTERVAL = 0.010 # 50ms
 
 middlewareData = None
 
@@ -47,11 +50,14 @@ async def api(request):
         state = middlewareData['state']
         state_message = middlewareData['state_message']
         speed = middlewareData['speed']
-        position = middlewareData['position']
+        distance = middlewareData['distance']
         x_acceleration = middlewareData['x_acceleration']
         y_acceleration = middlewareData['y_acceleration']
         z_acceleration = middlewareData['z_acceleration']
         direction = middlewareData['direction']
+        number = middlewareData['number']
+        cube = middlewareData['cube']
+        crane = middlewareData['crane']
         linedetector = middlewareData['linedetector']
         numberdetector = middlewareData['numberdetector']
         movement = middlewareData['movement']
@@ -62,11 +68,14 @@ async def api(request):
         'state': str(state),
         'stateMessage': str(state_message),
         'speed': str(speed),
-        'position': str(position),
+        'distance': str(distance),
         'xAcceleration': str(x_acceleration),
         'yAcceleration': str(y_acceleration),
         'zAcceleration': str(z_acceleration),
         'direction': str(direction),
+        'number': str(number),
+        'cube': str(cube),
+        'crane': str(crane),
         'heartBeatLineDetector': str(linedetector),
         'heartBeatNumberDetector': str(numberdetector),
         'heartBeatMovement': str(movement),
@@ -76,7 +85,6 @@ async def api(request):
 
 @app.route('/sound/<sound_nr>')
 async def play_sound(request, sound_nr):
-    print("Sending number:" + sound_nr)
     mwadapter.send_acoustic_cmd(sound_nr)
     return json({'received': True})
 
@@ -85,16 +93,34 @@ async def send_speed(request, speed):
     mwadapter.send_move_cmd(int(speed))
     return json({'received': True})
 
+@app.route('/crane/<state>')
+async def send_crane_cmd(request, state):
+    if int(state) == 1:
+        mwadapter.send_crane_cmd(1)
+    else:
+        mwadapter.send_crane_cmd(0)
+    return json({'received': True})
+
 # Middleware handling
 
 async def periodic_middleware_task(app):
     global middlewareData
     ''' periodic task for retrieving middleware messages '''
     middlewareData = mwadapter.get_data()
-    time.sleep(MIDDLEWARE_SCAN_INTERVAL)
+
+    #Change crane value if we receive acknowledge
+    if zmq_ack.KEY_CRANE_CMD_MOVEMENT in middlewareData.keys():
+        if middlewareData[zmq_ack.KEY_CRANE_CMD_MOVEMENT] is True:
+            logger.info("received crane cmd ack from movement")
+            if middlewareData['crane'] == 0:
+                middlewareData['crane'] = 1
+            else:
+                middlewareData['crane'] = 0
+            middlewareData[zmq_ack.KEY_CRANE_CMD_MOVEMENT] = False
+
     app.add_task(periodic_middleware_task(app))
 
 if __name__ == '__main__':
     signal.signal(signal.SIGINT, signal_int_handler)
     app.add_task(periodic_middleware_task(app))
-    app.run(host='0.0.0.0', port=2828)
+    app.run(host='0.0.0.0', port=2828, debug=False, access_log=False)

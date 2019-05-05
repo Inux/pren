@@ -7,15 +7,15 @@ Usage:
 import logging
 
 logger = logging.getLogger('SoulTrain')
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 
 #Write to file
 fh = logging.FileHandler('SoulTrain.log')
-fh.setLevel(logging.DEBUG)
+fh.setLevel(logging.INFO)
 
 #Write to stdout
 ch = logging.StreamHandler()
-ch.setLevel(logging.DEBUG)
+ch.setLevel(logging.INFO)
 
 #Formatting
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')

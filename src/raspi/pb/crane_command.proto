@@ -1,5 +1,5 @@
 syntax = "proto3";
 
 message CraneCommand {
-    float command = 1; //e.g start
+    int32 command = 1; //e.g 1 = crane on, 0 = off (but manual action needed!)
 }
