@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x13\x63rane_command.proto\"\x1f\n\x0c\x43raneCommand\x12\x0f\n\x07\x63ommand\x18\x01 \x01(\x02\x62\x06proto3')
+  serialized_pb=_b('\n\x13\x63rane_command.proto\"\x1f\n\x0c\x43raneCommand\x12\x0f\n\x07\x63ommand\x18\x01 \x01(\x05\x62\x06proto3')
 )
 
 
@@ -34,8 +34,8 @@ _CRANECOMMAND = _descriptor.Descriptor(
   fields=[
     _descriptor.FieldDescriptor(
       name='command', full_name='CraneCommand.command', index=0,
-      number=1, type=2, cpp_type=6, label=1,
-      has_default_value=False, default_value=float(0),
+      number=1, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
