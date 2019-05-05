@@ -80,14 +80,6 @@ def get_data():
             #Try parse crane command
             crane_cmd = crane_command_pb2.CraneCommand()
             crane_cmd.ParseFromString(dataraw)
-<<<<<<< HEAD
-
-            if crane_cmd is not None:
-                logger.info("received crane command. Command: '%s'", crane_cmd.command)
-                data['crane'] = crane_cmd.command
-
-=======
->>>>>>> small fixes and crane cmd handling
 
             if crane_cmd is not None:
                 logger.info("received crane command. Command: '%s'", crane_cmd.command)
