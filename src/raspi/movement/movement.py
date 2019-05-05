@@ -15,10 +15,13 @@ from src.raspi.lib import zmq_socket
 from src.raspi.lib import zmq_ack
 from src.raspi.lib import periodic_job
 from src.raspi.lib import heartbeat as hb
+import src.raspi.lib.log as log
 from src.raspi.movement import protocol
 from src.raspi.movement.accelerometer import AccelerationReader
 from src.raspi.movement.fakeaccelerometer import FakeAccelerationmeter
 from src.raspi.movement import mw_adapter_movement
+
+logger = log.getLogger("SoulTrain.movement.movement")
 
 socket = zmq_socket.get_movement_sender()
 
@@ -64,6 +67,7 @@ class Movement(base_app.App):
 
         if self.data['crane'] != int(data_tmp['crane']):
             self.data['crane'] = int(data_tmp['crane'])
+            logger.info("sending crane command ack")
             mw_adapter_movement.send_ack(zmq_ack.ACK_RECV_CRANE_CMD, hb.COMPONENT_MOVEMENT)
 
     def on_new_speed(self, speed):

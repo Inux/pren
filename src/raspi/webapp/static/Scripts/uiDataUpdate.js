@@ -28,6 +28,29 @@ function updateUI(data) {
     updateHeartBeats(data);
 }
 
+// Update logic of certain buttons depending on the data
+
+let crane_state = "undefined";
+
+function updateLogic(data) {
+
+    //Update Crane buttons depending on the data (allow on only if state is 0)
+    let craneOnButton = document.getElementById('craneOn');
+    let craneResetButton = document.getElementById('craneReset');
+
+    if(crane_state !== data.crane) {
+        if(data.crane === "0") {
+            craneOnButton.disabled = false;
+            craneResetButton.disabled = true;
+        } else {
+            craneOnButton.disabled = true;
+            craneResetButton.disabled = false;
+        }
+
+        crane_state = data.crane;
+    }
+}
+
 // Update SoulTrain data received from the backend
 function updateSoulTrainData(data) {
     document.getElementById("state").innerText = data.state;
@@ -41,6 +64,8 @@ function updateSoulTrainData(data) {
     document.getElementById("number").innerText = data.number;
     document.getElementById("cube").innerText = data.cube;
     document.getElementById("crane").innerText = data.crane;
+
+    updateLogic(data);
 }
 
 // Update the classes to display HearBeat status

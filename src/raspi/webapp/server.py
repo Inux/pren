@@ -12,13 +12,14 @@ from sanic.response import file
 import src.raspi.webapp.mw_adapter_server as mwadapter
 from src.raspi.lib import zmq_ack
 from src.raspi.lib import heartbeat as hb
+import src.raspi.lib.log as log
+
+logger = log.getLogger("SoulTrain.webapp.server")
 
 app = Sanic()
 app.name = "PrenTeam28WebApp"
 
 app.static('/static', os.path.join(os.path.dirname(__file__), 'static'))
-
-MIDDLEWARE_SCAN_INTERVAL = 0.050 # 50ms
 
 middlewareData = None
 
@@ -108,17 +109,18 @@ async def periodic_middleware_task(app):
     middlewareData = mwadapter.get_data()
 
     #Change crane value if we receive acknowledge
-    key = zmq_ack.ACK_RECV_CRANE_CMD+hb.COMPONENT_MOVEMENT
-    if key in middlewareData and middlewareData[key]:
-        if middlewareData['crane'] == 0:
-            middlewareData['crane'] = 1
-        else:
-            middlewareData['crane'] = 0
+    if zmq_ack.KEY_CRANE_CMD_MOVEMENT in middlewareData.keys():
+        if middlewareData[zmq_ack.KEY_CRANE_CMD_MOVEMENT] is True:
+            logger.info("received crane cmd ack from movement")
+            if middlewareData['crane'] == 0:
+                middlewareData['crane'] = 1
+            else:
+                middlewareData['crane'] = 0
+            middlewareData[zmq_ack.KEY_CRANE_CMD_MOVEMENT] = False
 
-    time.sleep(MIDDLEWARE_SCAN_INTERVAL)
     app.add_task(periodic_middleware_task(app))
 
 if __name__ == '__main__':
     signal.signal(signal.SIGINT, signal_int_handler)
     app.add_task(periodic_middleware_task(app))
-    app.run(host='0.0.0.0', port=2828)
+    app.run(host='0.0.0.0', port=2828, debug=False, access_log=False)

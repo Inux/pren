@@ -24,9 +24,13 @@ class FakeAccelerationmeter:
     def read_acceleration(self):
         #x_axis, y_axis, z_axis = gyro.read()
         x_axis, y_axis, z_axis = self.mock_gyro()
+<<<<<<< HEAD
         logger.info("Acceleration x: %d, y: %d, z: %d", x_axis, y_axis, z_axis)
 <<<<<<< HEAD
 <<<<<<< HEAD
+=======
+        logger.debug("Acceleration x: %d, y: %d, z: %d", x_axis, y_axis, z_axis)
+>>>>>>> finished implementation of crane control, removed sleep in backend, ui button updates
         self.call_back(POLL_TIME.microseconds, x_axis, y_axis, z_axis)
 =======
         self.call_back(POLL_TIME.total_seconds(), x_axis, y_axis, z_axis)

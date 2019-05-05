@@ -15,6 +15,11 @@ def __get_reader(port):
     context = zmq.Context()
     socket = context.socket(zmq.SUB)
     socket.connect("tcp://127.0.0.1:{}".format(port))
+    socket.setsockopt(zmq.LINGER, 0)
+    try:
+        socket.recv(flags=NOBLOCK)
+    except:
+        pass
 
     return socket
 
@@ -22,6 +27,7 @@ def __get_sender(port):
     context = zmq.Context()
     socket = context.socket(zmq.PUB)
     socket.bind("tcp://127.0.0.1:{}".format(port))
+    socket.setsockopt(zmq.LINGER, 0)
 
     return socket
 

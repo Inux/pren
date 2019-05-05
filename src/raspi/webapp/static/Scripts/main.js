@@ -110,19 +110,30 @@ soundButton.onclick = () => {
 };
 
 let craneOnButton = document.getElementById('craneOn');
+let craneResetButton = document.getElementById('craneReset');
+craneOnButton.disabled = true;
+craneResetButton.disabled = true;
+
+let craneStatus = document.getElementById("crane");
+
 craneOnButton.onclick = () => {
-    xmlhttp = new XMLHttpRequest();
-    xmlhttp.open('GET', '/crane/1', true);
-    xmlhttp.send();
-    craneOnButton.disabled = true;
+    if(document.getElementById("crane").innerText === "0") {
+        xmlhttp = new XMLHttpRequest();
+        xmlhttp.open('GET', '/crane/1', true);
+        xmlhttp.send();
+
+        craneOnButton.disabled = true;
+    }
 };
 
-let craneResetButton = document.getElementById('craneReset');
 craneResetButton.onclick = () => {
-    xmlhttp = new XMLHttpRequest();
-    xmlhttp.open('GET', '/crane/0', true);
-    xmlhttp.send();
-    craneOnButton.disabled = false;
+    if(document.getElementById("crane").innerText === "1") {
+        xmlhttp = new XMLHttpRequest();
+        xmlhttp.open('GET', '/crane/0', true);
+        xmlhttp.send();
+
+        craneResetButton.disabled = true;
+    }
 };
 
 /* Start Main Flow ---------------------------- */

@@ -96,15 +96,6 @@ def get_data():
                 data['y_acceleration'] = acceleration.y
                 data['z_acceleration'] = acceleration.z
 
-        if topic == zmq_topics.CURRENT_TOPIC:
-            #Try Parse Current
-            current = current_pb2.Current()
-            current.ParseFromString(dataraw)
-
-            if current is not None:
-                logger.debug("received current '%s'", current.current)
-                data['current'] = current.current
-
         if topic == zmq_topics.DISTANCE_TOPIC:
             #Try Parse Distance
             distance = distance_pb2.Distance()
@@ -121,27 +112,38 @@ def get_data():
 
             if ack is not None:
                 logger.debug("received ack -> action: '%s', component: '%s'", ack.action, ack.component)
+                if ack.action+ack.component in zmq_ack.KEY_CRANE_CMD_MOVEMENT:
+                    logger.debug("received crane cmd ack from movement!")
                 data[ack.action+ack.component] = True
+
+        if topic == zmq_topics.CURRENT_TOPIC:
+            #Try Parse Current
+            current = current_pb2.Current()
+            current.ParseFromString(dataraw)
+
+            if current is not None:
+                logger.debug("received current '%s'", current.current)
+                data['current'] = current.current
 
     return data
 
 def send_move_cmd(speed):
     move_cmd = move_command_pb2.MoveCommand()
-    move_cmd.speed = speed
+    move_cmd.speed = int(speed)
     msg = move_cmd.SerializeToString()
     logger.info("Sending move command. Speed: '%s'", move_cmd.speed)
     sender_webapp.send(zmq_topics.MOVE_CMD_TOPIC + b' ' + msg)
 
 def send_acoustic_cmd(number):
     acoustic_cmd = acoustic_command_pb2.AcousticCommand()
-    acoustic_cmd.number = number
+    acoustic_cmd.number = int(number)
     msg = acoustic_cmd.SerializeToString()
     logger.info("Sending acoustic command. Number: '%s'", acoustic_cmd.number)
     sender_webapp.send(zmq_topics.ACOUSTIC_TOPIC + b' ' + msg)
 
 def send_crane_cmd(state):
     crane_cmd = crane_command_pb2.CraneCommand()
-    crane_cmd.command = state
+    crane_cmd.command = int(state)
     msg = crane_cmd.SerializeToString()
-    logger.info("Sending crane command. Number: '%s'", crane_cmd.command)
+    logger.info("Sending crane command. Command: '%s'", crane_cmd.command)
     sender_webapp.send(zmq_topics.CRANE_CMD_TOPIC + b' ' + msg)
