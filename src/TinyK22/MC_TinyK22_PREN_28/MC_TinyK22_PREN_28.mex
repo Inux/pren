@@ -322,6 +322,44 @@
                   </pin>
                </pins>
             </function>
+            <function name="I2C_InitPins">
+               <description>Configures pin routing and optionally pin electrical features.</description>
+               <options>
+                  <callFromInitBoot>false</callFromInitBoot>
+                  <prefix>I2C_</prefix>
+                  <coreID>core0</coreID>
+                  <enableClock>true</enableClock>
+               </options>
+               <dependencies>
+                  <dependency resourceType="Peripheral" resourceId="I2C0" description="Peripheral I2C0 is not initialized" problem_level="1" source="Pins:I2C_InitPins">
+                     <feature name="initialized" evaluation="equal">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.common" description="Pins initialization requires the COMMON Driver in the project." problem_level="2" source="Pins:I2C_InitPins">
+                     <feature name="enabled" evaluation="equal" configuration="core0">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.port" description="Pins initialization requires the PORT Driver in the project." problem_level="2" source="Pins:I2C_InitPins">
+                     <feature name="enabled" evaluation="equal" configuration="core0">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+               </dependencies>
+               <pins>
+                  <pin peripheral="I2C0" signal="SDA" pin_num="60" pin_signal="PTD3/SPI0_SIN/UART2_TX/FTM3_CH3/FB_AD3/LPUART0_TX/I2C0_SDA">
+                     <pin_features>
+                        <pin_feature name="open_drain" value="enable"/>
+                     </pin_features>
+                  </pin>
+                  <pin peripheral="I2C0" signal="SCL" pin_num="59" pin_signal="PTD2/LLWU_P13/SPI0_SOUT/UART2_RX/FTM3_CH2/FB_AD4/LPUART0_RX/I2C0_SCL">
+                     <pin_features>
+                        <pin_feature name="open_drain" value="enable"/>
+                     </pin_features>
+                  </pin>
+               </pins>
+            </function>
          </functions_list>
       </pins>
       <clocks name="Clocks" version="5.0" enabled="true" update_project_code="true">
