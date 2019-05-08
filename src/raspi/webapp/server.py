@@ -85,7 +85,7 @@ async def api(request):
 
 @app.route('/sound/<sound_nr>')
 async def play_sound(request, sound_nr):
-    mwadapter.send_acoustic_cmd(sound_nr)
+    mwadapter.send_acoustic_cmd(int(sound_nr))
     return json({'received': True})
 
 @app.route('/speed/<speed>')
@@ -109,14 +109,14 @@ async def periodic_middleware_task(app):
     middlewareData = mwadapter.get_data()
 
     #Change crane value if we receive acknowledge
-    if zmq_ack.KEY_CRANE_CMD_MOVEMENT in middlewareData.keys():
-        if middlewareData[zmq_ack.KEY_CRANE_CMD_MOVEMENT] is True:
+    if zmq_ack.ACK_RECV_CRANE_CMD in middlewareData.keys():
+        if middlewareData[zmq_ack.ACK_RECV_CRANE_CMD] is True:
             logger.info("received crane cmd ack from movement")
             if middlewareData['crane'] == 0:
                 middlewareData['crane'] = 1
             else:
                 middlewareData['crane'] = 0
-            middlewareData[zmq_ack.KEY_CRANE_CMD_MOVEMENT] = False
+            middlewareData[zmq_ack.ACK_RECV_CRANE_CMD] = False
 
     app.add_task(periodic_middleware_task(app))
 

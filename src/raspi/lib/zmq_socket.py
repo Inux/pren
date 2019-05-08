@@ -14,20 +14,19 @@ PORT_WEBAPP = 28286
 def __get_reader(port):
     context = zmq.Context()
     socket = context.socket(zmq.SUB)
-    socket.connect("tcp://127.0.0.1:{}".format(port))
-    socket.setsockopt(zmq.LINGER, 0)
-    try:
-        socket.recv(flags=NOBLOCK)
-    except:
-        pass
-
+    socket.connect("tcp://0.0.0.0:{}".format(port))
+#    socket.setsockopt(zmq.LINGER, 0)
+#    try:
+#        socket.recv(flags=NOBLOCK)
+#    except:
+#        pass
     return socket
 
 def __get_sender(port):
     context = zmq.Context()
     socket = context.socket(zmq.PUB)
-    socket.bind("tcp://127.0.0.1:{}".format(port))
-    socket.setsockopt(zmq.LINGER, 0)
+    socket.bind("tcp://0.0.0.0:{}".format(port))
+#    socket.setsockopt(zmq.LINGER, 0)
 
     return socket
 
@@ -61,6 +60,7 @@ def get_movement_reader():
     __mr.setsockopt(zmq.SUBSCRIBE, zmq_topics.ACCELERATION_TOPIC)
     __mr.setsockopt(zmq.SUBSCRIBE, zmq_topics.DISTANCE_TOPIC)
     __mr.setsockopt(zmq.SUBSCRIBE, zmq_topics.HEARTBEAT_TOPIC)
+    __mr.setsockopt(zmq.SUBSCRIBE, zmq_topics.CRANE_CMD_TOPIC)
     __mr.setsockopt(zmq.SUBSCRIBE, zmq_topics.ACKNOWLEDGE_TOPIC)
     return __mr
 

@@ -43,7 +43,7 @@ class FakeSerial:
     ## write()
     # writes a string of characters to the fake serial device
     def write( self, string ):
-        logger.info("received: " + string.encode('utf-8'))
+        logger.info("received: " + str(string.encode('utf-8')))
         self._receivedData += string
 
     ## read()
