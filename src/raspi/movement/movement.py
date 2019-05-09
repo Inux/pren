@@ -59,7 +59,7 @@ class Movement(base_app.App):
         self.data['speed_tiny'] = 0 #mm/s
         self.data['distance'] = 0.0 #mm
         self.data['crane'] = 0 #mm
-        self.data['phase'] = 'startup' #one of the phases of system_status.proto
+        self.data['phase'] = '' #one of the phases of system_status.proto
 
         self.run() #run movement loop
 
@@ -80,10 +80,9 @@ class Movement(base_app.App):
             self.tiny.send_crane(self.data['crane'])
             mw_adapter_movement.send_ack(zmq_ack.ACK_RECV_CRANE_CMD, hb.COMPONENT_MOVEMENT)
 
-        if self.data['phase'] not in data_tmp['phase']:
+        if data_tmp['phase'] not in self.data['phase']:
             self.data['phase'] = data_tmp['phase']
-
-        self.tiny.send_phase(self.data['phase'])
+            self.tiny.send_phase(self.data['phase'])
 
     def on_new_speed(self, speed):
         self.data['speed_tiny'] = speed

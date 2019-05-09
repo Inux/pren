@@ -4,6 +4,7 @@ Implements the protocol between raspi and the tiny
 import time
 
 import serial
+from src.raspi.config import config
 from src.raspi.movement.fakeserialdevice import FakeSerial
 
 from src.raspi.movement.messages import Message
@@ -107,9 +108,15 @@ class Protocol():
         '''
         write the phase to tiny
         '''
-        if phase in range(0, 7):
-            self.last_sent_phase = phase
-            self.__write_cmd(Message.PHASE, phase)
+        p = -10
+        try:
+            p = config.PHASE_TO_INT[phase]
+        except KeyError:
+            pass
+
+        if p in range(0, 8):
+            self.last_sent_phase = p
+            self.__write_cmd(Message.PHASE, p)
 
     def send_ack(self, message):
         '''

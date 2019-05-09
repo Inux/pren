@@ -3,6 +3,7 @@ import src.raspi.lib.log as log
 from src.raspi.lib import zmq_socket
 from src.raspi.lib import zmq_topics
 from src.raspi.lib import zmq_msg
+from src.raspi.config import config
 
 logger = log.getLogger("SoulTrain.movement.mw_adapter_movement")
 
@@ -14,7 +15,7 @@ reader_controlflow = zmq_socket.get_controlflow_reader()
 data = {}
 data['speed'] = 0
 data['crane'] = 0
-data['phase'] = 'startup'
+data['phase'] = config.PHASE_FINISHED
 
 def send_speed(speed):
     zmq_msg.send_speed(sender_movement, speed)
@@ -35,13 +36,11 @@ def send_ack(action, component):
     zmq_msg.send_ack(sender_movement, action, component)
 
 def _set_data(key, val):
-    global data
     logger.debug("received -> key: " + str(key) + ", value: " + str(val))
     data[key] = val
 
 # Data Fields
 def get_data():
-    global data
 #webapp
     zmq_msg.recv(
         reader_webapp,
