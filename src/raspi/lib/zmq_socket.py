@@ -35,13 +35,15 @@ def __get_sender(port):
 def get_acoustic_reader():
     __ar = __get_reader(PORT_ACOUSTIC)
     __ar.setsockopt(zmq.SUBSCRIBE, zmq_topics.HEARTBEAT_TOPIC)
-    __ar.setsockopt(zmq.SUBSCRIBE, zmq_topics.ACOUSTIC_TOPIC)
     __ar.setsockopt(zmq.SUBSCRIBE, zmq_topics.ACKNOWLEDGE_TOPIC)
     return __ar
 
 def get_controlflow_reader():
     __cr = __get_reader(PORT_CONTROLFLOW)
     __cr.setsockopt(zmq.SUBSCRIBE, zmq_topics.SYSTEM_STATUS_TOPIC)
+    __cr.setsockopt(zmq.SUBSCRIBE, zmq_topics.ACOUSTIC_TOPIC)
+    __cr.setsockopt(zmq.SUBSCRIBE, zmq_topics.CRANE_CMD_TOPIC)
+    __cr.setsockopt(zmq.SUBSCRIBE, zmq_topics.MOVE_CMD_TOPIC)
     __cr.setsockopt(zmq.SUBSCRIBE, zmq_topics.HEARTBEAT_TOPIC)
     __cr.setsockopt(zmq.SUBSCRIBE, zmq_topics.ACKNOWLEDGE_TOPIC)
     return __cr
@@ -60,7 +62,6 @@ def get_movement_reader():
     __mr.setsockopt(zmq.SUBSCRIBE, zmq_topics.ACCELERATION_TOPIC)
     __mr.setsockopt(zmq.SUBSCRIBE, zmq_topics.DISTANCE_TOPIC)
     __mr.setsockopt(zmq.SUBSCRIBE, zmq_topics.HEARTBEAT_TOPIC)
-    __mr.setsockopt(zmq.SUBSCRIBE, zmq_topics.CRANE_CMD_TOPIC)
     __mr.setsockopt(zmq.SUBSCRIBE, zmq_topics.ACKNOWLEDGE_TOPIC)
     __mr.setsockopt(zmq.SUBSCRIBE, zmq_topics.CUBE_STATUS)
     return __mr
@@ -77,8 +78,9 @@ def get_webapp_reader():
     __wr.setsockopt(zmq.SUBSCRIBE, zmq_topics.MOVE_CMD_TOPIC)
     __wr.setsockopt(zmq.SUBSCRIBE, zmq_topics.ACOUSTIC_TOPIC)
     __wr.setsockopt(zmq.SUBSCRIBE, zmq_topics.SYSTEM_CMD_TOPIC)
-    __wr.setsockopt(zmq.SUBSCRIBE, zmq_topics.NUMBER_DETECTOR_TOPIC)
     __wr.setsockopt(zmq.SUBSCRIBE, zmq_topics.CRANE_CMD_TOPIC)
+    __wr.setsockopt(zmq.SUBSCRIBE, zmq_topics.HEARTBEAT_TOPIC)
+    __wr.setsockopt(zmq.SUBSCRIBE, zmq_topics.ACKNOWLEDGE_TOPIC)
     return __wr
 
 # Sender

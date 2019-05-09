@@ -30,7 +30,7 @@ class Movement(base_app.App):
 
     def detection_loop(self, *args, **kwargs):
         pass
-        
+
 
 if __name__ == '__main__':
     Movement().run()

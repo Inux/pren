@@ -51,6 +51,24 @@ class HeartBeatListener(metaclass=Singleton):
     def __name__(self):
         return repr(self)
 
+    def get_linedetector(self):
+        return self.linedetector
+
+    def get_numberdetector(self):
+        return self.numberdetector
+
+    def get_movement(self):
+        return self.movement
+
+    def get_acoustic(self):
+        return self.acoustic
+
+    def get_controlflow(self):
+        return self.controlflow
+
+    def get_webapp(self):
+        return self.webapp
+
     def get_data(self):
         '''
         get the actual heartbeat data

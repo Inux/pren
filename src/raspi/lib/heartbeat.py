@@ -1,7 +1,8 @@
-import sys
-
 import src.raspi.lib.log as log
+from src.raspi.config import config
 import src.raspi.lib.zmq_topics as zmq_topics
+import src.raspi.lib.zmq_msg as zmq_msg
+import src.raspi.lib.zmq_socket as zmq_socket
 from src.raspi.pb import heartbeat_pb2
 
 # Dont change - has impact on conditional logic
@@ -30,3 +31,11 @@ def get_heartbeat_msg(component, status):
     heartbeat.component = component
     heartbeat.status = status
     return heartbeat.SerializeToString()
+
+data = {}
+data['phase'] = STATUS_ERROR
+
+def _set_data(key, val):
+    global data
+    data[key] = val
+
