@@ -18,7 +18,7 @@ socket = zmq_socket.get_numberdetector_sender()
 
 
 def send_hb():
-    hb.send_heartbeat(socket, hb.COMPONENT_NUMBERDETECTION, hb.STATUS_RUNNING)
+    hb.send_heartbeat(socket, hb.COMPONENT_NUMBERDETECTION, hb.get_status())
 
 
 class Movement(base_app.App):
@@ -30,7 +30,7 @@ class Movement(base_app.App):
 
     def detection_loop(self, *args, **kwargs):
         pass
-        
+
 
 if __name__ == '__main__':
     Movement().run()

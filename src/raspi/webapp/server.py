@@ -9,7 +9,7 @@ from sanic import Sanic
 from sanic.response import json
 from sanic.response import file
 
-import src.raspi.webapp.mw_adapter_server as mwadapter
+import src.raspi.webapp.mw_adapter_server as mw_adapter_server
 from src.raspi.lib import zmq_ack
 from src.raspi.lib import heartbeat as hb
 import src.raspi.lib.log as log
@@ -85,7 +85,7 @@ async def api(request):
 
 @app.route('/sound/<sound_nr>')
 async def play_sound(request, sound_nr):
-    mwadapter.send_acoustic_cmd(int(sound_nr))
+    mw_adapter_server.send_acoustic_cmd(int(sound_nr))
     return json({'received': True})
 
 @app.route('/speed/<speed>')
@@ -93,15 +93,15 @@ async def send_speed(request, speed):
     global middlewareData
 
     middlewareData['speed_ack'] = False
-    mwadapter.send_move_cmd(int(speed))
+    mw_adapter_server.send_move_cmd(int(speed))
     return json({'received': True})
 
 @app.route('/crane/<state>')
 async def send_crane_cmd(request, state):
     if int(state) == 1:
-        mwadapter.send_crane_cmd(1)
+        mw_adapter_server.send_crane_cmd(1)
     else:
-        mwadapter.send_crane_cmd(0)
+        mw_adapter_server.send_crane_cmd(0)
     return json({'received': True})
 
 class Payload(object):
@@ -112,15 +112,19 @@ class Payload(object):
 async def send_controlflow_cmd(request):
     json_string = request.body.decode('utf-8')
     p = Payload(json_string)
-    mwadapter.send_sys_cmd(p.command, dict(p.phases))
+    mw_adapter_server.send_sys_cmd(p.command, dict(p.phases))
     return json({'received': True})
 
 # Middleware handling
 
 async def periodic_middleware_task(app):
     global middlewareData
-    ''' periodic task for retrieving middleware messages '''
-    middlewareData = mwadapter.get_data()
+    ''' periodic task for handling middleware '''
+
+    #send heartbeat
+    mw_adapter_server.send_hb()
+
+    middlewareData = mw_adapter_server.get_data()
 
     #Change crane value if we receive acknowledge
     if zmq_ack.ACK_RECV_CRANE_CMD in middlewareData.keys():

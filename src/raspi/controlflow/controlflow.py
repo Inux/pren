@@ -17,6 +17,7 @@ from src.raspi.controlflow.phases import a_starting
 from src.raspi.controlflow.phases import b_find_cube
 from src.raspi.controlflow.phases import c_grab_cube
 from src.raspi.controlflow.phases import d_round_one
+from src.raspi.controlflow.phases import e_round_two
 from src.raspi.controlflow.phases import f_find_stop
 from src.raspi.controlflow.phases import g_stopping
 from src.raspi.controlflow.phases import h_finished
@@ -38,25 +39,25 @@ class Controlflow(base_app.App):
                              a_starting.method,
                              config.PHASE_FIND_CUBE)
         self.find_cube = Phase(config.PHASE_FIND_CUBE,
-                               a_starting.method,
+                               b_find_cube.method,
                                config.PHASE_GRAB_CUBE)
         self.grab_cube = Phase(config.PHASE_GRAB_CUBE,
-                               a_starting.method,
+                               c_grab_cube.method,
                                config.PHASE_ROUND_ONE)
         self.round_one = Phase(config.PHASE_ROUND_ONE,
-                               a_starting.method,
+                               d_round_one.method,
                                config.PHASE_ROUND_TWO)
         self.round_two = Phase(config.PHASE_ROUND_TWO,
-                               a_starting.method,
+                               e_round_two.method,
                                config.PHASE_FIND_STOP)
         self.find_stop = Phase(config.PHASE_FIND_STOP,
-                               a_starting.method,
+                               f_find_stop.method,
                                config.PHASE_STOPPING)
         self.stopping = Phase(config.PHASE_STOPPING,
-                              a_starting.method,
+                              g_stopping.method,
                               config.PHASE_FINISHED)
         self.finished = Phase(config.PHASE_FINISHED,
-                              a_starting.method,
+                              h_finished.method,
                               "")
 
         self.actual_phase = None

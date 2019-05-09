@@ -1,7 +1,8 @@
-import sys
-
 import src.raspi.lib.log as log
+from src.raspi.config import config
 import src.raspi.lib.zmq_topics as zmq_topics
+import src.raspi.lib.zmq_msg as zmq_msg
+import src.raspi.lib.zmq_socket as zmq_socket
 from src.raspi.pb import heartbeat_pb2
 
 # Dont change - has impact on conditional logic
@@ -30,3 +31,30 @@ def get_heartbeat_msg(component, status):
     heartbeat.component = component
     heartbeat.status = status
     return heartbeat.SerializeToString()
+
+data = {}
+data['phase'] = STATUS_ERROR
+
+def _set_data(key, val):
+    global data
+    data[key] = val
+
+def get_status():
+    global data
+
+    zmq_msg.recv(
+        zmq_socket.get_controlflow_reader(),
+        {
+            zmq_topics.SYSTEM_STATUS_TOPIC: lambda obj: [
+                _set_data('phase', obj.phase)
+            ]
+        }
+    )
+
+    if data['phase'] in config.PHASE_FINISHED:
+        data['phase'] = STATUS_FINISHED
+    else:
+        data['phase'] = STATUS_RUNNING
+
+
+    return data['phase']

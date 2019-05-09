@@ -26,7 +26,7 @@ def get_number():
 socket = zmq_socket.get_numberdetector_sender()
 
 def send_hb():
-    hb.send_heartbeat(socket, hb.COMPONENT_NUMBERDETECTOR, hb.STATUS_RUNNING)
+    hb.send_heartbeat(socket, hb.COMPONENT_NUMBERDETECTOR, hb.get_status())
 
 class NumberDetector(base_app.App):
     def __init__(self, *args, **kwargs):

@@ -1,7 +1,7 @@
 from datetime import timedelta
 
 import src.raspi.lib.log as log
-import zmq_socket
+import src.raspi.lib.zmq_socket as zmq_socket
 from src.raspi.lib import base_app
 from src.raspi.lib import periodic_job
 from src.raspi.lib import heartbeat as hb
@@ -13,7 +13,7 @@ logger = log.getLogger('SoulTrain.acoustic.sound')
 socket = zmq_socket.get_acoustic_sender()
 
 def send_hb():
-    hb.send_heartbeat(socket, hb.COMPONENT_MOVEMENT, hb.STATUS_RUNNING)
+    hb.send_heartbeat(socket, hb.COMPONENT_MOVEMENT, hb.get_status())
 
 class Buzzer(base_app.App):
     def __init__(self, *args, **kwargs):

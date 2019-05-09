@@ -6,6 +6,7 @@ from src.raspi.lib import zmq_topics
 from src.raspi.lib import zmq_msg
 from src.raspi.lib import zmq_heartbeat_listener
 from src.raspi.lib import zmq_ack
+from src.raspi.lib import heartbeat as hb
 
 logger = log.getLogger("SoulTrain.webapp.mw_adapter_server")
 
@@ -92,3 +93,6 @@ def send_crane_cmd(state):
 def send_sys_cmd(command, phases):
     logger.info("Sending system command. Command: '%s', Phases: '%s'", command, str(phases))
     zmq_msg.send_system_cmd(sender_webapp, command, phases)
+
+def send_hb():
+    hb.send_heartbeat(sender_webapp, hb.COMPONENT_WEBAPP, hb.get_status())
