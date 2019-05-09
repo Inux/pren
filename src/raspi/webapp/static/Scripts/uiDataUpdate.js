@@ -1,5 +1,4 @@
-//Variables & Constants
-var updateInterval = 250; // 250ms
+//NOTE!: Load main.js first!
 
 //Helper for API get method
 function apiGet(callback) {
@@ -53,8 +52,8 @@ function updateLogic(data) {
 
 // Update SoulTrain data received from the backend
 function updateSoulTrainData(data) {
-    document.getElementById("state").innerText = data.state;
-    document.getElementById("stateMessage").innerText = data.stateMessage;
+    document.getElementById("phase").innerText = data.phase;
+    document.getElementById("phaseMessage").innerText = data.phaseMessage;
     document.getElementById("speed").innerText = data.speed;
     document.getElementById("distance").innerText = data.distance;
     document.getElementById("xAcceleration").innerText = data.xAcceleration;

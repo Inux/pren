@@ -1,6 +1,4 @@
 #!/usr/bin/env python
-import json
-
 import src.raspi.lib.log as log
 from src.raspi.lib import zmq_socket
 from src.raspi.lib import zmq_topics
@@ -18,8 +16,6 @@ sender_ctrlflow = zmq_socket.get_controlflow_sender()
 hb_listener = zmq_heartbeat_listener.HeartBeatListener()
 
 data = {} # data will be updated by HeartBeatListener
-data['state'] = "undefined"
-data['state_message'] = "undefined"
 data['speed'] = 0
 data['distance'] = 0
 data['x_acceleration'] = 0
@@ -37,7 +33,7 @@ def _set_data(key, val):
     data[key] = val
 
 def _set_sys_cmd(command, phases):
-    logger.info("received sys cmd -> command: " + str(command) + ", phases: " + str(json.dumps(phases)))
+    logger.info("received sys cmd -> command: " + str(command) + ", phases: " + str(dict(phases)))
 
 # Data Fields
 def get_data():
@@ -90,5 +86,5 @@ def send_crane_cmd(state):
     zmq_msg.send_crane_cmd(sender_ctrlflow, state)
 
 def send_sys_status(phase, message):
-    logger.info("Sending sys status. Phase: '%s', Message :'%s'", phase, message)
+    logger.debug("Sending sys status. Phase: '%s', Message :'%s'", phase, message)
     zmq_msg.send_system_status(sender_ctrlflow, phase, message)

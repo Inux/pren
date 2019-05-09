@@ -47,8 +47,8 @@ async def api(request):
     ''' api returns the API JSON available under /api '''
     direction = 'undefined'
     if middlewareData is not None:
-        state = middlewareData['state']
-        state_message = middlewareData['state_message']
+        phase = middlewareData['phase']
+        phase_message = middlewareData['phase_message']
         speed = middlewareData['speed']
         distance = middlewareData['distance']
         x_acceleration = middlewareData['x_acceleration']
@@ -65,8 +65,8 @@ async def api(request):
         controlflow = middlewareData['controlflow']
 
     return json({
-        'state': str(state),
-        'stateMessage': str(state_message),
+        'phase': str(phase),
+        'phaseMessage': str(phase_message),
         'speed': str(speed),
         'distance': str(distance),
         'xAcceleration': str(x_acceleration),

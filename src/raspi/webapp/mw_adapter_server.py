@@ -12,12 +12,13 @@ logger = log.getLogger("SoulTrain.webapp.mw_adapter_server")
 # Sockets
 reader_linedetector = zmq_socket.get_linedetector_reader()
 reader_movement = zmq_socket.get_movement_reader()
+reader_ctrlflow = zmq_socket.get_controlflow_reader()
 sender_webapp = zmq_socket.get_webapp_sender()
 hb_listener = zmq_heartbeat_listener.HeartBeatListener()
 
 data = {} # data will be updated by HeartBeatListener
-data['state'] = "undefined"
-data['state_message'] = "undefined"
+data['phase'] = "undefined"
+data['phase_message'] = "undefined"
 data['speed'] = 0
 data['distance'] = 0
 data['x_acceleration'] = 0
@@ -61,6 +62,16 @@ def get_data():
             zmq_topics.ACKNOWLEDGE_TOPIC: lambda obj: _set_data(obj.action, True),
             zmq_topics.CURRENT_TOPIC: lambda obj: _set_data('current', obj.current),
             zmq_topics.CUBE_STATUS: lambda obj: _set_data('cube', obj.state)
+        }
+    )
+
+    zmq_msg.recv(
+        reader_ctrlflow,
+        {
+            zmq_topics.SYSTEM_STATUS_TOPIC: lambda obj: [
+                _set_data('phase', obj.phase),
+                _set_data('phase_message', obj.message)
+            ]
         }
     )
 
