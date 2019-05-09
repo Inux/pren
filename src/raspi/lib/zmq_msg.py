@@ -5,6 +5,7 @@ import src.raspi.pb.acknowledge_pb2 as acknowledge_pb2
 import src.raspi.pb.acoustic_command_pb2 as acoustic_command_pb2
 import src.raspi.pb.crane_command_pb2 as crane_command_pb2
 import src.raspi.pb.current_pb2 as current_pb2
+import src.raspi.pb.cube_pb2 as cube_pb2
 import src.raspi.pb.direction_pb2 as direction_pb2
 import src.raspi.pb.distance_pb2 as distance_pb2
 import src.raspi.pb.heartbeat_pb2 as heartbeat_pb2
@@ -20,6 +21,7 @@ topic_proto_map = {
     zmq_topics.ACOUSTIC_TOPIC: acoustic_command_pb2.AcousticCommand,
     zmq_topics.CRANE_CMD_TOPIC: crane_command_pb2.CraneCommand,
     zmq_topics.CURRENT_TOPIC: current_pb2.Current,
+    zmq_topics.CUBE_STATUS: cube_pb2.Cube,
     zmq_topics.DIRECTION_TOPIC: direction_pb2.Direction,
     zmq_topics.DISTANCE_TOPIC: distance_pb2.Distance,
     zmq_topics.HEARTBEAT_TOPIC: heartbeat_pb2.Heartbeat,
@@ -63,6 +65,12 @@ def send_current(socket, current):
     msg = curr.SerializeToString()
     socket.send(zmq_topics.CURRENT_TOPIC + b' ' + msg)
 
+def send_cube_state(socket, state):
+    cube = cube_pb2.Cube()
+    cube.state = state
+    msg = cube.SerializeToString()
+    socket.send(zmq_topics.CUBE_STATUS + b' ' + msg)
+
 def send_direction(socket, direction):
     d = direction_pb2.Direction()
     d.direction = direction
@@ -88,9 +96,9 @@ def send_detected_number(socket, number):
     socket.send(zmq_topics.NUMBER_DETECTOR_TOPIC + b' ' + msg)
 
 def send_speed(socket, speed):
-    speed = speed_pb2.Speed()
-    speed.speed = speed
-    msg = speed.SerializeToString()
+    s = speed_pb2.Speed()
+    s.speed = speed
+    msg = s.SerializeToString()
     socket.send(zmq_topics.SPEED_TOPIC + b' ' + msg)
 
 def send_system_cmd(socket, command, phases):

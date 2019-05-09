@@ -27,6 +27,9 @@ def send_acceleration(x, y, z):
 def send_distance(distance):
     zmq_msg.send_distance(sender_movement, distance)
 
+def send_cube_state(state):
+    zmq_msg.send_cube_state(sender_movement, state)
+
 def send_ack(action, component):
     zmq_msg.send_ack(sender_movement, action, component)
 

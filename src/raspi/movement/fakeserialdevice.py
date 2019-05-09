@@ -9,7 +9,7 @@ class FakeSerial:
 
     ## init(): the constructor.  Many of the arguments have default values
     # and can be skipped when calling the constructor.
-    def __init__( self, port='COM1', baudrate = 19200, timeout=1,
+    def __init__( self, port='/dev/ttys005', baudrate = 98600, timeout=5,
                   bytesize = 8, parity = 'N', stopbits = 1, xonxoff=0,
                   rtscts = 0):
         self.name     = port

@@ -14,7 +14,7 @@ class Protocol():
     The protocol itself
     '''
     def __init__(self, device, baud,
-                 onNewSpeed=None, onNewCurrent=None, real_device=True):
+                 onNewSpeed=None, onNewCurrent=None, onNewCubeState=None, real_device=True):
         self.log = logger.getLogger('SoulTrain.movement.protocol')
         self.logTiny = logger.getLogger('SoulTrain.movement.tiny')
 
@@ -40,9 +40,23 @@ class Protocol():
         self.cube = None
         self.current = None
 
+        #Internal values sent to tiny
+        self.last_sent_crane_state = None
+        self.last_sent_phase = None
+        self.last_sent_speed = None
+
         #CallBacks
         self.onNewSpeed = onNewSpeed
         self.onNewCurrent = onNewCurrent
+        self.onNewCubeState = onNewCubeState
+
+        #Stores the methods to execute again when a message has to be resend
+        self.resend_map = {
+            Message.SPEED: lambda: self.send_speed(self.last_sent_speed),
+            Message.CRANE: lambda: self.send_crane(self.last_sent_crane_state),
+            Message.PHASE: lambda: self.send_phase(self.last_sent_phase)
+        }
+
 
     def connect(self):
         '''
@@ -51,6 +65,7 @@ class Protocol():
         if self.conn is None:
             if self.real_device:
                 self.conn = serial.Serial(self.device, baudrate=self.baud, timeout=3.0)
+                self.log.info("connect to device: " + self.device + ", baudrate: " + str(self.baud))
             else:
                 self.conn = FakeSerial()
 
@@ -74,6 +89,7 @@ class Protocol():
         '''
         write speed to tiny (mm/s)
         '''
+        self.last_sent_speed = speed
         self.__write_cmd(Message.SPEED, speed)
 
     def send_crane(self, state):
@@ -81,6 +97,7 @@ class Protocol():
         write crane cmd to tiny
         '''
         if state in range(0, 1):
+            self.last_sent_crane_state = state
             self.__write_cmd(Message.CRANE, state)
 
     def send_phase(self, phase):
@@ -88,6 +105,7 @@ class Protocol():
         write the phase to tiny
         '''
         if phase in range(0, 7):
+            self.last_sent_phase = phase
             self.__write_cmd(Message.PHASE, phase)
 
     def send_ack(self, message):
@@ -120,36 +138,60 @@ class Protocol():
         if self.conn is not None:
             while self.conn.in_waiting:
                 line = self.conn.readline()
-                if line != "" and line is not None:
+
+                #Expect to have byte array
+                try:
+                    line = line.decode('utf-8')
+                except AttributeError:
+                    pass
+
+                line = line.strip(' \t\n\r ')
+                if line is not None and line != "":
                     self.__parse_line(line)
 
+    def ack_handler(self):
+        '''
+        resend if not received ack
+        '''
+        for key, time in self.ack_map.items():
+            if self.ack_map[key]+0.05 < time.time():
+                if key in self.resend_send_map
+
     def __parse_line(self, line):
+        rcv_msg=""
+        rcv_key=""
         try:
-            line = line.decode('utf-8')
+            self.log.info("parsing line: '" + line + "'")
+
             key_value = line.split(',')
             if len(key_value) >= 2:
-                msg = key_value[0].replace("\n", "").replace("\t", "").replace(" ", "")
-                val = key_value[1].replace("\n", "").replace("\t", "").replace(" ", "")
+                rcv_msg = key_value[0].strip(' \t\n\r ')
+                rcv_val = key_value[1].strip(' \t\n\r ')
 
-                self.log.info("Parsed line with Msg: '%s', Value: '%s'", msg, val)
-                if msg in self.recv_map.keys():
-                    self.log.info("Execution method of Msg: '%s'", msg)
-                    self.recv_map[msg](val) #call specific recv handler
+                self.log.info("parsed line with msg: '%s', val: '%s'", str(rcv_msg), str(rcv_val))
+                if rcv_msg in self.recv_map.keys():
+                    self.log.info("execute method of msg: '%s'", str(rcv_msg))
+                    self.recv_map[rcv_msg](rcv_val) #call specific recv handler
 
-        except Exception as e:
-            self.log.error("Could not parse line: '%s'. Exception: %s", line, e)
+        except KeyError as e:
+            self.log.error("Could not parse line: '%s', msg: '%s', val: '%s', exception: %s", line, str(rcv_msg), str(rcv_val), e)
 
     def __set_recv_speed(self, val):
         if self.is_speed != int(val):
             self.is_speed = int(val)
             if self.onNewSpeed is not None:
-                self.onNewSpeed(int(val))
+                self.onNewSpeed(self.is_speed)
 
         self.send_ack(Message.IS_SPEED.value)
 
     def __set_recv_cube(self, val):
-        self.cube = int(val)
-        self.send_ack(Message.CUBE.value)
+        if int(val) in range(0, 2):
+            if self.cube != int(val):
+                self.cube = int(val)
+                if self.onNewCubeState is not None:
+                    self.onNewCubeState(int(val))
+
+            self.send_ack(Message.CUBE.value)
 
     def __set_recv_current(self, val):
         if self.current != int(val):

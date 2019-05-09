@@ -7,11 +7,11 @@ Usage:
 import logging
 
 logger = logging.getLogger('SoulTrain')
-logger.setLevel(logging.INFO)
+logger.setLevel(logging.DEBUG)
 
 #Write to file
 fh = logging.FileHandler('SoulTrain.log')
-fh.setLevel(logging.INFO)
+fh.setLevel(logging.DEBUG)
 
 #Write to stdout
 ch = logging.StreamHandler()
