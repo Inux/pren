@@ -68,7 +68,7 @@ class Protocol():
         '''
         if self.conn is None:
             if self.real_device:
-                self.conn = serial.Serial(self.device, baudrate=self.baud, timeout=3.0)
+                self.conn = serial.Serial(self.device, baudrate=self.baud, timeout=3)
                 self.log.info("connect to device: " + self.device + ", baudrate: " + str(self.baud))
             else:
                 self.conn = FakeSerial()
