@@ -9,15 +9,18 @@ from src.raspi.movement.fakeserialdevice import FakeSerial
 from src.raspi.movement.messages import Message
 import src.raspi.lib.log as logger
 
+RESEND_TIME=0.05
+
 class Protocol():
     '''
     The protocol itself
     '''
     def __init__(self, device, baud,
-                 onNewSpeed=None, onNewCurrent=None, onNewCubeState=None, real_device=True):
+                 onNewSpeed=None, onNewCurrent=None, onNewCubeState=None, resend=True, real_device=True):
         self.log = logger.getLogger('SoulTrain.movement.protocol')
         self.logTiny = logger.getLogger('SoulTrain.movement.tiny')
 
+        self.resend = resend
         self.real_device = real_device
 
         self.device = device
@@ -52,9 +55,9 @@ class Protocol():
 
         #Stores the methods to execute again when a message has to be resend
         self.resend_map = {
-            Message.SPEED: lambda: self.send_speed(self.last_sent_speed),
-            Message.CRANE: lambda: self.send_crane(self.last_sent_crane_state),
-            Message.PHASE: lambda: self.send_phase(self.last_sent_phase)
+            Message.SPEED.value: lambda: self.send_speed(self.last_sent_speed),
+            Message.CRANE.value: lambda: self.send_crane(self.last_sent_crane_state),
+            Message.PHASE.value: lambda: self.send_phase(self.last_sent_phase)
         }
 
 
@@ -153,9 +156,11 @@ class Protocol():
         '''
         resend if not received ack
         '''
-        for key, time in self.ack_map.items():
-            if self.ack_map[key]+0.05 < time.time():
-                if key in self.resend_send_map
+        if self.resend:
+            for key in self.ack_map.keys():
+                if self.ack_map[key]+RESEND_TIME < time.time():
+                    if key in self.resend_map.keys():
+                        self.resend_map[key]()
 
     def __parse_line(self, line):
         rcv_msg=""

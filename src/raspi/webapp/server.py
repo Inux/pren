@@ -126,7 +126,7 @@ async def periodic_middleware_task(app):
         if middlewareData[zmq_ack.ACK_RECV_MOVE_CMD] is True:
             logger.info("received move cmd ack from movement")
             middlewareData['speed_ack'] = True
-            middlewareData[zmq_ack.ACK_RECV_CRANE_CMD] = False
+            middlewareData[zmq_ack.ACK_RECV_MOVE_CMD] = False
 
     app.add_task(periodic_middleware_task(app))
 

@@ -8,3 +8,7 @@ MASTER_UART_BAUD = 115200
 
 MASTER_UART_INTERFACE_PC = "/dev/ttys008"
 #Simulate on MacOs -> 'socat -d -d pty,raw,echo=0 pty,raw,echo=0' then 'screen /dev/ttys005'
+
+
+# Tiny Config
+RESEND_TINY_MESSAGES = False

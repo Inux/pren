@@ -46,10 +46,12 @@ class Movement(base_app.App):
 
         if self.is_raspi:
             self.tiny = protocol.Protocol(config.MASTER_UART_INTERFACE_TINY, config.MASTER_UART_BAUD, onNewSpeed=self.on_new_speed, onNewCurrent=self.on_new_current,
-            onNewCubeState=self.on_new_cube_state)
+            onNewCubeState=self.on_new_cube_state,
+            resend=config.RESEND_TINY_MESSAGES)
         else:
             self.tiny = protocol.Protocol(config.MASTER_UART_INTERFACE_PC, config.MASTER_UART_BAUD, onNewSpeed=self.on_new_speed, onNewCurrent=self.on_new_current,
-            onNewCubeState=self.on_new_cube_state)
+            onNewCubeState=self.on_new_cube_state,
+            resend=config.RESEND_TINY_MESSAGES)
         self.tiny.connect()
 
         self.data = {}
@@ -62,6 +64,7 @@ class Movement(base_app.App):
 
     def movement_loop(self, *args, **kwargs):
         self.tiny.rcv_handler()
+        self.tiny.ack_handler()
 
         data_tmp = mw_adapter_movement.get_data()
 

@@ -62,6 +62,7 @@ def get_movement_reader():
     __mr.setsockopt(zmq.SUBSCRIBE, zmq_topics.HEARTBEAT_TOPIC)
     __mr.setsockopt(zmq.SUBSCRIBE, zmq_topics.CRANE_CMD_TOPIC)
     __mr.setsockopt(zmq.SUBSCRIBE, zmq_topics.ACKNOWLEDGE_TOPIC)
+    __mr.setsockopt(zmq.SUBSCRIBE, zmq_topics.CUBE_STATUS)
     return __mr
 
 def get_numberdetector_reader():
