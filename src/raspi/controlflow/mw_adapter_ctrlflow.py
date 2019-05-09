@@ -37,7 +37,7 @@ def set_data(key, val, log=True):
         log_set_data(key, val)
 
 def log_set_data(key, val):
-    logger.info("received -> key: " + str(key) + ", value: " + str(val))
+    logger.debug("received -> key: " + str(key) + ", value: " + str(val))
 
 def _set_sys_cmd(command, phases):
     global mw_data_ctrlflow
@@ -99,4 +99,4 @@ def send_crane_cmd(state):
 
 def send_sys_status(phase, message):
     logger.debug("Sending sys status. Phase: '%s', Message :'%s'", phase, message)
-    zmq_msg.send_system_status(sender_ctrlflow, phase, message)
+    zmq_msg.send_system_status(sender_ctrlflow, str(phase), str(message))
