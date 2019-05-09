@@ -33,7 +33,7 @@ data[zmq_ack.ACK_RECV_MOVE_CMD] = False
 data[zmq_ack.ACK_RECV_CRANE_CMD] = False
 
 def _set_data(key, val):
-    logger.info("received -> key: " + str(key) + ", value: " + str(val))
+    logger.debug("received -> key: " + str(key) + ", value: " + str(val))
     data[key] = val
 
 # Data Fields
