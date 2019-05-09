@@ -4,10 +4,6 @@
 
 /* Mobile */
 
-body {
-    overflow: hidden;
-}
-
 @media only screen and (max-width: 600px) {
     .title {
         position: relative;
@@ -78,7 +74,7 @@ dl {
 
 dt {
     float: left;
-    width: 30%;
+    width: 40%;
     /* adjust the width; make sure the total of both is 100% */
     background: #eee;
     padding: 0;
@@ -87,7 +83,7 @@ dt {
 
 dd {
     float: left;
-    width: 70%;
+    width: 60%;
     /* adjust the width; make sure the total of both is 100% */
     background: #eee;
     padding: 0;
