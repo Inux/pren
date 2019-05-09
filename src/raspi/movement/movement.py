@@ -26,7 +26,7 @@ logger = log.getLogger("SoulTrain.movement.movement")
 socket = zmq_socket.get_movement_sender()
 
 def send_hb():
-    hb.send_heartbeat(socket, hb.COMPONENT_MOVEMENT, hb.get_status())
+    hb.send_heartbeat(socket, hb.COMPONENT_MOVEMENT, hb.STATUS_RUNNING)
 
 class Movement(base_app.App):
     def __init__(self, *args, **kwargs):

@@ -95,4 +95,4 @@ def send_sys_cmd(command, phases):
     zmq_msg.send_system_cmd(sender_webapp, command, phases)
 
 def send_hb():
-    hb.send_heartbeat(sender_webapp, hb.COMPONENT_WEBAPP, hb.get_status())
+    hb.send_heartbeat(sender_webapp, hb.COMPONENT_WEBAPP, hb.STATUS_RUNNING)

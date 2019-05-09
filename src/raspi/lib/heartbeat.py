@@ -39,22 +39,3 @@ def _set_data(key, val):
     global data
     data[key] = val
 
-def get_status():
-    global data
-
-    zmq_msg.recv(
-        zmq_socket.get_controlflow_reader(),
-        {
-            zmq_topics.SYSTEM_STATUS_TOPIC: lambda obj: [
-                _set_data('phase', obj.phase)
-            ]
-        }
-    )
-
-    if data['phase'] in config.PHASE_FINISHED:
-        data['phase'] = STATUS_FINISHED
-    else:
-        data['phase'] = STATUS_RUNNING
-
-
-    return data['phase']
