@@ -14,6 +14,7 @@ reader_controlflow = zmq_socket.get_controlflow_reader()
 data = {}
 data['speed'] = 0
 data['crane'] = 0
+data['phase'] = 'startup'
 
 def send_speed(speed):
     zmq_msg.send_speed(sender_movement, speed)
@@ -34,11 +35,13 @@ def send_ack(action, component):
     zmq_msg.send_ack(sender_movement, action, component)
 
 def _set_data(key, val):
-    logger.info("received -> key: " + str(key) + ", value: " + str(val))
+    global data
+    logger.debug("received -> key: " + str(key) + ", value: " + str(val))
     data[key] = val
 
 # Data Fields
 def get_data():
+    global data
 #webapp
     zmq_msg.recv(
         reader_webapp,
@@ -53,7 +56,8 @@ def get_data():
         reader_controlflow,
         {
             zmq_topics.MOVE_CMD_TOPIC: lambda obj: _set_data('speed', obj.speed),
-            zmq_topics.CRANE_CMD_TOPIC: lambda obj: _set_data('crane', obj.command)
+            zmq_topics.CRANE_CMD_TOPIC: lambda obj: _set_data('crane', obj.command),
+            zmq_topics.SYSTEM_STATUS_TOPIC: lambda obj: _set_data('phase', obj.phase)
         }
     )
 

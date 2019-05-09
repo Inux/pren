@@ -99,7 +99,7 @@ class Protocol():
         '''
         write crane cmd to tiny
         '''
-        if state in range(0, 1):
+        if state in range(0, 2):
             self.last_sent_crane_state = state
             self.__write_cmd(Message.CRANE, state)
 

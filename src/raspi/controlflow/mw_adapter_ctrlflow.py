@@ -37,7 +37,7 @@ def set_data(key, val, log=True):
         log_set_data(key, val)
 
 def log_set_data(key, val):
-    logger.info("received -> key: " + str(key) + ", value: " + str(val))
+    logger.debug("received -> key: " + str(key) + ", value: " + str(val))
 
 def _set_sys_cmd(command, phases):
     global mw_data_ctrlflow
