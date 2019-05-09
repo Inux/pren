@@ -1,26 +1,10 @@
 #!/usr/bin/env python
 
-import logging
-import os
-import select
-import zmq
-
 import src.raspi.lib.log as log
 from src.raspi.lib import zmq_socket
 from src.raspi.lib import zmq_topics
-from src.raspi.pb import direction_pb2
-from src.raspi.pb import move_command_pb2
-from src.raspi.pb import heartbeat_pb2
-from src.raspi.pb import speed_pb2
-from src.raspi.pb import current_pb2
-from src.raspi.pb import acceleration_pb2
-from src.raspi.pb import number_detection_pb2
-from src.raspi.pb import acoustic_command_pb2
-from src.raspi.pb import crane_command_pb2
-from src.raspi.pb import distance_pb2
-from src.raspi.pb import acknowledge_pb2
+from src.raspi.lib import zmq_msg
 from src.raspi.lib import zmq_heartbeat_listener
-from src.raspi.lib import heartbeat as hb
 from src.raspi.lib import zmq_ack
 
 logger = log.getLogger("SoulTrain.webapp.mw_adapter_server")
@@ -28,12 +12,13 @@ logger = log.getLogger("SoulTrain.webapp.mw_adapter_server")
 # Sockets
 reader_linedetector = zmq_socket.get_linedetector_reader()
 reader_movement = zmq_socket.get_movement_reader()
+reader_ctrlflow = zmq_socket.get_controlflow_reader()
 sender_webapp = zmq_socket.get_webapp_sender()
 hb_listener = zmq_heartbeat_listener.HeartBeatListener()
 
 data = {} # data will be updated by HeartBeatListener
-data['state'] = "undefined"
-data['state_message'] = "undefined"
+data['phase'] = "undefined"
+data['phase_message'] = "undefined"
 data['speed'] = 0
 data['distance'] = 0
 data['x_acceleration'] = 0
@@ -43,107 +28,67 @@ data['direction'] = "undefined"
 data['number'] = 0
 data['cube'] = 0
 data['crane'] = 0
-data[zmq_ack.KEY_CRANE_CMD_MOVEMENT] = False
+data[zmq_ack.ACK_RECV_ACOUSTIC_CMD] = False
+data[zmq_ack.ACK_RECV_MOVE_CMD] = False
+data[zmq_ack.ACK_RECV_CRANE_CMD] = False
+
+def _set_data(key, val):
+    logger.debug("received -> key: " + str(key) + ", value: " + str(val))
+    data[key] = val
 
 # Data Fields
 def get_data():
-    global data
-
     heartbeats = hb_listener.get_data()
     data.update(heartbeats) # append heartbeats data to data object
 
     #Handle LineDetector in Messages
-    if reader_linedetector.poll(timeout=1, flags=zmq.POLLIN) & zmq.POLLIN == zmq.POLLIN:
-        topic_and_data = reader_linedetector.recv()
-        topic = topic_and_data.split(b' ', 1)[0]
-        dataraw = topic_and_data.split(b' ', 1)[1]
+    zmq_msg.recv(
+        reader_linedetector,
+        {
+            zmq_topics.DIRECTION_TOPIC: lambda obj: _set_data('direction', obj.direction)
+        }
+    )
 
-        if topic == zmq_topics.DIRECTION_TOPIC:
-            #Try Parse Direction
-            dir_obj = direction_pb2.Direction()
-            dir_obj.ParseFromString(dataraw)
+    zmq_msg.recv(
+        reader_movement,
+        {
+            zmq_topics.SPEED_TOPIC: lambda obj: _set_data('speed', obj.speed),
+            zmq_topics.ACCELERATION_TOPIC: lambda obj: [
+                _set_data('x_acceleration', obj.x),
+                _set_data('y_acceleration', obj.y),
+                _set_data('z_acceleration', obj.z),
+            ],
+            zmq_topics.DISTANCE_TOPIC: lambda obj: _set_data('distance', obj.distance),
+            zmq_topics.ACKNOWLEDGE_TOPIC: lambda obj: _set_data(obj.action, True),
+            zmq_topics.CURRENT_TOPIC: lambda obj: _set_data('current', obj.current),
+            zmq_topics.CUBE_STATUS: lambda obj: _set_data('cube', obj.state)
+        }
+    )
 
-            if dir_obj is not None:
-                logger.debug("received direction: '%s'", dir_obj.direction)
-                data['direction'] = dir_obj.direction
-                return data
-
-    #Handle Movement in Messages
-    if reader_movement.poll(timeout=1, flags=zmq.POLLIN) & zmq.POLLIN == zmq.POLLIN:
-        topic_and_data = reader_movement.recv()
-        topic = topic_and_data.split(b' ', 1)[0]
-        dataraw = topic_and_data.split(b' ', 1)[1]
-
-        if topic == zmq_topics.SPEED_TOPIC:
-            #Try Parse Speed
-            speed = speed_pb2.Speed()
-            speed.ParseFromString(dataraw)
-
-            if speed is not None:
-                logger.debug("received speed '%s'", speed.speed)
-                data['speed'] = speed.speed
-
-        if topic == zmq_topics.ACCELERATION_TOPIC:
-            # Try Parse Acceleration
-            acceleration = acceleration_pb2.Acceleration()
-            acceleration.ParseFromString(dataraw)
-
-            if acceleration is not None:
-                logger.debug("received acceleration in x-axis '%s'", acceleration.x)
-                logger.debug("received acceleration in y-axis '%s'", acceleration.y)
-                logger.debug("received acceleration in z-axis '%s'", acceleration.z)
-                data['x_acceleration'] = acceleration.x
-                data['y_acceleration'] = acceleration.y
-                data['z_acceleration'] = acceleration.z
-
-        if topic == zmq_topics.DISTANCE_TOPIC:
-            #Try Parse Distance
-            distance = distance_pb2.Distance()
-            distance.ParseFromString(dataraw)
-
-            if distance is not None:
-                logger.debug("received distance '%s'", distance.distance)
-                data['distance'] = distance.distance
-
-        if topic == zmq_topics.ACKNOWLEDGE_TOPIC:
-            #Try Parse Acknowledge
-            ack = acknowledge_pb2.Acknowledge()
-            ack.ParseFromString(dataraw)
-
-            if ack is not None:
-                logger.debug("received ack -> action: '%s', component: '%s'", ack.action, ack.component)
-                if ack.action+ack.component in zmq_ack.KEY_CRANE_CMD_MOVEMENT:
-                    logger.debug("received crane cmd ack from movement!")
-                data[ack.action+ack.component] = True
-
-        if topic == zmq_topics.CURRENT_TOPIC:
-            #Try Parse Current
-            current = current_pb2.Current()
-            current.ParseFromString(dataraw)
-
-            if current is not None:
-                logger.debug("received current '%s'", current.current)
-                data['current'] = current.current
+    zmq_msg.recv(
+        reader_ctrlflow,
+        {
+            zmq_topics.SYSTEM_STATUS_TOPIC: lambda obj: [
+                _set_data('phase', obj.phase),
+                _set_data('phase_message', obj.message)
+            ]
+        }
+    )
 
     return data
 
 def send_move_cmd(speed):
-    move_cmd = move_command_pb2.MoveCommand()
-    move_cmd.speed = int(speed)
-    msg = move_cmd.SerializeToString()
-    logger.info("Sending move command. Speed: '%s'", move_cmd.speed)
-    sender_webapp.send(zmq_topics.MOVE_CMD_TOPIC + b' ' + msg)
+    logger.info("Sending move command. Speed: '%s'", speed)
+    zmq_msg.send_move_cmd(sender_webapp, speed)
 
 def send_acoustic_cmd(number):
-    acoustic_cmd = acoustic_command_pb2.AcousticCommand()
-    acoustic_cmd.number = int(number)
-    msg = acoustic_cmd.SerializeToString()
-    logger.info("Sending acoustic command. Number: '%s'", acoustic_cmd.number)
-    sender_webapp.send(zmq_topics.ACOUSTIC_TOPIC + b' ' + msg)
+    logger.info("Sending acoustic command. Number: '%s'", number)
+    zmq_msg.send_acoustic_cmd(sender_webapp, number)
 
 def send_crane_cmd(state):
-    crane_cmd = crane_command_pb2.CraneCommand()
-    crane_cmd.command = int(state)
-    msg = crane_cmd.SerializeToString()
-    logger.info("Sending crane command. Command: '%s'", crane_cmd.command)
-    sender_webapp.send(zmq_topics.CRANE_CMD_TOPIC + b' ' + msg)
+    logger.info("Sending crane command. Command: '%s'", state)
+    zmq_msg.send_crane_cmd(sender_webapp, state)
+
+def send_sys_cmd(command, phases):
+    logger.info("Sending system command. Command: '%s', Phases: '%s'", command, str(phases))
+    zmq_msg.send_system_cmd(sender_webapp, command, phases)

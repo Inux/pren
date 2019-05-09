@@ -4,7 +4,7 @@
 import sys
 import os
 import signal
-import time
+import json as j
 from sanic import Sanic
 from sanic.response import json
 from sanic.response import file
@@ -47,8 +47,8 @@ async def api(request):
     ''' api returns the API JSON available under /api '''
     direction = 'undefined'
     if middlewareData is not None:
-        state = middlewareData['state']
-        state_message = middlewareData['state_message']
+        phase = middlewareData['phase']
+        phase_message = middlewareData['phase_message']
         speed = middlewareData['speed']
         distance = middlewareData['distance']
         x_acceleration = middlewareData['x_acceleration']
@@ -65,8 +65,8 @@ async def api(request):
         controlflow = middlewareData['controlflow']
 
     return json({
-        'state': str(state),
-        'stateMessage': str(state_message),
+        'phase': str(phase),
+        'phaseMessage': str(phase_message),
         'speed': str(speed),
         'distance': str(distance),
         'xAcceleration': str(x_acceleration),
@@ -85,11 +85,14 @@ async def api(request):
 
 @app.route('/sound/<sound_nr>')
 async def play_sound(request, sound_nr):
-    mwadapter.send_acoustic_cmd(sound_nr)
+    mwadapter.send_acoustic_cmd(int(sound_nr))
     return json({'received': True})
 
 @app.route('/speed/<speed>')
 async def send_speed(request, speed):
+    global middlewareData
+
+    middlewareData['speed_ack'] = False
     mwadapter.send_move_cmd(int(speed))
     return json({'received': True})
 
@@ -101,6 +104,17 @@ async def send_crane_cmd(request, state):
         mwadapter.send_crane_cmd(0)
     return json({'received': True})
 
+class Payload(object):
+    def __init__(self, json_string):
+        self.__dict__ = j.loads(json_string)
+
+@app.post('/controlflow')
+async def send_controlflow_cmd(request):
+    json_string = request.body.decode('utf-8')
+    p = Payload(json_string)
+    mwadapter.send_sys_cmd(p.command, dict(p.phases))
+    return json({'received': True})
+
 # Middleware handling
 
 async def periodic_middleware_task(app):
@@ -109,14 +123,21 @@ async def periodic_middleware_task(app):
     middlewareData = mwadapter.get_data()
 
     #Change crane value if we receive acknowledge
-    if zmq_ack.KEY_CRANE_CMD_MOVEMENT in middlewareData.keys():
-        if middlewareData[zmq_ack.KEY_CRANE_CMD_MOVEMENT] is True:
+    if zmq_ack.ACK_RECV_CRANE_CMD in middlewareData.keys():
+        if middlewareData[zmq_ack.ACK_RECV_CRANE_CMD] is True:
             logger.info("received crane cmd ack from movement")
             if middlewareData['crane'] == 0:
                 middlewareData['crane'] = 1
             else:
                 middlewareData['crane'] = 0
-            middlewareData[zmq_ack.KEY_CRANE_CMD_MOVEMENT] = False
+            middlewareData[zmq_ack.ACK_RECV_CRANE_CMD] = False
+
+    #Change speed ack value if we receive acknowledge
+    if zmq_ack.ACK_RECV_MOVE_CMD in middlewareData.keys():
+        if middlewareData[zmq_ack.ACK_RECV_MOVE_CMD] is True:
+            logger.info("received move cmd ack from movement")
+            middlewareData['speed_ack'] = True
+            middlewareData[zmq_ack.ACK_RECV_MOVE_CMD] = False
 
     app.add_task(periodic_middleware_task(app))
 
