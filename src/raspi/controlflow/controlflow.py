@@ -73,12 +73,12 @@ class Controlflow(base_app.App):
         mw_data = mw_adapter_ctrlflow.get_data()
 
         if 'start' in mw_data['sys_cmd']:
-            mw_adapter_ctrlflow.set_data('sys_cmd', '')
+            mw_adapter_ctrlflow.set_data('sys_cmd', '', False)
             self.actual_phase = self.startup
 
-        if 'start' in mw_data['sys_cmd']:
-            mw_adapter_ctrlflow.set_data('sys_cmd', '')
-            self.actual_phase = self.finished
+        if 'stop' in mw_data['sys_cmd']:
+            mw_adapter_ctrlflow.set_data('sys_cmd', '', False)
+            self.actual_phase = None
 
         if self.actual_phase is not None:
             self.actual_phase = self.actual_phase.run(mw_data)
@@ -95,7 +95,6 @@ class Controlflow(base_app.App):
         else:
             mw_adapter_ctrlflow.send_sys_status(PHASE_FINISHED,
                                                 "waiting for command...")
-
 
 if __name__ == '__main__':
     Controlflow().run()

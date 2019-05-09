@@ -18,20 +18,24 @@ class Phase(object):
         run the current phase
         - returns a phase (maybe next phase if method was successful)
         '''
-        logger.debug("running phase: " + self.name)
 
         #method has to return empty string! (string is otherwise the log message)
         result = "" #suppose we don't have to run the method
         if self.name in middleware_data['phases'].keys() and middleware_data['phases'][self.name] is True:
+            logger.info("running phase: " + self.name)
             result = self.method(middleware_data)
 
         self.msg = result
 
         if result in "":
             if self.next_phase_key in phases.keys():
+                logger.info("select next phase: " + self.next_phase_key)
                 return phases[self.next_phase_key]
+
+            logger.info("no next phase: " + self.next_phase_key)
             return None
 
+        logger.info("still not finished: " + self.next_phase_key)
         return self
 
     def get_name(self):

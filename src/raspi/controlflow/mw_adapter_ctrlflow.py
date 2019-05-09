@@ -30,10 +30,14 @@ mw_data_ctrlflow['crane'] = 0
 mw_data_ctrlflow[zmq_ack.ACK_RECV_MOVE_CMD] = False
 mw_data_ctrlflow[zmq_ack.ACK_RECV_CRANE_CMD] = False
 
-def set_data(key, val):
+def set_data(key, val, log=True):
     global mw_data_ctrlflow
-    logger.info("received -> key: " + str(key) + ", value: " + str(val))
     mw_data_ctrlflow[key] = val
+    if log:
+        log_set_data(key, val)
+
+def log_set_data(key, val):
+    logger.info("received -> key: " + str(key) + ", value: " + str(val))
 
 def _set_sys_cmd(command, phases):
     global mw_data_ctrlflow
