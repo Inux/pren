@@ -7,7 +7,7 @@ def method(middleware_data):
     global count
     if count < limit:
         count = count + 1
-        time.sleep(1)
+        time.sleep(0.5)
         return "'" + str(count) + "' < '" + str(limit) + "'"
 
     count = 0
