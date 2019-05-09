@@ -52,27 +52,21 @@ class HeartBeatListener(metaclass=Singleton):
         return repr(self)
 
     def get_linedetector(self):
-        self.poll()
         return self.linedetector
 
     def get_numberdetector(self):
-        self.poll()
         return self.numberdetector
 
     def get_movement(self):
-        self.poll()
         return self.movement
 
     def get_acoustic(self):
-        self.poll()
         return self.acoustic
 
     def get_controlflow(self):
-        self.poll()
         return self.controlflow
 
     def get_webapp(self):
-        self.poll()
         return self.webapp
 
     def get_data(self):
