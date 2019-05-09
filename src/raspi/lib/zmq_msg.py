@@ -104,7 +104,8 @@ def send_speed(socket, speed):
 def send_system_cmd(socket, command, phases):
     c = system_command_pb2.SystemCommand()
     c.command = command
-    c.phases = phases
+    for k, v in phases.items():
+        c.phases[k] = v
     msg = c.SerializeToString()
     socket.send(zmq_topics.SYSTEM_CMD_TOPIC + b' ' + msg)
 

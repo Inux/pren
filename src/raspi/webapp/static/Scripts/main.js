@@ -1,7 +1,10 @@
 //Variables & Constants
-var updateInterval = 250; // 250ms
-var isSimulating = true;
-var simulationIntervalID;
+let updateInterval = 250; // 250ms
+let isSimulating = true;
+let simulationIntervalID;
+
+const COMMAND_START = 'start';
+const COMMAND_STOP = 'stop';
 
 /* Main functions ----------------------------- */
 
@@ -45,9 +48,45 @@ function enableControlFlow() {
     controlFlow.style.display = 'block';
 }
 
+function getControlFlowData(command) {
+    let data = {};
+    let findCube = document.getElementById("find_cube");
+    let grabCube = document.getElementById("grab_cube");
+    let roundOne = document.getElementById("round_one");
+    let roundTwo = document.getElementById("round_two");
+    let findStop = document.getElementById("find_stop");
+    let stopping = document.getElementById("stopping");
+
+    data = {
+        "command": command,
+        "phases": {
+            "find_cube": findCube.checked,
+            "grab_cube": grabCube.checked,
+            "round_one": roundOne.checked,
+            "round_two": roundTwo.checked,
+            "find_stop": findStop.checked,
+            "stopping": stopping.checked,
+        }
+    };
+
+    return data;
+}
+
+function sendControlFlowData(data) {
+    xmlhttp = new XMLHttpRequest();
+    xmlhttp.open('POST', '/controlflow', true);
+    xmlhttp.setRequestHeader("Content-Type", "application/json");
+    xmlhttp.send(JSON.stringify(data));
+}
+
 // start ControlFlow
 function startControlFlow() {
+    sendControlFlowData(getControlFlowData(COMMAND_START));
+}
 
+// stop ControlFlow
+function stopControlFlow() {
+    sendControlFlowData(getControlFlowData(COMMAND_STOP));
 }
 
 

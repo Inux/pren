@@ -105,11 +105,22 @@ dd {
 
 /* --------------- */
 
-/* Start Button */
+/* Controlflow */
 
 .startButton {
     width: 100px;
     height: 100px;
+    float: left;
+}
+
+.stopButton {
+    width: 100px;
+    height: 100px;
+    float: left;
+}
+
+.phasesSelection {
+    margin-top: 10px;
     float: left;
 }
 

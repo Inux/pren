@@ -93,10 +93,38 @@
         <div class="notVisible" id="controlFlow">
             <h3>ControlFlow</h3>
             <div>
-                <button class="startButton" id="startButton" onclick="start()">Start</button>
+                <button class="startButton" onclick="startControlFlow(this);">Start</button>
+                <button class="stopButton" onclick="stopControlFlow(this);">Stop</button>
                 <img src="/static/Resources/sanic.png" height="100" width="125">
                 Gotta go now -
                 No brakes on the SoulTrain!
+
+                <br>
+                <div class="phasesSelection">
+                    <label for="find_cube">Find Cube:</label>
+                    <input name="find_cube" type="checkbox" id="find_cube" checked>
+                    <br>
+
+                    <label for="grab_cube">Grab Cube:</label>
+                    <input name="grab_cube" type="checkbox" id="grab_cube" checked>
+                    <br>
+
+                    <label for="round_one">Round One:</label>
+                    <input name="round_one" type="checkbox" id="round_one" checked>
+                    <br>
+
+                    <label for="round_two">Round Two:</label>
+                    <input name="round_two" type="checkbox" id="round_two" checked>
+                    <br>
+
+                    <label for="find_stop">Find Stop:</label>
+                    <input name="find_stop" type="checkbox" id="find_stop" checked>
+                    <br>
+
+                    <label for="stopping">Stopping:</label>
+                    <input name="stopping" type="checkbox" id="stopping" checked>
+                    <br>
+                </div>
             </div>
         </div>
 

@@ -4,7 +4,7 @@
 import sys
 import os
 import signal
-import time
+import json as j
 from sanic import Sanic
 from sanic.response import json
 from sanic.response import file
@@ -102,6 +102,17 @@ async def send_crane_cmd(request, state):
         mwadapter.send_crane_cmd(1)
     else:
         mwadapter.send_crane_cmd(0)
+    return json({'received': True})
+
+class Payload(object):
+    def __init__(self, json_string):
+        self.__dict__ = j.loads(json_string)
+
+@app.post('/controlflow')
+async def send_controlflow_cmd(request):
+    json_string = request.body.decode('utf-8')
+    p = Payload(json_string)
+    mwadapter.send_sys_cmd(p.command, dict(p.phases))
     return json({'received': True})
 
 # Middleware handling

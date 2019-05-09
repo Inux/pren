@@ -77,3 +77,7 @@ def send_acoustic_cmd(number):
 def send_crane_cmd(state):
     logger.info("Sending crane command. Command: '%s'", state)
     zmq_msg.send_crane_cmd(sender_webapp, state)
+
+def send_sys_cmd(command, phases):
+    logger.info("Sending system command. Command: '%s', Phases: '%s'", command, str(phases))
+    zmq_msg.send_system_cmd(sender_webapp, command, phases)
