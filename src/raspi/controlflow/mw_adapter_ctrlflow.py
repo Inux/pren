@@ -99,4 +99,4 @@ def send_crane_cmd(state):
 
 def send_sys_status(phase, message):
     logger.debug("Sending sys status. Phase: '%s', Message :'%s'", phase, message)
-    zmq_msg.send_system_status(sender_ctrlflow, phase, message)
+    zmq_msg.send_system_status(sender_ctrlflow, str(phase), str(message))

@@ -50,22 +50,21 @@ function enableControlFlow() {
 
 function getControlFlowData(command) {
     let data = {};
-    let findCube = document.getElementById("find_cube");
-    let grabCube = document.getElementById("grab_cube");
-    let roundOne = document.getElementById("round_one");
-    let roundTwo = document.getElementById("round_two");
-    let findStop = document.getElementById("find_stop");
-    let stopping = document.getElementById("stopping");
 
+    //startup and finished have to be executed anyway!
+    // -startup is always executed when starting (finished as well)
+    // -finished is always executed when pressing stop
     data = {
         "command": command,
         "phases": {
-            "find_cube": findCube.checked,
-            "grab_cube": grabCube.checked,
-            "round_one": roundOne.checked,
-            "round_two": roundTwo.checked,
-            "find_stop": findStop.checked,
-            "stopping": stopping.checked,
+            "startup": true,
+            "find_cube": document.getElementById("find_cube").checked,
+            "grab_cube": document.getElementById("grab_cube").checked,
+            "round_one": document.getElementById("round_one").checked,
+            "round_two": document.getElementById("round_two").checked,
+            "find_stop": document.getElementById("find_stop").checked,
+            "stopping": document.getElementById("stopping").checked,
+            "finished": true,
         }
     };
 

@@ -70,14 +70,21 @@ class Controlflow(base_app.App):
 
         if 'stop' in mw_data['sys_cmd']:
             mw_adapter_ctrlflow.set_data('sys_cmd', '', False)
-            self.actual_phase = None
+            self.actual_phase = self.finished
 
         if self.actual_phase is not None:
-            phase = self.actual_phase.get_name()
-            msg = self.actual_phase.get_msg()
-            mw_adapter_ctrlflow.send_sys_status(phase, msg)
-
             self.actual_phase = self.actual_phase.run(mw_data)
+
+            phase = None
+            msg = None
+
+            if self.actual_phase is not None:
+                phase = self.actual_phase.get_name()
+                msg = self.actual_phase.get_msg()
+
+            #send only a status if we really change the value
+            if phase is not None and msg is not None:
+                mw_adapter_ctrlflow.send_sys_status(phase, msg)
 
         else:
             mw_adapter_ctrlflow.send_sys_status(config.PHASE_FINISHED,
