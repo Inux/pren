@@ -15,30 +15,38 @@ reader_webapp = zmq_socket.get_webapp_reader()
 sender_ctrlflow = zmq_socket.get_controlflow_sender()
 hb_listener = zmq_heartbeat_listener.HeartBeatListener()
 
-data = {} # data will be updated by HeartBeatListener
-data['speed'] = 0
-data['distance'] = 0
-data['x_acceleration'] = 0
-data['y_acceleration'] = 0
-data['z_acceleration'] = 0
-data['direction'] = "undefined"
-data['number'] = 0
-data['cube'] = 0
-data['crane'] = 0
-data[zmq_ack.ACK_RECV_MOVE_CMD] = False
-data[zmq_ack.ACK_RECV_CRANE_CMD] = False
+mw_data_ctrlflow = {} # data will be updated by HeartBeatListener
+mw_data_ctrlflow['sys_cmd'] = ''
+mw_data_ctrlflow['phases'] = dict()
+mw_data_ctrlflow['speed'] = 0
+mw_data_ctrlflow['distance'] = 0
+mw_data_ctrlflow['x_acceleration'] = 0
+mw_data_ctrlflow['y_acceleration'] = 0
+mw_data_ctrlflow['z_acceleration'] = 0
+mw_data_ctrlflow['direction'] = "undefined"
+mw_data_ctrlflow['number'] = 0
+mw_data_ctrlflow['cube'] = 0
+mw_data_ctrlflow['crane'] = 0
+mw_data_ctrlflow[zmq_ack.ACK_RECV_MOVE_CMD] = False
+mw_data_ctrlflow[zmq_ack.ACK_RECV_CRANE_CMD] = False
 
 def _set_data(key, val):
+    global mw_data_ctrlflow
     logger.info("received -> key: " + str(key) + ", value: " + str(val))
-    data[key] = val
+    mw_data_ctrlflow[key] = val
 
 def _set_sys_cmd(command, phases):
+    global mw_data_ctrlflow
     logger.info("received sys cmd -> command: " + str(command) + ", phases: " + str(dict(phases)))
+    mw_data_ctrlflow['sys_cmd'] = str(command)
+    mw_data_ctrlflow['phases'] = dict(phases)
 
 # Data Fields
 def get_data():
+    global mw_data_ctrlflow
+
     heartbeats = hb_listener.get_data()
-    data.update(heartbeats) # append heartbeats data to data object
+    mw_data_ctrlflow.update(heartbeats) # append heartbeats data to data object
 
     #Handle LineDetector in Messages
     zmq_msg.recv(
@@ -67,11 +75,11 @@ def get_data():
     zmq_msg.recv(
         reader_webapp,
         {
-            zmq_topics.SYSTEM_CMD_TOPIC: lambda obj: _set_sys_cmd(obj. command, obj.phases)
+            zmq_topics.SYSTEM_CMD_TOPIC: lambda obj: _set_sys_cmd(obj. command, dict(obj.phases))
         }
     )
 
-    return data
+    return mw_data_ctrlflow
 
 def send_move_cmd(speed):
     logger.info("Sending move command. Speed: '%s'", speed)

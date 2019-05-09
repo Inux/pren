@@ -14,16 +14,16 @@ logger = log.getLogger("SoulTrain.movement.mw_adapter_movement")
 reader_number = zmq_socket.get_numberdetector_reader()
 reader_web = zmq_socket.get_webapp_reader()
 
-data = {}
-data['number'] = 0
+data_acoustic = {}
+data_acoustic['number'] = 0
 
 def _set_data(key, val):
-    global data
-    data[key] = val
+    global data_acoustic
+    data_acoustic[key] = val
 
 # Data Fields
 def get_data():
-    global data
+    global data_acoustic
 
     zmq_msg.recv(
         reader_web,
@@ -39,4 +39,4 @@ def get_data():
         }
     )
 
-    return data
+    return data_acoustic
