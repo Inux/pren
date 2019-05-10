@@ -20,6 +20,8 @@ typedef enum
   PH_finished = 7,
 } tPhase;
 
+tPhase phase_GetPhase(void);
+
 void phase_Init(void);
 
 

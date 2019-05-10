@@ -55,7 +55,8 @@ void crane_main()
   if (i > 25)
   {
     i = 0;
-    craneDoWork();
+    if (phase_GetPhase() == PH_grab_cube)
+      craneDoWork();
   }
 }
 
@@ -66,7 +67,8 @@ void cube_main()
   if (i > 50)
   {
     i = 0;
-    cubeDoWork();
+    if (phase_GetPhase() == PH_find_cube)
+      cubeDoWork();
   }
 }
 
