@@ -74,6 +74,8 @@ class Controlflow(base_app.App):
             self.actual_phase = self.finished
 
         if self.actual_phase is not None:
+            oldphase = self.actual_phase.get_name()
+            oldmsg = self.actual_phase.get_msg()
             self.actual_phase = self.actual_phase.run(mw_data)
 
             phase = None
@@ -84,7 +86,7 @@ class Controlflow(base_app.App):
                 msg = self.actual_phase.get_msg()
 
             #send only a status if we really change the value
-            if phase is not None and msg is not None:
+            if phase is not None and phase is not oldphase and msg is not None and msg is not oldmsg:
                 mw_adapter_ctrlflow.send_sys_status(phase, msg)
 
         else:
