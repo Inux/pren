@@ -11,23 +11,26 @@ def method(middleware_data):
 
 #   if hbl.HeartBeatListener().get_acoustic() not in hb.STATUS_RUNNING:
 #        hb_status = False
+#        return "waiting for acoustic heartbeat..."
 
     if hbl.HeartBeatListener().get_controlflow() not in hb.STATUS_RUNNING:
         hb_status = False
+        return "waiting for controlflow heartbeat..."
 
     if hbl.HeartBeatListener().get_linedetector() not in hb.STATUS_RUNNING:
         hb_status = False
+        return "waiting for linedetector heartbeat..."
 
     if hbl.HeartBeatListener().get_movement() not in hb.STATUS_RUNNING:
         hb_status = False
+        return "waiting for movement heartbeat..."
 
 #   if hbl.HeartBeatListener().get_numberdetector() not in hb.STATUS_RUNNING:
 #        hb_status = False
+#        return "waiting for numberdetector heartbeat..."
 
     if hbl.HeartBeatListener().get_webapp() not in hb.STATUS_RUNNING:
         hb_status = False
-
-    if hb_status is False:
-        return "waiting for heartbeats..."
+        return "waiting for webapp heartbeat..."
 
     return ""

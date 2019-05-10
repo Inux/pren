@@ -5,12 +5,14 @@ import sys
 import os
 import signal
 import json as j
+import time
 from sanic import Sanic
 from sanic.response import json
 from sanic.response import file
 
 import src.raspi.webapp.mw_adapter_server as mw_adapter_server
 from src.raspi.lib import zmq_ack
+from src.raspi.config import config as cfg
 from src.raspi.lib import heartbeat as hb
 import src.raspi.lib.log as log
 
@@ -22,6 +24,7 @@ app.name = "PrenTeam28WebApp"
 app.static('/static', os.path.join(os.path.dirname(__file__), 'static'))
 
 middlewareData = None
+hb_last_sent = 0.0
 
 # SIGINT handler (when pressing Ctrl+C)
 
@@ -119,10 +122,14 @@ async def send_controlflow_cmd(request):
 
 async def periodic_middleware_task(app):
     global middlewareData
+    global hb_last_sent
+
     ''' periodic task for handling middleware '''
 
     #send heartbeat
-    mw_adapter_server.send_hb()
+    if (hb_last_sent+(float(cfg.HB_INTERVAL)/1000)) < time.time():
+        hb_last_sent = time.time()
+        mw_adapter_server.send_hb()
 
     middlewareData = mw_adapter_server.get_data()
 
