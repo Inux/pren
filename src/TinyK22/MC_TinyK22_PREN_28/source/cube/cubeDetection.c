@@ -151,19 +151,16 @@ tError cubeFrameHander (const unsigned char *value)
  */
 void cube_Init(void)
 {
-  //I2C_InitPins();
   i2cInit();
   ms_Counter_Init();
 
   VL53L0X_Constructor();
   VL53L0X_init(true);
   VL53L0X_setTimeout(5*20);
-  //VL53L0X_io_timeout = 500; //todo correct
   VL53L0X_startContinuous(0);
 
   strncpy(cubeAckHandler.topic, CUBE_TOPIC, sizeof(cubeAckHandler.topic));
   cubeAckHandler.timeoutHandler = cubeAckTimeoutHandler;
-  //ackRegisterHandler(&cubeAckHandler);
 
   piRegisterFrameLineHandler(&cubeFrameHandler, CUBE_TOPIC, "frames to manipulate the cube detection", cubeFrameHander, &cubeAckHandler);
 }

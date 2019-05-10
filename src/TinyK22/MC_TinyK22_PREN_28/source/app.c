@@ -59,6 +59,17 @@ void crane_main()
   }
 }
 
+void cube_main()
+{
+  static int i = 0;
+  i++;
+  if (i > 50)
+  {
+    i = 0;
+    cubeDoWork();
+  }
+}
+
 void RunApp(void)
 {
   McuWait_Init();
@@ -77,5 +88,6 @@ void RunApp(void)
     ack_main();
     drive_main();
     crane_main();
+    cube_main();
   }
 }

@@ -8,7 +8,7 @@
 #ifndef APP_H_
 #define APP_H_
 
-#define TEST 1
+#define TEST 0
 
 typedef enum
 {
