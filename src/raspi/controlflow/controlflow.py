@@ -75,6 +75,7 @@ class Controlflow(base_app.App):
         # Handle commands from webapp
 
         if 'start' in mw_data['sys_cmd']:
+            mw_adapter_ctrlflow.clear_states()
             mw_adapter_ctrlflow.set_data('sys_cmd', '', False)
             self.actual_phase = self.startup
 

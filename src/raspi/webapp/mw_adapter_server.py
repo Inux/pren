@@ -33,12 +33,33 @@ data[zmq_ack.ACK_RECV_ACOUSTIC_CMD] = False
 data[zmq_ack.ACK_RECV_MOVE_CMD] = False
 data[zmq_ack.ACK_RECV_CRANE_CMD] = False
 
+def clear_states():
+    global data
+    data['phase'] = "undefined"
+    data['phase_message'] = "undefined"
+    data['speed'] = 0
+    data['distance'] = 0
+    data['x_acceleration'] = 0
+    data['y_acceleration'] = 0
+    data['z_acceleration'] = 0
+    data['direction'] = "undefined"
+    data['number'] = 0
+    data['cube'] = 0
+    data['crane'] = 0
+    data[zmq_ack.ACK_RECV_ACOUSTIC_CMD] = False
+    data[zmq_ack.ACK_RECV_MOVE_CMD] = False
+    data[zmq_ack.ACK_RECV_CRANE_CMD] = False
+
 def _set_data(key, val):
+    global data
+
     logger.debug("received -> key: " + str(key) + ", value: " + str(val))
     data[key] = val
 
 # Data Fields
 def get_data():
+    global data
+
     heartbeats = hb_listener.get_data()
     data.update(heartbeats) # append heartbeats data to data object
 

@@ -178,7 +178,7 @@ class Protocol():
 
     def __set_recv_speed(self, val):
         if self.onNewSpeed is not None:
-            self.onNewSpeed(val)
+            self.onNewSpeed(int(val))
 
         self.send_ack(Message.IS_SPEED.value)
 

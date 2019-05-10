@@ -30,6 +30,20 @@ mw_data_ctrlflow['crane'] = 0
 mw_data_ctrlflow[zmq_ack.ACK_RECV_MOVE_CMD] = False
 mw_data_ctrlflow[zmq_ack.ACK_RECV_CRANE_CMD] = False
 
+def clear_states():
+    global mw_data_ctrlflow
+
+    #Clear only data! (some mw_data_ctrlflow should not be deleted!)
+    mw_data_ctrlflow['speed'] = 0
+    mw_data_ctrlflow['distance'] = 0
+    mw_data_ctrlflow['x_acceleration'] = 0
+    mw_data_ctrlflow['y_acceleration'] = 0
+    mw_data_ctrlflow['z_acceleration'] = 0
+    mw_data_ctrlflow['direction'] = "undefined"
+    mw_data_ctrlflow['number'] = 0
+    mw_data_ctrlflow['cube'] = 0
+    mw_data_ctrlflow['crane'] = 0
+
 def set_data(key, val, log=True):
     global mw_data_ctrlflow
     mw_data_ctrlflow[key] = val
