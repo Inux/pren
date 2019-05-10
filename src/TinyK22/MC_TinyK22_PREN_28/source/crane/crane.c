@@ -28,6 +28,7 @@
 /* 5 sec */
 #define TIMEOUT_VALUE       (5000/25)
 
+static tAckHandler isCraneAckHandler;
 static tAckHandler craneAckHandler;
 static tframeLineHandler craneFrameHandler;
 
@@ -56,9 +57,10 @@ static void motor_A_UpdatePwmDutyCycle(uint32_t value)
 
 static void doneRetractCrane(void)
 {
-  //todo send to raspi
   craneRetracting = false;
   craneDoneRetracted = true;
+
+  piWriteNum32u(IS_CRANE_TOPIC, 1, &isCraneAckHandler);
 }
 
 
@@ -72,7 +74,6 @@ void craneDoWork(void)
   int ctrl_i = 0;
   int ctrl_d;
   int currentError;
-  //todo check for timeout and let it be if timeout expires
 
   if (craneRetracting && timeoutCounter < TIMEOUT_VALUE)
   {
@@ -181,6 +182,11 @@ tError craneFrameLineHandler(const unsigned char *value)
   return EC_SUCCESS;
 }
 
+void isCraneAckTimeoutHandler(void)
+{
+  piWriteNum32u(IS_CRANE_TOPIC, 1, &isCraneAckHandler);
+}
+
 void crane_Init(void)
 {
   kp = 15;
@@ -196,4 +202,8 @@ void crane_Init(void)
   strncpy(craneAckHandler.topic, CRANE_TOPIC, sizeof(craneAckHandler.topic));
   craneAckHandler.timeoutHandler = NULL;
   piRegisterFrameLineHandler(&craneFrameHandler, CRANE_TOPIC, "", craneFrameLineHandler, &craneAckHandler);
+
+  strncpy(isCraneAckHandler.topic, IS_CRANE_TOPIC, sizeof(isCraneAckHandler.topic));
+  isCraneAckHandler.timeoutHandler = isCraneAckTimeoutHandler;
+  ackRegisterHandler(&isCraneAckHandler);
 }

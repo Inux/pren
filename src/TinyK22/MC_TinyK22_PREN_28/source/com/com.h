@@ -17,6 +17,7 @@
 
 #define SPEED_TOPIC     "speed"
 #define CRANE_TOPIC     "crane"
+#define IS_CRANE_TOPIC  "is_crane"
 #define PHASE_TOPIC     "phase"
 #define IS_SPEED_TOPIC  "is_speed"
 #define CUBE_TOPIC      "cube"
