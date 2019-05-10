@@ -161,8 +161,6 @@ void craneDoWork(void)
 
 tError craneFrameLineHandler(const unsigned char *value)
 {
-  // todo implement some stuff here
-  // todo implement the correct stuff here
   uint32_t iVal = 0;
   McuUtility_ScanDecimal32uNumber(&value, &iVal);
 

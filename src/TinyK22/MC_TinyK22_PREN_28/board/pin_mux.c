@@ -99,6 +99,7 @@ void BOARD_InitBootPins(void)
     BOARD_InitPins();
     Encoder_InitPins();
     Motor_S_InitPins();
+    I2C_InitPins();
 }
 
 /* clang-format off */
@@ -378,10 +379,10 @@ void Motor_S_InitPins(void)
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 I2C_InitPins:
-- options: {callFromInitBoot: 'false', prefix: I2C_, coreID: core0, enableClock: 'true'}
+- options: {callFromInitBoot: 'true', prefix: I2C_, coreID: core0, enableClock: 'true'}
 - pin_list:
-  - {pin_num: '60', peripheral: I2C0, signal: SDA, pin_signal: PTD3/SPI0_SIN/UART2_TX/FTM3_CH3/FB_AD3/LPUART0_TX/I2C0_SDA, open_drain: enable}
-  - {pin_num: '59', peripheral: I2C0, signal: SCL, pin_signal: PTD2/LLWU_P13/SPI0_SOUT/UART2_RX/FTM3_CH2/FB_AD4/LPUART0_RX/I2C0_SCL, open_drain: enable}
+  - {pin_num: '60', peripheral: I2C0, signal: SDA, pin_signal: PTD3/SPI0_SIN/UART2_TX/FTM3_CH3/FB_AD3/LPUART0_TX/I2C0_SDA, open_drain: enable, pull_select: up}
+  - {pin_num: '59', peripheral: I2C0, signal: SCL, pin_signal: PTD2/LLWU_P13/SPI0_SOUT/UART2_RX/FTM3_CH2/FB_AD4/LPUART0_RX/I2C0_SCL, open_drain: enable, pull_select: up}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -402,22 +403,30 @@ void I2C_InitPins(void)
 
     PORTD->PCR[2] = ((PORTD->PCR[2] &
                       /* Mask bits to zero which are setting */
-                      (~(PORT_PCR_ODE_MASK | PORT_PCR_ISF_MASK)))
+                      (~(PORT_PCR_PS_MASK | PORT_PCR_ODE_MASK | PORT_PCR_ISF_MASK)))
 
                      /* Open Drain Enable: Open drain output is enabled on the corresponding pin, if the pin is
                       * configured as a digital output. */
-                     | PORT_PCR_ODE(kPORT_OpenDrainEnable));
+                     | PORT_PCR_ODE(kPORT_OpenDrainEnable)
+
+                     /* Pull Select: Internal pullup resistor is enabled on the corresponding pin, if the
+                      * corresponding PE field is set. */
+                     | PORT_PCR_PS(kPORT_PullUp));
 
     /* PORTD3 (pin 60) is configured as I2C0_SDA */
     PORT_SetPinMux(I2C_SD_CARD_DAT0_PORT, I2C_SD_CARD_DAT0_PIN, kPORT_MuxAlt7);
 
     PORTD->PCR[3] = ((PORTD->PCR[3] &
                       /* Mask bits to zero which are setting */
-                      (~(PORT_PCR_ODE_MASK | PORT_PCR_ISF_MASK)))
+                      (~(PORT_PCR_PS_MASK | PORT_PCR_ODE_MASK | PORT_PCR_ISF_MASK)))
 
                      /* Open Drain Enable: Open drain output is enabled on the corresponding pin, if the pin is
                       * configured as a digital output. */
-                     | PORT_PCR_ODE(kPORT_OpenDrainEnable));
+                     | PORT_PCR_ODE(kPORT_OpenDrainEnable)
+
+                     /* Pull Select: Internal pullup resistor is enabled on the corresponding pin, if the
+                      * corresponding PE field is set. */
+                     | PORT_PCR_PS(kPORT_PullUp));
 }
 /***********************************************************************************************************************
  * EOF
