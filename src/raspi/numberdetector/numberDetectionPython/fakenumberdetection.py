@@ -9,6 +9,7 @@ import zmq
 import zmq.auth
 
 from src.raspi.lib import base_app
+from src.raspi.config import config as cfg
 from src.raspi.lib import periodic_job
 from src.raspi.lib import zmq_socket
 from src.raspi.lib import zmq_topics
@@ -31,7 +32,7 @@ def send_hb():
 class NumberDetector(base_app.App):
     def __init__(self, *args, **kwargs):
         super().__init__("numberdetector", self.numberdetectorloop, *args, **kwargs)
-        self.job = periodic_job.PeriodicJob(interval=timedelta(milliseconds=50), execute=send_hb)
+        self.job = periodic_job.PeriodicJob(interval=timedelta(milliseconds=cfg.HB_INTERVAL), execute=send_hb)
         self.job.start()
 
     def numberdetectorloop(self, *args, **kwargs):

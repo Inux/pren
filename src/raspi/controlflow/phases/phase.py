@@ -20,8 +20,6 @@ class Phase(object):
         '''
 
         #method has to return empty string! (string is otherwise the log message)
-        self.msg = None #set msg to None (when no method is executed)
-
         if self.name in middleware_data['phases'].keys() and middleware_data['phases'][self.name] is True:
             logger.info("running phase: " + self.name)
             self.msg = self.method(middleware_data)

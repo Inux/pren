@@ -33,12 +33,33 @@ data[zmq_ack.ACK_RECV_ACOUSTIC_CMD] = False
 data[zmq_ack.ACK_RECV_MOVE_CMD] = False
 data[zmq_ack.ACK_RECV_CRANE_CMD] = False
 
+def clear_states():
+    global data
+    data['phase'] = "undefined"
+    data['phase_message'] = "undefined"
+    data['speed'] = 0
+    data['distance'] = 0
+    data['x_acceleration'] = 0
+    data['y_acceleration'] = 0
+    data['z_acceleration'] = 0
+    data['direction'] = "undefined"
+    data['number'] = 0
+    data['cube'] = 0
+    data['crane'] = 0
+    data[zmq_ack.ACK_RECV_ACOUSTIC_CMD] = False
+    data[zmq_ack.ACK_RECV_MOVE_CMD] = False
+    data[zmq_ack.ACK_RECV_CRANE_CMD] = False
+
 def _set_data(key, val):
+    global data
+
     logger.debug("received -> key: " + str(key) + ", value: " + str(val))
     data[key] = val
 
 # Data Fields
 def get_data():
+    global data
+
     heartbeats = hb_listener.get_data()
     data.update(heartbeats) # append heartbeats data to data object
 
@@ -62,7 +83,8 @@ def get_data():
             zmq_topics.DISTANCE_TOPIC: lambda obj: _set_data('distance', obj.distance),
             zmq_topics.ACKNOWLEDGE_TOPIC: lambda obj: _set_data(obj.action, True),
             zmq_topics.CURRENT_TOPIC: lambda obj: _set_data('current', obj.current),
-            zmq_topics.CUBE_STATUS: lambda obj: _set_data('cube', obj.state)
+            zmq_topics.CUBE_STATUS: lambda obj: _set_data('cube', obj.state),
+            zmq_topics.CRANE_STATE: lambda obj: _set_data('crane', obj.command)
         }
     )
 
@@ -79,20 +101,20 @@ def get_data():
     return data
 
 def send_move_cmd(speed):
-    logger.info("Sending move command. Speed: '%s'", speed)
     zmq_msg.send_move_cmd(sender_webapp, speed)
+    logger.info("Sending move command. Speed: '%s'", speed)
 
 def send_acoustic_cmd(number):
-    logger.info("Sending acoustic command. Number: '%s'", number)
     zmq_msg.send_acoustic_cmd(sender_webapp, number)
+    logger.info("Sending acoustic command. Number: '%s'", number)
 
 def send_crane_cmd(state):
-    logger.info("Sending crane command. Command: '%s'", state)
     zmq_msg.send_crane_cmd(sender_webapp, state)
+    logger.info("Sending crane command. Command: '%s'", state)
 
 def send_sys_cmd(command, phases):
-    logger.info("Sending system command. Command: '%s', Phases: '%s'", command, str(phases))
     zmq_msg.send_system_cmd(sender_webapp, command, phases)
+    logger.info("Sending system command. Command: '%s', Phases: '%s'", command, str(phases))
 
 def send_hb():
     hb.send_heartbeat(sender_webapp, hb.COMPONENT_WEBAPP, hb.STATUS_RUNNING)

@@ -41,16 +41,22 @@ class Movement(base_app.App):
             self.acc_reader = FakeAccelerationmeter(onNewAcceleration=self.acceleration_callback)
         self.acc_reader.start()
 
-        self.job = periodic_job.PeriodicJob(interval=timedelta(milliseconds=50), execute=send_hb)
+        self.job = periodic_job.PeriodicJob(interval=timedelta(milliseconds=config.HB_INTERVAL), execute=send_hb)
         self.job.start()
 
         if self.is_raspi:
-            self.tiny = protocol.Protocol(config.MASTER_UART_INTERFACE_TINY, config.MASTER_UART_BAUD, onNewSpeed=self.on_new_speed, onNewCurrent=self.on_new_current,
-            onNewCubeState=self.on_new_cube_state,
-            resend=config.RESEND_TINY_MESSAGES)
+            interface = config.MASTER_UART_INTERFACE_TINY
+            baud = config.MASTER_UART_BAUD
         else:
-            self.tiny = protocol.Protocol(config.MASTER_UART_INTERFACE_PC, config.MASTER_UART_BAUD, onNewSpeed=self.on_new_speed, onNewCurrent=self.on_new_current,
+            interface = config.MASTER_UART_INTERFACE_PC
+            baud = config.MASTER_UART_BAUD
+
+        self.tiny = protocol.Protocol(
+            interface,
+            baud,
+            onNewSpeed=self.on_new_speed, onNewCurrent=self.on_new_current,
             onNewCubeState=self.on_new_cube_state,
+            onNewCraneState=self.on_new_crane_state,
             resend=config.RESEND_TINY_MESSAGES)
         self.tiny.connect()
 
@@ -93,6 +99,9 @@ class Movement(base_app.App):
 
     def on_new_cube_state(self, state):
         mw_adapter_movement.send_cube_state(state)
+
+    def on_new_crane_state(self, state):
+        mw_adapter_movement.send_crane_state(state)
 
     def acceleration_callback(self, time_delta_s, acc_x, acc_y, acc_z):
         # multiplying current speed_tiny with time offset to get distance for current section

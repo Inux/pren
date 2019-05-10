@@ -9,6 +9,7 @@ class Message(Enum):
     '''
     SPEED = "speed"
     CRANE = "crane"
+    IS_CRANE = 'is_crane'
     PHASE = "phase"
     IS_SPEED = "is_speed"
     CUBE = "cube"

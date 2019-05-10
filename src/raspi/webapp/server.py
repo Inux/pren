@@ -5,12 +5,14 @@ import sys
 import os
 import signal
 import json as j
+import time
 from sanic import Sanic
 from sanic.response import json
 from sanic.response import file
 
 import src.raspi.webapp.mw_adapter_server as mw_adapter_server
 from src.raspi.lib import zmq_ack
+from src.raspi.config import config as cfg
 from src.raspi.lib import heartbeat as hb
 import src.raspi.lib.log as log
 
@@ -22,6 +24,7 @@ app.name = "PrenTeam28WebApp"
 app.static('/static', os.path.join(os.path.dirname(__file__), 'static'))
 
 middlewareData = None
+hb_last_sent = 0.0
 
 # SIGINT handler (when pressing Ctrl+C)
 
@@ -98,6 +101,9 @@ async def send_speed(request, speed):
 
 @app.route('/crane/<state>')
 async def send_crane_cmd(request, state):
+    global middlewareData
+
+    middlewareData['crane_ack'] = False
     if int(state) == 1:
         mw_adapter_server.send_crane_cmd(1)
     else:
@@ -112,6 +118,10 @@ class Payload(object):
 async def send_controlflow_cmd(request):
     json_string = request.body.decode('utf-8')
     p = Payload(json_string)
+
+    if 'start' in p.command:
+        mw_adapter_server.clear_states() #clear states when starting controlflow
+
     mw_adapter_server.send_sys_cmd(p.command, dict(p.phases))
     return json({'received': True})
 
@@ -119,10 +129,14 @@ async def send_controlflow_cmd(request):
 
 async def periodic_middleware_task(app):
     global middlewareData
+    global hb_last_sent
+
     ''' periodic task for handling middleware '''
 
     #send heartbeat
-    mw_adapter_server.send_hb()
+    if (hb_last_sent+(float(cfg.HB_INTERVAL)/1000)) < time.time():
+        hb_last_sent = time.time()
+        mw_adapter_server.send_hb()
 
     middlewareData = mw_adapter_server.get_data()
 
@@ -130,10 +144,7 @@ async def periodic_middleware_task(app):
     if zmq_ack.ACK_RECV_CRANE_CMD in middlewareData.keys():
         if middlewareData[zmq_ack.ACK_RECV_CRANE_CMD] is True:
             logger.info("received crane cmd ack from movement")
-            if middlewareData['crane'] == 0:
-                middlewareData['crane'] = 1
-            else:
-                middlewareData['crane'] = 0
+            middlewareData['crane_ack'] = True
             middlewareData[zmq_ack.ACK_RECV_CRANE_CMD] = False
 
     #Change speed ack value if we receive acknowledge

@@ -12,8 +12,8 @@ killall() {
 }
 
 #acoustic
-echo "...Acoustic..."
-python3 acoustic/sound.py &
+#echo "...Acoustic..."
+#python3 acoustic/sound.py &
 
 #linedetector
 echo "...LineDetector..."
@@ -22,6 +22,12 @@ python3 linedetector/fakelinedetector.py &
 #movement
 echo "...Movement..."
 python3 movement/movement.py &
+
+# numberdetector
+
+#echo "...NumberDetector..."
+#python numberdetector/numberDetectionPython/numberDetection.py &
+
 
 #controlflow
 echo "...ControlFlow..."

@@ -17,7 +17,7 @@ class Protocol():
     The protocol itself
     '''
     def __init__(self, device, baud,
-                 onNewSpeed=None, onNewCurrent=None, onNewCubeState=None, resend=True, real_device=True):
+                 onNewSpeed=None, onNewCurrent=None, onNewCubeState=None, onNewCraneState=None, resend=True, real_device=True):
         self.log = logger.getLogger('SoulTrain.movement.protocol')
         self.logTiny = logger.getLogger('SoulTrain.movement.tiny')
 
@@ -34,15 +34,11 @@ class Protocol():
         self.recv_map = {
             Message.IS_SPEED.value : self.__set_recv_speed,
             Message.CUBE.value : self.__set_recv_cube,
+            Message.IS_CRANE.value : self.__set_recv_crane,
             Message.CURRENT.value : self.__set_recv_current,
             Message.LOG.value : self.__set_recv_log,
             Message.ACK.value : self.__set_recv_ack
         }
-
-        #Internal values received from tiny
-        self.is_speed = None
-        self.cube = None
-        self.current = None
 
         #Internal values sent to tiny
         self.last_sent_crane_state = None
@@ -53,6 +49,7 @@ class Protocol():
         self.onNewSpeed = onNewSpeed
         self.onNewCurrent = onNewCurrent
         self.onNewCubeState = onNewCubeState
+        self.onNewCraneState = onNewCraneState
 
         #Stores the methods to execute again when a message has to be resend
         self.resend_map = {
@@ -79,15 +76,6 @@ class Protocol():
         '''
         if self.conn is not None:
             self.conn.close()
-
-    def get_speed(self):
-        return self.is_speed
-
-    def get_cube(self):
-        return self.cube
-
-    def get_current(self):
-        return self.current
 
     def send_speed(self, speed):
         '''
@@ -189,27 +177,28 @@ class Protocol():
             self.log.error("Could not parse line: '%s', msg: '%s', val: '%s', exception: %s", line, str(rcv_msg), str(rcv_val), e)
 
     def __set_recv_speed(self, val):
-        if self.is_speed != int(val):
-            self.is_speed = int(val)
-            if self.onNewSpeed is not None:
-                self.onNewSpeed(self.is_speed)
+        if self.onNewSpeed is not None:
+            self.onNewSpeed(int(val))
 
         self.send_ack(Message.IS_SPEED.value)
 
     def __set_recv_cube(self, val):
         if int(val) in range(0, 2):
-            if self.cube != int(val):
-                self.cube = int(val)
-                if self.onNewCubeState is not None:
-                    self.onNewCubeState(int(val))
+            if self.onNewCubeState is not None:
+                self.onNewCubeState(int(val))
 
             self.send_ack(Message.CUBE.value)
 
+    def __set_recv_crane(self, val):
+        if int(val) in range(0, 2):
+            if self.onNewCraneState is not None:
+                self.onNewCraneState(int(val))
+
+            self.send_ack(Message.IS_CRANE.value)
+
     def __set_recv_current(self, val):
-        if self.current != int(val):
-            self.current = int(val)
-            if self.onNewCurrent is not None:
-                self.onNewCurrent(int(val))
+        if self.onNewCurrent is not None:
+            self.onNewCurrent(int(val))
 
         self.send_ack(Message.CURRENT.value)
 
