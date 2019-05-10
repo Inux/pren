@@ -101,17 +101,17 @@ def get_data():
     return mw_data_ctrlflow
 
 def send_move_cmd(speed):
-    logger.info("Sending move command. Speed: '%s'", speed)
     zmq_msg.send_move_cmd(sender_ctrlflow, speed)
+    logger.info("Sending move command. Speed: '%s'", speed)
 
 def send_acoustic_cmd(number):
-    logger.info("Sending acoustic command. Number: '%s'", number)
     zmq_msg.send_acoustic_cmd(sender_ctrlflow, number)
+    logger.info("Sending acoustic command. Number: '%s'", number)
 
 def send_crane_cmd(state):
-    logger.info("Sending crane command. Command: '%s'", state)
     zmq_msg.send_crane_cmd(sender_ctrlflow, state)
+    logger.info("Sending crane command. Command: '%s'", state)
 
 def send_sys_status(phase, message):
-    logger.debug("Sending sys status. Phase: '%s', Message :'%s'", phase, message)
     zmq_msg.send_system_status(sender_ctrlflow, str(phase), str(message))
+    logger.debug("Sending sys status. Phase: '%s', Message :'%s'", phase, message)

@@ -101,20 +101,20 @@ def get_data():
     return data
 
 def send_move_cmd(speed):
-    logger.info("Sending move command. Speed: '%s'", speed)
     zmq_msg.send_move_cmd(sender_webapp, speed)
+    logger.info("Sending move command. Speed: '%s'", speed)
 
 def send_acoustic_cmd(number):
-    logger.info("Sending acoustic command. Number: '%s'", number)
     zmq_msg.send_acoustic_cmd(sender_webapp, number)
+    logger.info("Sending acoustic command. Number: '%s'", number)
 
 def send_crane_cmd(state):
-    logger.info("Sending crane command. Command: '%s'", state)
     zmq_msg.send_crane_cmd(sender_webapp, state)
+    logger.info("Sending crane command. Command: '%s'", state)
 
 def send_sys_cmd(command, phases):
-    logger.info("Sending system command. Command: '%s', Phases: '%s'", command, str(phases))
     zmq_msg.send_system_cmd(sender_webapp, command, phases)
+    logger.info("Sending system command. Command: '%s', Phases: '%s'", command, str(phases))
 
 def send_hb():
     hb.send_heartbeat(sender_webapp, hb.COMPONENT_WEBAPP, hb.STATUS_RUNNING)
