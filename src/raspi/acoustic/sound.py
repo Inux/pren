@@ -13,7 +13,7 @@ logger = log.getLogger('SoulTrain.acoustic.sound')
 socket = zmq_socket.get_acoustic_sender()
 
 def send_hb():
-    hb.send_heartbeat(socket, hb.COMPONENT_MOVEMENT, hb.get_status())
+    hb.send_heartbeat(socket, hb.COMPONENT_MOVEMENT, hb.STATUS_RUNNING)
 
 class Buzzer(base_app.App):
     def __init__(self, *args, **kwargs):
