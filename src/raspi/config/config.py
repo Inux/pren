@@ -7,6 +7,10 @@ Configuration of the Raspberry
 # - speed while searching cube
 SPEED_CUBE_SEARCH = 5 #mm/s
 
+# - crane poll time and waittime until finished
+CRANE_POLL_TIME = 0.1
+CRANE_WAIT_TIME = 5
+
 # Tiny Config
 RESEND_TINY_MESSAGES = False
 

@@ -83,6 +83,15 @@ def get_data():
         }
     )
 
+    #add crane to mw_data
+    if zmq_ack.ACK_RECV_CRANE_CMD in mw_data_ctrlflow.keys():
+        if mw_data_ctrlflow[zmq_ack.ACK_RECV_CRANE_CMD] is True:
+            if mw_data_ctrlflow['crane'] == 0:
+                mw_data_ctrlflow['crane'] = 1
+            else:
+                mw_data_ctrlflow['crane'] = 0
+            mw_data_ctrlflow[zmq_ack.ACK_RECV_CRANE_CMD] = False
+
     return mw_data_ctrlflow
 
 def send_move_cmd(speed):

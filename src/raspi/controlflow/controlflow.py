@@ -8,6 +8,7 @@ from datetime import timedelta
 
 from src.raspi.lib import base_app
 from src.raspi.lib import zmq_socket
+from src.raspi.lib import zmq_ack
 from src.raspi.lib import periodic_job
 from src.raspi.lib import heartbeat as hb
 from src.raspi.config import config
@@ -61,9 +62,16 @@ class Controlflow(base_app.App):
                               "")
 
         self.actual_phase = None
+        self.oldphase = ''
+        self.oldmsg = ''
 
     def controlflow_loop(self, *args, **kwargs):
+        global mw_data
+
         mw_data = mw_adapter_ctrlflow.get_data()
+
+
+        # Handle commands from webapp
 
         if 'start' in mw_data['sys_cmd']:
             mw_adapter_ctrlflow.set_data('sys_cmd', '', False)
@@ -73,21 +81,28 @@ class Controlflow(base_app.App):
             mw_adapter_ctrlflow.set_data('sys_cmd', '', False)
             self.actual_phase = self.finished
 
+
+        # Run phases (Statemachine)
+
         if self.actual_phase is not None:
-            oldphase = self.actual_phase.get_name()
-            oldmsg = self.actual_phase.get_msg()
+            phase = self.actual_phase.get_name()
+            msg = self.actual_phase.get_msg()
+
+            #send only a status if we really change the value
+            if str(phase) not in str(self.oldphase) and str(msg) not in str(self.oldmsg):
+                mw_adapter_ctrlflow.send_sys_status(str(phase), str(msg))
+
+            #run phase
             self.actual_phase = self.actual_phase.run(mw_data)
 
-            phase = None
-            msg = None
-
+            #send sys status again after running
             if self.actual_phase is not None:
                 phase = self.actual_phase.get_name()
                 msg = self.actual_phase.get_msg()
 
-            #send only a status if we really change the value
-            if phase is not None and phase is not oldphase and msg is not None and msg is not oldmsg:
-                mw_adapter_ctrlflow.send_sys_status(phase, msg)
+                #send only a status if we really change the value
+                if str(phase) not in str(self.oldphase) and str(msg) not in str(self.oldmsg):
+                    mw_adapter_ctrlflow.send_sys_status(str(phase), str(msg))
 
         else:
             mw_adapter_ctrlflow.send_sys_status(config.PHASE_FINISHED,
