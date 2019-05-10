@@ -41,7 +41,7 @@ class Movement(base_app.App):
             self.acc_reader = FakeAccelerationmeter(onNewAcceleration=self.acceleration_callback)
         self.acc_reader.start()
 
-        self.job = periodic_job.PeriodicJob(interval=timedelta(milliseconds=50), execute=send_hb)
+        self.job = periodic_job.PeriodicJob(interval=timedelta(milliseconds=config.HB_INTERVAL), execute=send_hb)
         self.job.start()
 
         if self.is_raspi:

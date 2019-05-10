@@ -1,6 +1,7 @@
 from datetime import timedelta
 
 import src.raspi.lib.log as log
+from src.raspi.config import config as cfg
 import src.raspi.lib.zmq_socket as zmq_socket
 from src.raspi.lib import base_app
 from src.raspi.lib import periodic_job
@@ -19,7 +20,7 @@ class Buzzer(base_app.App):
     def __init__(self, *args, **kwargs):
         super().__init__("Acoustic", self.acoustic_loop, *args, **kwargs)
 
-        self.job = periodic_job.PeriodicJob(interval=timedelta(milliseconds=50), execute=send_hb)
+        self.job = periodic_job.PeriodicJob(interval=timedelta(milliseconds=cfg.HB_INTERVAL), execute=send_hb)
         self.job.start()
 
         self.data = {}

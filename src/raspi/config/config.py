@@ -11,6 +11,10 @@ SPEED_CUBE_SEARCH = 5 #mm/s
 CRANE_POLL_TIME = 0.1
 CRANE_WAIT_TIME = 5
 
+# - heartbeat intervall in milliseconds and heartbeat invalidate time
+HB_INTERVAL = 200 #ms
+HB_INVALIDATE_TIME = 650 #ms
+
 # Tiny Config
 RESEND_TINY_MESSAGES = False
 

@@ -33,7 +33,7 @@ class Controlflow(base_app.App):
         super().__init__("Controlflow", self.controlflow_loop, *args, **kwargs)
 
         self.job = periodic_job.PeriodicJob(
-            interval=timedelta(milliseconds=50), execute=send_hb)
+            interval=timedelta(milliseconds=config.HB_INTERVAL), execute=send_hb)
         self.job.start()
 
         self.startup = Phase(config.PHASE_STARTUP,

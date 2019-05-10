@@ -8,6 +8,7 @@ from src.raspi.lib import zmq_socket
 from src.raspi.lib import zmq_topics
 from src.raspi.pb import heartbeat_pb2
 from src.raspi.lib import heartbeat as hb
+from src.raspi.config import config as cfg
 
 logger = log.getLogger("SoulTrain.lib.heartbeat_listener.py")
 
@@ -18,10 +19,6 @@ reader_movement = zmq_socket.get_movement_reader()
 reader_acoustic = zmq_socket.get_acoustic_reader()
 reader_controlflow = zmq_socket.get_controlflow_reader()
 reader_webapp = zmq_socket.get_webapp_reader()
-
-MS_10 = 0.010 # 10ms, poll interval
-MS_50 = 0.050 # 50ms, heartbeat limit
-
 
 class HeartBeatListener(metaclass=Singleton):
     '''
@@ -87,7 +84,7 @@ class HeartBeatListener(metaclass=Singleton):
         '''
         Check if new Heartbeats are available (updates all 15ms)
         '''
-        if self.last_poll is None or ((time.perf_counter() - self.last_poll) > MS_10):
+        if self.last_poll is None or ((time.perf_counter() - self.last_poll) > (float(cfg.HB_INTERVAL)/1000)):
             self.__poll()
             self.last_poll = time.perf_counter()
 
@@ -101,7 +98,7 @@ class HeartBeatListener(metaclass=Singleton):
 
     def __read_hb(self, heartbeat, last_scan, socket):
         hb_status = getattr(self, heartbeat)
-        if last_scan is None or ((time.perf_counter() - last_scan) > MS_50):
+        if last_scan is None or ((time.perf_counter() - last_scan) > (float(cfg.HB_INVALIDATE_TIME)/1000)):
             hb_status = hb.STATUS_ERROR
 
         if socket.poll(timeout=1, flags=zmq.POLLIN) & zmq.POLLIN == zmq.POLLIN:
