@@ -119,7 +119,7 @@ async def send_controlflow_cmd(request):
     json_string = request.body.decode('utf-8')
     p = Payload(json_string)
 
-    if p.command in 'start':
+    if 'start' in p.command:
         mw_adapter_server.clear_states() #clear states when starting controlflow
 
     mw_adapter_server.send_sys_cmd(p.command, dict(p.phases))
