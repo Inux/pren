@@ -40,12 +40,6 @@ class Protocol():
             Message.ACK.value : self.__set_recv_ack
         }
 
-        #Internal values received from tiny
-        self.is_speed = None
-        self.cube = None
-        self.is_crane = None
-        self.current = None
-
         #Internal values sent to tiny
         self.last_sent_crane_state = None
         self.last_sent_phase = None
@@ -82,18 +76,6 @@ class Protocol():
         '''
         if self.conn is not None:
             self.conn.close()
-
-    def get_speed(self):
-        return self.is_speed
-
-    def get_cube(self):
-        return self.cube
-
-    def get_crane(self):
-        return self.is_crane
-
-    def get_current(self):
-        return self.current
 
     def send_speed(self, speed):
         '''
@@ -195,36 +177,28 @@ class Protocol():
             self.log.error("Could not parse line: '%s', msg: '%s', val: '%s', exception: %s", line, str(rcv_msg), str(rcv_val), e)
 
     def __set_recv_speed(self, val):
-        if self.is_speed != int(val):
-            self.is_speed = int(val)
-            if self.onNewSpeed is not None:
-                self.onNewSpeed(self.is_speed)
+        if self.onNewSpeed is not None:
+            self.onNewSpeed(val)
 
         self.send_ack(Message.IS_SPEED.value)
 
     def __set_recv_cube(self, val):
         if int(val) in range(0, 2):
-            if self.cube != int(val):
-                self.cube = int(val)
-                if self.onNewCubeState is not None:
-                    self.onNewCubeState(int(val))
+            if self.onNewCubeState is not None:
+                self.onNewCubeState(int(val))
 
             self.send_ack(Message.CUBE.value)
 
     def __set_recv_crane(self, val):
         if int(val) in range(0, 2):
-            if self.is_crane != int(val):
-                self.is_crane = int(val)
-                if self.onNewCraneState is not None:
-                    self.onNewCraneState(int(val))
+            if self.onNewCraneState is not None:
+                self.onNewCraneState(int(val))
 
             self.send_ack(Message.IS_CRANE.value)
 
     def __set_recv_current(self, val):
-        if self.current != int(val):
-            self.current = int(val)
-            if self.onNewCurrent is not None:
-                self.onNewCurrent(int(val))
+        if self.onNewCurrent is not None:
+            self.onNewCurrent(int(val))
 
         self.send_ack(Message.CURRENT.value)
 
