@@ -49,21 +49,27 @@ class HeartBeatListener(metaclass=Singleton):
         return repr(self)
 
     def get_linedetector(self):
+        self.poll()
         return self.linedetector
 
     def get_numberdetector(self):
+        self.poll()
         return self.numberdetector
 
     def get_movement(self):
+        self.poll()
         return self.movement
 
     def get_acoustic(self):
+        self.poll()
         return self.acoustic
 
     def get_controlflow(self):
+        self.poll()
         return self.controlflow
 
     def get_webapp(self):
+        self.poll()
         return self.webapp
 
     def get_data(self):
@@ -101,7 +107,7 @@ class HeartBeatListener(metaclass=Singleton):
         if last_scan is None or ((time.perf_counter() - last_scan) > (float(cfg.HB_INVALIDATE_TIME)/1000)):
             hb_status = hb.STATUS_ERROR
 
-        if socket.poll(timeout=1, flags=zmq.POLLIN) & zmq.POLLIN == zmq.POLLIN:
+        if socket.poll(timeout=0.05, flags=zmq.POLLIN) & zmq.POLLIN == zmq.POLLIN:
             topic_and_data = socket.recv()
             topic = topic_and_data.split(b' ', 1)[0]
             dataraw = topic_and_data.split(b' ', 1)[1]
