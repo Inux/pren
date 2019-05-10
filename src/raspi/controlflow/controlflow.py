@@ -26,6 +26,8 @@ from src.raspi.controlflow.phases import h_finished
 
 socket = zmq_socket.get_controlflow_sender()
 
+mw_data = {} #Store mw_data
+
 def send_hb():
     hb.send_heartbeat(socket, hb.COMPONENT_CONTROLFLOW, hb.STATUS_RUNNING)
 
@@ -37,6 +39,78 @@ class Controlflow(base_app.App):
             interval=timedelta(milliseconds=config.HB_INTERVAL), execute=send_hb)
         self.job.start()
 
+        self.startup = None
+        self.find_cube = None
+        self.grab_cube = None
+        self.round_one = None
+        self.round_two = None
+        self.find_stop = None
+        self.stopping = None
+        self.finished = None
+        self.init_phases()
+
+        self.actual_phase = None
+        self.new_phase = None
+
+        self.oldphase = ''
+        self.oldmsg = ''
+
+        self.is_running = False
+
+    def controlflow_loop(self, *args, **kwargs):
+        global mw_data
+
+        mw_data = mw_adapter_ctrlflow.get_data()
+
+
+        # Handle commands from webapp
+
+        if 'start' in mw_data['sys_cmd'] and self.is_running is False:
+            self.is_running = True
+            mw_adapter_ctrlflow.clear_states()
+            self.init_phases()
+            self.actual_phase = self.startup
+
+        if 'stop' in mw_data['sys_cmd'] and self.is_running is True:
+            self.is_running = False
+            self.init_phases()
+            self.actual_phase = self.finished
+
+
+        # Run phases (Statemachine)
+
+        if self.actual_phase is not None:
+            phase = self.actual_phase.get_name()
+            msg = self.actual_phase.get_msg()
+
+            #send only a status if we really change the value
+            if str(phase) not in self.oldphase or str(msg) not in self.oldmsg:
+                self.oldphase = str(phase)
+                self.oldmsg = str(msg)
+                mw_adapter_ctrlflow.send_sys_status(str(phase), str(msg))
+
+            #run phase
+            self.new_phase = self.actual_phase.run(mw_data)
+
+            #send sys status again after running
+            phase = self.actual_phase.get_name()
+            msg = self.actual_phase.get_msg()
+
+            #send only a status if we really change the value
+            if str(phase) not in self.oldphase or str(msg) not in self.oldmsg:
+                self.oldphase = str(phase)
+                self.oldmsg = str(msg)
+                mw_adapter_ctrlflow.send_sys_status(str(phase), str(msg))
+
+
+            self.actual_phase = self.new_phase #switch to new phase
+        else:
+            mw_data['sys_cmd'] = False
+            mw_adapter_ctrlflow.set_data('sys_cmd', '', False)
+            mw_adapter_ctrlflow.send_sys_status(config.PHASE_FINISHED,
+                                                "waiting for command...")
+
+    def init_phases(self):
         self.startup = Phase(config.PHASE_STARTUP,
                              a_starting.method,
                              config.PHASE_FIND_CUBE)
@@ -61,59 +135,6 @@ class Controlflow(base_app.App):
         self.finished = Phase(config.PHASE_FINISHED,
                               h_finished.method,
                               "")
-
-        self.actual_phase = None
-        self.oldphase = ''
-        self.oldmsg = ''
-
-    def controlflow_loop(self, *args, **kwargs):
-        global mw_data
-
-        mw_data = mw_adapter_ctrlflow.get_data()
-
-
-        # Handle commands from webapp
-
-        if 'start' in mw_data['sys_cmd']:
-            mw_adapter_ctrlflow.clear_states()
-            mw_adapter_ctrlflow.set_data('sys_cmd', '', False)
-            self.actual_phase = self.startup
-
-        if 'stop' in mw_data['sys_cmd']:
-            mw_adapter_ctrlflow.set_data('sys_cmd', '', False)
-            self.actual_phase = self.finished
-
-
-        # Run phases (Statemachine)
-
-        if self.actual_phase is not None:
-            phase = self.actual_phase.get_name()
-            msg = self.actual_phase.get_msg()
-
-            #send only a status if we really change the value
-            if str(phase) not in self.oldphase or str(msg) not in self.oldmsg:
-                self.oldphase = str(phase)
-                self.oldmsg = str(msg)
-                mw_adapter_ctrlflow.send_sys_status(str(phase), str(msg))
-
-            #run phase
-            new_phase = self.actual_phase.run(mw_data)
-
-            #send sys status again after running
-            phase = self.actual_phase.get_name()
-            msg = self.actual_phase.get_msg()
-
-            #send only a status if we really change the value
-            if str(phase) not in self.oldphase or str(msg) not in self.oldmsg:
-                self.oldphase = str(phase)
-                self.oldmsg = str(msg)
-                mw_adapter_ctrlflow.send_sys_status(str(phase), str(msg))
-
-
-            self.actual_phase = new_phase #switch to new phase
-        else:
-            mw_adapter_ctrlflow.send_sys_status(config.PHASE_FINISHED,
-                                                "waiting for command...")
 
 if __name__ == '__main__':
     Controlflow().run()
