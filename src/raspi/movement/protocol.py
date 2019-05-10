@@ -17,7 +17,7 @@ class Protocol():
     The protocol itself
     '''
     def __init__(self, device, baud,
-                 onNewSpeed=None, onNewCurrent=None, onNewCubeState=None, resend=True, real_device=True):
+                 onNewSpeed=None, onNewCurrent=None, onNewCubeState=None, onNewCraneState=None, resend=True, real_device=True):
         self.log = logger.getLogger('SoulTrain.movement.protocol')
         self.logTiny = logger.getLogger('SoulTrain.movement.tiny')
 
@@ -34,6 +34,7 @@ class Protocol():
         self.recv_map = {
             Message.IS_SPEED.value : self.__set_recv_speed,
             Message.CUBE.value : self.__set_recv_cube,
+            Message.IS_CRANE.value : self.__set_recv_crane,
             Message.CURRENT.value : self.__set_recv_current,
             Message.LOG.value : self.__set_recv_log,
             Message.ACK.value : self.__set_recv_ack
@@ -42,6 +43,7 @@ class Protocol():
         #Internal values received from tiny
         self.is_speed = None
         self.cube = None
+        self.is_crane = None
         self.current = None
 
         #Internal values sent to tiny
@@ -53,6 +55,7 @@ class Protocol():
         self.onNewSpeed = onNewSpeed
         self.onNewCurrent = onNewCurrent
         self.onNewCubeState = onNewCubeState
+        self.onNewCraneState = onNewCraneState
 
         #Stores the methods to execute again when a message has to be resend
         self.resend_map = {
@@ -85,6 +88,9 @@ class Protocol():
 
     def get_cube(self):
         return self.cube
+
+    def get_crane(self):
+        return self.is_crane
 
     def get_current(self):
         return self.current
@@ -204,6 +210,15 @@ class Protocol():
                     self.onNewCubeState(int(val))
 
             self.send_ack(Message.CUBE.value)
+
+    def __set_recv_crane(self, val):
+        if int(val) in range(0, 2):
+            if self.is_crane != int(val):
+                self.is_crane = int(val)
+                if self.onNewCraneState is not None:
+                    self.onNewCraneState(int(val))
+
+            self.send_ack(Message.IS_CRANE.value)
 
     def __set_recv_current(self, val):
         if self.current != int(val):

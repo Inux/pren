@@ -64,6 +64,7 @@ def get_movement_reader():
     __mr.setsockopt(zmq.SUBSCRIBE, zmq_topics.HEARTBEAT_TOPIC)
     __mr.setsockopt(zmq.SUBSCRIBE, zmq_topics.ACKNOWLEDGE_TOPIC)
     __mr.setsockopt(zmq.SUBSCRIBE, zmq_topics.CUBE_STATUS)
+    __mr.setsockopt(zmq.SUBSCRIBE, zmq_topics.CRANE_CMD_TOPIC) # miss use of crane command to send crane state to webapp and controlflow
     return __mr
 
 def get_numberdetector_reader():

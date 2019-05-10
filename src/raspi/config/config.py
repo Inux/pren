@@ -39,6 +39,8 @@ PHASE_TO_INT = {
     PHASE_FINISHED: 7,
 }
 
+PHASE_DELAY = 5 # in seconds (Delay some phases - especially those which are running very fast!)
+
 # Master UART variables -----------------------------
 MASTER_UART_INTERFACE_TINY = "/dev/ttyTiny"
 MASTER_UART_BAUD = 115200

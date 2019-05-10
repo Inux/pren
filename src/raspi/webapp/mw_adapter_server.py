@@ -62,7 +62,8 @@ def get_data():
             zmq_topics.DISTANCE_TOPIC: lambda obj: _set_data('distance', obj.distance),
             zmq_topics.ACKNOWLEDGE_TOPIC: lambda obj: _set_data(obj.action, True),
             zmq_topics.CURRENT_TOPIC: lambda obj: _set_data('current', obj.current),
-            zmq_topics.CUBE_STATUS: lambda obj: _set_data('cube', obj.state)
+            zmq_topics.CUBE_STATUS: lambda obj: _set_data('cube', obj.state),
+            zmq_topics.CRANE_STATE: lambda obj: _set_data('crane', obj.command)
         }
     )
 

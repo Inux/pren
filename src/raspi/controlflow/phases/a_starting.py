@@ -1,5 +1,6 @@
 import time
 
+from src.raspi.config import config as cfg
 from src.raspi.lib import heartbeat as hb
 from src.raspi.lib import zmq_heartbeat_listener as hbl
 
@@ -32,5 +33,7 @@ def method(middleware_data):
     if hbl.HeartBeatListener().get_webapp() not in hb.STATUS_RUNNING:
         hb_status = False
         return "waiting for webapp heartbeat..."
+
+    time.sleep(cfg.PHASE_DELAY)
 
     return ""

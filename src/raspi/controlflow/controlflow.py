@@ -4,6 +4,7 @@
 -Sends direction over middleware (straight, left, right)
 """
 import time
+import copy
 from datetime import timedelta
 
 from src.raspi.lib import base_app
@@ -89,21 +90,26 @@ class Controlflow(base_app.App):
             msg = self.actual_phase.get_msg()
 
             #send only a status if we really change the value
-            if str(phase) not in str(self.oldphase) and str(msg) not in str(self.oldmsg):
+            if str(phase) not in self.oldphase or str(msg) not in self.oldmsg:
+                self.oldphase = str(phase)
+                self.oldmsg = str(msg)
                 mw_adapter_ctrlflow.send_sys_status(str(phase), str(msg))
 
             #run phase
-            self.actual_phase = self.actual_phase.run(mw_data)
+            new_phase = self.actual_phase.run(mw_data)
 
             #send sys status again after running
-            if self.actual_phase is not None:
-                phase = self.actual_phase.get_name()
-                msg = self.actual_phase.get_msg()
+            phase = self.actual_phase.get_name()
+            msg = self.actual_phase.get_msg()
 
-                #send only a status if we really change the value
-                if str(phase) not in str(self.oldphase) and str(msg) not in str(self.oldmsg):
-                    mw_adapter_ctrlflow.send_sys_status(str(phase), str(msg))
+            #send only a status if we really change the value
+            if str(phase) not in self.oldphase or str(msg) not in self.oldmsg:
+                self.oldphase = str(phase)
+                self.oldmsg = str(msg)
+                mw_adapter_ctrlflow.send_sys_status(str(phase), str(msg))
 
+
+            self.actual_phase = new_phase #switch to new phase
         else:
             mw_adapter_ctrlflow.send_sys_status(config.PHASE_FINISHED,
                                                 "waiting for command...")

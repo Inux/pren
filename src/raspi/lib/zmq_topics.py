@@ -6,6 +6,9 @@ ACCELERATION_TOPIC = b'acceleration'
 ACKNOWLEDGE_TOPIC = b'acknowledge'
 ACOUSTIC_TOPIC = b'acoustic'
 CRANE_CMD_TOPIC = b'cranecommand'
+#use message for both cmd and state
+#for movement it is a command, for others it's the state sent from movement
+CRANE_STATE = CRANE_CMD_TOPIC
 CURRENT_TOPIC = b'current'
 DIRECTION_TOPIC = b'direction'
 DISTANCE_TOPIC = b'distance'

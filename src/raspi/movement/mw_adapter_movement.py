@@ -32,6 +32,9 @@ def send_distance(distance):
 def send_cube_state(state):
     zmq_msg.send_cube_state(sender_movement, state)
 
+def send_crane_state(state):
+    zmq_msg.send_crane_cmd(sender_movement, state) #miss use crane cmd to send the actual crane state to webapp and controlflow
+
 def send_ack(action, component):
     zmq_msg.send_ack(sender_movement, action, component)
 

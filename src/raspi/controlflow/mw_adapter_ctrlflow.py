@@ -72,7 +72,8 @@ def get_data():
             zmq_topics.DISTANCE_TOPIC: lambda obj: set_data('distance', obj.distance),
             zmq_topics.ACKNOWLEDGE_TOPIC: lambda obj: set_data(obj.action, True),
             zmq_topics.CURRENT_TOPIC: lambda obj: set_data('current', obj.current),
-            zmq_topics.CUBE_STATUS: lambda obj: set_data('cube', obj.state)
+            zmq_topics.CUBE_STATUS: lambda obj: set_data('cube', obj.state),
+            zmq_topics.CRANE_STATE: lambda obj: set_data('crane', obj.command)
         }
     )
 
@@ -82,15 +83,6 @@ def get_data():
             zmq_topics.SYSTEM_CMD_TOPIC: lambda obj: _set_sys_cmd(obj. command, dict(obj.phases))
         }
     )
-
-    #add crane to mw_data
-    if zmq_ack.ACK_RECV_CRANE_CMD in mw_data_ctrlflow.keys():
-        if mw_data_ctrlflow[zmq_ack.ACK_RECV_CRANE_CMD] is True:
-            if mw_data_ctrlflow['crane'] == 0:
-                mw_data_ctrlflow['crane'] = 1
-            else:
-                mw_data_ctrlflow['crane'] = 0
-            mw_data_ctrlflow[zmq_ack.ACK_RECV_CRANE_CMD] = False
 
     return mw_data_ctrlflow
 

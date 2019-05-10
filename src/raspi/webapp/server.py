@@ -101,6 +101,9 @@ async def send_speed(request, speed):
 
 @app.route('/crane/<state>')
 async def send_crane_cmd(request, state):
+    global middlewareData
+
+    middlewareData['crane_ack'] = False
     if int(state) == 1:
         mw_adapter_server.send_crane_cmd(1)
     else:
@@ -137,10 +140,7 @@ async def periodic_middleware_task(app):
     if zmq_ack.ACK_RECV_CRANE_CMD in middlewareData.keys():
         if middlewareData[zmq_ack.ACK_RECV_CRANE_CMD] is True:
             logger.info("received crane cmd ack from movement")
-            if middlewareData['crane'] == 0:
-                middlewareData['crane'] = 1
-            else:
-                middlewareData['crane'] = 0
+            middlewareData['crane_ack'] = True
             middlewareData[zmq_ack.ACK_RECV_CRANE_CMD] = False
 
     #Change speed ack value if we receive acknowledge
