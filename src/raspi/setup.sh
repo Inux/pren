@@ -10,10 +10,10 @@
 #       -sudo unzip -o $PROTOC_ZIP -d /usr/local bin/protoc
 #       -rm -f $PROTOC_ZIP
 #3. wifi hotspot -> https://github.com/billz/raspap-webgui
-#       - ssid: RaspiTeam28
+#       - ssid: PrenMasterTeam28
 #       - ip: 10.3.141.1
 #       - usr: admin
-#       - pwd: team28team$$
+#       - pwd: Team28Master
 #4.
 #5.
 #6.
