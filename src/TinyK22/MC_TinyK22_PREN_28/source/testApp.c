@@ -23,6 +23,8 @@
 #include "drive.h"
 #include "driveCom.h"
 #include "crane.h"
+#include "cubeDetection.h"
+#include "ms_counter.h"
 
 void Test_Motor_S(void)
 {
@@ -109,6 +111,7 @@ void RunTestApp(void)
   pi_Init();
   drive_Init();
   crane_Init();
+  cube_Init();
 
   strncpy(test_ackh.topic, testTopic, sizeof(test_ackh.topic));
   test_ackh.timeoutHandler = TestAckTimeoutHandler;
@@ -123,12 +126,19 @@ void RunTestApp(void)
   while(1) {
     McuWait_Waitms(1);
 
-    j++;
-    if (j > 100)
+    m++;
+    if (m > 50)
     {
-      j = 0;
-      Test_Motor_S();
+      m = 0;
+      cubeDoWork();
     }
+
+//    j++;
+//    if (j > 500)
+//    {
+//      j = 0;
+//      piWriteNum32u("ms", millis(), NULL);
+//    }
 
     l++;
     if (l > 25)

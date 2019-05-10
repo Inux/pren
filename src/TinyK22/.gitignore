@@ -3,3 +3,4 @@
 /.mcuxpressoide_packages_support/
 /frdmk22f_uart_interrupt_rb_transfer/
 /frdmk22f_uart_interrupt/
+/frdmk22f_i2c_polling_b2b_transfer_master/

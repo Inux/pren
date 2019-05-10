@@ -138,6 +138,24 @@ void Encoder_InitPins(void);
  */
 void Motor_S_InitPins(void);
 
+/*! @name PORTD3 (number 60), J1[4]/J8[P7]/SPI0_SIN/uSD_SPI_MISO
+  @{ */
+#define I2C_SD_CARD_DAT0_PORT PORTD /*!<@brief PORT device name: PORTD */
+#define I2C_SD_CARD_DAT0_PIN 3U     /*!<@brief PORTD pin index: 3 */
+                                    /* @} */
+
+/*! @name PORTD2 (number 59), J1[2]/J8[P3]/uSD_SPI_MOSI
+  @{ */
+#define I2C_SD_CARD_CMD_PORT PORTD /*!<@brief PORT device name: PORTD */
+#define I2C_SD_CARD_CMD_PIN 2U     /*!<@brief PORTD pin index: 2 */
+                                   /* @} */
+
+/*!
+ * @brief Configures pin routing and optionally pin electrical features.
+ *
+ */
+void I2C_InitPins(void);
+
 #if defined(__cplusplus)
 }
 #endif
