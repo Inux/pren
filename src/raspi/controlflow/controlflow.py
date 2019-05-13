@@ -34,11 +34,11 @@ def send_hb():
 class Controlflow(base_app.App):
     def __init__(self, *args, **kwargs):
         super().__init__("Controlflow", self.controlflow_loop, *args, **kwargs)
-        mw_adapter_ctrlflow.clear_states() # set default values
-
         self.job = periodic_job.PeriodicJob(
             interval=timedelta(milliseconds=config.HB_INTERVAL), execute=send_hb)
         self.job.start()
+
+        mw_adapter_ctrlflow.clear_states() #set default values
 
         self.startup = None
         self.find_cube = None
