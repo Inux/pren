@@ -4,7 +4,7 @@ from src.raspi.controlflow import mw_adapter_ctrlflow as mw
 from src.raspi.config import config as cfg
 from src.raspi.lib import log
 
-logger = log.getLogger("SoulTrain.movement.phases.b_find_cube")
+logger = log.getLogger("SoulTrain.controlflow.phases.b_find_cube")
 
 def method(middleware_data):
     if 'cube' in middleware_data.keys() and int(middleware_data['cube']) == int(1):

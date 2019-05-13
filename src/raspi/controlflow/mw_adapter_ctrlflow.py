@@ -6,7 +6,7 @@ from src.raspi.lib import zmq_msg
 from src.raspi.lib import zmq_heartbeat_listener
 from src.raspi.lib import zmq_ack
 
-logger = log.getLogger("SoulTrain.webapp.mw_adapter_ctrlflow")
+logger = log.getLogger("SoulTrain.controlflow.mw_adapter_ctrlflow")
 
 # Sockets
 reader_linedetector = zmq_socket.get_linedetector_reader()

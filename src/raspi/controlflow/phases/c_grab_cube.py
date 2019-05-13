@@ -7,7 +7,7 @@ from src.raspi.lib import log
 crane_sent = False
 time_waited = 0
 
-logger = log.getLogger("SoulTrain.movement.phases.c_grab_cube")
+logger = log.getLogger("SoulTrain.controlflow.phases.c_grab_cube")
 
 def method(middleware_data):
     global crane_sent

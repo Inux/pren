@@ -122,7 +122,7 @@ class HeartBeatListener(metaclass=Singleton):
 
                 if rcv_hb is not None:
                     hb_status = rcv_hb.status
-                    logger.debug("received heartbeat from '%s' with status '%s'", heartbeat, hb_status)
+                    logger.info("received heartbeat from '%s' with status '%s'", heartbeat, hb_status)
 
         #setting value of member by name
         setattr(self, heartbeat, hb_status)

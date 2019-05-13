@@ -4,7 +4,7 @@ from src.raspi.lib import log
 
 actual_distance = 0
 
-logger = log.getLogger("SoulTrain.movement.phases.e_round_two")
+logger = log.getLogger("SoulTrain.controlflow.phases.e_round_two")
 
 def method(middleware_data):
     global actual_distance

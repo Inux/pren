@@ -4,7 +4,7 @@ import src.raspi.controlflow.mw_adapter_ctrlflow as mw
 import src.raspi.config.config as cfg
 from src.raspi.lib import log
 
-logger = log.getLogger("SoulTrain.movement.phases.g_stopping")
+logger = log.getLogger("SoulTrain.controlflow.phases.g_stopping")
 
 def method(middleware_data):
     logger.info("stopping...")

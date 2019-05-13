@@ -5,7 +5,7 @@ from src.raspi.lib import heartbeat as hb
 from src.raspi.lib import zmq_heartbeat_listener as hbl
 from src.raspi.lib import log
 
-logger = log.getLogger("SoulTrain.movement.phases.a_starting")
+logger = log.getLogger("SoulTrain.controlflow.phases.a_starting")
 
 
 def method(middleware_data):
