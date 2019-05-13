@@ -38,7 +38,7 @@ function updateLogic(data) {
     let craneOnButton = document.getElementById('craneOn');
     let craneResetButton = document.getElementById('craneReset');
 
-    if(data !== null && crane_state !== data.crane) {
+    if(data != null && crane_state !== data.crane) {
         if(data.crane === "0") {
             craneOnButton.disabled = false;
             craneResetButton.disabled = true;
@@ -48,9 +48,6 @@ function updateLogic(data) {
         }
 
         crane_state = data.crane;
-    } else {
-        craneOnButton.disabled = true;
-        craneResetButton.disabled = true;
     }
 }
 
