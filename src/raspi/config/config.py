@@ -2,21 +2,36 @@
 Configuration of the Raspberry
 '''
 
-# General Parameters
+# Controlflow Parameters
 
-# - speed while searching cube
+# - speed values
 SPEED_CUBE_SEARCH = 5 #mm/s
+SPEED_MAXIMAL_LIMIT = 3000 #mm/s
+SPEED_NUMBER_DETECTION_LIMIT = 1500 #mm/s
+SPEED_STOP_SEARCH = 10 #mm/s
 
 # - crane poll time and waittime until finished
 CRANE_POLL_TIME = 0.1
 CRANE_WAIT_TIME = 5
 
+# - distances of the parcour
+DISTANCE_ROUND_MM = 10000
+DISTANCE_STOP_MAX = 10000 # distance to last stop signal
+
+
+# Component Parameters ----------------------------------------------
+
 # - heartbeat intervall in milliseconds and heartbeat invalidate time
 HB_INTERVAL = 200 #ms
 HB_INVALIDATE_TIME = 650 #ms
 
+
 # Tiny Config
 RESEND_TINY_MESSAGES = False
+MASTER_UART_INTERFACE_TINY = "/dev/ttyTiny"
+MASTER_UART_BAUD = 115200
+MASTER_UART_INTERFACE_PC = "/dev/ttys010" #Simulate on MacOs -> 'socat -d -d pty,raw,echo=0 pty,raw,echo=0' then 'screen /dev/ttys005'
+
 
 # Phases of the system
 PHASE_STARTUP = 'startup'
@@ -40,10 +55,3 @@ PHASE_TO_INT = {
 }
 
 PHASE_DELAY = 5 # in seconds (Delay some phases - especially those which are running very fast!)
-
-# Master UART variables -----------------------------
-MASTER_UART_INTERFACE_TINY = "/dev/ttyTiny"
-MASTER_UART_BAUD = 115200
-
-MASTER_UART_INTERFACE_PC = "/dev/ttys004"
-#Simulate on MacOs -> 'socat -d -d pty,raw,echo=0 pty,raw,echo=0' then 'screen /dev/ttys005'
