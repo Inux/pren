@@ -111,6 +111,8 @@ class Controlflow(base_app.App):
             phase = config.PHASE_FINISHED
             msg = "waiting for command..."
             if str(phase) not in self.oldphase or str(msg) not in self.oldmsg:
+                mw_adapter_ctrlflow.clear_states() #clear the states (only once)
+
                 self.oldphase = str(phase)
                 self.oldmsg = str(msg)
 
