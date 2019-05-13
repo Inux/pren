@@ -1,14 +1,14 @@
 import time
 
-count = 0
-limit = 5
+import src.raspi.controlflow.mw_adapter_ctrlflow as mw
+import src.raspi.config.config as cfg
+from src.raspi.lib import log
+
+logger = log.getLogger("SoulTrain.movement.phases.g_stopping")
 
 def method(middleware_data):
-    global count
-    if count < limit:
-        count = count + 1
-        time.sleep(0.5)
-        return "'" + str(count) + "' < '" + str(limit) + "'"
-
-    count = 0
+    logger.info("stopping...")
+    mw.send_move_cmd(0)
+    mw.send_crane_cmd(0)
+    time.sleep(cfg.PHASE_DELAY)
     return ""

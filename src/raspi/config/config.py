@@ -30,7 +30,7 @@ HB_INVALIDATE_TIME = 650 #ms
 RESEND_TINY_MESSAGES = False
 MASTER_UART_INTERFACE_TINY = "/dev/ttyTiny"
 MASTER_UART_BAUD = 115200
-MASTER_UART_INTERFACE_PC = "/dev/ttys004" #Simulate on MacOs -> 'socat -d -d pty,raw,echo=0 pty,raw,echo=0' then 'screen /dev/ttys005'
+MASTER_UART_INTERFACE_PC = "/dev/ttys010" #Simulate on MacOs -> 'socat -d -d pty,raw,echo=0 pty,raw,echo=0' then 'screen /dev/ttys005'
 
 
 # Phases of the system

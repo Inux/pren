@@ -1,17 +1,13 @@
 import time
+from src.raspi.lib import log
+import src.raspi.config.config as cfg
 
 count = 0
 limit = 5
 
+logger = log.getLogger("SoulTrain.movement.phases.h_finished")
+
 def method(middleware_data):
-    global count
-    if count < 0:
-        count = 0
-
-    if count < limit:
-        count = count + 1
-        time.sleep(0.5)
-        return "'" + str(count) + "' < '" + str(limit) + "'"
-
-    count = 0
+    logger.info("finished...")
+    time.sleep(cfg.PHASE_DELAY)
     return ""
