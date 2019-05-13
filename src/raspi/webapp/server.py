@@ -157,6 +157,7 @@ async def periodic_middleware_task(app):
     app.add_task(periodic_middleware_task(app))
 
 if __name__ == '__main__':
+    mw_adapter_server.clear_states() #set default values
     signal.signal(signal.SIGINT, signal_int_handler)
     app.add_task(periodic_middleware_task(app))
     app.run(host='0.0.0.0', port=2828, debug=False, access_log=False)

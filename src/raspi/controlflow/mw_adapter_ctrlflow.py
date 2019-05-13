@@ -13,22 +13,12 @@ reader_linedetector = zmq_socket.get_linedetector_reader()
 reader_movement = zmq_socket.get_movement_reader()
 reader_webapp = zmq_socket.get_webapp_reader()
 sender_ctrlflow = zmq_socket.get_controlflow_sender()
+reader_number_detector = zmq_socket.get_numberdetector_reader()
 hb_listener = zmq_heartbeat_listener.HeartBeatListener()
 
 mw_data_ctrlflow = {} # data will be updated by HeartBeatListener
 mw_data_ctrlflow['sys_cmd'] = ''
 mw_data_ctrlflow['phases'] = dict()
-mw_data_ctrlflow['speed'] = 0
-mw_data_ctrlflow['distance'] = 0
-mw_data_ctrlflow['x_acceleration'] = 0
-mw_data_ctrlflow['y_acceleration'] = 0
-mw_data_ctrlflow['z_acceleration'] = 0
-mw_data_ctrlflow['direction'] = "undefined"
-mw_data_ctrlflow['number'] = 0
-mw_data_ctrlflow['cube'] = 0
-mw_data_ctrlflow['crane'] = 0
-mw_data_ctrlflow[zmq_ack.ACK_RECV_MOVE_CMD] = False
-mw_data_ctrlflow[zmq_ack.ACK_RECV_CRANE_CMD] = False
 
 def clear_states():
     global mw_data_ctrlflow
@@ -40,9 +30,11 @@ def clear_states():
     mw_data_ctrlflow['y_acceleration'] = 0
     mw_data_ctrlflow['z_acceleration'] = 0
     mw_data_ctrlflow['direction'] = "undefined"
-    mw_data_ctrlflow['number'] = 0
+    mw_data_ctrlflow['number'] = None
     mw_data_ctrlflow['cube'] = 0
     mw_data_ctrlflow['crane'] = 0
+    mw_data_ctrlflow[zmq_ack.ACK_RECV_MOVE_CMD] = False
+    mw_data_ctrlflow[zmq_ack.ACK_RECV_CRANE_CMD] = False
 
 def set_data(key, val, log=True):
     global mw_data_ctrlflow
@@ -94,7 +86,14 @@ def get_data():
     zmq_msg.recv(
         reader_webapp,
         {
-            zmq_topics.SYSTEM_CMD_TOPIC: lambda obj: _set_sys_cmd(obj. command, dict(obj.phases))
+            zmq_topics.SYSTEM_CMD_TOPIC: lambda obj: _set_sys_cmd(obj.command, dict(obj.phases))
+        }
+    )
+
+    zmq_msg.recv(
+        reader_number_detector,
+        {
+            zmq_topics.NUMBER_DETECTOR_TOPIC: lambda obj: set_data('number', obj.number)
         }
     )
 
