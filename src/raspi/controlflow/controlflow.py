@@ -103,13 +103,19 @@ class Controlflow(base_app.App):
                 self.oldmsg = str(msg)
                 mw_adapter_ctrlflow.send_sys_status(str(phase), str(msg))
 
-
             self.actual_phase = self.new_phase #switch to new phase
+
         else:
-            mw_data['sys_cmd'] = False
-            mw_adapter_ctrlflow.set_data('sys_cmd', '', False)
-            mw_adapter_ctrlflow.send_sys_status(config.PHASE_FINISHED,
-                                                "waiting for command...")
+            phase = config.PHASE_FINISHED
+            msg = "waiting for command..."
+            if str(phase) not in self.oldphase or str(msg) not in self.oldmsg:
+                self.oldphase = str(phase)
+                self.oldmsg = str(msg)
+
+                mw_data['sys_cmd'] = False
+                mw_adapter_ctrlflow.set_data('sys_cmd', '', False)
+                mw_adapter_ctrlflow.send_sys_status(str(phase), str(msg))
+
 
     def init_phases(self):
         self.startup = Phase(config.PHASE_STARTUP,
