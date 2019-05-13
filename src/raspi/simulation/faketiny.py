@@ -99,11 +99,11 @@ class Protocol():
 
     def __set_phase(self, val):
         print("handle phase -> val: " + str(val))
-        if 'find_cube' in str(val):
+        if 1 == int(val): # find_cube phase
             time.sleep(10)
             self.__write_cmd(Message.CUBE, 1)
 
-        if 'startup' in str(val):
+        if 0 == int(val): # startup phase
             self.__write_cmd(Message.CUBE, 0)
 
         self.send_ack(Message.PHASE.value)
