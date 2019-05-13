@@ -15,7 +15,6 @@ class AccelerationReader:
         self.call_back = onNewAcceleration
 
         self.job = periodic_job.PeriodicJob(POLL_TIME, execute=self.read_acceleration)
-        self.job.start()
 
     def start(self):
         self.job.start()
