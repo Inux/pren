@@ -106,6 +106,7 @@ class HeartBeatListener(metaclass=Singleton):
         hb_status = getattr(self, heartbeat)
         if last_scan is None or ((time.perf_counter() - last_scan) > (float(cfg.HB_INVALIDATE_TIME)/1000)):
             hb_status = hb.STATUS_ERROR
+            logger.error("received heartbeat from '%s' to status '%s'", heartbeat, hb_status)
 
         if socket.poll(timeout=0.05, flags=zmq.POLLIN) & zmq.POLLIN == zmq.POLLIN:
             topic_and_data = socket.recv()
