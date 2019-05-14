@@ -2,6 +2,8 @@
 Implements the protocol between raspi and the tiny
 '''
 import time
+import datetime
+import threading
 
 import serial
 
@@ -50,6 +52,7 @@ class Protocol():
     def __write_cmd(self, message, value):
         if self.conn is not None:
             msg = str(message.value)+","+str(value)+"\n"
+            print(str(datetime.datetime.now()) +" -> send msg: " + str(message.value) + "," + str(value))
 
             self.conn.write(msg.rstrip(' \t\r\0').encode())
 
@@ -87,29 +90,32 @@ class Protocol():
             pass
 
     def __send_is_speed(self, val):
-        print("handle is_speed -> val: " + str(val))
+        print(str(datetime.datetime.now()) +" -> handle is_speed -> val: " + str(val))
         self.send_ack(Message.IS_SPEED.value)
         self.__write_cmd(Message.IS_SPEED, val)
 
     def __send_crane(self, val):
-        print("handle crane -> val: " + str(val))
+        print(str(datetime.datetime.now()) +" -> handle crane -> val: " + str(val))
         self.send_ack(Message.CRANE.value)
-        time.sleep(10)
-        self.__write_cmd(Message.IS_CRANE, val)
+        crane_thread = threading.Thread(target=self.send_delayed, args=(Message.IS_CRANE, 1,))
+        crane_thread.start()
 
     def __set_phase(self, val):
-        print("handle phase -> val: " + str(val))
-        if 'find_cube' in str(val):
-            time.sleep(10)
-            self.__write_cmd(Message.CUBE, 1)
-
-        if 'startup' in str(val):
+        print(str(datetime.datetime.now()) +" -> handle phase -> val: " + str(val))
+        if 1 == int(val): # find_cube phase
+            cube_thread = threading.Thread(target=self.send_delayed, args=(Message.CUBE, 1,))
+            cube_thread.start()
+        if 0 == int(val): # startup phase
             self.__write_cmd(Message.CUBE, 0)
 
         self.send_ack(Message.PHASE.value)
 
+    def send_delayed(self, msg, val):
+        time.sleep(5)
+        self.__write_cmd(msg, val)
+
 if __name__ == '__main__':
-    proto = Protocol('/dev/ttys001', 115200)
+    proto = Protocol('/dev/ttys012', 115200)
     proto.connect()
     while True:
         proto.rcv_handler()

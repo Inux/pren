@@ -89,6 +89,11 @@ class Movement(base_app.App):
             self.data['phase'] = data_tmp['phase']
             self.tiny.send_phase(self.data['phase'])
 
+            if (self.data['phase'] in config.PHASE_STARTUP or
+                    self.data['phase'] in config.PHASE_FINISHED):
+
+                self.data['distance'] = 0 # set distance to zero when startup or finished
+
     def on_new_speed(self, speed):
         self.data['speed_tiny'] = speed
         mw_adapter_movement.send_speed(speed)
