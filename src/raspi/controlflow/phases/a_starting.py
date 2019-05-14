@@ -7,8 +7,12 @@ from src.raspi.lib import log
 
 logger = log.getLogger("SoulTrain.controlflow.phases.a_starting")
 
+time_waited = 0.0
 
 def method(middleware_data):
+    global time_waited
+    time_waited = time_waited + 0.1 #incease time even if we return without waiting...
+
     hb_status = True
 
 #   if hbl.HeartBeatListener().get_acoustic() not in hb.STATUS_RUNNING:
@@ -40,6 +44,11 @@ def method(middleware_data):
         hb_status = False
         return "waiting for webapp heartbeat..."
 
-    time.sleep(cfg.PHASE_DELAY)
 
-    return ""
+    time.sleep(0.1)
+
+    if time_waited < cfg.PHASE_DELAY:
+        return "delaying a bit...."
+
+
+    return "" # done with starting...
