@@ -2,6 +2,7 @@
 Implements the protocol between raspi and the tiny
 '''
 import time
+import datetime
 
 import serial
 
@@ -50,6 +51,7 @@ class Protocol():
     def __write_cmd(self, message, value):
         if self.conn is not None:
             msg = str(message.value)+","+str(value)+"\n"
+            print(str(datetime.datetime.now()) +" -> send msg: " + str(message.value) + "," + str(value))
 
             self.conn.write(msg.rstrip(' \t\r\0').encode())
 
@@ -87,20 +89,20 @@ class Protocol():
             pass
 
     def __send_is_speed(self, val):
-        print("handle is_speed -> val: " + str(val))
+        print(str(datetime.datetime.now()) +" -> handle is_speed -> val: " + str(val))
         self.send_ack(Message.IS_SPEED.value)
         self.__write_cmd(Message.IS_SPEED, val)
 
     def __send_crane(self, val):
-        print("handle crane -> val: " + str(val))
+        print(str(datetime.datetime.now()) +" -> handle crane -> val: " + str(val))
         self.send_ack(Message.CRANE.value)
-        time.sleep(10)
+        time.sleep(5)
         self.__write_cmd(Message.IS_CRANE, val)
 
     def __set_phase(self, val):
-        print("handle phase -> val: " + str(val))
+        print(str(datetime.datetime.now()) +" -> handle phase -> val: " + str(val))
         if 1 == int(val): # find_cube phase
-            time.sleep(10)
+            time.sleep(5)
             self.__write_cmd(Message.CUBE, 1)
 
         if 0 == int(val): # startup phase
