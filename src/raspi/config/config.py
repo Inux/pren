@@ -5,10 +5,10 @@ Configuration of the Raspberry
 # Controlflow Parameters
 
 # - speed values
-SPEED_CUBE_SEARCH = 5 #mm/s
-SPEED_MAXIMAL_LIMIT = 3000 #mm/s
-SPEED_NUMBER_DETECTION_LIMIT = 1500 #mm/s
-SPEED_STOP_SEARCH = 10 #mm/s
+SPEED_CUBE_SEARCH = 10 #mm/s
+SPEED_MAXIMAL_LIMIT = 3500 #mm/s
+SPEED_NUMBER_DETECTION_LIMIT = 3500 #mm/s
+SPEED_STOP_SEARCH = 1000 #mm/s
 
 # - crane poll time and waittime until finished
 CRANE_POLL_TIME = 0.1
