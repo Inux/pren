@@ -6,13 +6,13 @@
       keywordstyle=\color{blue}
     }
 
-    \graphicspath{{images/Konzepte/}{../../images/Konzepte/}}
+    \graphicspath{{images/et/}{../../images/et/}}
 
 
     \begin{document}
     \subsection{Elektrische Verbindungen} \label{et_verbindungen}
     Dieses Kapitel beschreibt die Verbindungen der Elektronischen Komponenten für die Stromversorgung und Kommunikation. Die Abbildung \ref{fig:et_komponenten} veranschaulicht den Aufbau der Elektronik. Darauf sind alle Verbindungen für die Kommunikation der Logik und die Stromversorgung eingezeichnet. Details zu den Lokigverbindungen mit den Sensoren und Aktoren werden im Kapitel \ref{et_Komponenten} erläutert. \\
-    Im Zentrum der Elektronik ist der Mikrocontroller Tiny K22. Die Software auf dem Mikrocontroller initialisiert alle Komponenten, überwacht deren Status und sendet die nötigen Informationen an das Pi. Diese Schnittstelle ist detailliert im Kapitel \ref{interface_pi_tiny} beschrieben. Weiteres Angaben zur implementierten Software auf dem Tiny werden in Kaptiel \ref{et_software_tiny} beschrieben.\\
+    Im Zentrum der Elektronik ist der Mikrocontroller Tiny K22. Die Software auf dem Mikrocontroller initialisiert alle Komponenten, überwacht deren Status und sendet die nötigen Informationen an das Pi. Diese Schnittstelle ist detailliert im Kapitel \ref{interface_pi_tiny} beschrieben. Weiteres Angaben zur implementierten Software auf dem Tiny werden in Kapitel \ref{et_software_tiny} beschrieben.\\
 
     \begin{figure}[H]
         \centering
@@ -25,7 +25,7 @@
 
     \begin{figure}[H]
         \centering
-        \includegraphics[width=1.0\textwidth]{../../images/et/et_pcb.jpg}
+        \includegraphics[width=0.7\textwidth]{../../images/et/et_pcb.jpg}
         \caption {PCB mit TinyK22}
         \label{fig:et_pcb}
     \end{figure}
@@ -35,18 +35,18 @@
 
     \begin{figure}[H]
         \centering
-        \includegraphics[width=1.0\textwidth]{../../images/et/et_anordnung_zug.jpg}
+        \includegraphics[width=1.0\textwidth]{../../images/et/et_anordnung_zug.pdf}
         \caption {Soul Train mit Elektronik}
         \label{fig:et_anordnung}
     \end{figure}
 
-    An der Front des Zuges, an der Antriebseinheit mit Antriebsmotor [1], sind die beiden Raspberry Pi's [2] befestigt. Hinten auf dem Zug befindet sich das PCB [3] mit dem DC-DC Wandler [4] und den beiden Motorentreiber (Treiber [5] für den Antriebsmotor [1], Treiber [6] für den Schwenkermotor [7]). Direkt hinter der Schwenkervorrichtung ist der Motor für den Schwenker [7] befestigt. Jeweils zwischen den Räger befindet sich auf jeder Seite ein Schleifkontakt für die Stromabnahme von den Schienen [8]. Diese werden beide nach hinten geführt und auf das PCB [3] verbunden. Direkt unter dem Schwenkerarm ist der TOF-Sensor [10] für die Würfelerkennung montiert. Vor dem Schwenker befinden sich der Beschleunigungssensor [11] und der Buzzer [12]. Diese sind direkt mit dem Raspberry Pi verbunden und werden auch von dort angesteuert und ausgelesen.\\
+    An der Front des Zuges, an der Antriebseinheit mit Antriebsmotor [1], sind die beiden Raspberry Pi's [2] befestigt. Hinten auf dem Zug befindet sich das PCB [3] mit dem DC-DC Wandler [4] und den beiden Motorentreiber (Treiber [5] für den Antriebsmotor [1], Treiber [6] für den Schwenkermotor [7]). Direkt hinter der Schwenkervorrichtung ist der Motor für den Schwenker [7] befestigt. Jeweils zwischen den Räder befindet sich auf jeder Seite ein Schleifkontakt für die Stromabnahme von den Schienen [8]. Diese werden beide nach hinten geführt und auf das PCB [3] verbunden. Direkt unter dem Schwenkerarm ist der TOF-Sensor [10] für die Würfelerkennung montiert. Vor dem Schwenker befinden sich der Beschleunigungssensor [11] und der Buzzer [12]. Diese sind direkt mit dem Raspberry Pi verbunden und werden auch von dort angesteuert und ausgelesen.\\
      Alle Verbindungen sind mit Kabel auf der Rückseite des Zuges durchgeführt und befestigt. (siehe Abbildung \ref{fig:et_kabel})\\
 
     \begin{figure}[H]
         \centering
         \includegraphics[width=1.0\textwidth]{../../images/et/et_kabel.jpg}
-        \caption {Kabelverbindungen}
+        \caption {Kabelverbindungen Rückseite}
         \label{fig:et_kabel}
     \end{figure}
 
@@ -75,7 +75,9 @@
     \end{wrapfigure}
 
     Die Geschwindigkeit des Zuges ($v_{Zug}$) kann somit aus der Anzahl Impulsen ($Anz_{I}$)mittels der Mechanischen Übersetzung und der Grösse der Räder berechnet werden.
-    $$v_{Zug}(Anz_{I}) = \frac{2 \cdot \pi \cdot Anz_{Impulse}}{\Delta T \cdot I_{Umdrehung} \cdot U}$$\\
+    \begin{equation} \label{eq:et_v_zug}
+        v_{Zug}(Anz_{I}) = \frac{2 \cdot \pi \cdot Anz_{Impulse}}{\Delta T \cdot I_{Umdrehung} \cdot U}
+    \end{equation}
     $r_r:$ Raddradius  $=13mm$\\
     $\Delta T:$  Messperiode  $=10ms$\\
     $I_{Umdrehung}:$  Impulse pro Umdrehung  $=1024$\\
@@ -87,7 +89,7 @@
     
     \textbf{Distanz rechts (Erkennung Würfel) }\\
     Gemäss der Aufgabenstellung befindet sich der Würfel in einem Abstand von $8\pm1cm$ von der Gleismitte. Somit muss der Distanzsensor Distanzen zwischen ca. $20mm$ und $80mm$ erkennen können. Der exakte Wert der Distanz ist dabei nicht entscheidend, da nur ein bestimmter Schwellwert erkannt werden muss. Die Distanz zum Würfel wird mit einem TOF Sensor \footnote{TOF: Timo-Of-Flight} VL53L0X ermittelt. \\
-    Dieser Schwellwert wird Messtechnisch ermittelt. Der Würfel wird an der vorgegebenen Position vor dem Sensor platziert (siehe Abbildung \ref{fig:et_tof_messung}) und der Wert ausgelesen. Dieser Wert kann dann in der Software festgelegt werden um zu entscheiden ob der Würfel erkannt wurde oder nicht. Der genaue Ablauf der Messung und Entscheidung der Software auf dem Tiny ist in Kapitel \ref{et_software_tiny} beschreiben.
+    Dieser Schwellwert wird Messtechnisch ermittelt. Der Würfel wird an der vorgegebenen Position vor dem Sensor platziert (siehe Abbildung \ref{fig:et_tof_messung}) und der Wert ausgelesen. Dieser Wert kann dann in der Software festgelegt werden um zu entscheiden ob der Würfel erkannt wurde oder nicht. Der genaue Ablauf der Messung und Entscheidung der Software auf dem Tiny ist in Kapitel \ref{et_software_tiny_cube} beschreiben.
 
     \begin{figure}[H]
         \centering
