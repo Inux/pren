@@ -1,0 +1,52 @@
+\documentclass[../../main.tex]{subfiles}
+\begin{document}
+\subsection{Webapplikation}
+In diesem Kapitel wird auf die Implementierung der technischen Komponente 'Web Applikation' eingegangen. Die Webapplikation wurde am Anfang des Entwicklungsprozess eingeführt und ist somit nicht in Pren1 dokumentiert. 
+\subsubsection{Anforderung}
+
+Ziel und Zweck der Applikation ist es eine zentrale Übersicht der einzelnen Module / Komponente zu erhalten und diese zu testen. Der Zug wird mittels Startknopf über das Webinterface gestartet.
+
+\paragraph{Anforderungen}
+\begin{itemize}
+    \item Übersicht
+      \subitem Heartbeat
+      \subitem Informationen zu Zug \& Fahrt
+    \item Module testen
+    \item Fahrt starten
+\end{itemize}
+
+\subsubsection{Lösung}
+Der Client ist eine klassische Kombination aus html \& javascript. Dieser spricht über eine Rest API mit unserem Server. Auf dem Server verwenden wir Sanic, eine auf Python basierte Servertechnologie.
+
+\paragraph{Technologien / Komponente}
+ 
+
+\paragraph{Aufbau}
+\dirtree{%
+.1 /webapp.
+.2 /static.
+.3 /Resources.
+.3 /Scripts.
+.3 /Style.
+.2 index.html.
+.2 server.py.
+}
+
+
+
+\paragraph{Sanic}
+Sanic ist ein Python 3.6+ Webserver und Webframework, welches den Fokus auf Performanz legt. Durch den Einsatz der im Python 3.5 hinzugefügten 'async/await' Syntax wird der Code nicht-blockierend und schneller.
+
+Das Projekt ist für kleine Projekte ideal, auch ist Python ein grosser Pluspunkt, weshalb wir uns für diese Technologie entschieden haben.
+
+\paragraph{REST API}
+
+\paragraph{Soll-Ist-Vergleich}
+
+\subsubsection{Entwicklungsablauf}
+
+\subsubsection{Testing}
+
+\subsubsection{Reflexion}
+
+\end{document}
