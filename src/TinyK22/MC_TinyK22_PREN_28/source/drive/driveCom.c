@@ -74,7 +74,9 @@ tError driveHandleSpeedFrame(const unsigned char *frameValue)
 
 void driveSendSpeedUpdate(int32_t isSpeed)
 {
-//  piWriteNum32s(IS_SPEED_TOPIC, isSpeed, &isSpeedAckH); //todo add back in
+#if SEND_IS_SPEED
+  piWriteNum32s(IS_SPEED_TOPIC, isSpeed, &isSpeedAckH);
+#endif
 }
 
 void driveComAckTimeoutHandler(void)
