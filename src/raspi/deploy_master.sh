@@ -1,6 +1,6 @@
 #Deploy
 #
-IP="prenTeam28master" #IP Raspi
+IP="prenteam28master.local" #IP Raspi Master
 USR="pi"
 PWD='team28team$$'
 

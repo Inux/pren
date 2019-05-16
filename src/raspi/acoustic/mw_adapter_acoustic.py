@@ -1,14 +1,7 @@
 #!/usr/bin/env python
-import os
-import select
-import zmq
-
-import src.raspi.lib.log as log
 from src.raspi.lib import zmq_socket
 from src.raspi.lib import zmq_topics
 from src.raspi.lib import zmq_msg
-
-logger = log.getLogger("SoulTrain.movement.mw_adapter_movement")
 
 # Sockets
 reader_number = zmq_socket.get_numberdetector_reader()

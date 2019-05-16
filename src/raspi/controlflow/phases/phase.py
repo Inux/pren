@@ -30,13 +30,11 @@ class Phase(object):
 
             #we received a msg therefore we run again the same method
             return self
+
         else:
-            #select next phase
+            #select next phase and therefore next method
             self._set_msg('init')
             return self._get_next(middleware_data)
-
-        logger.info("still not finished: " + self.next_phase_key)
-        return self
 
     def get_name(self):
         return self.name

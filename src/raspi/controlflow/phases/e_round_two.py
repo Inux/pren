@@ -1,14 +1,24 @@
-import time
+import src.raspi.config.config as cfg
+from src.raspi.controlflow import mw_adapter_ctrlflow as mw
+from src.raspi.lib import log
 
-count = 0
-limit = 5
+actual_distance = 0
+
+logger = log.getLogger("SoulTrain.controlflow.phases.e_round_two")
 
 def method(middleware_data):
-    global count
-    if count < limit:
-        count = count + 1
-        time.sleep(0.5)
-        return "'" + str(count) + "' < '" + str(limit) + "'"
+    global actual_distance
+    actual_distance = middleware_data['distance']
 
-    count = 0
-    return ""
+    if actual_distance >= (cfg.DISTANCE_ROUND_MM*2):
+        logger.info("reached end of round two")
+        return "" #success we finished second round
+
+    if middleware_data['number'] is None:
+        mw.send_move_cmd(cfg.SPEED_NUMBER_DETECTION_LIMIT)
+        logger.debug("moving with number detection limit")
+        return "moving with number detection limit"
+
+    mw.send_move_cmd(cfg.SPEED_MAXIMAL_LIMIT)
+    logger.debug("moving as fast as possible")
+    return "moving as fast as possible"
