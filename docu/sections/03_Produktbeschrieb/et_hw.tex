@@ -11,7 +11,7 @@
 
     \begin{document}
     \subsection{Elektrische Verbindungen} \label{et_verbindungen}
-    Dieses Kapitel beschreibt die Verbindungen der Elektronischen Komponenten für die Stromversorgung und Kommunikation. Die Abbildung \ref{fig:et_komponenten} veranschaulicht den Aufbau der Elektronik. Darauf sind alle Verbindungen für die Kommunikation der Logik und die Stromversorgung eingezeichnet. Details zu den Lokigverbindungen mit den Sensoren und Aktoren werden im Kapitel \ref{et_Komponenten} erläutert. \\
+    Dieses Kapitel beschreibt die Verbindungen der Elektronischen Komponenten für die Stromversorgung und Kommunikation. Die Abbildung \ref{fig:et_komponenten} veranschaulicht den Aufbau der Elektronik. Darauf sind alle Verbindungen für die Kommunikation der Logik und die Stromversorgung eingezeichnet. Details zu den Lokigverbindungen mit den Sensoren und Aktoren werden im Kapitel \ref{et_Komponenten} erläutert. Für eine bessere Übersicht wurden die beiden Raspberry Pi's zusammengefasst als nur eine Komponente dargestellt.\\
     Im Zentrum der Elektronik ist der Mikrocontroller Tiny K22. Die Software auf dem Mikrocontroller initialisiert alle Komponenten, überwacht deren Status und sendet die nötigen Informationen an das Pi. Diese Schnittstelle ist detailliert im Kapitel \ref{interface_pi_tiny} beschrieben. Weiteres Angaben zur implementierten Software auf dem Tiny werden in Kapitel \ref{et_software_tiny} beschrieben.\\
 
     \begin{figure}[H]
@@ -89,7 +89,8 @@
     
     \textbf{Distanz rechts (Erkennung Würfel) }\\
     Gemäss der Aufgabenstellung befindet sich der Würfel in einem Abstand von $8\pm1cm$ von der Gleismitte. Somit muss der Distanzsensor Distanzen zwischen ca. $20mm$ und $80mm$ erkennen können. Der exakte Wert der Distanz ist dabei nicht entscheidend, da nur ein bestimmter Schwellwert erkannt werden muss. Die Distanz zum Würfel wird mit einem TOF Sensor \footnote{TOF: Timo-Of-Flight} VL53L0X ermittelt. \\
-    Dieser Schwellwert wird Messtechnisch ermittelt. Der Würfel wird an der vorgegebenen Position vor dem Sensor platziert (siehe Abbildung \ref{fig:et_tof_messung}) und der Wert ausgelesen. Dieser Wert kann dann in der Software festgelegt werden um zu entscheiden ob der Würfel erkannt wurde oder nicht. Der genaue Ablauf der Messung und Entscheidung der Software auf dem Tiny ist in Kapitel \ref{et_software_tiny_cube} beschreiben.
+    Dieser Schwellwert wird Messtechnisch ermittelt. Der Würfel wird an der vorgegebenen Position vor dem Sensor platziert (siehe Abbildung \ref{fig:et_tof_messung}) und der Wert ausgelesen. Dieser Wert kann dann in der Software festgelegt werden um zu entscheiden ob der Würfel erkannt wurde oder nicht. Der Wert des Sensors wird nicht in eine exakte Distanz umgerechnet, es wird direkt mit den rohen Sensorwerten der Schwellwert bestimmt. Mit der beschrieben Messung konnten mit dem Schwellwert $10000$ die zuverlässigsten Resultate erzielt werden.\\
+    Der genaue Ablauf der Messung und Entscheidung der Software auf dem Tiny ist in Kapitel \ref{et_software_tiny_cube} beschreiben.\\
 
     \begin{figure}[H]
         \centering
@@ -99,7 +100,8 @@
     \end{figure}
 
     \textbf{Schwenkerwinkel}\\
-    Um der Zurückgelegte Winkel des Schwenkers zu ermitteln ist auch auf dem Motor des Schwenkers ein Quadratur Encoder befestigt. Dieser Verhält sich vom Prinzip identisch wie der Encoder auf dem Antriebsmotor. Um den zurückgelegten Winkel zu ermitteln werden die Anzahl Impulse des Encoders gezählt. Der Motor muss den Schwenker drehen bis ein bestimmter Zielwert der Impulse erreicht ist. Dieser Zielwert wird mit der Mechanik messtechnisch ermittelt idem der Schwenker von Hand von der Start- bis zur Zielposition bewegt wird. (siehe Abbildung \ref{fig:et_schwenker_messung}) Die dabei gemessene Anzahlt Impulsen über die ganze Bewegung entspricht dem Zielwert.
+    Um der Zurückgelegte Winkel des Schwenkers zu ermitteln ist auch auf dem Motor des Schwenkers ein Quadratur Encoder befestigt. Dieser Verhält sich vom Prinzip identisch wie der Encoder auf dem Antriebsmotor. Um den zurückgelegten Winkel zu ermitteln werden die Anzahl Impulse des Encoders gezählt. Der Motor muss den Schwenker drehen bis ein bestimmter Zielwert der Impulse erreicht ist. Dieser Zielwert wird mit der Mechanik messtechnisch ermittelt idem der Schwenker von Hand von der Start- bis zur Zielposition bewegt wird. (siehe Abbildung \ref{fig:et_schwenker_messung}) Die dabei gemessene Anzahlt Impulsen über die ganze Bewegung entspricht dem Zielwert.\\
+    Diese Messung ergabe $5435$ Impulse für den nötigen Winkel.
 
     \begin{figure}[H]
         \centering
