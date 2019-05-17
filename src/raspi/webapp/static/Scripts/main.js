@@ -95,13 +95,21 @@ function stopControlFlow() {
 function playSound(sound_nr) {
     xmlhttp = new XMLHttpRequest();
     xmlhttp.open('GET', '/sound/' + sound_nr, true);
-    xmlhttp.send();
+    try {
+        xmlhttp.send();
+    } catch(e) {
+        console.error("could not play sound:", e)
+    }
 }
 
 function sendSpeed(speed) {
     xmlhttp = new XMLHttpRequest();
     xmlhttp.open('GET', '/speed/' + speed, true);
-    xmlhttp.send();
+    try {
+        xmlhttp.send();
+    } catch(e) {
+        console.error("could not send speed:", e)
+    }
 }
 
 function moveStart() {
@@ -158,7 +166,11 @@ craneOnButton.onclick = () => {
     if(document.getElementById("crane").innerText === "0") {
         xmlhttp = new XMLHttpRequest();
         xmlhttp.open('GET', '/crane/1', true);
-        xmlhttp.send();
+        try {
+            xmlhttp.send();
+        } catch(e) {
+            console.error("could not move crane:", e);
+        }
 
         craneOnButton.disabled = true;
     }

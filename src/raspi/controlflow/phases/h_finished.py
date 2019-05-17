@@ -1,17 +1,21 @@
 import time
+from src.raspi.lib import log
+import src.raspi.config.config as cfg
 
 count = 0
 limit = 5
 
+logger = log.getLogger("SoulTrain.controlflow.phases.h_finished")
+
+time_waited = 0.0
+
 def method(middleware_data):
-    global count
-    if count < 0:
-        count = 0
+    global time_waited
+    time_waited = time_waited + 0.1
+    time.sleep(0.1)
 
-    if count < limit:
-        count = count + 1
-        time.sleep(0.5)
-        return "'" + str(count) + "' < '" + str(limit) + "'"
+    if time_waited < cfg.PHASE_DELAY:
+        return "delaying a bit...."
 
-    count = 0
+    logger.info("finished...")
     return ""

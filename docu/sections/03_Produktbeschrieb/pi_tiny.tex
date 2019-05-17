@@ -1,0 +1,82 @@
+\documentclass[../../main.tex]{subfiles}
+
+    \lstset{basicstyle=\small,
+      showstringspaces=false,
+      commentstyle=\color{black},
+      keywordstyle=\color{blue}
+    }
+
+    \graphicspath{{images/Interface/}{../../images/Interface/}}
+
+    \begin{document}
+    \subsection{Aufgabentrennung zwischen Pi und Tiny} \label{aufgabentrennung_pi_tiny}
+    Dieses Kapitel beschreibt die Aufgabentrennung zwischen der Systemsteuerung auf dem Raspberry Pi 3+ (im folgenden Pi genannt) und dem Mikrocontroller MK22FN512VLH12 auf dem Entwicklerboard TinyK22 (im folgenden Tiny genannt). Das Pi dient im System als Master. Damit fällt das Pi alle Entscheidungen. Das Tiny dient als Slave, es führt die Entscheidungen vom Pi aus und gibt Rückmeldung zum aktuellen Status und zu den Sensordaten.\\
+    Im System sind folgende Aufgaben für die jeweiligen Steuerungen vorgesehen:\\
+    \textbf{Pi:}
+    \begin{itemize}
+        \item Entscheidung Start gemäss Befehl vom Webinterface
+        \item Auswertung der Kameraaufnahmen
+            \subitem Entscheidung über bevorstehende Kurven
+            \subitem Entscheidungen gemäss erkannter Schilder
+        \item Entscheidung der Fahrgeschwindigkeit
+        \item Auswertung des Beschleunigungssensors
+        \item Versenden der Sensordaten an das Webinterface
+    \end{itemize}
+
+    \textbf{Tiny:}
+    \begin{itemize}
+        \item Ansteuerung / Regelung Antriebsmotor
+        \item Ansteuerung Schwenkermotor
+            \subitem inkl. Auswertung Position des Schwenkers bis vollständig eingefahren
+        \item Auslesen von Sensordaten
+            \subitem Objekterkennung Würfel
+            \subitem aktuelle Ist-Geschwindigkeit
+            \subitem bestimmung Schwenkerposition beim einfahren
+    \end{itemize}
+
+    Somit ist jedes System auf Informationen des anderen angewiesen. Deshalb ist eine klare Definition der Schnittstelle der beiden Komponenten nötig. Im folgenden Kapitel \ref{interface_pi_tiny} wird diese Interface genauer beschrieben.
+
+    \subsection{Interface zwischen Pi und Tiny} \label{interface_pi_tiny}
+    Dieses Kapitel beschreibt die Kommunikation zwischen der Systemsteuerung auf dem Raspberry Pi und dem Mikrocontroller MK22FN512VLH12 auf dem Entwicklerboard TinyK22. Dabei sollen Informationen zur aktuellen Situation, sowie auch Informationen zum aktuellen Status des jeweiligen Systems ausgetauscht werden.\\
+    Diese Kommunikation soll es den Systemen ermöglichen, die zugewiesenen Aufgaben gemäss Kapitel \ref{aufgabentrennung_pi_tiny} zu erfüllen.
+
+    \subsubsection{Hardware Schnittstelle}
+    Als Hardware Schnittstelle wird UART (auch RS-232 genannt) verwendet. Dies ist eine asynchrone serielle Schnittstelle. Die Kommunikation kann mit zwei Leitungen realisiert werden. Eine dient als Empfangsverbindung (Rx) und eine als Sendeverbindung (Tx). Diese Trennung erlaubt eine voll-duplexe Kommunikation.
+
+    \subsubsection{Übertragungsprotokoll}
+    Sobald ein System Information für das andere System hat werden Datenpakete (im folgenden Frame genannt) in einem fest vorgelegten Format ausgetauscht. Dabei gibt es ein Grundformat für die Informationen und Definitionen für Schlüsselwörter für eine identifikation der Daten.\\
+    Die Schlüsselwörter und die Bedeutung der zugehörigen Daten unterscheiden sich dabei für Frames vom Tiny zum Pi und für Frame vom Pi zum Tiny. Die Inhalte sind so ausgelegt, dass jedes System seine Aufgaben gemäss dem Kapitel \ref{aufgabentrennung_pi_tiny} erfüllen kann.
+
+    \textbf{Grundformat}\\
+    Die Frames bestehen jeweils aus einem Bezeichner (Key) und einem Wert (Value). Diese werden mit einem Komma getrennt. Als Abschluss dient das New Line Zeichen '\textbackslash n'. Somit sieht ein Informationsstück folgendermassen aus: $$\{Key\},\{Value\}\textbackslash n$$
+    Zum Beispiel würde eine Information zur Geschwindigkeit folgendermassen aussehen: $$speed,200$$
+    Die gesamten Informationen werden als Zeichenkette (String) im Ascii Format verschickt. Zahlenwerte werden jeweils vor dem Senden in einen String umgewandelt und nach dem Empfangen wieder in einen Zahlenwert zurückkonvertiert. Dies verbessert die Leserlichkeit, was zum Testen und Simulieren der Kommunikation sehr hilfreich sein kann.
+
+    \textbf{Frames Inhalte}\\
+    In Tabelle \ref{tab:frame_pi_tiny} sind die Schlüsselwörter (Key) und die zugehörigen möglichen Werte aufgeführt.\\
+
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{|l|p{5cm}|p{2cm}|p{2cm}|p{2cm}|} \hline
+        \textbf{Key (String)} & \textbf{Values}   & \textbf{Von}    & \textbf{Nach}      & \textbf{Interval} \\ \hline
+        speed        & int32 {[}mm/s{]}                  & Pi      & Tiny    & -        \\ \hline
+        crane        & Each int32: \newline 0 = nothing\newline 1 = retract crane     & Pi      & Tiny    & -        \\ \hline
+        is\_crane    & Each int32:\newline 0 = nothing\newline 1 = done retract crane      & Tiny    & Pi      & -        \\ \hline
+        phase        & Jeweils int32: \newline 0 = startup\newline 1 = find\_cube\newline 2 = grab\_cube\newline 3 = round\_one \newline 4 = round\_two \newline 5 = find\_stop \newline 6 = stopping\newline 7 = finished & Pi      & Tiny    & -        \\ \hline
+        is\_speed    & int32 {[}mm/s{]}                & Tiny    & Pi      & 50ms     \\ \hline
+        cube         & Each int32:\newline 0 = nothing\newline 1 = detected      & Tiny    & Pi      & -        \\ \hline
+        log          & String to log on Raspi                    & Tiny    & Pi      & -        \\ \hline
+        ack          & String of command. One of:\newline - speed\newline - crane\newline - is\_crane\newline - phase\newline - is\_speed\newline - cube\newline - log                                                                                                     & Tiny/Pi & Pi/Tiny & -       \\ \hline
+        \end{tabular}
+        \caption{Schlüsselwörter und mögliche Werte Kommunikation Pi $\Leftrightarrow$ Tiny}
+        \label{tab:frame_pi_tiny}
+        \end{table}
+
+        \textbf{Acknowledge (ack)}\\
+        Um eine zuverlässige Informationsübertragung zu garantieren bestätigen sich die Systeme jeweils den Empfangen eines Frames mit einer Acknowledge Nachricht. Der Inhalt dieser Nachricht ist der Schlüssel der Empfangen Nachricht. Bleibt also ein Acknowledge für zu lange zeit aus, kann das System davon ausgehe, dass das Frame gat nicht oder nicht korrekt angekommen ist.\\
+
+        \textbf{Periodische Frames}\\
+        Die Information über die akutelle Geschwindigkeit (is\_speed) wird alle 50ms vom Tiny zum Pi geschickt. Neben dem Austausch der Information dient dies auch als Lebenszeichen vom Tiny. Wenn das Tiny die aktuelle Geschwindigkeit nicht mehr schickt kann das Pi davon ausgehen, dass es ein Problem gibt und kann darauf reagieren indem z.B. der Benutzer über das Web-Interface informiert wird. Mit den Acknowledge Nachrichten auf die is\_speed Frames weiss auch das Tiny jeweils, dass das System auf dem Pi noch korrekt läuft. Bleibt ein Acknowledge auf ein is\_speed Frame zu lange aus kann das Tiny darauf reagieren indem es den Zug sicher zum Stillstand bringt bis das Pi wieder reagiert und neue Befehle schickt.\\
+        Alle anderen Frames werden nur nach bedarf verschickt, sobald neue Information verfügbar sind.
+
+    \end{document}

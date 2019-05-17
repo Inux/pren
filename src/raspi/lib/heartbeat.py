@@ -23,7 +23,7 @@ logger = log.getLogger('SoulTrain.lib.heartbeat')
 
 def send_heartbeat(socket, component, status):
     msg = get_heartbeat_msg(component, status)
-    logger.debug("Sending HeartBeat for '%s' with status '%s'", component, status)
+    logger.debug("sending HeartBeat for '%s' with status '%s'", component, status)
     socket.send(zmq_topics.HEARTBEAT_TOPIC + b' ' + msg)
 
 def get_heartbeat_msg(component, status):

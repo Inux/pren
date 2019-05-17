@@ -31,6 +31,12 @@ def send_hb():
 class Movement(base_app.App):
     def __init__(self, *args, **kwargs):
         super().__init__("Movement", self.movement_loop, *args, **kwargs)
+        self.data = {}
+        self.data['speed'] = 0 #mm/s
+        self.data['speed_tiny'] = 0 #mm/s
+        self.data['distance'] = 0.0 #mm
+        self.data['crane'] = 0 #mm
+        self.data['phase'] = '' #one of the phases of system_status.proto
 
         #We use fake acceleration and fake serial device when we don't run on raspi
         self.is_raspi = os.uname()[4].startswith("arm")
@@ -60,13 +66,6 @@ class Movement(base_app.App):
             resend=config.RESEND_TINY_MESSAGES)
         self.tiny.connect()
 
-        self.data = {}
-        self.data['speed'] = 0 #mm/s
-        self.data['speed_tiny'] = 0 #mm/s
-        self.data['distance'] = 0.0 #mm
-        self.data['crane'] = 0 #mm
-        self.data['phase'] = '' #one of the phases of system_status.proto
-
         self.run() #run movement loop
 
     def movement_loop(self, *args, **kwargs):
@@ -89,6 +88,11 @@ class Movement(base_app.App):
         if data_tmp['phase'] not in self.data['phase']:
             self.data['phase'] = data_tmp['phase']
             self.tiny.send_phase(self.data['phase'])
+
+            if (self.data['phase'] in config.PHASE_STARTUP or
+                    self.data['phase'] in config.PHASE_FINISHED):
+
+                self.data['distance'] = 0 # set distance to zero when startup or finished
 
     def on_new_speed(self, speed):
         self.data['speed_tiny'] = speed

@@ -120,7 +120,9 @@ def recv(socket, map_topic_callback):
     '''
     receive a middleware message
     '''
-    if socket.poll(timeout=0.05, flags=zmq.POLLIN) & zmq.POLLIN == zmq.POLLIN:
+    if (socket is not None and
+        socket.poll(timeout=0.05, flags=zmq.POLLIN) & zmq.POLLIN == zmq.POLLIN):
+
         topic_and_data = socket.recv()
         recv_topic = topic_and_data.split(b' ', 1)[0]
         dataraw = topic_and_data.split(b' ', 1)[1]
