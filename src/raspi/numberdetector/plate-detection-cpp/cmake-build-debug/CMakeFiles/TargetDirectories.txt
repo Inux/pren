@@ -1,3 +1,0 @@
-/home/patrick/Programming/pren/src/raspi/numberdetector/plate-detection-cpp/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/patrick/Programming/pren/src/raspi/numberdetector/plate-detection-cpp/cmake-build-debug/CMakeFiles/Main.dir
-/home/patrick/Programming/pren/src/raspi/numberdetector/plate-detection-cpp/cmake-build-debug/CMakeFiles/edit_cache.dir
