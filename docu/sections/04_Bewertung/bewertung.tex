@@ -1,6 +1,29 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-Vergleich zwischen Konzeptlösung und Funktionsmuster (Bewertung der Lösung) 
+%Vergleich zwischen Konzeptlösung und Funktionsmuster (Bewertung der Lösung) 
+Das Konzept aus PREN1 konnte in den meisten Punkten im PREN2 so wie geplant umgesetzt werden. Nötige Änderungen sind in diesem Kapitle beschrieben und begründet. Einige Sachen mussten angepasst werden, andere wurden aus Zeitgründen weggelassen. Die weggelassenen Teilkonzepte sind allerdings alle nicht zwingend notwendig um die Aufgebenstellung zu erfüllen.\\
+
+\subsection{Elektronik}
+In diesem Kapitel wird das Konzept für die Elektronik bewertet und allfällige Änderungen beschrieben.
+
+\subsubsection{Bewertung}
+Ausser den Änderungen, welche in Kapitel \ref{bewertung_et_aenderungen} beschrieben sind konnte das Konzept wie geplant umgesetzt werden. Die Teilkonzepte für die Aktoren und Sensoren konnten erfolgreich umgesetzt werden.
+
+\subsubsection{Änderungen} \label{bewertung_et_aenderungen}
+Weggelassen wurden die Strommessung und der Parksensor. Eine weitere Anpassung ist das Prinzip wie der Quadraturencoder für den Antrieb ausgewertet wird und daraus die Geschwindigkeit bestimmt wird. Auch wurde eine Änderung für den Quadraturencoder für den Schwenker durchgeführt, damit auch erkann wird wenn sich der Schwenker rückwärts dreht.\\
+Im Folgenden sind die Gründe dafür erläutert.\\
+
+\textbf{Strommessung}\\
+Die Strommessung ist auf der ersten Version des PCB nicht möglich, da ein Fehler bei der Pinbelegung des Operationsverstärkers ist. Dieser Fehler konnte aus Zeitgründen nicht mehr korrigiert werden und da die Information zum Strom nicht nötig ist um die Aufgabe zu erfüllen fiel der Entscheid dieses Teilkonzept ganz zu verwerfen.\\
+
+\textbf{Parksensor}\\
+Die Distanz zum Haltesignal kann direkt über die Auswertung der Kamera bestimmt werden. Dies reduziert den Hardwareaufwand für die Elektronik und Mechanik.\\
+
+\textbf{Quadraturencoder Antrieb}\\
+Das im PREN1 angedachte Konzept basierte darauf die Zeit zwischen zwei Impulsen zu messen und daraus die Geschwindigkeit zu bestimmen. Dies stellte sich in der Umsetzung jedoch als zu wenig zuverlässig heraus. Vorallem im Zusammenhang mit der Regelung (beschrieben in Kapitle \ref{et_sw_modul_drive}) wurde es mit der unzuverlässigen Auswertung des Encoders unmöglich eine konstante Geschwindigkeit zu halten. Daher wurde das Prinzip angepasst, dass die Impulse des Encoders über eine bestimmte Zeit gezählt werden und daraus die Geschwindigkeit bestimmt wird (siehe Kapitle \ref{et_sw_modul_drive}).\\
+
+\textbf{Quadraturencoder Schwenker}\\
+In den ersten Tests kam es vor, dass der Schwenker während des Einfahren wieder ein wenig rückwärts rutschte. Mit dem Angedachten Prinzip zum Zählen der Impulse an einem Kanal kann aber die Richtung nicht festgestellt werden und ein Impuls rückwärts wird gleich interpretiert wie ein Impuls vorwärts. Dies verfälscht die Bestimmung der Position und macht es unmöglich sicherzustellen, dass der Schwenker die richtige Position erreicht. Um zu erkennen in welche Richtung sich der Schwenker dreht wurde der zweite Kanal des Quadraturencoders auf einen Pin vom Mikrocontroller verbunden. Durch das Auslesen dieses Pins bei einer positiven Flanke am anderen Kanal kann die Drehrichtung bestimmt werden. (siehe Abbildung \ref{fig:et_encoder} auf Seite \pageref{fig:et_encoder}) Mit dieser Information kann also sichergestellt werden, dass der Schwenker weit genug dreht.\\ 
 
 \end{document}
