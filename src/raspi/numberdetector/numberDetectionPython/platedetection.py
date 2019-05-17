@@ -5,7 +5,7 @@ import time
 import pytesseract
 import queue
 import threading
-import src.raspi.numberdetector.numberDetectionPython.numberReco as NumberReco
+# import src.raspi.numberdetector.numberDetectionPython.numberReco as NumberReco
 
 
 def nothing(x):
@@ -15,7 +15,7 @@ def nothing(x):
 class PlateDetection:
 
     def __init__(self):
-        self.numberReco = NumberReco.NumberReco()
+        # self.numberReco = NumberReco.NumberReco()
         self.windowTrackbar = "trackbarWindow"
         self.windowWorkFrame = "workFrameWindow"
         self.windowOriginalFrame = "OriginalFrameWindow"
@@ -201,12 +201,13 @@ class PlateDetection:
             forcc = cv2.VideoWriter_fourcc(*'XVID')
             out = cv2.VideoWriter('output.avi', forcc, 20.0, (640, 480))
 
-        while(not startSignalFound):
+        while(True):
             ret, frame = cap.read()
             startSignalFound, thresholdFrame, origFrame = self.detectStartSignal(frame)
 
             if(window):
                 cv2.imshow(self.windowOriginalFrame, origFrame)
+                cv2.imshow(self.windowWorkFrame, thresholdFrame)
 
             if(save):
                 out.write(frame)
@@ -214,6 +215,8 @@ class PlateDetection:
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
 
+            time.sleep(0.05)
+            
     def tesseractWorker(self):
         while True:
             try:
@@ -233,15 +236,15 @@ class PlateDetection:
                 pass
 
 def main():
-    cap = cv2.VideoCapture('Z:/output_start.mp4')
+    cap = cv2.VideoCapture('Z:/output.avi')
     plateDetection = PlateDetection()
     time.sleep(2)
-    t = threading.Thread(target= plateDetection.kerasWorker)
-    t2 = threading.Thread(target= plateDetection.kerasWorker)
-    t.start()
-    t2.start()
+    # t = threading.Thread(target= plateDetection.kerasWorker)
+    # t2 = threading.Thread(target= plateDetection.kerasWorker)
+    # t.start()
+    # t2.start()
     # plateDetection.routineDetectStartSignal(cap, True, False, False)
-    plateDetection.routineDetectNumber(cap)
+    plateDetection.routineDetectStartSignal(cap, True, False, False)
     # plateDetection.changeFrame()
 
 

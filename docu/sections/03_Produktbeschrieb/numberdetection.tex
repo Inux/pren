@@ -108,6 +108,62 @@ Das Start- / Stop- Signal (im weiteren nur noch Startsignal genannt) befindet si
   \label{fig:startsignal}
 \end{wrapfigure}
 
-Um das Signal zu erkennen wird dafür das Bildverarbeitungsframework OpenCV verwendet. Das Startsignal verfügt mit den blauen Streifen über ein Alleinstellungsmerkmal. Dies wird für die Erkennung ausgenützt. Mittels HSV- Filter kann auf den genauen Farbraum gefiltert werden. So kann die Farbe Blau extrahiert werden. Als zweiter Schritt wird anschliessend Konturen erfasst und auf bestimmte Form und Grösse gefiltert. Da zwei blaue Streifen vorhanden sind, sollten jeweils zwei Treffer vorhanden sein. Wenn dies zutrifft wurde das Startsignal erkannt. Im Abbildung XX ist die Filterfunktion mit HSV- und Konturfilter ersichtlich.
+Um das Signal zu erkennen wird dafür das Bildverarbeitungsframework OpenCV verwendet. Das Startsignal verfügt mit den blauen Streifen über ein Alleinstellungsmerkmal. Dies wird für die Erkennung ausgenützt. Mittels \textbf{HSV- Filter} kann auf den genauen Farbraum gefiltert werden. So kann die Farbe Blau extrahiert werden. Als zweiter Schritt wird anschliessend Konturen erfasst und auf bestimmte Form und Grösse gefiltert. Da zwei blaue Streifen vorhanden sind, sollten jeweils zwei Treffer vorhanden sein. Wenn dies zutrifft wurde das Startsignal erkannt. Im Abbildung \ref{fig:codesnipped_startfilter} links ist die Filterfunktion mit HSV- und Konturfilter ersichtlich.
+
+\vspace{0.5cm}
+
+\begin{figure}[H] %Codesnipped Startsignalfilter
+  \centering
+  \includegraphics[width=0.7\textwidth]{codesnipped-filterStart.png}
+  \caption{Codesnipped: Filter Startsignal}
+  \label{fig:codesnipped_startfilter}
+\end{figure}
+
+\vspace{1cm}
+
+\begin{table}[H] % Tabelle mit Phasen
+  \begin{flushleft}
+      \begin{tabular}{ | p{3cm} | p{10.5cm} |}
+          \hline
+          \textbf{Filter}  & \textbf{Beschreibung} \\\hline
+          HSV          & Extraktion des blauen Farbraumes \\\hline
+          Konturen     & Auf Grösse und Form der Konturen filtern\\\hline
+      \end{tabular}
+  \end{flushleft}
+  \caption{Filter für Startsignalerkennung}
+  \label{tab:filter_startsignal}
+\end{table}
+
+\newpage
+
+\textbf{Tafelerkennung}\\
+Die Tafel kann in zwei Ausführungen vorkommen. Weisse Zahl mit schwarzem Hintergrund oder umgekehrt. Für das Erkennen der Tafel kommen andere Filter wie beim Startsignalerkennung zum Einsatz. Anstatt einem HSV- Filter kommt bei der Tafelerkennung eine kombination von drei Filtern zum Einsatz. Als erstes kommt ein \textbf{Blur- Filter} zum Einsatz. Dieser sorgt dafür, dass alle «harten» Kanten im Bild \textit{weichgezeichnet} werden und somit können störeinflüsse reduziert werden. Anschliessend kommt die kombination \textbf{Binary- / OTSU- Filter} zum Einsatz. Diese Kombination dient dazu das Bild in ein \textit{Binary-Picture} zu transformieren und somit die Konturen zu extrahieren. Dabei wird ähnlich wie beim Startsignal die Konturen auf Grösse und Form gefiltert. 
+
+\vspace{0.5cm}
+
+\begin{figure}[H] %Tafelerkennung
+  \centering
+  \includegraphics[width=0.4\textwidth]{tafel-weiss.png}
+  \includegraphics[width=0.4\textwidth]{tafel-schwarz.png}
+  \caption{Tafelerkennung}
+  \label{fig:tafelerkennung}
+\end{figure}
+
+\vspace{0.5cm}
+
+\textbf{Nummerkennung}\\
+Um nun die Nummer zu erkennen, wird ein Machine- Learning Framework eingesetzt. Erste Versuche im PREN 1 wurde mit der Bibliothek Keras und Backend Tensorflow durchgeführt. Für die Finale Version wurde aber auf die Software \textit{Tesseract OCR} von Google gesetzt, dies aus den Gründen der Effizienz. Tesseract OCR verfügt über einen Python Wrapper welcher einfach über den Packetinstaller \textit{pip} installiert werden kann. Tesseract selber kann einfach Mittels Sourcefiles kompiliert und installiert werden. In Abbildung ist ein Codesnipped für den TesseractWorker abgebildet. Ein grosser Vorteil von Tesseract OCR ist auch die Einfachheit. Nachdem die Konfigurationen gesetzt sind kann mittels einem Funktionsaufruf die erkannte Nummer zurückgegeben werden.
+
+\begin{figure}[H] %Tesseract Codesnipped
+  \centering
+  \includegraphics[width=0.8\textwidth]{codesnipped-tesseract.png}
+  \caption{Codesnipped Tesseract}
+  \label{fig:codesnipped_tesseract}
+\end{figure}
+
+\newpage
+
+\textbf{Worker- Ablauf}\\
+
 
 \end{document}
