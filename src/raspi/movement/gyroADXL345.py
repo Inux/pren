@@ -6,29 +6,57 @@
 
 import smbus2
 import time
+import sys
 
+from src.raspi.lib import log
+
+logger = log.getLogger("SoulTrain.movement.gyroADXL345")
+
+MAX_INIT_RETRY = 5
 
 class ADXL345:
 
     def __init__(self):
-        # Get I2C bus
-        self.bus = smbus2.SMBus(1)
-        # ADXL345 address, 0x53(83)
-        # Select bandwidth rate register, 0x2C(44)
-        #		0x0A(10)	Normal mode, Output data rate = 100 Hz
-        self.bus.write_byte_data(0x53, 0x2C, 0x0A)
-        # ADXL345 address, 0x53(83)
-        # Select power control register, 0x2D(45)
-        #		0x08(08)	Auto Sleep disable
-        self.bus.write_byte_data(0x53, 0x2D, 0x08)
-        # ADXL345 address, 0x53(83)
-        # Select data format register, 0x31(49)
-        #		0x08(08)	Self test disabled, 4-wire interface
-        #					Full resolution, Range = +/-2g
-        self.bus.write_byte_data(0x53, 0x31, 0x08)
-        time.sleep(0.5)
+        self.initialized = False
+        self.initcount = 0
+
+        self.init()
+
+    def init(self):
+        if self.initcount >= MAX_INIT_RETRY:
+            logger.error("max retries for initializing reached")
+            return
+
+        if not self.initialized:
+            try:
+                # Get I2C bus
+                self.bus = smbus2.SMBus(1)
+                # ADXL345 address, 0x53(83)
+                # Select bandwidth rate register, 0x2C(44)
+                #		0x0A(10)	Normal mode, Output data rate = 100 Hz
+                self.bus.write_byte_data(0x53, 0x2C, 0x0A)
+                # ADXL345 address, 0x53(83)
+                # Select power control register, 0x2D(45)
+                #		0x08(08)	Auto Sleep disable
+                self.bus.write_byte_data(0x53, 0x2D, 0x08)
+                # ADXL345 address, 0x53(83)
+                # Select data format register, 0x31(49)
+                #		0x08(08)	Self test disabled, 4-wire interface
+                #					Full resolution, Range = +/-2g
+                self.bus.write_byte_data(0x53, 0x31, 0x08)
+
+                time.sleep(0.5)
+
+                self.initialized = True
+            except Exception as e:
+                logger.error("exception while initializing: " + str(e))
 
     def read(self):
+        if not self.initialized:
+            #return unrealistic date if not initialized
+            self.init()
+            return -sys.maxsize, -sys.maxsize, -sys.maxsize
+
         # ADXL345 address, 0x53(83)
         # Read data back from 0x32(50), 2 bytes
         # X-Axis LSB, X-Axis MSB

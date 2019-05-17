@@ -1,19 +1,19 @@
-//Variables & Constants
-var updateInterval = 250; // 250ms
+//NOTE!: Load main.js first!
 
 //Helper for API get method
 function apiGet(callback) {
     var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function () {
-        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-            try {
-                var data = JSON.parse(xmlhttp.responseText);
-            } catch (err) {
-                console.log(err.message + " in " + xmlhttp.responseText);
-                return;
-            }
-            callback(data);
+    xmlhttp.onload = function(e) {
+        try {
+            var data = JSON.parse(xmlhttp.responseText);
+        } catch (err) {
+            console.log(err.message + " in " + xmlhttp.responseText);
+            return;
         }
+        callback(data);
+    };
+    xmlhttp.onerror= function(e) {
+        setToDefaultValues();
     };
     xmlhttp.open("GET", '/api', true);
     xmlhttp.send();
@@ -38,7 +38,7 @@ function updateLogic(data) {
     let craneOnButton = document.getElementById('craneOn');
     let craneResetButton = document.getElementById('craneReset');
 
-    if(crane_state !== data.crane) {
+    if(data != null && crane_state !== data.crane) {
         if(data.crane === "0") {
             craneOnButton.disabled = false;
             craneResetButton.disabled = true;
@@ -53,17 +53,17 @@ function updateLogic(data) {
 
 // Update SoulTrain data received from the backend
 function updateSoulTrainData(data) {
-    document.getElementById("state").innerText = data.state;
-    document.getElementById("stateMessage").innerText = data.stateMessage;
-    document.getElementById("speed").innerText = data.speed;
-    document.getElementById("distance").innerText = data.distance;
-    document.getElementById("xAcceleration").innerText = data.xAcceleration;
-    document.getElementById("yAcceleration").innerText = data.yAcceleration;
-    document.getElementById("zAcceleration").innerText = data.zAcceleration;
-    document.getElementById("direction").innerText = data.direction;
-    document.getElementById("number").innerText = data.number;
-    document.getElementById("cube").innerText = data.cube;
-    document.getElementById("crane").innerText = data.crane;
+    document.getElementById("phase").innerText = data == null ? "-" : data.phase;
+    document.getElementById("phaseMessage").innerText = data == null ? "-" : data.phaseMessage;
+    document.getElementById("speed").innerText = data == null ? "-" : data.speed;
+    document.getElementById("distance").innerText = data == null ? "-" : data.distance;
+    document.getElementById("xAcceleration").innerText = data == null ? "-" : data.xAcceleration;
+    document.getElementById("yAcceleration").innerText = data == null ? "-" : data.yAcceleration;
+    document.getElementById("zAcceleration").innerText = data == null ? "-" : data.zAcceleration;
+    document.getElementById("direction").innerText = data == null ? "-" : data.direction;
+    document.getElementById("number").innerText = data == null ? "-" : data.number;
+    document.getElementById("cube").innerText = data == null ? "-" : data.cube;
+    document.getElementById("crane").innerText = data == null ? "-" : data.crane;
 
     updateLogic(data);
 }
@@ -86,11 +86,17 @@ function updateHeartBeats(data) {
         }
     });
 
-    lineDetectorDiv.classList.add(data.heartBeatLineDetector);
-    numberDetectorDiv.classList.add(data.heartBeatNumberDetector);
-    movementDiv.classList.add(data.heartBeatMovement);
-    acousticDiv.classList.add(data.heartBeatAcoustic);
-    controlFlowDiv.classList.add(data.heartBeatControlFlow);
+    lineDetectorDiv.classList.add(data == null ? "error" : data.heartBeatLineDetector);
+    numberDetectorDiv.classList.add(data == null ? "error" : data.heartBeatNumberDetector);
+    movementDiv.classList.add(data == null ? "error" : data.heartBeatMovement);
+    acousticDiv.classList.add(data == null ? "error" : data.heartBeatAcoustic);
+    controlFlowDiv.classList.add(data == null ? "error" : data.heartBeatControlFlow);
+}
+
+// set to default values
+function setToDefaultValues() {
+    updateHeartBeats(null);
+    updateSoulTrainData(null);
 }
 
 // Starting interval (all 250ms)

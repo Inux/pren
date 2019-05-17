@@ -40,6 +40,17 @@ void piRegisterFrameLineHandler(tframeLineHandler *flh, unsigned char* topic,
  * sends a number for the given topic to the pi
  * if ackHandler is NULL -> no ack is expected
  */
+void piWriteNum32u(const char *topic, uint32_t value, tAckHandler* ackHandler)
+{
+  char str[sizeof("4294967295")];
+  McuUtility_Num32uToStr(str, sizeof(str), value);
+  piWriteString(topic, str, ackHandler);
+}
+
+/**
+ * sends a number for the given topic to the pi
+ * if ackHandler is NULL -> no ack is expected
+ */
 void piWriteNum32s(const char *topic, int32_t value, tAckHandler* ackHandler)
 {
   char str[sizeof("-2147483648")];

@@ -7,11 +7,12 @@ import time
 from datetime import timedelta
 
 from src.raspi.lib import base_app
+from src.raspi.config import config as cfg
 from src.raspi.lib import zmq_socket
 from src.raspi.lib import periodic_job
 from src.raspi.lib import heartbeat as hb
 
-socket = zmq_socket.make_socket()
+socket = zmq_socket.get_linedetector_sender()
 
 def send_hb():
     hb.send_heartbeat(socket, hb.COMPONENT_LINEDETECTOR, hb.STATUS_RUNNING)
@@ -20,7 +21,7 @@ class Linedetection(base_app.App):
     def __init__(self, *args, **kwargs):
         super().__init__("Linedetection", self.linedetection_loop, *args, **kwargs)
 
-        self.job = periodic_job.PeriodicJob(interval=timedelta(milliseconds=50), execute=send_hb)
+        self.job = periodic_job.PeriodicJob(interval=timedelta(milliseconds=cfg.HB_INTERVAL), execute=send_hb)
         self.job.start()
 
     def linedetection_loop(self, *args, **kwargs):

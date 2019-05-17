@@ -29,6 +29,7 @@ void piRegisterFrameLineHandler(tframeLineHandler *clh,
     unsigned char* cmd, unsigned char *cmdDesc, frameHandler h, tAckHandler *ackHandler);
 
 void piWriteNum32s(const char *topic, int32_t value, tAckHandler* ackHandler);
+void piWriteNum32u(const char *topic, uint32_t value, tAckHandler* ackHandler);
 void piWriteString(const char *topic, const char *str, tAckHandler* ackHandler);
 
 void piDoWork(void);

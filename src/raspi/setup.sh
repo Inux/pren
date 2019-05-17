@@ -9,12 +9,8 @@
 #       -curl -OL https://github.com/google/protobuf/releases/download/v3.3.0/$PROTOC_ZIP
 #       -sudo unzip -o $PROTOC_ZIP -d /usr/local bin/protoc
 #       -rm -f $PROTOC_ZIP
-#3. wifi hotspot -> https://github.com/billz/raspap-webgui
-#       - ssid: RaspiTeam28
-#       - ip: 10.3.141.1
-#       - usr: admin
-#       - pwd: team28team$$
-#4.
+#3. wifi hotspot (hostapd)-> https://www.elektronik-kompendium.de/sites/raspberry-pi/2002171.htm
+#4. sudo apt-get install -y i2c-tools
 #5.
 #6.
 

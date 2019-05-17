@@ -15,7 +15,6 @@ class AccelerationReader:
         self.call_back = onNewAcceleration
 
         self.job = periodic_job.PeriodicJob(POLL_TIME, execute=self.read_acceleration)
-        self.job.start()
 
     def start(self):
         self.job.start()
@@ -29,4 +28,4 @@ class AccelerationReader:
         :return:
         """
         x_axis, y_axis, z_axis = self.gyro.read()
-        self.call_back(POLL_TIME.microseconds, x_axis, y_axis, z_axis)
+        self.call_back(POLL_TIME.total_seconds(), x_axis, y_axis, z_axis)

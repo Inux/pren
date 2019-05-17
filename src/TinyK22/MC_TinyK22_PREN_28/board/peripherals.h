@@ -39,12 +39,21 @@ extern "C" {
 #define FTM_2_ENCODER_IRQ_PRIORITY 2
 /* FTM_2_Encoder interrupt handler identifier. */
 #define FTM_2_ENCODER_IRQHANDLER FTM2_IRQHandler
+/* Definition of peripheral ID */
+#define FTM_3_MS_COUTNER_PERIPHERAL FTM3
+/* Definition of the clock source frequency */
+#define FTM_3_MS_COUTNER_CLOCK_SOURCE CLOCK_GetFreq(kCLOCK_BusClk)
+/* FTM_3_MS_Coutner interrupt vector ID (number). */
+#define FTM_3_MS_COUTNER_IRQN FTM3_IRQn
+/* FTM_3_MS_Coutner interrupt handler identifier. */
+#define FTM3_MS_COUNTER_IRQHandler FTM3_IRQHandler
 
 /***********************************************************************************************************************
  * Global variables
  **********************************************************************************************************************/
 extern const ftm_config_t FTM_1_Motor_PWM_config;
 extern const ftm_config_t FTM_2_Encoder_config;
+extern const ftm_config_t FTM_3_MS_Coutner_config;
 
 /***********************************************************************************************************************
  * Initialization functions

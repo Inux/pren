@@ -1,0 +1,5 @@
+syntax = "proto3";
+
+message Cube {
+    int32 state = 1; //e.g 1 = cube detected, 0 = cube NOT detected
+}

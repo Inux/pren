@@ -31,6 +31,12 @@ def send_hb():
 class Movement(base_app.App):
     def __init__(self, *args, **kwargs):
         super().__init__("Movement", self.movement_loop, *args, **kwargs)
+        self.data = {}
+        self.data['speed'] = 0 #mm/s
+        self.data['speed_tiny'] = 0 #mm/s
+        self.data['distance'] = 0.0 #mm
+        self.data['crane'] = 0 #mm
+        self.data['phase'] = '' #one of the phases of system_status.proto
 
         #We use fake acceleration and fake serial device when we don't run on raspi
         self.is_raspi = os.uname()[4].startswith("arm")
@@ -41,22 +47,30 @@ class Movement(base_app.App):
             self.acc_reader = FakeAccelerationmeter(onNewAcceleration=self.acceleration_callback)
         self.acc_reader.start()
 
-        self.job = periodic_job.PeriodicJob(interval=timedelta(milliseconds=50), execute=send_hb)
+        self.job = periodic_job.PeriodicJob(interval=timedelta(milliseconds=config.HB_INTERVAL), execute=send_hb)
         self.job.start()
 
-        self.tiny = protocol.Protocol(config.MASTER_UART_INTERFACE_TINY, config.MASTER_UART_BAUD, onNewSpeed=self.on_new_speed, onNewCurrent=self.on_new_current,
-        real_device=self.is_raspi)
-        self.tiny.connect()
+        if self.is_raspi:
+            interface = config.MASTER_UART_INTERFACE_TINY
+            baud = config.MASTER_UART_BAUD
+        else:
+            interface = config.MASTER_UART_INTERFACE_PC
+            baud = config.MASTER_UART_BAUD
 
-        self.data = {}
-        self.data['speed'] = 0 #mm/s
-        self.data['distance'] = 0.0 #mm
-        self.data['crane'] = 0 #mm
+        self.tiny = protocol.Protocol(
+            interface,
+            baud,
+            onNewSpeed=self.on_new_speed, onNewCurrent=self.on_new_current,
+            onNewCubeState=self.on_new_cube_state,
+            onNewCraneState=self.on_new_crane_state,
+            resend=config.RESEND_TINY_MESSAGES)
+        self.tiny.connect()
 
         self.run() #run movement loop
 
     def movement_loop(self, *args, **kwargs):
         self.tiny.rcv_handler()
+        self.tiny.ack_handler()
 
         data_tmp = mw_adapter_movement.get_data()
 
@@ -64,24 +78,44 @@ class Movement(base_app.App):
         if self.data['speed'] != int(data_tmp['speed']):
             self.data['speed'] = int(data_tmp['speed'])
             self.tiny.send_speed(self.data['speed'])
+            mw_adapter_movement.send_ack(zmq_ack.ACK_RECV_MOVE_CMD, hb.COMPONENT_MOVEMENT)
 
         if self.data['crane'] != int(data_tmp['crane']):
             self.data['crane'] = int(data_tmp['crane'])
-            logger.info("sending crane command ack")
+            self.tiny.send_crane(self.data['crane'])
             mw_adapter_movement.send_ack(zmq_ack.ACK_RECV_CRANE_CMD, hb.COMPONENT_MOVEMENT)
 
+        if data_tmp['phase'] not in self.data['phase']:
+            self.data['phase'] = data_tmp['phase']
+            self.tiny.send_phase(self.data['phase'])
+
+            if (self.data['phase'] in config.PHASE_STARTUP or
+                    self.data['phase'] in config.PHASE_FINISHED):
+
+                self.data['distance'] = 0 # set distance to zero when startup or finished
+
     def on_new_speed(self, speed):
+        self.data['speed_tiny'] = speed
         mw_adapter_movement.send_speed(speed)
 
     def on_new_current(self, current):
         mw_adapter_movement.send_current(current)
 
-    def acceleration_callback(self, time_delta_us, acc_x, acc_y, acc_z):
-        # multiplying current speed with time offset to get distance for current section
-        section_distance = float(self.data['speed']) * (float(time_delta_us) / 1000000.0)
+    def on_new_cube_state(self, state):
+        mw_adapter_movement.send_cube_state(state)
+
+    def on_new_crane_state(self, state):
+        mw_adapter_movement.send_crane_state(state)
+
+    def acceleration_callback(self, time_delta_s, acc_x, acc_y, acc_z):
+        # multiplying current speed_tiny with time offset to get distance for current section
+        section_distance = float(self.data['speed_tiny']) * float(time_delta_s)
+        logger.info("time_delta_us: " + str(time_delta_s))
         # adding distance of measured section to overall distance
         self.data['distance'] = self.data['distance'] + section_distance
         mw_adapter_movement.send_distance(self.data['distance'])
+
+        logger.info("new distance: " + str(self.data['distance']) + ", speed: " + str(self.data['speed']))
 
         mw_adapter_movement.send_acceleration(acc_x, acc_y, acc_z)
 

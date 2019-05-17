@@ -3,7 +3,6 @@ from datetime import timedelta
 
 import src.raspi.lib.log as log
 from src.raspi.lib import periodic_job
-import src.raspi.movement.mw_adapter_movement as mwadapter
 
 logger = log.getLogger('SoulTrain.movement.fakeacceleration')
 
@@ -25,7 +24,7 @@ class FakeAccelerationmeter:
         #x_axis, y_axis, z_axis = gyro.read()
         x_axis, y_axis, z_axis = self.mock_gyro()
         logger.debug("Acceleration x: %d, y: %d, z: %d", x_axis, y_axis, z_axis)
-        self.call_back(POLL_TIME.microseconds, x_axis, y_axis, z_axis)
+        self.call_back(POLL_TIME.total_seconds(), x_axis, y_axis, z_axis)
 
     def mock_gyro(self):
         fak = random.random()
