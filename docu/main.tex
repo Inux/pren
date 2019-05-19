@@ -23,6 +23,7 @@
 \usepackage[ddmmyyyy]{datetime}
 \usepackage{pdfpages}
 \usepackage{wrapfig}
+\usepackage{pdflscape}
 \renewcommand{\dateseparator}{.}
 
 \lstset{basicstyle=\small,
@@ -104,8 +105,10 @@
     \subfile{sections/03_Produktbeschrieb/akustik.tex}
     \subfile{sections/03_Produktbeschrieb/webApp.tex}
     \clearpage
+    \subfile{sections/03_Produktbeschrieb/numberdetection.tex}
+    \clearpage
 
-    \section{Bewertung}
+    \section{Bewertung} \label{main_bewertung}
     \subfile{sections/04_Bewertung/bewertung.tex}
     \clearpage
 

@@ -26,4 +26,9 @@ Das im PREN1 angedachte Konzept basierte darauf die Zeit zwischen zwei Impulsen 
 \textbf{Quadraturencoder Schwenker}\\
 In den ersten Tests kam es vor, dass der Schwenker während des Einfahren wieder ein wenig rückwärts rutschte. Mit dem Angedachten Prinzip zum Zählen der Impulse an einem Kanal kann aber die Richtung nicht festgestellt werden und ein Impuls rückwärts wird gleich interpretiert wie ein Impuls vorwärts. Dies verfälscht die Bestimmung der Position und macht es unmöglich sicherzustellen, dass der Schwenker die richtige Position erreicht. Um zu erkennen in welche Richtung sich der Schwenker dreht wurde der zweite Kanal des Quadraturencoders auf einen Pin vom Mikrocontroller verbunden. Durch das Auslesen dieses Pins bei einer positiven Flanke am anderen Kanal kann die Drehrichtung bestimmt werden. (siehe Abbildung \ref{fig:et_encoder} auf Seite \pageref{fig:et_encoder}) Mit dieser Information kann also sichergestellt werden, dass der Schwenker weit genug dreht.\\ 
 
+\subsection{Informatik}
+
+\textbf{Tafel- \& Nummererkennung}\\
+Das im PREN 1 erstellte Konzept im Bereich der Tafel- \& Nummererkennung musste während PREN 2 im Bereich der Hardware sowie im Bereich der Software Anpassungen vorgenommen werden. Wie im Kapitel \ref{numberdetection} beschrieben, musste im Bereich der Hardware auf einen rechenstärkeren Raspberry PI 3 A+ gewechselt werden. Dank der Budgetreserve und der minimalen Hardwareanpassung konnte dies ohne Probleme vorgenommen werden. Im Bereich der Software wurde bei der Nummererkennung auf die Software Teseract OCR gewechselt. Dies aus den Gründen der Einfachheit und der Effizienz. 
+
 \end{document}
