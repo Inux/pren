@@ -1,8 +1,0 @@
-syntax = "proto2";
-
-package plateReco;
-
-message plateReco{
-    required string message = 1;
-}
-
