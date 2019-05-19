@@ -164,6 +164,67 @@ Um nun die Nummer zu erkennen, wird ein Machine- Learning Framework eingesetzt. 
 \newpage
 
 \textbf{Worker- Ablauf}\\
+Ein grosser Vorteil bei der gewählten Architektur mit zwei Raspberry PIs ist die verfügbare Rechenleistung für die Bildverarbeitung. Dieser Vorteil wird auch in der Architektur der Applikation genutzt. Wie in der Abbildung \ref{fig:worker-ablauf} ersichtlich werden die verschiedenen Funktionen parallel in mehreren Threads abgearbeitet. Somit erhält jeder Worker einen eigenen Thread und kann somit unabhängig voneinander arbeiten. \\
 
+\begin{table}[H] % Tabelle mit Workern
+  \begin{flushleft}
+      \begin{tabular}{ | p{4cm} | p{10cm} |}
+          \hline
+          \textbf{Worker}  & \textbf{Beschreibung} \\\hline
+          Camera- Worker          & Mittels Kamera wird ein Videostream in die beiden Worker- Queue «Startsignal- Queue» und «Tafel- Queue» aufgenommen. \\\hline
+          Startsignal- Worker     & Nimmt Frame für Frame aus der «Startsignal- Queue» und versucht wie oben beschrieben das Startsignal zu erkenne.\\\hline
+          Tafel- Worker & Nimmt Frame für Frame aus der «Tafel- Queue» und versucht wie oben beschrieben die Tafel (klein / gross) zu erkennen. Wenn ein Treffer erzielt wurde wird das gefilterte Frame in die «Number- Queue» verschoben.\\\hline
+          Numberdetection- Worker & Nimmt Frame für Frame aus der «Number- Queue» und versucht wie oben beschreiben die Nummer zu erkennen. \\\hline
+          StateMachine- Worker & Dieser Worker beinhaltet die Ablaufsteuerung und somit die State- Machine.\\\hline  
+      \end{tabular}
+  \end{flushleft}
+  \caption{Worker Beschreibung}
+  \label{tab:worker_beschreibung}
+\end{table}
+
+
+\begin{figure}[H] %Worker- Ablauf
+  \centering
+  \includegraphics[width=1\textwidth]{worker-ablauf.png}
+  \caption{Architektur: Worker- Ablauf}
+  \label{fig:worker-ablauf}
+\end{figure}
+ 
+\subsubsection{Testing}
+Wie am Anfang des Kapitels erwähnt, beschränkt sich die definierte Anforderung vom PREN 1 auf die Erfüllung der Funktionalität und das Erreichen einer Minimalgeschwindigkeit von 0.5 m/s. Daraus ergibt sich für das Testing folgende Prioritäten:
+\begin{itemize}
+  \item 1. Prio: Erfüllung der Funktionalität
+  \item 2. Prio: Zuverlässigkeit erhöhen
+  \item 3. Prio: Geschwindigkeit erhöhen
+\end{itemize}
+
+Aus diesen Prioritäten wurde ein Testplan \ref{tab:testplan} erstellt. Dieser beinhaltet verschiedene Testcases und der Grad der Erfüllung wurde dabei dokumentiert. Da dirket mit der physischen Umgebung (Kamera) getestet werden muss, konnten nur beschränkt automatisierte Tests durchgeführt werden. Die im Testplan erstellten erfassten Testcases sind alle manuelle Tests. Automatisierte Tests wurden mittels einzelnen Bildern realisiert.
+
+\newpage
+
+\begin{landscape}
+\begin{table}[H] % Testplan
+  \begin{flushleft}
+      \begin{tabular}{|l|p{6cm}|p{11cm}|l|}
+          \hline
+          \textbf{TestNr.} & \textbf{Testcase}                            & \textbf{Beschreibung}                       & \textbf{Erfüllt}\\\hline
+          1                & Funktionsüberprüfung Tafelerkennung statisch & Die Funktion der Tafelerkennung wird statisch überprüft und diese funktioniert einwandfrei (100 \% Trefferwahrscheinlichkeit) & Erfüllt \\\hline
+          2 & Funktionsüberprüfung Nummererkennung mit statischer Tafelerkennung & Die Funktion der Nummererkennung wird überprüft (mittels statischer Tafelerkennung) und diese funktioniert einwandfrei (100 \% Trefferwahrscheinlichkeit) & Erfüllt \\\hline
+          3 & Funktionsüberprüfung Startsignal statisch & Die Funktion Startsignalerkennung wird statisch überprüft und diese funktioniert einwandfrei (100 \% Trefferwahrscheinlichkeit) & Erfüllt \\\hline
+          4 & Funktionsüberprüfung Tafelerkennung dynamisch langsam & Die Funktion der Tafelerkennung wird dynamisch mit einer Geschwindigkeit von v = 0.1 m/s  überprüft und diese funktionert einwandfrei (100 \% Trefferwahrscheinlichkeit) & Erfüllt \\\hline
+          5 & Funktionsüberprüfung Nummererkennung mit dynamischer Tafelerkennung langsam & Die Funktion der Nummererkennung wird überprüft (mittels dynamischer Tafelerekennung langsam) und diese funktioniert einwandfrei (100 \% Trefferwahrscheinlichkeit) & Nicht erfüllt (80 \%) \\\hline
+          6 & Funktionsüberprüfung Startsingal dynamisch langsam & Die Funktion Startsignalerkennung wird dynamsich mit einer Geschwindigkeit von v = 0.1 m/s überprüft und diese funktioniert einwandfrei (100 \% Trefferwahrscheinlichkeit) & Erfüllt \\\hline
+          7 & Funktionsüberprüfung Tafelerkennung dynamisch schnell & Die Funktion der Tafelerkennung wird dynamisch mit einer Geschwindigkeit von v = 0.7 m/s  überprüft und diese funktionert einwandfrei (100 \% Trefferwahrscheinlichkeit) & Nicht erfüllt (70 \%) \\\hline
+          8 & Funktionsüberprüfung Nummererkennung mit dynamischer Tafelerkennung schnell & Die Funktion der Nummererkennung wird überprüft (mittels dynamischer Tafelerekennung schnell) und diese funktioniert einwandfrei (100 \% Trefferwahrscheinlichkeit) & Nicht erfüllt (70 \%) \\\hline
+          9 & Funktionsüberprüfung Startsingal dynamisch schnell & Die Funktion Startsignalerkennung wird dynamsich mit einer Geschwindigkeit von v = 0.7 m/s überprüft und diese funktioniert einwandfrei (100 \% Trefferwahrscheinlichkeit) & Erfüllt \\\hline
+          10 & Funktionsüberprüfung Ablauf (State- Machine) & Der Ablauf (State- Machine) funktioniert bei allen Geschwindigkeiten und lässt kein Fehlverhalten beim Ablauf zu. & Erfüllt \\\hline
+      \end{tabular}
+  \end{flushleft}
+  \caption{Testplanbeschreibung}
+  \label{tab:testplan}
+\end{table}
+
+\end{landscape}
+\newpage
 
 \end{document}
