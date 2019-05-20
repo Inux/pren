@@ -6,10 +6,10 @@
 *.out
 *.synctex.gz
 *.synctex(busy)
-*.pdf
 *.toc
 *.tks
 *.bbl
 *.blg
 *.lof
 *.lot
+*.pdf
