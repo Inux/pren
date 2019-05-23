@@ -30,12 +30,12 @@ Inhalt dieser Anleitung setzt einen voll Funktionsfähigen Soultrain voraus. Ras
 \textbf{Stromquelle}
 Der Raspberry Pi 3 B+ besitzt keine eigene Stromquelle und muss somit über eine externe Quelle gespeist werden. Hierführ kennen wir 3 Möglichkeiten:
 \begin{itemize}
-    \item Anschluss der Schleifkontakte an einen Wandler(Andi pls help)
-    \item Aufgeleisung des Zuges auf eine gespeiste Schiene (siehe Bedienungsanleitung MT)
+    \item Anschluss der Schleifkontakte an einen Power Supply
+    \item Aufgleisung des Zuges auf eine gespeiste Schiene (siehe Bedienungsanleitung MT)
     \item Den Raspi über Micro USB speisen. Hierbei kann der Zug nicht betrieben werden, sondern nur der Raspi.
 \end{itemize}
 
-\textbf{Verbindung}
+\textbf{Verbindung}\\
 Ist die Stromversorgung zum Raspi gewährleistet kann man auf diesen über eine SSH Verbindung zugreifen. Hierführ erstellen wir einen WLAN Hotspot.
 \begin{itemize}
     \item Netzwerk und Interneteinstellungen öffnen
@@ -80,14 +80,14 @@ Wenn wir alles richtig gemacht haben sollte nun folgendes Fenster erscheinen:
     \item password = 'team28'
 \end{itemize}
 
-\paragraph{Raspberry Pi}
+\textbf{Raspberry Pi}\\
 Von unserem Home Verzeichnis navigieren wir weiter zum Code: \\
 \begin{lstlisting}
     cd Actual Path
 \end{lstlisting}
 Von hier aus haben wir verschiedene Möglichkeiten die Applikation zu starten. \\
 
-\textbf{Applikation}
+\textbf{Applikation}\\
 Die Applikation besteht aus mehreren Modulen, welche miteinander kommunizieren. Jede dieser Module kann eigenständig ein- und ausgeschaltet werden. Zum Beispiel können wir das 'Akustik' Modul folgendermassen starten: \\
 \begin{lstlisting}
     python3 /acoustic/sound.py
@@ -99,7 +99,7 @@ Für ein funktionierendes Zusammenspiel der jeweiligen Module, benötigen wir je
 \end{lstlisting}
 Das Skript startet zudem einen WebServer, über welchen wir die Applikation bedienen können. \\
 
-\textbf{Web Server}
+\textbf{Web Server}\\
 Der WebServer wird auf dem Port :2828 gestartet und kann jederzeit über die IP-Adresse des Raspi aufgerufen werden.
 \begin{itemize}
     \item Browser starten (Firofox, Chrome, IE o.Ä)
@@ -121,7 +121,7 @@ Der Web Client ist in 3 Teilbereiche aufgeteilt.
     \item Start
 \end{itemize}
 Zwischen den beiden Bereichen 'Simulation' und 'Start' kann über die Checkbox "Simulation Mode" in der "Übersicht" gewechselt werden.
-\textbf{Übersicht}
+\textbf{Übersicht}\\
 \begin{figure}[H] \centering
     \includegraphics[width=0.75\textwidth]{UebersichtWebApp}
     \caption{Übersicht}
@@ -171,7 +171,7 @@ Folgende Module werden überwacht:
     \end{tabular}
 \end{table}
 
-\textbf{Simulation}
+\textbf{Simulation}\\
 \begin{figure}[H] \centering
     \includegraphics[width=0.5\textwidth]{SimulationWebApp}
     \caption{WebApp}
@@ -186,7 +186,7 @@ Folgende Module werden überwacht:
     Crane & Die Kranbewegung starten\\ \hline
     \end{tabular}
 \end{table}
-\textbf{Start}
+\textbf{Start}\\
 \begin{figure}[H] \centering
     \includegraphics[width=0.5\textwidth]{StartWebApp}
     \caption{Start}
