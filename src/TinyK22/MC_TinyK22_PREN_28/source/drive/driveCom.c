@@ -90,8 +90,6 @@ void driveComAckTimeoutHandler(void)
  {
    //driveSetSpeed(0); todo add this back in
    LOG_CRITICAL("no speed ack afer 500ms. stop the train");
-   //todo maybe set nbrOfRetries to zero to reduce panic
-   //todo maybe reset only in test mode
    isSpeedAckH.nbrOfRetries=0;
 
  }

@@ -26,7 +26,7 @@
 #define ACK_TOPIC       "ack"
 
 #define USE_DEBUG_UART      0
-#define SEND_IS_SPEED       0
+#define SEND_IS_SPEED       1
 
 #define DEBUG_UART          UART1
 #define PI_UART             UART0
