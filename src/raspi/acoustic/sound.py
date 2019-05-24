@@ -29,15 +29,16 @@ class Buzzer(base_app.App):
     def acoustic_loop(self, *args, **kwargs):
 
         data_tmp = mw_adapter.get_data()
-        print('received data:' + str(data_tmp))
+        logger.debug('received data:' + str(data_tmp))
 
         # only send data if the change
         if self.data['number'] != int(data_tmp['number']):
             self.data['number'] = int(data_tmp['number'])
+            logger.info("playing sound number: " + str(self.data['number']))
             self.buzz(self.data['number'])
 
     def buzz(self, number):
-        for x in range(0, number):
+        for x in range(0, int(number)):
             passiv_buzzer.play_number(number)
 
 if __name__ == '__main__':
