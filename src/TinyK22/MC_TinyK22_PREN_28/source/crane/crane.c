@@ -17,6 +17,7 @@
 #include "crane.h"
 #include "quad.h"
 #include <stdbool.h>
+#include "cubeDetection.h"
 
 #define MOTOR_S_MAX_VALUE   (100000/2)
 
@@ -25,7 +26,6 @@
 #define TICKS_TO_DRIVE      (5435+50)
                             //(TICK_PER_REV*ANGLE_TO_DRIVE/360)
 
-/* 5 sec */
 #define TIMEOUT_VALUE       (10000/25)
 
 static tAckHandler isCraneAckHandler;
@@ -150,9 +150,9 @@ void craneDoWork(void)
 
     motor_S_UpdatePwmDutyCycle(val);
 
-//#if TEST
+#if TEST
     piWriteNum32s("motor_S_SetValue", val, NULL); //todo clean
-//#endif
+#endif
   }
   else
   {
@@ -171,10 +171,15 @@ tError craneFrameLineHandler(const unsigned char *value)
     targetPos = TICKS_TO_DRIVE;
     craneRetracting = true;
   }
-  else if (iVal == 42 && !craneRetracting && craneDoneRetracted)
+  else if (iVal == 42)
   {
-    craneDoneRetracted = false;
-    timeoutCounter = 0;
+    cubeReset();
+
+    if (!craneRetracting && craneDoneRetracted)
+    {
+      craneDoneRetracted = false;
+      timeoutCounter = 0;
+    }
   }
 
   ackSend(&craneAckHandler);

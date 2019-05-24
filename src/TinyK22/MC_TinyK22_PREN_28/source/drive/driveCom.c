@@ -89,7 +89,7 @@ void driveComAckTimeoutHandler(void)
  else
  {
    //driveSetSpeed(0); todo add this back in
-   LOG_CRITICAL("no speed ack afer 500ms. stop the train");
+   LOG_CRITICAL("no speed ack afer 500ms. Tiny is lonely and in panic.");
    isSpeedAckH.nbrOfRetries=0;
 
  }

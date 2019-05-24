@@ -146,6 +146,13 @@ tError cubeFrameHander (const unsigned char *value)
   ackSend(&cubeAckHandler);
 }
 
+
+void cubeReset(void)
+{
+  cubeFrameHander("42");
+}
+
+
 /**
  * Initializes the cube module and the i2c necessary for it.
  */

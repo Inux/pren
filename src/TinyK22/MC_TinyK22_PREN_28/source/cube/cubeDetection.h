@@ -13,5 +13,7 @@ void cube_Init(void);
 
 void cubeDoWork(void);
 
+void cubeReset(void);
+
 
 #endif /* CRANE_CUBEDETECTION_H_ */
