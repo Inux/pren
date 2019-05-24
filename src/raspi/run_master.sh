@@ -14,8 +14,8 @@ killall() {
 }
 
 #acoustic
-#echo "...Acoustic..."
-#python3 acoustic/sound.py &
+echo "...Acoustic..."
+python3 acoustic/sound.py &
 
 #linedetector
 echo "...LineDetector..."
