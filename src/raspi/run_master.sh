@@ -1,6 +1,8 @@
 #Run Raspi Applications
 echo "Starting Raspi Applications..."
 
+rm SoulTrain.log || true #delete log
+
 trap 'killall' INT
 
 killall() {

@@ -161,16 +161,15 @@ class Protocol():
         rcv_msg=""
         rcv_key=""
         try:
-            self.log.info("parsing line: '" + line + "'")
+            self.log.debug("parsing line: '" + line + "'")
 
             key_value = line.split(',')
             if len(key_value) >= 2:
                 rcv_msg = key_value[0].strip(' \t\n\r ')
                 rcv_val = key_value[1].strip(' \t\n\r ')
 
-                self.log.info("parsed line with msg: '%s', val: '%s'", str(rcv_msg), str(rcv_val))
                 if rcv_msg in self.recv_map.keys():
-                    self.log.info("execute method of msg: '%s'", str(rcv_msg))
+                    self.log.info("parsed line with msg: '%s', val: '%s'", str(rcv_msg), str(rcv_val))
                     self.recv_map[rcv_msg](rcv_val) #call specific recv handler
 
         except KeyError as e:
@@ -204,7 +203,7 @@ class Protocol():
 
     def __set_recv_log(self, val):
         self.logTiny.info(val) #log tiny log messages
-        self.send_ack(Message.LOG.value)
+        #self.send_ack(Message.LOG.value)
 
     def __set_recv_ack(self, val):
         if val in self.ack_map.keys():
