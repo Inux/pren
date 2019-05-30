@@ -82,6 +82,7 @@ def get_numberdetector_reader():
     __nr.setsockopt(zmq.SUBSCRIBE, zmq_topics.HEARTBEAT_TOPIC)
     __nr.setsockopt(zmq.SUBSCRIBE, zmq_topics.NUMBER_DETECTOR_TOPIC)
     __nr.setsockopt(zmq.SUBSCRIBE, zmq_topics.ACKNOWLEDGE_TOPIC)
+    __nr.setsockopt(zmq.SUBSCRIBE, zmq_topics.ROUND)
     return __nr
 
 
