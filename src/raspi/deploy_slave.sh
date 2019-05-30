@@ -1,6 +1,6 @@
 #Deploy
 #
-IP="raspberrypi" #IP Raspi
+IP="192.168.1.107" #IP Raspi
 USR="pi"
 PWD='raspberry'
 

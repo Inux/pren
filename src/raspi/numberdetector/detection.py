@@ -2,7 +2,7 @@
 import cv2
 import numpy as np
 import queue
-import pytesseract
+#import pytesseract
 from src.raspi.numberdetector.numberDetectionPython.camera import Window
 
 
@@ -149,7 +149,7 @@ class Detection():
             try:
                 frame = self.ImageQueue.get()
                 config = ('-l eng --oem 1 --psm 3')
-                print(pytesseract.image_to_string(frame, config=config))
+                #print(pytesseract.image_to_string(frame, config=config))
             except:
                 pass
     
