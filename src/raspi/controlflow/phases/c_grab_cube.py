@@ -13,7 +13,7 @@ def method(middleware_data):
     global crane_sent
     global time_waited
 
-    if 'crane' in middleware_data.keys() and int(middleware_data['crane']) == 1 and int(time_waited) >= cfg.CRANE_WAIT_TIME:
+    if 'crane' in middleware_data.keys() and int(middleware_data['crane']) == 1: #and int(time_waited) >= cfg.CRANE_WAIT_TIME:
         crane_sent = False
         time_waited = 0
         mw.send_crane_cmd(0)

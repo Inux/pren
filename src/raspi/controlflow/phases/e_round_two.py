@@ -10,7 +10,7 @@ def method(middleware_data):
     global actual_distance
     actual_distance = middleware_data['distance']
 
-    if actual_distance >= (cfg.DISTANCE_ROUND_MM*2):
+    if actual_distance >= cfg.DISTANCE_ROUND_TWO:
         logger.info("reached end of round two")
         return "" #success we finished second round
 

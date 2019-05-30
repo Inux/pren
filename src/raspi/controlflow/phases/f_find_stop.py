@@ -10,7 +10,7 @@ def method(middleware_data):
     global actual_distance
     actual_distance = middleware_data['distance']
 
-    if actual_distance >= ((cfg.DISTANCE_ROUND_MM*2) + cfg.DISTANCE_STOP_MAX):
+    if actual_distance >= cfg.DISTANCE_UNTIL_STOP:
         mw.send_move_cmd(0)
         logger.error("reached end but not at correct stop...")
         return ""

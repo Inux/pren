@@ -1,6 +1,8 @@
 #Run Raspi Applications
 echo "Starting Raspi Applications..."
 
+rm SoulTrain.log || true #delete log
+
 trap 'killall' INT
 
 killall() {
@@ -12,8 +14,8 @@ killall() {
 }
 
 #acoustic
-#echo "...Acoustic..."
-#python3 acoustic/sound.py &
+echo "...Acoustic..."
+python3 acoustic/sound.py &
 
 #linedetector
 echo "...LineDetector..."

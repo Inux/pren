@@ -6,6 +6,9 @@ let simulationIntervalID;
 const COMMAND_START = 'start';
 const COMMAND_STOP = 'stop';
 
+const SIMULATION_MODE = 1;
+const CONTROLFLOW_MODE = 0;
+
 /* Main functions ----------------------------- */
 
 // Initialization
@@ -31,6 +34,8 @@ function enableSimulation() {
     //Enable Simulation View
     var simulation = document.getElementById('simulation');
     simulation.style.display = 'block';
+
+    sendMode(SIMULATION_MODE);
 }
 
 // Enable controlflow, disable simulation mode
@@ -46,6 +51,8 @@ function enableControlFlow() {
     //Enable ControlFlow View
     var controlFlow = document.getElementById('controlFlow');
     controlFlow.style.display = 'block';
+
+    sendMode(CONTROLFLOW_MODE);
 }
 
 function getControlFlowData(command) {
@@ -90,6 +97,33 @@ function stopControlFlow() {
 
 
 /* Simulation commands ------------------------ */
+function sendMode(mode) {
+    /* Mode 1: Simulation
+       Mode 2: ControlFlow
+    */
+    if(mode !== 0 && mode !== 1)
+    {
+        return // no valid mode
+    }
+
+    xmlhttp = new XMLHttpRequest();
+    xmlhttp.open('GET', '/mode/' + mode, true);
+    try {
+        xmlhttp.send();
+    } catch(e) {
+        console.error("could not send mode....", e)
+    }
+}
+
+function resetTiny() {
+    xmlhttp = new XMLHttpRequest();
+    xmlhttp.open('GET', '/resettiny', true);
+    try {
+        xmlhttp.send();
+    } catch(e) {
+        console.error("could not reset tiny....", e)
+    }
+}
 
 // Plays the number pressed as sound (e.g. for #1 it plays "Number one") wow
 function playSound(sound_nr) {

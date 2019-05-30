@@ -1,11 +1,8 @@
 from datetime import timedelta
 
 from src.raspi.movement.gyroADXL345 import ADXL345
-import src.raspi.lib.log as log
 from src.raspi.lib import periodic_job
-import src.raspi.movement.mw_adapter_movement as mwadapter
 
-logger = log.getLogger('SoulTrain.movement.accelerometer')
 
 POLL_TIME = timedelta(milliseconds=50)
 
