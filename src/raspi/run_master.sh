@@ -25,12 +25,6 @@ python3 linedetector/fakelinedetector.py &
 echo "...Movement..."
 python3 movement/movement.py &
 
-# numberdetector
-
-#echo "...NumberDetector..."
-#python numberdetector/numberDetectionPython/numberDetection.py &
-
-
 #controlflow
 echo "...ControlFlow..."
 python3 controlflow/controlflow.py &
