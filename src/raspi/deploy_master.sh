@@ -24,8 +24,7 @@ sshpass -p $PWD scp -r numberdetector $USR@$IP:~/team28/src/raspi
 sshpass -p $PWD scp -r pb $USR@$IP:~/team28/src/raspi
 sshpass -p $PWD scp -r webapp $USR@$IP:~/team28/src/raspi
 sshpass -p $PWD scp __init__.py $USR@$IP:~/team28/src/raspi
-sshpass -p $PWD scp build.sh $USR@$IP:~/team28/src/raspi
-sshpass -p $PWD scp kill.sh $USR@$IP:~/team28/src/raspi
 sshpass -p $PWD scp requirements.txt $USR@$IP:~/team28/src/raspi
-sshpass -p $PWD scp run_master.sh $USR@$IP:~/team28/src/raspi
 sshpass -p $PWD scp setup.sh $USR@$IP:~/team28/src/raspi
+
+sshpass -p $PWD scp run_master.sh $USR@$IP:~/team28/src/raspi
