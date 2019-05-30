@@ -3,7 +3,7 @@ Configuration of the Raspberry
 '''
 
 # IP/Hostname of Raspberry Slave
-RASPI_SLAVE_IP = "raspberrypi"
+RASPI_SLAVE_IP = "192.168.1.107"
 
 # Controlflow Parameters
 
