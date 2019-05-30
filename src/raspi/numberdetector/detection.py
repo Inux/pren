@@ -3,15 +3,19 @@ import cv2
 import numpy as np
 import queue
 import pytesseract
+from src.raspi.numberdetector.numberDetectionPython.camera import Window
 
 
 class Detection():
 
-    def __init__(self, imageQueueStartSignal, imageQueueNumberDetector):
+    def __init__(self, cam):
         self.subscribers = set()
-        self.imageQueueStartSignal = imageQueueStartSignal
-        self.imageQueuePlateDetector = imageQueueNumberDetector
+        self.cam = cam
+        self.imageQueueStartSignal = self.cam.imageQueueStartSignal
+        self.imageQueuePlateDetector = self.cam.imageQueueNumberDetector
         self.imageQueueNumberDetector = queue.Queue()
+        self.win = Window()
+        self.win.createTrackbar()
 
     def filterAndMorphOPNumber2(self, frame, threashold, kernel, iterator):
         x, y, w, h = 50, 50, 400, 500
@@ -58,12 +62,12 @@ class Detection():
     def detectStartSignal(self, frame):
         origFrame = frame
         thresholdFrame = self.filterAndMorphOPStart(frame, 
-                                                    self.getTrackbarValues(
-                                                        self.threshTrackbar), 
-                                                    self.getTrackbarValues(
-                                                        self.kernelTrackbar), 
-                                                    self.getTrackbarValues(
-                                                        self.iteratorTrackbar))
+                                                 self.win.getTrackbarValues(
+                                                    self.win.threshTrackbar), 
+                                                self.win.getTrackbarValues(
+                                                     self.win.kernelTrackbar), 
+                                                self.win.getTrackbarValues(
+                                                    self.win.iteratorTrackbar))
         contours, hierarchy = cv2.findContours(
                                                 thresholdFrame, 
                                                 cv2.RETR_TREE, 
@@ -89,12 +93,12 @@ class Detection():
     def detectPlate(self, frame):
         origFrame = frame
         thresholdFrame = self.filterAndMorphOPNumber2(frame, 
-                                                    self.getTrackbarValues(
-                                                        self.threshTrackbar), 
-                                                    self.getTrackbarValues(
-                                                        self.kernelTrackbar), 
-                                                    self.getTrackbarValues(
-                                                        self.iteratorTrackbar))
+                                                self.win.getTrackbarValues(
+                                                    self.win.threshTrackbar), 
+                                                self.win.getTrackbarValues(
+                                                    self.win.kernelTrackbar), 
+                                                self.win.getTrackbarValues(
+                                                    self.iteratorTrackbar))
         contours, hierarchy = cv2.findContours(
                                                 thresholdFrame, 
                                                 cv2.RETR_TREE, 
@@ -119,10 +123,12 @@ class Detection():
         while True:
             try:
                 frame = self.imageQueueStartSignal.get()
-                result, _, _ = self.detectStartSignal(frame)
+                result, threashold, origFrame = self.detectStartSignal(frame)
+                cv2.imshow(self.win.windowWorkFrame, threashold)
+                cv2.imshow(self.win.windowOriginalFrame, origFrame)
                 if result > 0:
                     runde += 1
-                    self.dispatch("r" + runde)
+                    self.updateStartSignal(runde)
                 if runde == 3:
                     break
                 return runde
@@ -153,6 +159,10 @@ class Detection():
     def unregister(self, who):
         self.subscribers.discard(who)
     
-    def dispatch(self, message):
+    def updateStartSignal(self, message):
         for subscriber in self.subscribers:
-            subscriber.update(message)
+            subscriber.updateStartSignal(message)
+
+    def updateNumberFound(self, number):
+        for subscriber in self.subscribers:
+            subscriber.notifyNumberFound(number)

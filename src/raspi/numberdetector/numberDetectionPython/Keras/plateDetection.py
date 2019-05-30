@@ -253,7 +253,7 @@ class PlateDetection:
 
 
 def main():
-    cap = cv2.VideoCapture('Z:/output.avi')
+    cap = cv2.VideoCapture(-1)
     plateDetection = PlateDetection()
     time.sleep(2)
     # t = threading.Thread(target= plateDetection.kerasWorker)
