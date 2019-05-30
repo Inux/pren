@@ -14,6 +14,7 @@ logger = log.getLogger("SoulTrain.webapp.mw_adapter_server")
 reader_linedetector = zmq_socket.get_linedetector_reader()
 reader_movement = zmq_socket.get_movement_reader()
 reader_ctrlflow = zmq_socket.get_controlflow_reader()
+reader_numberdetection = zmq_socket.get_numberdetector_reader()
 sender_webapp = zmq_socket.get_webapp_sender()
 hb_listener = zmq_heartbeat_listener.HeartBeatListener()
 
@@ -29,7 +30,8 @@ def clear_states():
     data['y_acceleration'] = 0
     data['z_acceleration'] = 0
     data['direction'] = "undefined"
-    data['number'] = 0
+    data['number'] = "undefined"
+    data['round'] = "undefined"
     data['cube'] = 0
     data['crane'] = 0
     data[zmq_ack.ACK_RECV_ACOUSTIC_CMD] = False
@@ -80,6 +82,18 @@ def get_data():
             zmq_topics.SYSTEM_STATUS_TOPIC: lambda obj: [
                 _set_data('phase', obj.phase),
                 _set_data('phase_message', obj.message)
+            ]
+        }
+    )
+
+    zmq_msg.recv(
+        reader_numberdetection,
+        {
+            zmq_topics.ROUND: lambda obj: [
+                _set_data('round', obj.round)
+            ],
+            zmq_topics.NUMBER_DETECTOR_TOPIC: lambda obj: [
+                _set_data('number', obj.number)
             ]
         }
     )

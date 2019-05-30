@@ -14,6 +14,7 @@ import src.raspi.pb.number_detection_pb2 as number_detection_pb2
 import src.raspi.pb.speed_pb2 as speed_pb2
 import src.raspi.pb.system_command_pb2 as system_command_pb2
 import src.raspi.pb.system_status_pb2 as system_status_pb2
+import src.raspi.pb.round_pb2 as round_pb2
 
 topic_proto_map = {
     zmq_topics.ACCELERATION_TOPIC: acceleration_pb2.Acceleration,
@@ -30,6 +31,7 @@ topic_proto_map = {
     zmq_topics.SPEED_TOPIC: speed_pb2.Speed,
     zmq_topics.SYSTEM_CMD_TOPIC: system_command_pb2.SystemCommand,
     zmq_topics.SYSTEM_STATUS_TOPIC: system_status_pb2.SystemStatus,
+    zmq_topics.ROUND: round_pb2.Round,
 }
 
 def send_acceleration(socket, x, y, z):
@@ -115,6 +117,12 @@ def send_system_status(socket, phase, message):
     s.message = message
     msg = s.SerializeToString()
     socket.send(zmq_topics.SYSTEM_STATUS_TOPIC + b' ' + msg)
+
+def send_round(socket, round_number):
+    r = round_pb2.Round()
+    r.round = round_number
+    msg = r.SerializeToString()
+    socket.send(zmq_topics.ROUND + b' ' + msg)
 
 def recv(socket, map_topic_callback):
     '''

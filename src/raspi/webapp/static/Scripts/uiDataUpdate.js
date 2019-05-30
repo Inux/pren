@@ -62,6 +62,7 @@ function updateSoulTrainData(data) {
     document.getElementById("zAcceleration").innerText = data == null ? "-" : data.zAcceleration;
     document.getElementById("direction").innerText = data == null ? "-" : data.direction;
     document.getElementById("number").innerText = data == null ? "-" : data.number;
+    document.getElementById("round").innerText = data == null ? "-" : data.round;
     document.getElementById("cube").innerText = data == null ? "-" : data.cube;
     document.getElementById("crane").innerText = data == null ? "-" : data.crane;
 

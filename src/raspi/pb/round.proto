@@ -1,0 +1,5 @@
+syntax = "proto3";
+
+message Round {
+    int32 round = 1; //e.g 0 = start, 1 = round one, 2 = round two, 3 = round three
+}
