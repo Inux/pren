@@ -1,6 +1,7 @@
 import zmq
 import zmq.auth
 
+import src.raspi.config.config as cfg
 import src.raspi.lib.zmq_topics as zmq_topics
 
 # Define Ports for all Components
@@ -12,10 +13,10 @@ PORT_NUMBERDETECTOR = 28285
 PORT_WEBAPP = 28286
 
 
-def __get_reader(port):
+def __get_reader(port, ip="0.0.0.0"):
     context = zmq.Context()
     socket = context.socket(zmq.SUB)
-    socket.connect("tcp://0.0.0.0:{}".format(port))
+    socket.connect("tcp://{}:{}".format(ip, port))
     socket.setsockopt(zmq.LINGER, 0)
     socket.setsockopt(zmq.AFFINITY, 1)
     socket.setsockopt(zmq.RCVTIMEO, 10)
@@ -77,7 +78,7 @@ def get_movement_reader():
 
 
 def get_numberdetector_reader():
-    __nr = __get_reader(PORT_NUMBERDETECTOR)
+    __nr = __get_reader(PORT_NUMBERDETECTOR, cfg.RASPI_SLAVE_IP)
     __nr.setsockopt(zmq.SUBSCRIBE, zmq_topics.HEARTBEAT_TOPIC)
     __nr.setsockopt(zmq.SUBSCRIBE, zmq_topics.NUMBER_DETECTOR_TOPIC)
     __nr.setsockopt(zmq.SUBSCRIBE, zmq_topics.ACKNOWLEDGE_TOPIC)

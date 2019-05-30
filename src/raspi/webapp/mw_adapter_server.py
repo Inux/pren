@@ -102,5 +102,11 @@ def send_sys_cmd(command, phases):
     zmq_msg.send_system_cmd(sender_webapp, command, phases)
     logger.info("Sending system command. Command: '%s', Phases: '%s'", command, str(phases))
 
+def reset_tiny():
+    zmq_msg.send_crane_cmd(sender_webapp, 42) #magic!
+
+def send_phase(phase):
+    zmq_msg.send_system_status(sender_webapp, phase, "simulating...")
+
 def send_hb():
     hb.send_heartbeat(sender_webapp, hb.COMPONENT_WEBAPP, hb.STATUS_RUNNING)

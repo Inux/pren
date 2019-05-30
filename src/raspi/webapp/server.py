@@ -25,6 +25,7 @@ app.static('/static', os.path.join(os.path.dirname(__file__), 'static'))
 
 middlewareData = None
 hb_last_sent = 0.0
+is_simulation_mode = True
 
 # SIGINT handler (when pressing Ctrl+C)
 
@@ -105,8 +106,10 @@ async def send_crane_cmd(request, state):
 
     middlewareData['crane_ack'] = False
     if int(state) == 1:
+        mw_adapter_server.send_phase(cfg.PHASE_GRAB_CUBE)
         mw_adapter_server.send_crane_cmd(1)
     else:
+        mw_adapter_server.reset_tiny()
         mw_adapter_server.send_crane_cmd(0)
     return json({'received': True})
 
@@ -120,9 +123,30 @@ async def send_controlflow_cmd(request):
     p = Payload(json_string)
 
     if 'start' in p.command:
+        mw_adapter_server.reset_tiny()
         mw_adapter_server.clear_states() #clear states when starting controlflow
 
     mw_adapter_server.send_sys_cmd(p.command, dict(p.phases))
+    return json({'received': True})
+
+@app.route('/mode/<state>')
+async def set_mode(request, state):
+    global is_simulation_mode
+
+    if int(state) == 1:
+        logger.info("Switched to Simulation Mode!")
+        mw_adapter_server.send_phase(cfg.PHASE_FIND_CUBE) #otherwise tiny will not send this state
+        is_simulation_mode = True
+    else:
+        logger.info("Switched to ControlFlow Mode!")
+        is_simulation_mode = False
+
+    return json({'received': True})
+
+@app.route('/resettiny')
+async def reset_tiny(request):
+    mw_adapter_server.reset_tiny()
+
     return json({'received': True})
 
 # Middleware handling

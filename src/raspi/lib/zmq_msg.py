@@ -49,7 +49,7 @@ def send_ack(socket, action, component):
 
 def send_acoustic_cmd(socket, number):
     acoustic_cmd = acoustic_command_pb2.AcousticCommand()
-    acoustic_cmd.number = number
+    acoustic_cmd.number = int(number)
     msg = acoustic_cmd.SerializeToString()
     socket.send(zmq_topics.ACOUSTIC_TOPIC + b' ' + msg)
 
