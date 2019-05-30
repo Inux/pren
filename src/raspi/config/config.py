@@ -2,6 +2,9 @@
 Configuration of the Raspberry
 '''
 
+# IP/Hostname of Raspberry Slave
+RASPI_SLAVE_IP = "prenTeam28slave"
+
 # Controlflow Parameters
 
 # - speed values
