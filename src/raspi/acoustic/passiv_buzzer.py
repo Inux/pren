@@ -16,7 +16,9 @@
 import RPi.GPIO as GPIO
 import time
 
-Buzzer = 11
+Buzzer = 7
+
+once = False
 
 CL = [0, 131, 147, 165, 175, 196, 211, 248]		# Frequency of Low C notes
 
@@ -46,12 +48,16 @@ beat_2 = [	1, 1, 2, 2, 1, 1, 2, 2, 			# Beats of song 2, 1 means 1/8 beats
             1, 2, 2, 1, 1, 3 ]
 
 def setup():
-    GPIO.setmode(GPIO.BOARD)		# Numbers GPIOs by physical location
-    GPIO.setup(Buzzer, GPIO.OUT)    # Set pins' mode is output
-    global Buzz						# Assign a global variable to replace GPIO.PWM
-    Buzz = GPIO.PWM(Buzzer, 440)    # 440 is initial frequency.
-    Buzz.start(50)					# Start Buzzer pin with 50% duty ration
+    global once
 
+    if not once:
+        GPIO.setmode(GPIO.BOARD)		# Numbers GPIOs by physical location
+        GPIO.setup(Buzzer, GPIO.OUT)    # Set pins' mode is output
+        global Buzz						# Assign a global variable to replace GPIO.PWM
+        Buzz = GPIO.PWM(Buzzer, 440)    # 440 is initial frequency.
+        once = True
+
+    Buzz.start(50)					# Start Buzzer pin with 50% duty ration
 
 def loop():
     while True:

@@ -110,12 +110,12 @@ class Movement(base_app.App):
     def acceleration_callback(self, time_delta_s, acc_x, acc_y, acc_z):
         # multiplying current speed_tiny with time offset to get distance for current section
         section_distance = float(self.data['speed_tiny']) * float(time_delta_s)
-        logger.info("time_delta_us: " + str(time_delta_s))
+        logger.debug("time_delta_us: " + str(time_delta_s))
         # adding distance of measured section to overall distance
         self.data['distance'] = self.data['distance'] + section_distance
         mw_adapter_movement.send_distance(self.data['distance'])
 
-        logger.info("new distance: " + str(self.data['distance']) + ", speed: " + str(self.data['speed']))
+        logger.debug("new distance: " + str(self.data['distance']) + ", speed: " + str(self.data['speed']))
 
         mw_adapter_movement.send_acceleration(acc_x, acc_y, acc_z)
 

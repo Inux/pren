@@ -1,5 +1,5 @@
 syntax = "proto3";
 
 message AcousticCommand {
-    string number = 1; //e.g "1" - "9"
+    int32 number = 1; //e.g "1" - "9"
 }
