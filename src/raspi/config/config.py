@@ -8,10 +8,10 @@ RASPI_SLAVE_IP = "prenTeam28slave"
 # Controlflow Parameters
 
 # - speed values
-SPEED_CUBE_SEARCH = 50 #mm/s
+SPEED_CUBE_SEARCH = 150 #mm/s
 SPEED_MAXIMAL_LIMIT = 2400 #mm/s
 SPEED_NUMBER_DETECTION_LIMIT = 2400 #mm/s
-SPEED_STOP_SEARCH = 500 #mm/s
+SPEED_STOP_SEARCH = 150 #mm/s
 
 # - crane poll time and waittime until finished
 CRANE_POLL_TIME = 0.1
