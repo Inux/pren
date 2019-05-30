@@ -3,30 +3,78 @@
 \graphicspath{{images/Steuerungssoftware/}{../../images/Steuerungssoftware/}}
 \begin{document}
 \subsection{Steuerungssoftware}
-In diesem Kapitel wird auf die Implementierung der technischen Komponente 'Web Applikation' eingegangen. Die Webapplikation wurde am Anfang des Entwicklungsprozess eingeführt und ist somit nicht in Pren1 dokumentiert. 
+In diesem Kapitel wird auf die Implementierung der technischen Komponente 'Steuerungssoftware' eingegangen. Auch wird ein Augenmerk auf unsere Middleware 'ZeroMQ' und die Datenserialisierung mittels 'Protobufers' gelegt. Die Steuerungssoftware befindet sich im Mittelpunkt der Applikation und kann somit auch als Herzstück bezeichnet werden. Sie orchestriert die verschiedenen Module, damit ein funktionierendes Zusammenspiel ermöglicht wird und der Applikationsablauf geschmeidig durchlaufen wird.
+
 \subsubsection{Anforderung}
 
-Ziel und Zweck der Applikation ist es eine zentrale Übersicht der einzelnen Module / Komponente zu erhalten und diese zu testen. Somit fungiert die WebApp als Testing/Monitoring Komponente und ist für den Ablauf des Controlflows irrelevant. Der Zug kann mittels Startknopf über das Webinterface gestartet werden.
-
-\paragraph{Anforderungen}
 \begin{itemize}
-    \item Übersicht
-      \subitem Heartbeat
-      \subitem Informationen zu Zug \& Fahrt
-    \item Module testen
-    \item Fahrt starten
+    \item Korrekte Ausführung des PREN-Ablaufs
+    \item Robust
+    \item Ausführung einzelner Module
 \end{itemize}
 
 \subsubsection{Lösung}
-Der Client ist eine klassische Kombination aus html \& javascript. Dieser spricht über eine Rest API mit unserem Server. Auf dem Server verwenden wir Sanic, eine auf Python basierte Servertechnologie.
+Die Steuerungssoftware wird wie in PREN beschrieben mittels der Middleware Technologie 'ZeroMQ' und 'Protobufers' unterstützt. Die Steuerungssoftware selbst erbt wie alle anderen Module auch von der Basisklasse 'App', dazu später mehr. Solange die Steuerungssoftware läuft wartet sie auf ein Startsignal, welches den Applikationsablauf in Gang setzt.
 
-\paragraph{Technologien / Aufbau}
+\subsubsection{Technologien / Aufbau}
+Einblick in verwendete Technologien, sowie ein Überblick über Programmstruktur und Aufbau der Middleware. 
+
+\textbf{ZeroMQ} \\
+ZeroMQ 
+
+\textbf{Protocol buffers} \\
+Protocol buffers, auch Protobuf, ist ein von Google entwickeltes Protokoll zum Senden und Empfangen von serialisierten und deserialisierten Daten über verschiedene Dienste. Google's Design Ziel für Protobuf liegt darin kleiner, einfacher und schneller als XML zu sein. Unterstützt werden alle häufig verwendet Sprachen wie: Python, Java, Objective-C, C\# und andere.
+
+\textbf{Beispiel Protobuf:}
+\lstinputlisting{../../../src/raspi/pb/direction.proto}
+Man sieht nun, dass eine 'Direction' Mitteilung definiert wird. Diese hat ein String Attribut, welches direction heisst. Mit dieser Definition wird mithilfe eines 'protobuffer compiler' Code generiert. Dieser kann die definierte Message Serialisieren und Deserialisieren.
+
+\textbf{Beispiel Generierung für Python:}
+\begin{lstlisting}
+    protoc -I=pb --python_out=pb pb/direction.proto
+\end{lstlisting}
+Mithilfe von diesem Beispiel wird die Protobuf Definition (direction.proto) zu Python Code generiert.
+
+\textbf{Beispiel Generierter Python Code:}
+\lstinputlisting[language=Python]{../../../src/raspi/pb/direction_pb2.py}
+Das generierte Python File, welches mithilfe des 'protobuffer compiler' erzeugt wurde.
 
 \textbf{Protobuf Nachrichten} \\
+Eine Auflistung aller verwendeter Protobuf Nachrichten, welche über die Middleware gesendet werden.
+\begin{table}[H]
+  \begin{tabular}{lll}
+  \hline
+  \textbf{Nachricht} & \textbf{Bezeichner} & \textbf{Datentyp} \\ \hline
+  Acceleration & x & Integer32bit \\ 
+   & y & Integer32bit \\
+   & z & Integer32bit \\ \hline
+  CraneCommand & command & Integer32bit\\ \hline
+  Cube & state & Integer32bit\\ \hline
+  Current & current & Integer32bit\\ \hline
+  Direction & direction & String\\ \hline
+  Distance & distance & Float\\ \hline
+  Heartbeat & component & String\\ 
+   & status & String\\ \hline
+  MoveCommand & speed & Integer32bit\\ \hline
+  NumberDetection & number & String\\ \hline
+  Speed & speed & Integer32bit\\ \hline
+  SystemCommand & command & String\\
+   & phases & Map<String, Boolean>\\ \hline
+  SystemStatus & phase & String\\
+   & message & String\\ \hline
+  \end{tabular}
+\end{table}
+message Cube {
+    int32 state = 1; //e.g 1 = cube detected, 0 = cube NOT detected
+}
+
+
 \textbf{Kommunikationsmodule} \\
 \textbf{ZeroMQ Kommunikationsdiagramm} \\
 \textbf{Ablauf (mit Code)} \\
+\textbf{Hearbeat}
 \textbf{Codestruktur (Basisklasse)} \\
+Die Basisklasse wird von allen Modulen verwendet. Der Grund, weshalb die Basisklasse in diesem Kapitel beschrieben wird, ist dass der Zusammenhang mit dem obigen Kontext am einfachsten zu verstehen ist.
 
 \subsubsection{Entwicklungsablauf}
 Enwurf, sowie erster Prototyp der WebApp wurden von Steve Ineichen anfangs von PREN1 erstellt. Das Hinzufügen immer weiterer Komponenten führte dazu, dass die WebApp im Laufe der Entwicklung kontinuierlich erweitert wurde.
