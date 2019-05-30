@@ -1,0 +1,42 @@
+\documentclass[../../main.tex]{subfiles}
+
+\graphicspath{{images/Steuerungssoftware/}{../../images/Steuerungssoftware/}}
+\begin{document}
+\subsection{Steuerungssoftware}
+In diesem Kapitel wird auf die Implementierung der technischen Komponente 'Web Applikation' eingegangen. Die Webapplikation wurde am Anfang des Entwicklungsprozess eingeführt und ist somit nicht in Pren1 dokumentiert. 
+\subsubsection{Anforderung}
+
+Ziel und Zweck der Applikation ist es eine zentrale Übersicht der einzelnen Module / Komponente zu erhalten und diese zu testen. Somit fungiert die WebApp als Testing/Monitoring Komponente und ist für den Ablauf des Controlflows irrelevant. Der Zug kann mittels Startknopf über das Webinterface gestartet werden.
+
+\paragraph{Anforderungen}
+\begin{itemize}
+    \item Übersicht
+      \subitem Heartbeat
+      \subitem Informationen zu Zug \& Fahrt
+    \item Module testen
+    \item Fahrt starten
+\end{itemize}
+
+\subsubsection{Lösung}
+Der Client ist eine klassische Kombination aus html \& javascript. Dieser spricht über eine Rest API mit unserem Server. Auf dem Server verwenden wir Sanic, eine auf Python basierte Servertechnologie.
+
+\paragraph{Technologien / Aufbau}
+
+\textbf{Protobuf Nachrichten} \\
+\textbf{Kommunikationsmodule} \\
+\textbf{ZeroMQ Kommunikationsdiagramm} \\
+\textbf{Ablauf (mit Code)} \\
+\textbf{Codestruktur (Basisklasse)} \\
+
+\subsubsection{Entwicklungsablauf}
+Enwurf, sowie erster Prototyp der WebApp wurden von Steve Ineichen anfangs von PREN1 erstellt. Das Hinzufügen immer weiterer Komponenten führte dazu, dass die WebApp im Laufe der Entwicklung kontinuierlich erweitert wurde.
+
+\subsubsection{Testing}
+Eine spezifische Testingstrategie für Client oder Server existiert nicht. Die WebApp fungiert als Testingkomponente und ist somit Teststrategie der meisten Komponenten auf dem RasperryPi 3+.
+\\
+Das Testing erfolgt während des Entwicklungsablaufs automatisch. Wird eine neu eingebundene Komponente auf dem Client simuliert, so wird die Funktionalität der WebApp mitgetestet.
+
+\subsubsection{Reflexion}
+Eine Testingkomponente einzuführen war eine tolle Idee und hat sich während der Entwicklung sehr bewährt. Die WebApp liefert eine attraktive Übersicht betreffend den verschiedenen Komponenten.
+
+\end{document}
