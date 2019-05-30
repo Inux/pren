@@ -20,24 +20,29 @@ import src.raspi.numberdetector.numberDetectionPython.mw_adapter_numberdetection
 
 OFFSET = 0
 
+
 def get_number():
     return randint(1,9)
 
 
 socket = zmq_socket.get_numberdetector_sender()
 
+
 def send_hb():
     hb.send_heartbeat(socket, hb.COMPONENT_NUMBERDETECTOR, hb.STATUS_RUNNING)
+
 
 class NumberDetector(base_app.App):
     def __init__(self, *args, **kwargs):
         super().__init__("numberdetector", self.numberdetectorloop, *args, **kwargs)
         self.job = periodic_job.PeriodicJob(interval=timedelta(milliseconds=cfg.HB_INTERVAL), execute=send_hb)
         self.job.start()
+        self.run()
 
     def numberdetectorloop(self, *args, **kwargs):
         mwadapter.send_number(get_number())
         time.sleep(3)
+
 
 if __name__ == '__main__':
     NumberDetector().run()

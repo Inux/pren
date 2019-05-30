@@ -4,8 +4,6 @@ import numpy as np
 import time
 import pytesseract
 import queue
-import threading
-# import src.raspi.numberdetector.numberDetectionPython.numberReco as NumberReco
 
 
 def nothing(x):
@@ -25,17 +23,17 @@ class PlateDetection:
         self.hMinTrackbar = "HMin"
         self.iteratorTrackbar = "iterator"
         self.kernelTrackbar = "Kernel"
-        self.ImageQueue = queue.Queue()
+        self.imageQueueStartSignal = queue.Queue()
+        self.imageQueueNumberDetector = queue.Queue()
+        self.evt = Event()
         
-
-
-    def initCam(self):
-        self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
-        self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
-        self.cap.set(cv2.CAP_PROP_BRIGHTNESS, 70)
-        self.cap.set(cv2.CAP_PROP_CONTRAST, 30)
-        self.cap.set(cv2.CAP_PROP_SATURATION, 30)
-        self.cap.set(cv2.CAP_PROP_WB_TEMPERATURE, 45)
+    def initCam(self, cap):
+        cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+        cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+        cap.set(cv2.CAP_PROP_BRIGHTNESS, 70)
+        cap.set(cv2.CAP_PROP_CONTRAST, 30)
+        cap.set(cv2.CAP_PROP_SATURATION, 30)
+        cap.set(cv2.CAP_PROP_WB_TEMPERATURE, 45)
 
     def createTrackbar(self):
         cv2.namedWindow(self.windowTrackbar)
@@ -197,6 +195,7 @@ class PlateDetection:
 
     def routineDetectStartSignal(self, cap, window, manipulation, save):
         startSignalFound = False
+
         if(save):
             forcc = cv2.VideoWriter_fourcc(*'XVID')
             out = cv2.VideoWriter('output.avi', forcc, 20.0, (640, 480))
@@ -212,11 +211,29 @@ class PlateDetection:
             if(save):
                 out.write(frame)
 
-            if cv2.waitKey(1) & 0xFF == ord('q'):
+            if (cv2.waitKey(1) & 0xFF == ord('q')):
                 break
 
             time.sleep(0.05)
-            
+
+    def cameraWorker(self, cap):
+        while True:
+            ret, frame = cap.read()
+            self.imageQueueStartSignal.put(frame)
+            self.imageQueueNumberDetector(frame)
+
+    def startSignalWorker(self):
+        runde = 0
+        while True:
+            try:
+                frame = self.imageQueueStartSignal.get()
+                result, _, _ = self.detectStartSignal(frame)
+                if result > 0:
+                    runde += 1
+                return runde
+            except:
+                pass
+
     def tesseractWorker(self):
         while True:
             try:
@@ -226,7 +243,6 @@ class PlateDetection:
             except:
                 pass
 
-    
     def kerasWorker(self):
         while True:
             try:
@@ -234,6 +250,7 @@ class PlateDetection:
                 self.numberReco.recoNumber(frame)
             except:
                 pass
+
 
 def main():
     cap = cv2.VideoCapture('Z:/output.avi')

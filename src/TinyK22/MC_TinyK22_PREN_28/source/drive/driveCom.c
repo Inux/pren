@@ -74,7 +74,9 @@ tError driveHandleSpeedFrame(const unsigned char *frameValue)
 
 void driveSendSpeedUpdate(int32_t isSpeed)
 {
-//  piWriteNum32s(IS_SPEED_TOPIC, isSpeed, &isSpeedAckH); //todo add back in
+#if SEND_IS_SPEED
+  piWriteNum32s(IS_SPEED_TOPIC, isSpeed, &isSpeedAckH);
+#endif
 }
 
 void driveComAckTimeoutHandler(void)
@@ -87,9 +89,7 @@ void driveComAckTimeoutHandler(void)
  else
  {
    //driveSetSpeed(0); todo add this back in
-   LOG_CRITICAL("no speed ack afer 500ms. stop the train");
-   //todo maybe set nbrOfRetries to zero to reduce panic
-   //todo maybe reset only in test mode
+   LOG_CRITICAL("no speed ack afer 500ms. Tiny is lonely and in panic.");
    isSpeedAckH.nbrOfRetries=0;
 
  }

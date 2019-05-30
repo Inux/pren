@@ -17,16 +17,16 @@
 #include "crane.h"
 #include "quad.h"
 #include <stdbool.h>
+#include "cubeDetection.h"
 
-#define MOTOR_S_MAX_VALUE   (100000/4)
+#define MOTOR_S_MAX_VALUE   (100000/2)
 
 #define TICK_PER_REV        (512*21)
 #define ANGLE_TO_DRIVE      (180)
-#define TICKS_TO_DRIVE      (5435-25)
+#define TICKS_TO_DRIVE      (5435+50)
                             //(TICK_PER_REV*ANGLE_TO_DRIVE/360)
 
-/* 5 sec */
-#define TIMEOUT_VALUE       (5000/25)
+#define TIMEOUT_VALUE       (10000/25)
 
 static tAckHandler isCraneAckHandler;
 static tAckHandler craneAckHandler;
@@ -40,7 +40,7 @@ static bool craneRetracting = false;
 static bool craneDoneRetracted = false;
 static int timeoutCounter = 0;
 
-static void motor_A_UpdatePwmDutyCycle(uint32_t value)
+static void motor_S_UpdatePwmDutyCycle(uint32_t value)
 {
   uint32_t mod = FTM_1_MOTOR_PWM_PERIPHERAL->MOD;
   uint32_t cnv = (mod * value) / MOTOR_S_MAX_VALUE;
@@ -82,7 +82,7 @@ void craneDoWork(void)
     {
       //timeout reached
       //reset controler to original state
-      motor_A_UpdatePwmDutyCycle(0);
+      motor_S_UpdatePwmDutyCycle(0);
       targetPos = 0;
       setPos = 0;
       oldError = 0;
@@ -99,7 +99,7 @@ void craneDoWork(void)
     {
       //destination reached
       //reset controler to original state
-      motor_A_UpdatePwmDutyCycle(0);
+      motor_S_UpdatePwmDutyCycle(0);
       targetPos = 0;
       setPos = 0;
       oldError = 0;
@@ -111,7 +111,7 @@ void craneDoWork(void)
 
     if (targetPos > setPos)
     {
-      setPos += 40;
+      setPos += 50;
       if (targetPos < setPos)
         setPos = targetPos;
     }
@@ -148,7 +148,7 @@ void craneDoWork(void)
       intError += currentError;
     }
 
-    motor_A_UpdatePwmDutyCycle(val);
+    motor_S_UpdatePwmDutyCycle(val);
 
 #if TEST
     piWriteNum32s("motor_S_SetValue", val, NULL); //todo clean
@@ -156,7 +156,7 @@ void craneDoWork(void)
   }
   else
   {
-    motor_A_UpdatePwmDutyCycle(0);
+    motor_S_UpdatePwmDutyCycle(0);
   }
 }
 
@@ -171,10 +171,15 @@ tError craneFrameLineHandler(const unsigned char *value)
     targetPos = TICKS_TO_DRIVE;
     craneRetracting = true;
   }
-  else if (iVal == 42 && !craneRetracting && craneDoneRetracted)
+  else if (iVal == 42)
   {
-    craneDoneRetracted = false;
-    timeoutCounter = 0;
+    cubeReset();
+
+    if (!craneRetracting && craneDoneRetracted)
+    {
+      craneDoneRetracted = false;
+      timeoutCounter = 0;
+    }
   }
 
   ackSend(&craneAckHandler);
@@ -189,13 +194,13 @@ void isCraneAckTimeoutHandler(void)
 
 void crane_Init(void)
 {
-  kp = 15;
-  ki = 1;
+  kp = 25;
+  ki = 3;
   kd = 0;
   targetPos = 0;
 
   Motor_S_InitPins();
-  motor_A_UpdatePwmDutyCycle(0);
+  motor_S_UpdatePwmDutyCycle(0);
   Encoder_S_StartCountingTicks();
 
 

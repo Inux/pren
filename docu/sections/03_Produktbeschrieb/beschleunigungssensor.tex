@@ -48,9 +48,6 @@ Auf dem Zug findet der Sensor Platz zwischen unserem Kran und dem Abstellplatz f
 \paragraph{Prozessablauf}
 Der Sensor wir für jede Achse separat angeschprochen, die erhaltenen Daten werden direkt das erste Mal umgewandelt. Sobald die 'Movement' Komponente gestartet wird, liest diese im 50ms Takt Daten über den Beschleunigungssensor ein. Die erhaltenen Daten werden ausgewertet und in Geschwindigkeit und Beschleunigung gerechnet.
 
-\paragraph{Soll-Ist-Vergleich}
-Die Messung der Beschleunigung erfolgt wie erwartet. Bei der Umrechnung herschen noch kleinere Unsicherheiten bezüglich der Genauigkeit.
-
 \subsubsection{Entwicklungsablauf}
 Es gibt es Vielzahl ähnlicher Beschleunigungssensoren auf dem Markt und somit auch mehr als genügend Bibliotheken auf dem Internet. Das Finden einer kompatiblen Bibliotheken erwies sich somit als eher trivial. Als nächstes wurde der Sensor an den GPIO Bus angeschlossen und mithilfe einer Testapplikation getestet. \\
 Der Sensor reagierte jedoch nicht und so ging es weiter mit der Fehleranalyse. Nach dem Ausführen verschiedener anderer Applikationen und dem Austausch des Sensors wurde ich bald fündig. Wie sich heraustellte war das ganze nicht ganz so trivial wie gedacht und die Applikation muss auf Sensor, sowie GPIO angepasst werden. Ein Informatiker am Werk : )\\
