@@ -1,9 +1,7 @@
-from src.raspi.numberdetector.numberDetectionPython.StateMachine import SlaveStateMachine
-import time
-from datetime import timedelta
-from random import randint
-from src.raspi.numberdetector.numberDetectionPython.detection import Detection
-from src.raspi.numberdetector.numberDetectionPython.camera import Camera
+from src.raspi.numberdetector.StateMachine import SlaveStateMachine
+from src.raspi.numberdetector.detection import Detection
+from src.raspi.numberdetector.camera import Camera
+import src.raspi.numberdetector.mw_adapter_numberdetection as adapter
 
 
 import zmq
@@ -24,25 +22,28 @@ class Ablauf():
         self.number = 0
         self.name = "Ablauf"
         self.cam = Camera()
-        self.detection = Detection(self.cam.imageQueueStartSignal, self.cam.imageQueueNumberDetector)
+        self.detection = Detection(self.cam)
         self.stateMachine = SlaveStateMachine(self.detection, self.camera)
         self.detection.register(self)
 
         self.stateMachine.run('startbefehl')
 
-    def update(self, message):
-        if message.__eq__("r"+1):
+    def updateStartSignal(self, message):
+        if message.__eq__(1):
             self.stateMachine.run('startsignalErkannt')
-        elif message.__eq__("r"+2):
+        elif message.__eq__(2):
             if self.number > 0:
                 self.stateMachine.run('runde1StartSignalErkanntMitNummer')
             else:
                 self.stateMachine.run('runde1StartSignalErkanntOhneNummer')
-        elif message.__eq__("r"+3):
+        elif message.__eq__(3):
             if self.stateMachine.current_state.__eq__('runde2Langsam'):
                 self.stateMachine.run('stopSignalErkanntOhneNummer')
             else:
                 self.stateMachine.run('stopSignalErkanntMitNummer')
+
+    def updateNumberFound(self, number):
+        adapter.send_number(number)
 
 
 if __name__ == '__main__':

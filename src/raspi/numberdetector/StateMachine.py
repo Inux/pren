@@ -1,9 +1,5 @@
 from statemachine import StateMachine, State
-import cv2
-from src.raspi.numberdetector.numberDetectionPython.detection import Detection
-from src.raspi.numberdetector.numberDetectionPython.camera import Camera
 from multiprocessing.pool import ThreadPool
-import time
 
 
 class SlaveStateMachine(StateMachine):
@@ -39,8 +35,8 @@ class SlaveStateMachine(StateMachine):
 
     def on_enter_runde1(self):
         print("Neuer Zustand: RUNDE 1")
-        self.pool.apply_async(self.detection.startPlateWorker)
-        self.pool.apply_async(self.detection.startTeseractWorker)
+        #self.pool.apply_async(self.detection.startPlateWorker)
+        #self.pool.apply_async(self.detection.startTeseractWorker)
 
     def on_enter_runde2Langsam(self):
         print("Neuer Zustand: RUNDE 2 LANGSAM")
