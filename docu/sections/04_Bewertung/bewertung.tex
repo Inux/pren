@@ -1,4 +1,13 @@
 \documentclass[../../main.tex]{subfiles}
+
+\graphicspath{{images/Maschinentechnik/}{../../images/Maschinentechnik/}}
+
+\lstset{basicstyle=\small,
+      showstringspaces=false,
+      commentstyle=\color{black},
+      keywordstyle=\color{blue}
+    }
+
 \begin{document}
 
 %Vergleich zwischen Konzeptlösung und Funktionsmuster (Bewertung der Lösung) 
@@ -43,5 +52,52 @@ Die WebApp wurde in PREN2 entworfen und entwickelt, somit gibt es keine Erwartun
 \textbf{Würfelaufnahme}\\
 Das Grundkonzept wurde in PREN1 definiert und umgesetzt. Für das endgültige Produkt wurden kleine Änderungen vorgenommen. Der Verlauf der Kurvenscheibe wurde angepasst und die Führung des Würfels optimiert. Nun kann der Aufbau den Anforderungen gerecht werden. 
 
+\pagebreak
+
+\subsubsection{Maschinentechnik}
+
+\textbf{Teststrecke}\\
+Die grösste Herausforderung an das Fahrwerk besteht bei einer Doppelkurve mit engem Radius (siehe oben mitte in Abbildung \ref{fig:teststrecke1}). Ansonsten erfüllt die Lokomotive die Anforderungen an die Strecke. Sie berührt das Lichtraumprofil und kein anderes Element auf der Testrecke, mit einer Ausnahme, dem Holzwürfel. Ein Problem für die Mechanik stellt die enge Doppelkurve dar, da dadurch grosse Kräfte an der Lokomotive entstehen, welche aber durch die Kurvenführung weitgehen behoben wird.\\
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{teststrecke1.PNG}
+    \caption {Aufbau Teststrecke}
+    \label{fig:teststrecke1}
+  \end{figure}
+
+\textbf{Antriebswagen}\\
+Der Antriebswagen (siehe Abbildung \ref{fig:antriebswagen3}) wie auch der Führungswagen sind im allgmeinen wie konzipiert und konsturiert realisiert. In der Umsetzung wurden beim Antriebswagen zusätzlich zwei weitere Schleifkontakte für die bessere Gewährleistung der Stromabnahme und ein Vorrichtung für die Kurvenführung angebracht. Die Grösse und Form der Räder (siehe Abbildung \ref{fig:raeder}) wurde etwas angepasst, da die Gefahr bestand, dass die Lokomotive an den Gleisen hängen bleibt. Die genauen Änderungen der Räder werden im nächsten Absatz ausführlicher vorgestellt.\\
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.48\textwidth]{antriebswagen1.PNG}
+  \caption {Antriebswagen}
+  \label{fig:antriebswagen3}
+\end{figure}
+
+\pagebreak
+
+\textbf{Beschleunigung und Geschwindigkeit}\\
+Bei den Probefahrten auf der vorgebenen Teststrecke (siehe Abschnitt "Teststrecke") hat sich eine maximale Beschleunigung von 1 Meter pro Sekunde im Quadrat herausgestellt. Diese ergibt sich durch das Moment welches über das Getriebe auf die Räder übertragen wird, die Normalkraft des Zuges und der Reibwert zwischen Räder und Gleis. Dieser Wert entstand durch Messungen mit einem Beschleunigungsensor. Der berechnete Wert lag 2.94 Meter pro Sekunde im Quadrat. Die Differenz lässt sich durch den abweichenden Reibwert und die Masse erklären.\\
+Gemäss den Messungen auf der Teststrecke ist eine maximale Geschwindigkeit von 2.2 Meter pro Sekunde erreichbar. Der limitierende Faktor ist nicht das Kippen beziehungseise entgleisen in der Kurve, sondern der Motor. Der Motor erreicht dieser Geschwindigkeit seine maximale Leistung mit den gegebenn Werten des Stromes und der Spannung. Somit fährt die Lokomotive 1.7 Meter pro Sekunde schneller als im Anforderungskatalog deklariert wurde und etwa 0.7 Meter pro Sekunde schneller als der theoretisch berechnete Wert. An Hand dieser Ergebnisse ist ersichtlich, dass der Schwerpunkt optimaler liegt, als angenommen wurde und zusätzlich die Kurvenvorrichtung dazu beiträgt, dass die Lokomotive in der Kurve schneller fahren kann.\\
+
+\textbf{Wagenräder}\\
+Die Räder der Lokomotive sind für zwei Bereiche vorgesehen. Einerseits gibt es Räder für den Antriebswagen und andererseits solche für den Führungswagen. Die Räder für den Fürhungswagen haben im Gegensatz zu denen des Antriebswagens keine spezielle Bearbetiung. In einem ersten Veruch wurden die Reifen mit einem O-Ring versehen. Da der Anpressdruck durch das Gewicht der Lokomotive zu gering war und die Fuge nicht gleichmässig mit der Gummimasse gefüllt wurde, kippte der Zug leicht auf den Gleisen hin und her, da zusätzlich der Absatz für die Führung zu kurz war. In einem nächsten Schritt wurde ein Gummispray Schicht für Schicht auf die Räder gesprayt. Jedoch weissten diese bei der Testfahrt bereits grossen Verschleiss auf und ist somit für die Forderung nicht ausreichend. Als letzter und funktionsfähiger Versuch wurden die Räder mit einem speziellen Gummiband umwickelt. Die Funktion ist erfüllt und der Verschleiss hält sich in einem vernünftigen Rahmen. Bei den Antriebsrädern wie auch bei den Führungsrädern ist der Durchmesser etwas grösser und die Kontur leicht angepasst.\\
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.6\textwidth]{wagenraeder.PNG}
+  \caption {Räder Antriebswagen bzw. Führungswagen - Alt vs. Neu}
+  \label{fig:raeder}
+\end{figure}
+
+\pagebreak
+
+\textbf{Stromabnahme}\\
+In einem ersten Versuch wurde die Stromabnahme nur an einem Ort, dem Führungswagen, abgenommen. Jedoch ist die Gefahr gross, dass die Schleifkontakte bereits bei kleinsten Unebenheiten der Strecke den Kontakt verlieren und das System zum Absturz bringen. Somit wurden zusätzlich zwei Schleifkontakte am Antriebswagen befestigt, welche die Gefahr minimiert. Die Stromabnahme funktioniert nun mit der gewünschten Zuverlässigkeit.
+
+\textbf{Kurvenführung}\\
+Die Kurvenführung wurde in mehreren Testfahrten getestet und zeigte die gewünschten Effekte auf. Lediglich die Feder beziehungsweise die Federrate musste angepasst werden, damit der Anpressdruck der Stahlstifte genügend hoch ist und so der Zentripedalkraft der Lokomotive entgegenwirken kann.
 
 \end{document}

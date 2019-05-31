@@ -80,6 +80,86 @@ Direkt unterhalb der Kamerahalterung befindet sich eine Kurvenvorrichtung (siehe
 
 \pagebreak
 
+\textbf{Maximale Beschleunigung}\\
+Der Motor kann gemäss Datenblatt ein maximales Moment von 85.6 mNm erreicht werden. Durch das Übersetzungsverhältnis 2:1 des Getriebes wird ein Moment von 171.2 mNm auf die beiden Radachsen übertragen und somit eine theoretische maximale beschleunigung von 44.79 Meter pro Sekunde im Quadrat erreichen (siehe Tabelle \ref{tab:groessen_beschleunigung}):
+
+$$F_{Rad}=\frac{F_{G}}{8}=\frac{3kg \cdot 9.81m/s^2}{8}=0.375N$$
+
+$$F_{Reibung}=F_{Rad} \cdot k=0.375N \cdot 0.3=0.1125N$$
+
+$$M_{Rad}=M_{Getriebe} \cdot 0.5= 171.2 mNm \cdot 0.5 = 85.6 mNm$$
+
+$$M_{Rad}=F_{Reibung} \cdot a_{max, Getrtiebe} \cdot D_{Rad,Endprodukt} \cdot 0.5$$
+
+$$\boldsymbol{a_{max, Getriebe}}=\frac{M_{Rad}}{\frac{F_{Reibung}}{g} \cdot D_{Rad} \cdot 0.5}=\frac{0.0856Nm}{\frac{0.1125N}{9.81m/s^2} \cdot 0.026m \cdot 0.5}=\boldsymbol{58.53m/s^2}$$\\
+
+\begin{table}[H] \centering
+  \begin{tabular}{|l|l|}
+  \hline
+  \textbf{Grösse} & \textbf{Wert}\\
+  \hline
+  Durchmesser Rad (Konzept) [D,Konzept]          & 22 Milimeter\\
+   \hline
+   Durchmesser Rad (Endprodukt) [D,Endprodukt]          & 26 Milimeter\\
+   \hline
+  Reibungskoeffizient [k]      & 0.3\\
+  \hline
+  \end{tabular}
+
+  \caption{Grössen für die Beschleunigungsberechnung}
+  \label{tab:groessen_beschleunigung}
+  \end{table}
+
+Das theoretische maximale Moment beziehungswiese die maximale Drehzahl kann jedoch nicht erreicht werden da diese durch die vorgegebene Speisung beschränkt ist.\\
+In der Konzeptphase wurde die theoretische Maximalbeschleunigung gemäss CAD-Daten der Lokomotive (siehe Tabelle \ref{tab:groessen_beschleunigung}) wie folgt berechnet:
+
+$$M_{Rad,Konzept}=F_{Rad} \cdot 0.5 \cdot D_{Rad_Konzept}= 0.1125N \cdot 0.5 \cdot 22mm = 1.24mNm$$
+$$M_{Rad,Prototyp}=F_{Rad} \cdot 0.5 \cdot D_{Rad,Endprodukt}= 0.1125N \cdot 0.5 \cdot 26mm = 1.46mNm$$
+
+$$\boldsymbol{a_{max}}=\frac{F_{Reibung}}{\frac{F_{Rad}}{g}}=\frac{0.1125N}{\frac{0.375N}{9.81m/s^2}}=\boldsymbol{2.94m/s^2}$$
+\\
+
+\pagebreak
+
+\textbf{Maximale Geschwindigkeit}\\
+Die Maximale Geschwindigkeit in der Kurve wurde in der Theorie mit den gegebenen Grössen (siehe Tabelle \ref{tab:geschwindigkeitsberechnung}) folgendermassen berechnet:\\
+
+\begin{table}[H] \centering
+    \begin{tabular}{|l|l|}
+    \hline
+    \textbf{Grösse} & \textbf{Wert}\\
+    \hline
+    Minimaler Radius  [r]                               & 0.8 Meter\\
+     \hline
+    Masse [m]                                           & 3 Kilogramm\\
+    \hline
+    Schwerpunkt in x-Achse (maximaler Wert) [x]         & 0.0225 Meter\\
+    \hline
+    Schwerpunkt in y-Achse (maximaler Wert) [y]         & 0.05 Meter\\
+    \hline
+    \end{tabular}
+
+    \caption{Grössen für die Geschwindigkeitsberechnung}
+    \label{tab:geschwindigkeitsberechnung}
+    \end{table}
+
+Die Gewichts- und Zentripedalkraft, welche das Gleichungssystem für die Geschwindigkeitsberechnung bilden, sind wie folgt definiert:
+
+$$F_{G}=m \cdot g=3kg \cdot 9.81m/s^2=29.4N$$
+
+$$F_{max, z}=\frac{F_{G} \cdot x}{y}=\frac{29.4N \cdot 0.0225m}{0.05m}=13.24N$$
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.55\textwidth]{schwerpunkt.PNG}
+    \caption {Schwerpunkt der Lokomotive}
+    \label{fig:schwerpunkt}
+\end{figure}
+
+Da das Drehmoment eine vektorielle Grösse ist, müssen die beiden entstehenden Momente am Drehpunkt ''P'' am Gleis zusammen Null ergeben (siehe Abbildung \ref{fig:schwerpunkt}). Oder anders gesagt, müssen die beiden Momente gleich gross sein, damit das System ''statisch'' bestimmt ist. Die Berechnungen sind auf den kleinsten Kurvenradius ausgelegt, da dort die grösste Zentripedalkraft entsteht. Somit ergibt sich eine maximale Geschwindigkeit von 1.53 Meter pro Sekunde:
+
+$$F_{max, z}=\frac{m \cdot v_{max}^2}{r};\boldsymbol{v_{max}}=\sqrt\frac{F_{max, z}\cdot r}{m}=\sqrt\frac{13.24N \cdot 0.8m}{3kg}=\boldsymbol{1.53m/s}$$\\
+
 \begin{figure}[H]
   \begin{minipage}{.5\textwidth}
     \textbf{Führungwagen}\\
@@ -128,114 +208,6 @@ Der Aufbau des Führungswagens ist wie konzipiert, mit Ausnahme der Räder, fina
 
 \pagebreak
 
-\subsection{Vergleich Theorie und Endprodukt}
-
-\subsubsection{Antriebswagen}
-
-Der Antriebswagen (siehe Abbildung \ref{fig:antriebswagen3}) wie auch der Führungswagen sind im allgmeinen wie konzipiert und konsturiert realisiert. In der Umsetzung wurden beim Antriebswagen zusätzlich zwei weitere Schleifkontakte für die bessere Gewährleistung der Stromabnahme und ein Vorrichtung für die Kurvenführung angebracht. Die Grösse und Form der Räder (siehe Abbildung \ref{fig:raeder}) wurde etwas angepasst, da die Gefahr bestand, dass die Lokomotive an den Gleisen hängen bleibt. Die genauen Änderungen der Räder werden im nächsten Absatz ausführlicher vorgestellt.\\
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.48\textwidth]{antriebswagen1.PNG}
-  \caption {Antriebswagen}
-  \label{fig:antriebswagen3}
-\end{figure}
-
-Die Antriebsräder weichen etwas von der geplanten Form ab, da diese mit den O-Ringen nicht wie gewünscht funktioniert. Die O-Ringe weisen den nötigen Reibwert der Räder mit den Gleisen für eine maximale Beschleunigung vor. Der Anpressdruck ist jedoch zu gering, wodurch sich der O-Ring nicht gleichmässig in der Fuge verteilt. Durch ein spezielles Band aus Gummi, welches um das Rad gewickelt ist, wird der gewünschte Effekt erreicht. Bei den Antriebsrädern wie auch bei den Führungsrädern ist der Durchmesser etwas grösser und die Kontur leicht angepasst.\\
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.6\textwidth]{wagenraeder.PNG}
-  \caption {Räder Antriebswagen bzw. Führungswagen - Alt vs. Neu}
-  \label{fig:raeder}
-\end{figure}
-
-\newpage
-
-\textbf{Maximale Beschleunigung}\\
-Der Motor kann gemäss Datenblatt ein maximales Moment von 85.6 mNm erreicht werden. Durch das Übersetzungsverhältnis 2:1 des Getriebes wird ein Moment von 171.2 mNm auf die beiden Radachsen übertragen und somit eine theoretische maximale beschleunigung von 44.79 Meter pro Sekunde im Quadrat erreichen (siehe Tabelle \ref{tab:groessen_beschleunigung}):
-
-$$F_{Rad}=\frac{F_{G}}{8}=\frac{3kg \cdot 9.81m/s^2}{8}=0.375N$$
-
-$$F_{Reibung}=F_{Rad} \cdot k=0.375N \cdot 0.3=0.1125N$$
-
-$$M_{Rad}=M_{Getriebe} \cdot 0.5= 171.2 mNm \cdot 0.5 = 85.6 mNm$$
-
-$$M_{Rad}=F_{Reibung} \cdot a_{max, Getrtiebe} \cdot D_{Rad,Endprodukt} \cdot 0.5$$
-
-$$\boldsymbol{a_{max, Getriebe}}=\frac{M_{Rad}}{\frac{F_{Reibung}}{g} \cdot D_{Rad} \cdot 0.5}=\frac{0.0856Nm}{\frac{0.1125N}{9.81m/s^2} \cdot 0.026m \cdot 0.5}=\boldsymbol{58.53m/s^2}$$\\
-
-\begin{table}[H] \centering
-  \begin{tabular}{|l|l|}
-  \hline
-  \textbf{Grösse} & \textbf{Wert}\\
-  \hline
-  Durchmesser Rad (Konzept) [D,Konzept]          & 22 Milimeter\\
-   \hline
-   Durchmesser Rad (Endprodukt) [D,Endprodukt]          & 26 Milimeter\\
-   \hline
-  Reibungskoeffizient [k]      & 0.3\\
-  \hline
-  \end{tabular}
-
-  \caption{Grössen für die Beschleunigungsberechnung}
-  \label{tab:groessen_beschleunigung}
-  \end{table}
-
-Das theoretische maximale Moment beziehungswiese die maximale Drehzahl kann jedoch nicht erreicht werden da diese durch die vorgegebene Speisung beschränkt ist.\\
-In der Konzeptphase wurde die theoretische Maximalbeschleunigung gemäss CAD-Daten der Lokomotive (siehe Tabelle \ref{tab:groessen_beschleunigung}) wie folgt berechnet:
-
-$$M_{Rad,Konzept}=F_{Rad} \cdot 0.5 \cdot D_{Rad_Konzept}= 0.1125N \cdot 0.5 \cdot 22mm = 1.24mNm$$
-$$M_{Rad,Prototyp}=F_{Rad} \cdot 0.5 \cdot D_{Rad,Endprodukt}= 0.1125N \cdot 0.5 \cdot 26mm = 1.46mNm$$
-
-$$\boldsymbol{a_{max}}=\frac{F_{Reibung}}{\frac{F_{Rad}}{g}}=\frac{0.1125N}{\frac{0.375N}{9.81m/s^2}}=\boldsymbol{2.94m/s^2}$$
-\\
-
-Bei den Probefahrten auf der vorgebenen Teststrecke (siehe Abschnitt "Teststrecke") hat sich eine maximale Beschleunigung von ... herausgestellt. Diese ergibt sich durch das Moment welches über das Getriebe auf die Räder übertragen wird, die Normalkraft des Zuges und der Reibwert zwischen Räder und Gleis. Dieser Wert entstand durch Messungen mit einem Beschleunigungsensor.\\
-
-\newpage
-
-\textbf{Maximale Geschwindigkeit}\\
-Die Maximale Geschwindigkeit in der Kurve wurde in der Theorie mit den gegebenen Grössen (siehe Tabelle \ref{tab:geschwindigkeitsberechnung}) folgendermassen berechnet:\\
-
-\begin{table}[H] \centering
-    \begin{tabular}{|l|l|}
-    \hline
-    \textbf{Grösse} & \textbf{Wert}\\
-    \hline
-    Minimaler Radius  [r]                               & 0.8 Meter\\
-     \hline
-    Masse [m]                                           & 3 Kilogramm\\
-    \hline
-    Schwerpunkt in x-Achse (maximaler Wert) [x]         & 0.0225 Meter\\
-    \hline
-    Schwerpunkt in y-Achse (maximaler Wert) [y]         & 0.05 Meter\\
-    \hline
-    \end{tabular}
-
-    \caption{Grössen für die Geschwindigkeitsberechnung}
-    \label{tab:geschwindigkeitsberechnung}
-    \end{table}
-
-Die Gewichts- und Zentripedalkraft, welche das Gleichungssystem für die Geschwindigkeitsberechnung bilden, sind wie folgt definiert:
-
-$$F_{G}=m \cdot g=3kg \cdot 9.81m/s^2=29.4N$$
-
-$$F_{max, z}=\frac{F_{G} \cdot x}{y}=\frac{29.4N \cdot 0.0225m}{0.05m}=13.24N$$
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.6\textwidth]{schwerpunkt.PNG}
-    \caption {Schwerpunkt der Lokomotive}
-    \label{fig:schwerpunkt}
-\end{figure}
-
-Da das Drehmoment eine vektorielle Grösse ist, müssen die beiden entstehenden Momente am Drehpunkt ''P'' am Gleis zusammen Null ergeben (siehe Abbildung \ref{fig:schwerpunkt}). Oder anders gesagt, müssen die beiden Momente gleich gross sein, damit das System ''statisch'' bestimmt ist. Die Berechnungen sind auf den kleinsten Kurvenradius ausgelegt, da dort die grösste Zentripedalkraft entsteht. Somit ergibt sich eine maximale Geschwindigkeit von 1.53 Meter pro Sekunde:
-
-$$F_{max, z}=\frac{m \cdot v_{max}^2}{r};\boldsymbol{v_{max}}=\sqrt\frac{F_{max, z}\cdot r}{m}=\sqrt\frac{13.24N \cdot 0.8m}{3kg}=\boldsymbol{1.53m/s}$$\\
-
-Gemäss den Messungen auf der Teststrecke ist eine maximale Geschwindigkeit von 2.2 Meter pro Sekunde erreichbar. Der limitierende Faktor ist nicht das Kippen beziehungseise entgleisen in der Kurve, sondern der Motor. Der Motor erreicht dieser Geschwindigkeit seine maximale Leistung mit den gegebenn Werten des Stromes und der Spannung. Somit fährt die Lokomotive 1.7 Meter pro Sekunde schneller als im Anforderungskatalog deklariert wurde und etwa 0.7 Meter pro Sekunde schneller als der theoretisch berechnete Wert. An Hand dieser Ergebnisse ist ersichtlich, dass der Schwerpunkt optimaler liegt, als angenommen wurde und zusätzlich die Kurvenvorrichtung dazu beiträgt, dass die Lokomotive in der Kurve schneller fahren kann.\\
-
 \textbf{Befestigung der Elektrokomponenten}\\
 Der Montageraum für die Elektrokomponenten ist beim Endprodukt nicht nur auf dem Führungswagen, sondern ebenfalls auf dem Antriebswagen. Auf dem Antriebswagen sind Elektrokomponenten mit Klett an der Antriebseinheit befestigt. Weiter sind Elektrokomponenten wie Buzzer oder Näherungssensor an den Freien Flächen der Lokomotive angebracht. Auf der Abbildung \ref{fig:elektrokomponenten} sind die montierten Elektorkomponenten und deren Verkablung ersichtlich.\\
 
@@ -258,28 +230,5 @@ Der Montageraum für die Elektrokomponenten ist beim Endprodukt nicht nur auf de
     \label{fig:schleifkontakte}
     \end{minipage} 
 \end{figure} 
-
-\newpage
-
-\subsection{Ergebnisse aus Versuchen und Tests}
-
-\textbf{Teststrecke}\\
-Die grösste Herausforderung an das Fahrwerk besteht bei einer Doppelkurve mit engem Radius (siehe oben mitte in Abbildung \ref{fig:teststrecke1}). Ansonsten erfüllt die Lokomotive die Anforderungen an die Strecke. Sie berührt das Lichtraumprofil und kein anderes Element auf der Testrecke, mit einer Ausnahme, dem Holzwürfel. Ein Problem für die Mechanik stellt die enge Doppelkurve dar, da dadurch grosse Kräfte an der Lokomotive entstehen, welche aber durch die Kurvenführung weitgehen behoben wird.\\
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\textwidth]{teststrecke1.PNG}
-    \caption {Aufbau Teststrecke}
-    \label{fig:teststrecke1}
-  \end{figure}
-
-\textbf{Wagenräder}\\
-Die Räder der Lokomotive sind für zwei Bereiche vorgesehen. Einerseits gibt es Räder für den Antriebswagen und andererseits solche für den Führungswagen. Die Räder für den Fürhungswagen haben im Gegensatz zu denen des Antriebswagens keine spezielle Bearbetiung. In einem ersten Veruch wurden die Reifen mit einem O-Ring versehen. Da der Anpressdruck durch das Gewicht der Lokomotive zu gering war und die Fuge nicht gleichmässig mit der Gummimasse gefüllt wurde, kippte der Zug leicht auf den Gleisen hin und her, da zusätzlich der Absatz für die Führung zu kurz war. In einem nächsten Schritt wurde ein Gummispray Schicht für Schicht auf die Räder gesprayt. Jedoch weissten diese bei der Testfahrt bereits grossen Verschleiss auf und ist somit für die Forderung nicht ausreichend. Als letzter und funktionsfähiger Versuch wurden die Räder mit einem speziellen Gummiband umwickelt. Die Funktion ist erfüllt und der Verschleiss hält sich in einem vernünftigen Rahmen.
-
-\textbf{Stromabnahme}\\
-In einem ersten Versuch wurde die Stromabnahme nur an einem Ort, dem Führungswagen, abgenommen. Jedoch ist die Gefahr gross, dass die Schleifkontakte bereits bei kleinsten Unebenheiten der Strecke den Kontakt verlieren und das System zum Absturz bringen. Somit wurden zusätzlich zwei Schleifkontakte am Antriebswagen befestigt, welche die Gefahr minimiert. Die Stromabnahme funktioniert nun mit der gewünschten Zuverlässigkeit.
-
-\textbf{Kurvenführung}\\
-Die Kurvenführung wurde in mehreren Testfahrten getestet und zeigte die gewünschten Effekte auf. Lediglich die Feder beziehungsweise die Federrate musste angepasst werden, damit der Anpressdruck der Stahlstifte genügend hoch ist und so der Zentripedalkraft der Lokomotive entgegenwirken kann.
 
 \end{document}
