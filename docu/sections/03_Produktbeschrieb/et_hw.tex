@@ -118,7 +118,7 @@
     Es wird ein Arduion IBT\_2 DC-Motoren Treiber mit einem BTS7960 eingesetzt. Dieses Bauteil kann Motoren mit einem Strom von bis zu 43A versorgen. \\
 
     \textbf{Antriebsmotor}\\
-    Als Antriebsmotor dient ein Maxon DCX 32 L. Dieser kann eine Leistung von bis zu 70 Watt umsetzen. \cite{MaxonDCX32L} Dies ist bei einer Versorgungsspannung von 24V spezifiziert. Da aber nicht die maximale Drehzahl benötigt wird, kann auch eine entsprechend tiefere Spannung angelegt werden. Die Drehzahlkonstante des Motors ist $350 \frac{min^{-1}}{V}$. Für die angestrebte Drehzahl von $5200min^{-1}$ ergibt sich eine Spannung von $$\frac{5200min^{-1}}{350 \frac{min^{-1}}{V}} =14.8V$$ Somit muss der Antriebsmotor mit einer Spannung von $14.8V$ versorgt werden.\\\textbf{\color{red}{TODO:korrekt verwendete Spannung einsetzen!}}
+    Als Antriebsmotor dient ein Maxon DCX 32 L. Dieser kann eine Leistung von bis zu 70 Watt umsetzen. \cite{MaxonDCX32L} Dies ist bei einer Versorgungsspannung von 24V spezifiziert. Da aber nicht die maximale Drehzahl benötigt wird, kann auch eine entsprechend tiefere Spannung angelegt werden. Die Drehzahlkonstante des Motors ist $350 \frac{min^{-1}}{V}$. Für die angestrebte Drehzahl von $5200min^{-1}$ ergibt sich eine Spannung von $$\frac{5200min^{-1}}{350 \frac{min^{-1}}{V}} =14.8V$$ Somit muss der Antriebsmotor mit einer Spannung von $14.8V$ versorgt werden.\\
 
     \textbf{Motortreiber für Schwenker-Motor}\\
     Da die Richtung immer dieselbe ist reicht für den Schwenker ein normaler DC-Motoren Treiber. Um eine sanfte Beschleunigung und Bremsung der Konstruktion zu ermöglichen, wird auch der Schwenker-Motor mit einem PWM angesteuert. Als Treiber wird ein Board mit einem L298N verwendet.\\
