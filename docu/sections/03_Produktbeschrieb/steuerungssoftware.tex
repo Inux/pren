@@ -26,7 +26,7 @@ ZeroMQ
 Protocol buffers, auch Protobuf, ist ein von Google entwickeltes Protokoll zum Senden und Empfangen von serialisierten und deserialisierten Daten über verschiedene Dienste. Google's Design Ziel für Protobuf liegt darin kleiner, einfacher und schneller als XML zu sein. Unterstützt werden alle häufig verwendet Sprachen wie: Python, Java, Objective-C, C\# und andere.
 
 \textbf{Beispiel Protobuf:}
-\lstinputlisting{../../../src/raspi/pb/direction.proto}
+\lstinputlisting{../src/raspi/pb/direction.proto}
 Man sieht nun, dass eine 'Direction' Mitteilung definiert wird. Diese hat ein String Attribut, welches direction heisst. Mit dieser Definition wird mithilfe eines 'protobuffer compiler' Code generiert. Dieser kann die definierte Message Serialisieren und Deserialisieren.
 
 \textbf{Beispiel Generierung für Python:}
@@ -36,7 +36,7 @@ Man sieht nun, dass eine 'Direction' Mitteilung definiert wird. Diese hat ein St
 Mithilfe von diesem Beispiel wird die Protobuf Definition (direction.proto) zu Python Code generiert.
 
 \textbf{Beispiel Generierter Python Code:}
-\lstinputlisting[language=Python]{../../../src/raspi/pb/direction_pb2.py}
+\lstinputlisting[language=Python]{../src/raspi/pb/direction_pb2.py}
 Das generierte Python File, welches mithilfe des 'protobuffer compiler' erzeugt wurde.
 
 \textbf{Protobuf Nachrichten} \\
@@ -64,27 +64,67 @@ Eine Auflistung aller verwendeter Protobuf Nachrichten, welche über die Middlew
    & message & String\\ \hline
   \end{tabular}
 \end{table}
-message Cube {
-    int32 state = 1; //e.g 1 = cube detected, 0 = cube NOT detected
-}
 
 
 \textbf{Kommunikationsmodule} \\
-\textbf{ZeroMQ Kommunikationsdiagramm} \\
-\textbf{Ablauf (mit Code)} \\
-\textbf{Hearbeat}
+\begin{figure}[H] \centering
+  \includegraphics[width=1\textwidth]{Architektur}
+  \caption{Kommunikation}
+  \label{fig:Kommunikation}
+\end{figure}
+Das Senden / Empfangen der Hearbeats wurde in obigem Diagram bewusst weggelassen, die Hearbeats haben keinen direkten Einfluss auf das Verhalten der Applikation und sind somit für die Steuerung irrelevant.
+
+\textbf{Heartbeat} \\
+Der Heartbeat spiegelt den Zustand des Moduls wieder, welches ihn sendet.
+Jedes Modul besitzt einen Hearbeat, welches in regelmässigen Abständen gesendet wird. Ein Modul kann folgende Zustände annehmen:
+\begin{table}[H]
+    \begin{tabular}{ll}
+    \hline
+    Starting & Während der Initialisierungsphase des Moduls \\ \hline
+    Running & Solange das Modul läuft\\ \hline
+    Error & Sobald ein Fehler gemeldet wird oder das Modul keinen Hearbeat mehr sendet\\ \hline
+    Finished & Nach Abschluss seiner eigentlichen Tätigkeit\\ \hline
+    \end{tabular}
+\end{table} 
+Folgende Module werden überwacht:
+\begin{table}[H]
+    \begin{tabular}{ll}
+    \hline
+    Line Detector & Liest die Richtung der aufkommenden Gleise während der Fahrt \\ \hline
+    Number Detector & Liest die Nummern während der Fahrt\\ \hline
+    Movement & Liest Geschwindigkeit und regelt die momentane Geschwindigkeit anhand dessen\\ \hline
+    Acoustic & Gibt die eingelesene Nummer akustisch wieder\\ \hline
+    Control Flow & Regelt den Ablauf der verschiedenen Phasen \\ \hline
+    \end{tabular}
+\end{table}
 \textbf{Codestruktur (Basisklasse)} \\
-Die Basisklasse wird von allen Modulen verwendet. Der Grund, weshalb die Basisklasse in diesem Kapitel beschrieben wird, ist dass der Zusammenhang mit dem obigen Kontext am einfachsten zu verstehen ist.
+Alle Module erben von der Basisklasse.\\
+\begin{lstlisting}
+  class Buzzer(base_app.App):
+    def __init__(self, *args, **kwargs):
+        super().__init__("Acoustic", self.acoustic_loop, *args, **kwargs)
+\end{lstlisting}
+Module teilen sich die Eigenschaft einer nebenläufigen Methode, welche Nachrichten aus der Middleware liest. Somit wurde diese Funktionalität in eine Basisklasse ausgelagert. Die Basisklasse führt die Methode aus bis die Applikation beendet wird.\\
+\begin{lstlisting}
+  def run(self):
+  try:
+      while not self.stopped:
+          self.loop(self.args, self.kwargs)
+  except ProgramKilled:
+      self.stopped = True
+\end{lstlisting}
+Das Auslesen, Senden und Verarbeiten der Daten erfolgt in jedem Modul separat.
 
 \subsubsection{Entwicklungsablauf}
-Enwurf, sowie erster Prototyp der WebApp wurden von Steve Ineichen anfangs von PREN1 erstellt. Das Hinzufügen immer weiterer Komponenten führte dazu, dass die WebApp im Laufe der Entwicklung kontinuierlich erweitert wurde.
+Bevor mit dem Ablauf begonnen wurde, stellten wir sicher, dass die einzelnen Module einwandfrei funktionieren, um Probleme während der Fahrt auf ein Minimum zu begränzen. Die Steuerungssoftware wurde gegen Ende von PREN2 entwickelt und getestet. \\
+
+Die Architektur war schon zu Beginn von PREN2 vefügbar und lauffähig. Während der Entwicklung von PREN2 wurde die Middleware kontinuierlich erweitert. Gegen Ende gab es ein Refactoring der Middleware Schnittstelle, wobei das Abonnieren von Nachrichten um ein Vielfaches einfacher wurde.
 
 \subsubsection{Testing}
-Eine spezifische Testingstrategie für Client oder Server existiert nicht. Die WebApp fungiert als Testingkomponente und ist somit Teststrategie der meisten Komponenten auf dem RasperryPi 3+.
-\\
-Das Testing erfolgt während des Entwicklungsablaufs automatisch. Wird eine neu eingebundene Komponente auf dem Client simuliert, so wird die Funktionalität der WebApp mitgetestet.
+Während dem Testen kamen verschiedene Probleme auf. Ein grosser Blocker war das Fahren selbst. Der Zug blockierte (bei niedrigen Geschwindigkeiten) und entgleiste oft. Dies erschwerte das Testen des kompletten Ablaufs erheblich. Das Problem wurde von unseren Mechanikern rasch beseitigt. \\
 
-\subsubsection{Reflexion}
-Eine Testingkomponente einzuführen war eine tolle Idee und hat sich während der Entwicklung sehr bewährt. Die WebApp liefert eine attraktive Übersicht betreffend den verschiedenen Komponenten.
+Bei der Ausgabe eines akustischen Signals wurde festgestellt, dass die Kabel falsch verbunden wurden. Auch war die Ausgabe des Signals nicht wie erwartet, was ebenfalls behoben wurde. \\
+
+Die Kamera wackelte während der Fahrt stark, wobei die Bilder verwackelt wurden. Mithilfe eines Gummiuntersatzes an der Kamerahalterung wurde dem Wackeln entgegengewirkt. Das Ergebnis waren einiges schärfere Bilder.
 
 \end{document}
