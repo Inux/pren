@@ -36,6 +36,8 @@
 
     Somit ist jedes System auf Informationen des anderen angewiesen. Deshalb ist eine klare Definition der Schnittstelle der beiden Komponenten nötig. Im folgenden Kapitel \ref{interface_pi_tiny} wird diese Interface genauer beschrieben.
 
+    \pagebreak
+
     \subsection{Interface zwischen Pi und Tiny} \label{interface_pi_tiny}
     Dieses Kapitel beschreibt die Kommunikation zwischen der Systemsteuerung auf dem Raspberry Pi und dem Mikrocontroller MK22FN512VLH12 auf dem Entwicklerboard TinyK22. Dabei sollen Informationen zur aktuellen Situation, sowie auch Informationen zum aktuellen Status des jeweiligen Systems ausgetauscht werden.\\
     Diese Kommunikation soll es den Systemen ermöglichen, die zugewiesenen Aufgaben gemäss Kapitel \ref{aufgabentrennung_pi_tiny} zu erfüllen.
@@ -51,6 +53,8 @@
     Die Frames bestehen jeweils aus einem Bezeichner (Key) und einem Wert (Value). Diese werden mit einem Komma getrennt. Als Abschluss dient das New Line Zeichen '\textbackslash n'. Somit sieht ein Informationsstück folgendermassen aus: $$\{Key\},\{Value\}\textbackslash n$$
     Zum Beispiel würde eine Information zur Geschwindigkeit folgendermassen aussehen: $$speed,200$$
     Die gesamten Informationen werden als Zeichenkette (String) im Ascii Format verschickt. Zahlenwerte werden jeweils vor dem Senden in einen String umgewandelt und nach dem Empfangen wieder in einen Zahlenwert zurückkonvertiert. Dies verbessert die Leserlichkeit, was zum Testen und Simulieren der Kommunikation sehr hilfreich sein kann.
+
+    \pagebreak
 
     \textbf{Frames Inhalte}\\
     In Tabelle \ref{tab:frame_pi_tiny} sind die Schlüsselwörter (Key) und die zugehörigen möglichen Werte aufgeführt.\\
@@ -71,6 +75,8 @@
         \caption{Schlüsselwörter und mögliche Werte Kommunikation Pi $\Leftrightarrow$ Tiny}
         \label{tab:frame_pi_tiny}
         \end{table}
+
+        \pagebreak
 
         \textbf{Acknowledge (ack)}\\
         Um eine zuverlässige Informationsübertragung zu garantieren bestätigen sich die Systeme jeweils den Empfangen eines Frames mit einer Acknowledge Nachricht. Der Inhalt dieser Nachricht ist der Schlüssel der Empfangen Nachricht. Bleibt also ein Acknowledge für zu lange zeit aus, kann das System davon ausgehe, dass das Frame gat nicht oder nicht korrekt angekommen ist.\\

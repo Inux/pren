@@ -29,6 +29,8 @@ Protocol buffers, auch Protobuf, ist ein von Google entwickeltes Protokoll zum S
 \lstinputlisting{../src/raspi/pb/direction.proto}
 Man sieht nun, dass eine 'Direction' Mitteilung definiert wird. Diese hat ein String Attribut, welches direction heisst. Mit dieser Definition wird mithilfe eines 'protobuffer compiler' Code generiert. Dieser kann die definierte Message Serialisieren und Deserialisieren.
 
+\pagebreak
+
 \textbf{Beispiel Generierung für Python:}
 \begin{lstlisting}
     protoc -I=pb --python_out=pb pb/direction.proto
@@ -38,6 +40,8 @@ Mithilfe von diesem Beispiel wird die Protobuf Definition (direction.proto) zu P
 \textbf{Beispiel Generierter Python Code:}
 \lstinputlisting[language=Python]{../src/raspi/pb/direction_pb2.py}
 Das generierte Python File, welches mithilfe des 'protobuffer compiler' erzeugt wurde.
+
+\vspace{1cm}
 
 \textbf{Protobuf Nachrichten} \\
 Eine Auflistung aller verwendeter Protobuf Nachrichten, welche über die Middleware gesendet werden.
@@ -64,6 +68,8 @@ Eine Auflistung aller verwendeter Protobuf Nachrichten, welche über die Middlew
    & message & String\\ \hline
   \end{tabular}
 \end{table}
+
+\pagebreak
 
 
 \textbf{Kommunikationsmodule} \\
@@ -97,6 +103,9 @@ Folgende Module werden überwacht:
     Control Flow & Regelt den Ablauf der verschiedenen Phasen \\ \hline
     \end{tabular}
 \end{table}
+
+\pagebreak
+
 \textbf{Codestruktur (Basisklasse)} \\
 Alle Module erben von der Basisklasse.\\
 \begin{lstlisting}
