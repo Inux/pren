@@ -56,9 +56,10 @@ Wenn wir alles richtig gemacht haben sollte nun folgendes Fenster erscheinen:
     \label{fig:HotSpot}
 \end{figure}
 
-Nach einigen Sekunden sollte ein Eintrag (neue Verbindung zum Hotspot) erscheinen: {todo} Foto hinzufügen.
-Die IPv4 Adresse (siehe oben) in den Zwischenspeicher kopieren (Ctrl + C). Die IP-Adresse werden wir später noch verwenden, am Besten speichert man diese in einem Textfile oder Ä
-Mithilfe dessen eine Verbindung mittels Putty und SHH erstellen:
+Nach einigen Sekunden sollte ein Eintrag mit Informationen über den Raspi erscheinen.
+Die IPv4 Adresse (Format ähnlich wie '192.168.1.12') in den Zwischenspeicher kopieren (Ctrl + C). Die IP-Adresse werden wir später noch verwenden, speichert diese in einem Textdokument (Z.B. Word). \\
+
+Mithilfe der erhaltenen IPv4 Adresse eine Verbindung mit Putty und SHH erstellen:
 
 \begin{itemize}
     \item Starte PuTTY
@@ -83,7 +84,7 @@ Wenn wir alles richtig gemacht haben sollte nun folgendes Fenster erscheinen:
 \textbf{Raspberry Pi}\\
 Von unserem Home Verzeichnis navigieren wir weiter zum Code: \\
 \begin{lstlisting}
-    cd Actual Path
+    cd team28/src/raspi
 \end{lstlisting}
 Von hier aus haben wir verschiedene Möglichkeiten die Applikation zu starten. \\
 
@@ -102,7 +103,7 @@ Das Skript startet zudem einen WebServer, über welchen wir die Applikation bedi
 \textbf{Web Server}\\
 Der WebServer wird auf dem Port :2828 gestartet und kann jederzeit über die IP-Adresse des Raspi aufgerufen werden.
 \begin{itemize}
-    \item Browser starten (Firofox, Chrome, IE o.Ä)
+    \item Browser starten (Firofox, Chrome, IE ...)
     \item In URL-Leiste folgendes eingeben: <IPv4>:2828/
 \end{itemize}
 
@@ -120,7 +121,7 @@ Der Web Client ist in 3 Teilbereiche aufgeteilt.
     \item Simulation
     \item Start
 \end{itemize}
-Zwischen den beiden Bereichen 'Simulation' und 'Start' kann über die Checkbox "Simulation Mode" in der "Übersicht" gewechselt werden.
+Zwischen den beiden Bereichen 'Simulation' und 'Start' kann über die Checkbox 'Simulation Mode' in der 'Übersicht' gewechselt werden.
 \textbf{Übersicht}\\
 \begin{figure}[H] \centering
     \includegraphics[width=0.75\textwidth]{UebersichtWebApp}
@@ -156,7 +157,7 @@ Jedes Modul besitzt einen Hearbeat, welches in regelmässigen Abständen gesende
     Starting & Während der Initialisierungsphase des Moduls \\ \hline
     Running & Solange das Modul läuft\\ \hline
     Error & Sobald ein Fehler gemeldet wird oder das Modul keinen Hearbeat mehr sendet\\ \hline
-    Finished & Nach Abschluss seiner eigentlichen Tätigkeit\\ \hline
+    Finished & Nach Abschluss seiner Tätigkeit\\ \hline
     \end{tabular}
 \end{table} 
 Folgende Module werden überwacht:
