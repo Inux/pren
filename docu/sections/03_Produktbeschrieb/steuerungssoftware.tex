@@ -20,7 +20,7 @@ Die Steuerungssoftware wird wie in PREN beschrieben mittels der Middleware Techn
 Einblick in verwendete Technologien, sowie ein Überblick über Programmstruktur und Aufbau der Middleware. 
 
 \textbf{ZeroMQ} \\
-ZeroMQ 
+ZeroMQ % TODO-IT: Ergänzung nötig oder löschen
 
 \textbf{Protocol buffers} \\
 Protocol buffers, auch Protobuf, ist ein von Google entwickeltes Protokoll zum Senden und Empfangen von serialisierten und deserialisierten Daten über verschiedene Dienste. Google's Design Ziel für Protobuf liegt darin kleiner, einfacher und schneller als XML zu sein. Unterstützt werden alle häufig verwendet Sprachen wie: Python, Java, Objective-C, C\# und andere.
@@ -125,9 +125,9 @@ Module teilen sich die Eigenschaft einer nebenläufigen Methode, welche Nachrich
 Das Auslesen, Senden und Verarbeiten der Daten erfolgt in jedem Modul separat.
 
 \subsubsection{Entwicklungsablauf}
-Bevor mit dem Ablauf begonnen wurde, stellten wir sicher, dass die einzelnen Module einwandfrei funktionieren, um Probleme während der Fahrt auf ein Minimum zu begränzen. Die Steuerungssoftware wurde gegen Ende von PREN2 entwickelt und getestet. \\
+Bevor mit dem Ablauf begonnen wurde, stellten wir sicher, dass die einzelnen Module einwandfrei funktionieren, um Probleme während der Fahrt auf ein Minimum zu begrenzen. Die Steuerungssoftware wurde gegen Ende von PREN2 entwickelt und getestet. \\
 
-Die Architektur war schon zu Beginn von PREN2 vefügbar und lauffähig. Während der Entwicklung von PREN2 wurde die Middleware kontinuierlich erweitert. Gegen Ende gab es ein Refactoring der Middleware Schnittstelle, wobei das Abonnieren von Nachrichten um ein Vielfaches einfacher wurde.
+Die Architektur war schon zu Beginn von PREN2 verfügbar und lauffähig. Während der Entwicklung von PREN2 wurde die Middleware kontinuierlich erweitert. Gegen Ende gab es ein Refactoring der Middleware Schnittstelle, wobei das Abonnieren von Nachrichten um ein Vielfaches einfacher wurde.
 
 \subsubsection{Testing}
 Während dem Testen kamen verschiedene Probleme auf. Ein grosser Blocker war das Fahren selbst. Der Zug blockierte (bei niedrigen Geschwindigkeiten) und entgleiste oft. Dies erschwerte das Testen des kompletten Ablaufs erheblich. Das Problem wurde von unseren Mechanikern rasch beseitigt. \\

@@ -50,8 +50,8 @@ Der Sensor wir für jede Achse separat angeschprochen, die erhaltenen Daten werd
 
 \subsubsection{Entwicklungsablauf}
 Es gibt es Vielzahl ähnlicher Beschleunigungssensoren auf dem Markt und somit auch mehr als genügend Bibliotheken auf dem Internet. Das Finden einer kompatiblen Bibliotheken erwies sich somit als eher trivial. Als nächstes wurde der Sensor an den GPIO Bus angeschlossen und mithilfe einer Testapplikation getestet. \\
-Der Sensor reagierte jedoch nicht und so ging es weiter mit der Fehleranalyse. Nach dem Ausführen verschiedener anderer Applikationen und dem Austausch des Sensors wurde ich bald fündig. Wie sich heraustellte war das ganze nicht ganz so trivial wie gedacht und die Applikation muss auf Sensor, sowie GPIO angepasst werden. Ein Informatiker am Werk : )\\
-Mit einem funktionierenden Sensor, konnte ich fortfahren und schrieb eine Klasse, welche den Sensor im 50ms Takt ausliest und weitergiebt. Die WebApp und die Middleware wurde noch entsprechend angepasst.\\
+Der Sensor reagierte jedoch nicht und so ging es weiter mit der Fehleranalyse. Nach dem Ausführen verschiedener anderer Applikationen und dem Austausch des Sensors wurde ich bald fündig. Wie sich herausstellte war das ganze nicht ganz so trivial wie gedacht und die Applikation muss auf Sensor, sowie GPIO angepasst werden. Ein Informatiker am Werk : )\\
+Mit einem funktionierenden Sensor, konnte ich fortfahren und schrieb eine Klasse, welche den Sensor im 50ms Takt ausliest und weitergibt. Die WebApp und die Middleware wurde noch entsprechend angepasst.\\
 
 \subsubsection{Testing}
 Anfangs wurde die Komponente über eine einfache Klasse mit Ausgabe auf ein Terminal Fenster getestet. Nach der Anbindung an das WebApp konnte die Beschleunigung jederzeit auf dem Web-Client angesehen werden. Eine plausibilisierung der erhaltenen Daten erfolgte nicht. Wir haben volles Vertrauen in den Sensor und die in der Applikation erfolgende Umrechnung.
