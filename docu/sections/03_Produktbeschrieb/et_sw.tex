@@ -112,7 +112,7 @@
     Diese Komponente stellt Funktionen zur verfügung um den Sensor zu initialisieren und danach bei Bedarf den aktuellen Messwert auszulesen.\\
 
     \textbf{cubeDetection}\\
-    Diese Komponente wertet die Daten des des TOF-Sensors aus und entscheidet, wann der Würfel erkannt wurde. Die Funktion cubeDoWork() wird periodisch als Task aufgerufen. Dort wird der TOF-Sensor ausgelesen und der gemessene Wert mit einem Schwellwert verglichen. Die Ermittlung dieses Schwellwertes ist in Kapitel \ref{et_sensoren} beschrieben.\\
+    Diese Komponente wertet die Daten des TOF-Sensors aus und entscheidet, wann der Würfel erkannt wurde. Die Funktion cubeDoWork() wird periodisch als Task aufgerufen. Dort wird der TOF-Sensor ausgelesen und der gemessene Wert mit einem Schwellwert verglichen. Die Ermittlung dieses Schwellwertes ist in Kapitel \ref{et_sensoren} beschrieben.\\
     Das Modul kann drei Zustände einnehmen. Diese sind ''notFound'', ''finding'' und ''found''. Der Initialzustand ist ''notFound''.\\
     Sobald der Schwellwert bei einer Messung unterschritten wurde, wird der Zustand in ''finding'' geändert und es werden noch 20 weitere Messungen durchgeführt und mit dem Schwellwert verglichen. Von diesen 20 Messungen müssen mindestens 90\% den Schwellwert ebenfalls unterschreiten um in den Zustand ''found'' zu wechseln. Durch diese Verifizierung können einzelne Fehlmessungen gefiltert werden. Werden die 90\% bei der Verifizierung nicht erreicht wird noch überprüft ob mindestens 50\% den Schwellwert unterschritten haben. Ist dies der Fall wird sofort eine neuer Verifizierung gestartet und der Zustand bleibt auf ''finding''. Ist dies nicht der Fall geht das Modul wieder in den Zustand ''notFound''.\\
     Abbildung \ref{fig:et_cube_detection_proc} veranschaulicht den Ablauf der Würfelerkennung.
@@ -144,7 +144,7 @@
     Die Komponente motor setzt den Hardware Timer des Mikrocontrollers gemäss den Vorgaben. Dabei kann mit der Funktion ''motor\_A\_SetPwm()'' der Duty-Cycle des PWMs eingestellt werden. Dabei kann ein Wert zwischen  $-100'000$ und $100'000$ übergeben werden. Das Vorzeichen bestimmt dabei die Richtung. ($-$ entspricht rückwärts fahren)\\
 
     \textbf{quad}\\
-    Mit der Komponente quad wird die wahre Geschwindigkeit des Zuges bestimmt. Dazu werden die Impulse des des Quadraturencoders über eine bestimmte Zeit gezählt und daraus die Geschwindigkeit bestimmt. Um die Zeit des Messintervalls möglichst genau zu haben wird dafür ein Timer eingesetzt. Dieser überläuft jeweils nach $10 ms$. Beim Überlauf dieses Timers werden die Anzahl Impulse gespeichert und der Zähler wieder auf null zurückgesetzt.\\
+    Mit der Komponente quad wird die wahre Geschwindigkeit des Zuges bestimmt. Dazu werden die Impulse des Quadraturencoders über eine bestimmte Zeit gezählt und daraus die Geschwindigkeit bestimmt. Um die Zeit des Messintervalls möglichst genau zu haben wird dafür ein Timer eingesetzt. Dieser überläuft jeweils nach $10 ms$. Beim Überlauf dieses Timers werden die Anzahl Impulse gespeichert und der Zähler wieder auf null zurückgesetzt.\\
     Die Geschwindigkeit des Zuges kann dann mit der Formel \ref{eq:et_v_zug} auf Seite \pageref{eq:et_v_zug} in der Software bestimmt werden.
 
     \textbf{drive}\\

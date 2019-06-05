@@ -79,7 +79,7 @@
         \pagebreak
 
         \textbf{Acknowledge (ack)}\\
-        Um eine zuverlässige Informationsübertragung zu garantieren bestätigen sich die Systeme jeweils den Empfangen eines Frames mit einer Acknowledge Nachricht. Der Inhalt dieser Nachricht ist der Schlüssel der Empfangen Nachricht. Bleibt also ein Acknowledge für zu lange zeit aus, kann das System davon ausgehe, dass das Frame gar nicht oder nicht korrekt angekommen ist.\\
+        Um eine zuverlässige Informationsübertragung zu garantieren bestätigen sich die Systeme jeweils den Empfangen eines Frames mit einer Acknowledge Nachricht. Der Inhalt dieser Nachricht ist der Schlüssel der Empfangen Nachricht. Bleibt also ein Acknowledge für zu lange Zeit aus, kann das System davon ausgehe, dass das Frame gar nicht oder nicht korrekt angekommen ist.\\
 
         \textbf{Periodische Frames}\\
         Die Information über die akutelle Geschwindigkeit (is\_speed) wird alle 50ms vom Tiny zum Pi geschickt. Neben dem Austausch der Information dient dies auch als Lebenszeichen vom Tiny. Wenn das Tiny die aktuelle Geschwindigkeit nicht mehr schickt kann das Pi davon ausgehen, dass es ein Problem gibt und kann darauf reagieren indem z.B. der Benutzer über das Web-Interface informiert wird. Mit den Acknowledge Nachrichten auf die is\_speed Frames weiss auch das Tiny jeweils, dass das System auf dem Pi noch korrekt läuft. Bleibt ein Acknowledge auf ein is\_speed Frame zu lange aus kann das Tiny darauf reagieren indem es den Zug sicher zum Stillstand bringt bis das Pi wieder reagiert und neue Befehle schickt.\\
