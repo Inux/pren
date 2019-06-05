@@ -1,7 +1,7 @@
 \documentclass[../../main.tex]{subfiles}
 \graphicspath{{images/imagesPREN1/}{../../images/imagesPREN1/}}
 \begin{document}
-\subsection{Würfelaufnahme}
+\subsection{Würfelaufnahme} \label{mt_wuerfel}
 Um den Würfel rechts neben der Gleisstrecke aufzunehmen, wird eine einfache Lösung umgesetzt, steuerungstechnisch sowie mechanisch. Die Würfelaufnahme wird mit einem Draht und einem Stab durchgeführt. Damit nur ein Aktor angesteuert werden muss, wird von dem Prinzip einer Kurvenscheibe Gebrauch gemacht. Die gesamte Vorrichtung besteht grundsätzlich aus drei Elementen: Einem Kran zur Lastaufnahme, einem Antriebsstrang und der Kurvenscheibe. Wesentlichster Unterschied zum Grundkonzept aus PREN1 ist die Einführung bis zum Anschlag damit der Würfel sich nicht drehen kann während der Lastaufnahme. Unten auf der Abbildung ist die Einführung dargestellt. Weiter wurde eine zweite Revision der Kurvenscheibe gedruckt mit einigen Optimierungen. Hauptgrund war aber dass die Drehbewegung des Krans nun über 90 Grad ist. Das verschafft Gewissheit, das der Würfel an den Anschlag gedrückt wird und am für ihn bestimmten Ort zu liegen kommt.\\
 
         \begin{figure}[H]
@@ -16,7 +16,9 @@ Um den Würfel rechts neben der Gleisstrecke aufzunehmen, wird eine einfache Lö
         \begin{figure}[H]
             \centering
             \includegraphics[width=0.4\textwidth]{WuerfelaufnahmeBG.JPG}
-            \caption {Kran}
+            \hspace{1.5cm}
+            \includegraphics[width=0.35\textwidth]{Kran/Testaufbau.JPG}
+            \caption {Links: Kran Planung / Rechts: Kran Umsetzung}
         \end{figure}
 
 
@@ -29,11 +31,7 @@ Um den Würfel rechts neben der Gleisstrecke aufzunehmen, wird eine einfache Lö
         Das zweite Zahnrad jedoch wurde nur als STEP von Mädler heruntergeladen und anschliessend im CAD bearbeitet. Die
         Bohrung und der Flansch in der Mitte wurden verlängert und mit zwei Längsnuten versehen. Die Bohrung gilt als
         Axialführung und die Nuten dienen als Drehmomentübertragung.
-        \begin{figure}[H]
-            \centering
-            \includegraphics[width=0.4\textwidth]{Mechanismus.JPG}
-            \caption {Kran Antriebsstrang}
-        \end{figure}
+ 
 
         \subsubsection{Kurvenscheibe}
         Die Kurvenscheibe ist ebenfalls ein 3D-Druckteil. Der Grundkörper ist ein Rohr mit dem Aussendurchmesser 80 mm. An diesem wurden zwei Bahnführungen mittels Freiformflächen für den Kranausleger erzeugt. Die Steigung dieser Flächen ist variabel. Zu Beginn ist die Steigung gering und wird dann exponentiell grösser. Dies wurde aus dem einen Grund gewählt, damit das Anfahren für den Motor nicht zu streng ist. Nachdem die Drehbewegung und der vertikale Hub gemacht wurden, stoppt der Motor und der Kranausleger sollte durch die Schwerkraft heruntergezogen werden. Der Würfel wird nun in der für ihn vorgesehenen Aufnahme auf dem Zug platziert.\\
@@ -41,22 +39,21 @@ Um den Würfel rechts neben der Gleisstrecke aufzunehmen, wird eine einfache Lö
 
         \begin{figure}[H]
             \centering
-            \includegraphics[width=0.45\textwidth]{Kurvenscheibe.JPG}
-            \caption {Kurvenscheibe}
+            \includegraphics[width=0.3\textwidth]{Mechanismus.JPG}
+            \hspace{1.5cm}
+            \includegraphics[width=0.3\textwidth]{Kurvenscheibe.JPG}
+            \caption {Links: Kran Antriebsstrang / Rechts: Kurvenscheibe}
         \end{figure}
     
 
         \subsubsection{Testaufbau}
         Der Testaufbau besteht hauptsächlich aus 3D-Druckteilen und weichen Kunststoffen. Er dient momentan als Funktionsmuster. Wenn sich dieser weiter bewährt, möchte man mit den gefertigten Teilen weiterarbeiten. Der Test dient zur Probe des ausgewählten Lösungskonzepts der Würfelaufnahme. Erste Tests zeigen, dass die Funktion mit kleinen Anpassungen direkt umgesetzt werden kann.
 
-        \begin{figure}[H]
-            \centering
-            \includegraphics[width=0.6\textwidth]{Kran/Testaufbau.JPG}
-            \caption {Testaufbau}
-        \end{figure}
         
         \subsubsection{Finale Umsetzung}
         Für die endgültige Lösung werden wie bereits erwähnt einige Anpassungen an der Kurvenscheibe und am Anschlag vorgenommen. Auf der Abbildung unten ist die endgültige Version der Würfelaufnahme zu sehen. 
+
+        \vspace{1.5cm}
 
         \begin{figure}[H]
             \centering
@@ -64,8 +61,10 @@ Um den Würfel rechts neben der Gleisstrecke aufzunehmen, wird eine einfache Lö
             \caption {Würfelaufnahme}
         \end{figure}
 
-    \subsection{Motorauslegung}
-          Um die Aufgabenstellung der schnellen Fahrt auf Schienen bestmöglichst zu erfüllen, wird ein zuverlässiger
+    \pagebreak
+
+    \subsection{Motorauslegung} \label{mt_motor}
+          Um die Aufgabenstellung der schnellen Fahrt auf Schienen bestmöglich zu erfüllen, wird ein zuverlässiger
           starker Motor benötigt. Um einen solchen aus einer Vielzahl von Auswahlmöglichkeiten zu definieren, hat man
           sich auf den Katalog definiert maxon motor ag beschränkt. Im Anhang findet man ein Dokument mit den
           Berechnungen zur Motorauswahl. In Absprache der Disziplinen Elektrotechnik und Maschinentechnik wurde ein

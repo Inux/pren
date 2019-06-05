@@ -2,7 +2,7 @@
 \graphicspath{{images/Akustik/}{../../images/Akustik/}}
 \begin{document}
 \subsection{Akustik}
-In diesem Kapitel wird auf die Implementierung der technischen Komponente 'Akustik' eingegangen. Die akustische Ausgabe einer Zahl eine Teilanforderung für den korrekten Ablauf von Pren. Während der Fahrt wird ein Signal mit einer Nummer gelesen, diese Nummer wird am Ende der Fahrt akustisch wiedergegeben.
+In diesem Kapitel wird auf die Implementierung der technischen Komponente 'Akustik' eingegangen. Die akustische Ausgabe einer Zahl eine Teilanforderung für den korrekten Ablauf von PREN. Während der Fahrt wird ein Signal mit einer Nummer gelesen, diese Nummer wird am Ende der Fahrt akustisch wiedergegeben.
 
 \subsubsection{Anforderung}
 
@@ -17,7 +17,7 @@ In diesem Kapitel wird auf die Implementierung der technischen Komponente 'Akust
 \end{itemize}
 
 \subsubsection{Lösung}
-Die Lösung entspricht dem Lösungskonzept aus Pren1. Sobald ein Signal, in Form einer Zahl von 1-10, erhalten wird, buzzt der Buzzer die entsprechende Anzahl.
+Die Lösung entspricht dem Lösungskonzept aus PREN1. Sobald ein Signal, in Form einer Zahl von 1-10, erhalten wird, buzzt der Buzzer die entsprechende Anzahl.
 
 \paragraph{Technologien / Komponente}
 Über die GPIO Header des Raspberry Pi kann der Buzzer direkt angesprochen und versorgt werden. Ein einzelnes Signalkabel reicht für die Kommunikation aus.
@@ -52,7 +52,7 @@ Anbindung des Buzzers an den Raspberry Pi 3 B+ via GPIO Bus.
 \paragraph{Prozessablauf}
 
 \subsubsection{Entwicklungsablauf}
-Logik und Aufbau für die Kommunikation mit dem Buzzer war bereits aus Pren1 vorhanden. Die Herausforderung lag lediglich in der Kommunikation mit der Applikation. Der Buzzer wurde mithilfe einer Akustik-Klasse an die Middleware gebunden. Zuletzt wird die WebApp mit einer Akustik-Schnittstelle erweitert, welche das Senden von Akustik-Signalen erlaubt. 
+Logik und Aufbau für die Kommunikation mit dem Buzzer war bereits aus PREN1 vorhanden. Die Herausforderung lag lediglich in der Kommunikation mit der Applikation. Der Buzzer wurde mithilfe einer Akustik-Klasse an die Middleware gebunden. Zuletzt wird die WebApp mit einer Akustik-Schnittstelle erweitert, welche das Senden von Akustik-Signalen erlaubt. 
 
 \subsubsection{Testing}
 Über die Akustik-Schnittstelle auf der WebApp kann der Buzzer jederzeit getestet werden.
