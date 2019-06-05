@@ -11,7 +11,7 @@
 
     \begin{document}
     \subsection{Elektrische Verbindungen} \label{et_verbindungen}
-    Dieses Kapitel beschreibt die Verbindungen der Elektronischen Komponenten für die Stromversorgung und Kommunikation. Die Abbildung \ref{fig:et_komponenten} veranschaulicht den Aufbau der Elektronik. Darauf sind alle Verbindungen für die Kommunikation der Logik und die Stromversorgung eingezeichnet. Details zu den Lokigverbindungen mit den Sensoren und Aktoren werden im Kapitel \ref{et_Komponenten} erläutert. Für eine bessere Übersicht wurden die beiden Raspberry Pi's zusammengefasst als nur eine Komponente dargestellt.\\
+    Dieses Kapitel beschreibt die Verbindungen der Elektronischen Komponenten für die Stromversorgung und Kommunikation. Abbildung \ref{fig:et_komponenten} veranschaulicht den Aufbau der Elektronik. Darauf sind alle Verbindungen für die Kommunikation der Logik und die Stromversorgung eingezeichnet. Details zu den Logikverbindungen mit den Sensoren und Aktoren werden im Kapitel \ref{et_Komponenten} erläutert. Für eine bessere Übersicht wurden die beiden Raspberry Pi's zusammengefasst als nur eine Komponente dargestellt.\\
     Im Zentrum der Elektronik ist der Mikrocontroller Tiny K22. Die Software auf dem Mikrocontroller initialisiert alle Komponenten, überwacht deren Status und sendet die nötigen Informationen an das Pi. Diese Schnittstelle ist detailliert im Kapitel \ref{interface_pi_tiny} beschrieben. Weiteres Angaben zur implementierten Software auf dem Tiny werden in Kapitel \ref{et_software_tiny} beschrieben.\\
 
     \begin{figure}[H]
@@ -51,7 +51,7 @@
     \end{figure}
 
     \subsection{Elektronik Komponenten} \label{et_Komponenten}
-    In diesem Kapitel werden die einzelnen Komponenten beschreiben, die für die Steuerung des Soul Train verwendet werden. Dies beinhaltet alle Sensoren und Aktoren, die mit den Mikrocontroller TinyK22 verbunden sind.
+    In diesem Kapitel werden die einzelnen Komponenten beschreiben, die für die Steuerung des Zuges verwendet werden. Dies beinhaltet alle Sensoren und Aktoren, die mit den Mikrocontroller TinyK22 verbunden sind.
 
     \subsubsection{Sensoren} \label{et_sensoren}
     Mit diversen Sensoren sollen folgende Daten aufgenommen werden.
@@ -84,7 +84,9 @@
     $U$  Mechanische Übersetzung  $=2$\\
 
     \textbf{Position}\\
-    Durch das Zählen aller Impulse ab dem Start, kann die absolut zurückgelegte Distanz bestimmt werden. Diese Informationen wurde in der Umsetzung jedoch nicht benötigt und wurde somit auch nicht implementiert. Deshalb wird dies hier nicht weiter erläutert.
+    Durch das Zählen aller Impulse ab dem Start, kann die absolut zurückgelegte Distanz bestimmt werden. \\Auch kann die zurückgelegte Distanz durch eine Integration der Geschwindigkeit bestimmt werden. Unter der Annahme, dass zu Beginn der Messung zum Zeitpunkt $t = 0$ die zurückgelegte Strecke $0$ ist $(s(t=0) = 0)$, kann die Geschwindigkeit zum Zeitpunkt $t$ bestimmt werden mit $$s(t) = \int_{0}^{t} v(x) dx$$\\
+    Da aber auf einem Digitalen System die Daten nur zu diskreten Zeitpunkten ausgewertet werden können, ergibt sich dann eine Summen der Geschwindigkeiten zum Zeitpunkt $k$ $$s[k] = \sum_{i=0}^{k}v[i] \Delta t$$\\
+    Die Geschwindigkeit wird gemäss der Beschreibung oben bestimmt.
 
     
     \textbf{Distanz rechts (Erkennung Würfel) }\\
@@ -100,8 +102,8 @@
     \end{figure}
 
     \textbf{Schwenkerwinkel}\\
-    Um der Zurückgelegte Winkel des Schwenkers zu ermitteln ist auch auf dem Motor des Schwenkers ein Quadratur Encoder befestigt. Dieser Verhält sich vom Prinzip identisch wie der Encoder auf dem Antriebsmotor. Um den zurückgelegten Winkel zu ermitteln werden die Anzahl Impulse des Encoders gezählt. Der Motor muss den Schwenker drehen bis ein bestimmter Zielwert der Impulse erreicht ist. Dieser Zielwert wird mit der Mechanik messtechnisch ermittelt idem der Schwenker von Hand von der Start- bis zur Zielposition bewegt wird. (siehe Abbildung \ref{fig:et_schwenker_messung}) Die dabei gemessene Anzahlt Impulsen über die ganze Bewegung entspricht dem Zielwert.\\
-    Diese Messung ergabe $5435$ Impulse für den nötigen Winkel.
+    Um der Zurückgelegte Winkel des Schwenkers zu ermitteln ist auch auf dem Motor des Schwenkers ein Quadratur Encoder befestigt. Dieser Verhält sich vom Prinzip identisch wie der Encoder auf dem Antriebsmotor. Um den zurückgelegten Winkel zu ermitteln werden die Anzahl Impulse des Encoders gezählt. Der Motor muss den Schwenker drehen bis ein bestimmter Zielwert der Impulse erreicht ist. Dieser Zielwert wird mit der Mechanik messtechnisch ermittelt indem der Schwenker von Hand von der Start- bis zur Zielposition bewegt wird. (siehe Abbildung \ref{fig:et_schwenker_messung}) Die dabei gemessene Anzahlt Impulsen über die ganze Bewegung entspricht dem Zielwert.\\
+    Diese Messung ergab $5435$ Impulse für den nötigen Winkel.
 
     \begin{figure}[H]
         \centering

@@ -29,7 +29,7 @@
     \end{table}
 
 
-    In Abbildung \ref{fig:et_mc_softwarekonzept} ist die Aufteilung veranschaulicht. Mit grün sind jeweisl die einzelnen Module gekennzeichnet. Die Module benutzen jeweils ihre Komponenten abwärts bis zum Zugriff auf die Hardware. In Abbildung \ref{fig:et_mc_softwarekonzept} gelb gekennzeichnet repräsentiert die Komponenten, welche auf die Hardware des Mikrocontrollers zugreifen. Orange kennzeichnet die Komponenten, welche als Schnittstellen zwischen dem Hardwarezugriff und der Logik dienen. Diese Bereiten Informationen der Hardware auf in ein Format, dass die Logik gut verarbeiten kann. Die Logik ist in den rot gekennzeichneten Komponenten implementiert. Diese verarbeitet die Daten und trifft Entscheidungen.
+    In Abbildung \ref{fig:et_mc_softwarekonzept} ist die Aufteilung veranschaulicht. Mit grün sind jeweils die einzelnen Module gekennzeichnet. Die Module benutzen jeweils ihre Komponenten abwärts bis zum Zugriff auf die Hardware. In Abbildung \ref{fig:et_mc_softwarekonzept} gelb gekennzeichnet repräsentiert die Komponenten, welche auf die Hardware des Mikrocontrollers zugreifen. Orange kennzeichnet die Komponenten, welche als Schnittstellen zwischen dem Hardwarezugriff und der Logik dienen. Diese Bereiten Informationen der Hardware auf in ein Format, dass die Logik gut verarbeiten kann. Die Logik ist in den rot gekennzeichneten Komponenten implementiert. Diese verarbeitet die Daten und trifft Entscheidungen.
     In Abbildung \ref{fig:et_mc_softwarekonzept} aus Übersichtsgründen nicht ersichtlich ist, dass alle module auf das com modul zugreifen können um mit dem Pi zu kommunizieren. Dabei benützen die Module die Komponenten comPi, comAck und comLog.\\
 
     \begin{figure}[H]
@@ -40,7 +40,7 @@
     \end{figure}
 
     \textbf{Task Scheudler}\\
-    Für jedes Modul gibt es eine Taskfunktion, die während des Betriebs in einem Task Scheduler Loop periodisch aufgerufen wird. Auf die Benutzung eines Betriebssysteme wurde in diesem Projekt verzichtet. Der es gibt also keine Prioritäten oder Time-Slicing für die Tasks. Abbildung \ref{fig:et_task_scheudler} veranschaulicht das Prinzip der Implementation für einen Task. Wichtig dabei zu beachten ist, dass mit dieser Variante die vorgegebenen Zeitintervalle nicht exakt und je nach Auslastung variieren. Da die Tasks aber ohnehin nicht stark zeitkritisch sind funktioniert dies trotzdem. Alle Zeitkritischen Aufgaben werden über Interrupts behandelt.
+    Für jedes Modul gibt es eine Taskfunktion, die während des Betriebs in einem Task Scheduler Loop periodisch aufgerufen wird. Auf die Benutzung eines Betriebssysteme wurde in diesem Projekt verzichtet. Das heisst es gibt also keine Prioritäten oder Time-Slicing für die Tasks. Abbildung \ref{fig:et_task_scheudler} veranschaulicht das Prinzip der Implementation für einen Task. Wichtig dabei zu beachten ist, dass mit dieser Variante die vorgegebenen Zeitintervalle nicht exakt und je nach Auslastung variieren. Da die Tasks aber ohnehin nicht stark zeitkritisch sind, funktioniert dies trotzdem. Alle Zeitkritischen Aufgaben werden über Interrupts behandelt.
 
     \begin{figure}[H]
         \centering
@@ -112,7 +112,7 @@
     Diese Komponente stellt Funktionen zur verfügung um den Sensor zu initialisieren und danach bei Bedarf den aktuellen Messwert auszulesen.\\
 
     \textbf{cubeDetection}\\
-    Diese Komponente wertet die Daten des des TOF-Sensors aus und entscheidet wann der Würfel erkannt wurde. Die Funktion cubeDoWork() wird periodisch als Task aufgerufen. Dort wird der TOF-Sensor ausgelesen und der gemessene Wert mit einem Schwellwert verglichen. Die Ermittlung dieses Schwellwertes ist in Kapitel \ref{et_sensoren} beschrieben.\\
+    Diese Komponente wertet die Daten des des TOF-Sensors aus und entscheidet, wann der Würfel erkannt wurde. Die Funktion cubeDoWork() wird periodisch als Task aufgerufen. Dort wird der TOF-Sensor ausgelesen und der gemessene Wert mit einem Schwellwert verglichen. Die Ermittlung dieses Schwellwertes ist in Kapitel \ref{et_sensoren} beschrieben.\\
     Das Modul kann drei Zustände einnehmen. Diese sind ''notFound'', ''finding'' und ''found''. Der Initialzustand ist ''notFound''.\\
     Sobald der Schwellwert bei einer Messung unterschritten wurde, wird der Zustand in ''finding'' geändert und es werden noch 20 weitere Messungen durchgeführt und mit dem Schwellwert verglichen. Von diesen 20 Messungen müssen mindestens 90\% den Schwellwert ebenfalls unterschreiten um in den Zustand ''found'' zu wechseln. Durch diese Verifizierung können einzelne Fehlmessungen gefiltert werden. Werden die 90\% bei der Verifizierung nicht erreicht wird noch überprüft ob mindestens 50\% den Schwellwert unterschritten haben. Ist dies der Fall wird sofort eine neuer Verifizierung gestartet und der Zustand bleibt auf ''finding''. Ist dies nicht der Fall geht das Modul wieder in den Zustand ''notFound''.\\
     Abbildung \ref{fig:et_cube_detection_proc} veranschaulicht den Ablauf der Würfelerkennung.
@@ -154,7 +154,7 @@
     \begin{figure}[H]
         \centering
         \includegraphics[width=0.6\textwidth]{../../images/et/et_wiki_PID_en.png}
-        \caption {Allgemeines Prinzip eines PID-Reglers\\Quelle: Wikipedia.org - PID controller}
+        \caption {Allgemeines Prinzip eines PID-Reglers \cite{PIDcontroller}}
         \label{fig:et_drive_pid}
     \end{figure}
 
