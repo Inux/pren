@@ -21,7 +21,7 @@ Die Lösung wird wie in PREN1 beschrieben, umgesetzt.
 Der Beschleunigungssensor wird direkt an die 'Movement'-Klasse angebunden. Diese verarbeitet die erhaltenen Daten weiter zu Geschwindigkeit und Beschleunigung.
 
 \paragraph{Technologien / Komponente}
-Softwaretechnisch ist die Komponente in Python3 realisiert. Für die Umsetzung wird auf die Bibliotheken 'smbus2', 'time' und 'sys' zurückgegriffen. 'smbus2' enthält alle nötigen Informationen über den GPIO (General Purpose Input / Output) Bus. 'time' und 'sys' enthalten für die Entwicklung unterstützende Funktionen. 
+Softwaretechnisch ist die Komponente in Python3 realisiert. Für die Umsetzung wird auf die Bibliotheken 'smbus2', 'time' und 'sys' zurückgegriffen. 'smbus2' enthält alle nötigen Informationen über den GPIO (General Purpose Input / Output) Bus. 'time' und 'sys' enthalten für die Entwicklung unterstützende Funktionen.
 
 \paragraph{Aufbau}
 Der Sensor wird über die $I^2C$ Schnittstelle angesprochen und verwendet somit eine Datenleitung (SDA) und eine Clockleitung (SCL). Für die Stromversorgung werden die Anschlüsse für 3.3V des GPIO Headers benutzt.
@@ -46,7 +46,7 @@ Der Sensor wird über die $I^2C$ Schnittstelle angesprochen und verwendet somit 
 Auf dem Zug findet der Sensor Platz zwischen unserem Kran und dem Abstellplatz für den Würfel. Bei der Montage wurde darauf geachtet, dass die x-Achse Richtung Zugspitze zeigt und die y-Achse die Kräfte nach Links oder Rechts erfasst. Die z-Achse findet keine direkte Anwendung.
 
 \paragraph{Prozessablauf}
-Der Sensor wir für jede Achse separat angeschprochen, die erhaltenen Daten werden direkt das erste Mal umgewandelt. Sobald die 'Movement' Komponente gestartet wird, liest diese im 50ms Takt Daten über den Beschleunigungssensor ein. Die erhaltenen Daten werden ausgewertet und in Geschwindigkeit und Beschleunigung gerechnet.
+Der Sensor wir für jede Achse separat angesprochen, die erhaltenen Daten werden direkt das erste Mal umgewandelt. Sobald die 'Movement' Komponente gestartet wird, liest diese im 50ms Takt Daten über den Beschleunigungssensor ein. Die erhaltenen Daten werden ausgewertet und in Geschwindigkeit und Beschleunigung gerechnet.
 
 \subsubsection{Entwicklungsablauf}
 Es gibt es Vielzahl ähnlicher Beschleunigungssensoren auf dem Markt und somit auch mehr als genügend Bibliotheken auf dem Internet. Das Finden einer kompatiblen Bibliotheken erwies sich somit als eher trivial. Als nächstes wurde der Sensor an den GPIO Bus angeschlossen und mithilfe einer Testapplikation getestet. \\

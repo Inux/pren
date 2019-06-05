@@ -14,10 +14,10 @@ In diesem Kapitel wird auf die Implementierung der technischen Komponente 'Steue
 \end{itemize}
 
 \subsubsection{Lösung}
-Die Steuerungssoftware wird wie in PREN beschrieben mittels der Middleware Technologie 'ZeroMQ' und 'Protobufers' unterstützt. Die Steuerungssoftware selbst erbt wie alle anderen Module auch von der Basisklasse 'App', dazu später mehr. Solange die Steuerungssoftware läuft wartet sie auf ein Startsignal, welches den Applikationsablauf in Gang setzt.
+Die Steuerungssoftware wird wie in PREN beschrieben mittels der Middleware Technologie 'ZeroMQ' und 'Protobuffers' unterstützt. Die Steuerungssoftware selbst erbt wie alle anderen Module auch von der Basisklasse 'App', dazu später mehr. Solange die Steuerungssoftware läuft wartet sie auf ein Startsignal, welches den Applikationsablauf in Gang setzt.
 
 \subsubsection{Technologien / Aufbau}
-Einblick in verwendete Technologien, sowie ein Überblick über Programmstruktur und Aufbau der Middleware. 
+Einblick in verwendete Technologien, sowie ein Überblick über Programmstruktur und Aufbau der Middleware.
 
 \textbf{ZeroMQ} \\
 ZeroMQ % TODO-IT: Ergänzung nötig oder löschen
@@ -49,7 +49,7 @@ Eine Auflistung aller verwendeter Protobuf Nachrichten, welche über die Middlew
   \begin{tabular}{lll}
   \hline
   \textbf{Nachricht} & \textbf{Bezeichner} & \textbf{Datentyp} \\ \hline
-  Acceleration & x & Integer32bit \\ 
+  Acceleration & x & Integer32bit \\
    & y & Integer32bit \\
    & z & Integer32bit \\ \hline
   CraneCommand & command & Integer32bit\\ \hline
@@ -57,7 +57,7 @@ Eine Auflistung aller verwendeter Protobuf Nachrichten, welche über die Middlew
   Current & current & Integer32bit\\ \hline
   Direction & direction & String\\ \hline
   Distance & distance & Float\\ \hline
-  Heartbeat & component & String\\ 
+  Heartbeat & component & String\\
    & status & String\\ \hline
   MoveCommand & speed & Integer32bit\\ \hline
   NumberDetection & number & String\\ \hline
@@ -91,7 +91,7 @@ Jedes Modul besitzt einen Hearbeat, welches in regelmässigen Abständen gesende
     Error & Sobald ein Fehler gemeldet wird oder das Modul keinen Hearbeat mehr sendet\\ \hline
     Finished & Nach Abschluss seiner eigentlichen Tätigkeit\\ \hline
     \end{tabular}
-\end{table} 
+\end{table}
 Folgende Module werden überwacht:
 \begin{table}[H]
     \begin{tabular}{ll}

@@ -88,7 +88,7 @@
     Da aber auf einem Digitalen System die Daten nur zu diskreten Zeitpunkten ausgewertet werden können, ergibt sich dann eine Summen der Geschwindigkeiten zum Zeitpunkt $k$ $$s[k] = \sum_{i=0}^{k}v[i] \Delta t$$\\
     Die Geschwindigkeit wird gemäss der Beschreibung oben bestimmt.
 
-    
+
     \textbf{Distanz rechts (Erkennung Würfel) }\\
     Gemäss der Aufgabenstellung befindet sich der Würfel in einem Abstand von $8\pm1cm$ von der Gleismitte. Somit muss der Distanzsensor Distanzen zwischen ca. $20mm$ und $80mm$ erkennen können. Der exakte Wert der Distanz ist dabei nicht entscheidend, da nur ein bestimmter Schwellwert erkannt werden muss. Die Distanz zum Würfel wird mit einem TOF Sensor \footnote{TOF: Timo-Of-Flight} VL53L0X ermittelt. \\
     Dieser Schwellwert wird Messtechnisch ermittelt. Der Würfel wird an der vorgegebenen Position vor dem Sensor platziert (siehe Abbildung \ref{fig:et_tof_messung}) und der Wert ausgelesen. Dieser Wert kann dann in der Software festgelegt werden um zu entscheiden ob der Würfel erkannt wurde oder nicht. Der Wert des Sensors wird nicht in eine exakte Distanz umgerechnet, es wird direkt mit den rohen Sensorwerten der Schwellwert bestimmt. Mit der beschrieben Messung konnten mit dem Schwellwert $10000$ die zuverlässigsten Resultate erzielt werden.\\

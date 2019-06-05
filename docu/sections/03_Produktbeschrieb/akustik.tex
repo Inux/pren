@@ -17,7 +17,7 @@ In diesem Kapitel wird auf die Implementierung der technischen Komponente 'Akust
 \end{itemize}
 
 \subsubsection{Lösung}
-Die Lösung entspricht dem Lösungskonzept aus PREN1. Sobald ein Signal, in Form einer Zahl von 1-10, erhalten wird, buzzt der Buzzer die entsprechende Anzahl.
+Die Lösung entspricht dem Lösungskonzept aus PREN1. Sobald ein Signal, in Form einer Zahl von 1-10, erhalten wird, piepst der Buzzer die entsprechende Anzahl.
 
 \paragraph{Technologien / Komponente}
 Über die GPIO Header des Raspberry Pi kann der Buzzer direkt angesprochen und versorgt werden. Ein einzelnes Signalkabel reicht für die Kommunikation aus.
@@ -25,7 +25,7 @@ Die Lösung entspricht dem Lösungskonzept aus PREN1. Sobald ein Signal, in Form
 Softwaretechnisch wird das Ganze mit Python ausgeführt. Python besitzt mächtige Bibliotheken in diesen Bereichen.
 
 \subparagraph{Buzzer}
-Es gibt zwei Arten von Buzzer, den Aktiv-Buzzer und den Passiv-Buzzer. Wir verwenden einen Passiv-Buzzer, der exakte Unterschied der beiden Modelle ist mir nicht bekannt, jedoch ist dies für die Implementierung nicht relevant. Für den Passiv-Buzzer gibt es viele Beispiele auf dem Internet. 
+Es gibt zwei Arten von Buzzer, den Aktiv-Buzzer und den Passiv-Buzzer. Wir verwenden einen Passiv-Buzzer, der exakte Unterschied der beiden Modelle ist mir nicht bekannt, jedoch ist dies für die Implementierung nicht relevant. Für den Passiv-Buzzer gibt es viele Beispiele auf dem Internet.
 
 Auf dem Zug befindet sich der Buzzer zwischen Kran und dem Abstellplatz für den Würfel. Grösse und Gewicht erlauben eine einfache Montur auf einem Klettstreifen.
 
@@ -52,12 +52,12 @@ Anbindung des Buzzers an den Raspberry Pi 3 B+ via GPIO Bus.
 \paragraph{Prozessablauf}
 
 \subsubsection{Entwicklungsablauf}
-Logik und Aufbau für die Kommunikation mit dem Buzzer war bereits aus PREN1 vorhanden. Die Herausforderung lag lediglich in der Kommunikation mit der Applikation. Der Buzzer wurde mithilfe einer Akustik-Klasse an die Middleware gebunden. Zuletzt wird die WebApp mit einer Akustik-Schnittstelle erweitert, welche das Senden von Akustik-Signalen erlaubt. 
+Logik und Aufbau für die Kommunikation mit dem Buzzer war bereits aus PREN1 vorhanden. Die Herausforderung lag lediglich in der Kommunikation mit der Applikation. Der Buzzer wurde mithilfe einer Akustik-Klasse an die Middleware gebunden. Zuletzt wird die WebApp mit einer Akustik-Schnittstelle erweitert, welche das Senden von Akustik-Signalen erlaubt.
 
 \subsubsection{Testing}
 Über die Akustik-Schnittstelle auf der WebApp kann der Buzzer jederzeit getestet werden.
 
 \subsubsection{Reflexion}
-Es gab keine bösen Überraschungen und der Buzzer läuft zuverlässig. 
+Es gab keine bösen Überraschungen und der Buzzer läuft zuverlässig.
 
 \end{document}
