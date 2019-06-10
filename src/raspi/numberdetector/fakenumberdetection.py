@@ -16,7 +16,7 @@ from src.raspi.lib import zmq_topics
 import src.raspi.lib.heartbeat as hb
 from src.raspi.pb import direction_pb2
 
-import src.raspi.numberdetector.numberDetectionPython.mw_adapter_numberdetection as mwadapter
+import src.raspi.numberdetector.mw_adapter_numberdetection as mwadapter
 
 OFFSET = 0
 

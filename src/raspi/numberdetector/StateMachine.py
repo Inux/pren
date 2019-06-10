@@ -21,7 +21,7 @@ class SlaveStateMachine(StateMachine):
         self.stopSignalErkanntOhneNummer = runde2Langsam.to(runde3)
         self.kleinTafelErkannt = runde3.to(ende)
         self.cam = cam
-        self.pool = ThreadPool(process=3)
+        self.pool = ThreadPool()
         self.detection = detection
 
     def on_enter_start(self):

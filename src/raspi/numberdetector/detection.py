@@ -3,7 +3,7 @@ import cv2
 import numpy as np
 import queue
 #import pytesseract
-from src.raspi.numberdetector.numberDetectionPython.camera import Window
+from src.raspi.numberdetector.camera import Window
 
 
 class Detection():
@@ -14,8 +14,8 @@ class Detection():
         self.imageQueueStartSignal = self.cam.imageQueueStartSignal
         self.imageQueuePlateDetector = self.cam.imageQueueNumberDetector
         self.imageQueueNumberDetector = queue.Queue()
-        self.win = Window()
-        self.win.createTrackbar()
+        #self.win = Window()
+        #self.win.createTrackbar()
 
     def filterAndMorphOPNumber2(self, frame, threashold, kernel, iterator):
         x, y, w, h = 50, 50, 400, 500
